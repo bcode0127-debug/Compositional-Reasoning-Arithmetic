@@ -1,0 +1,34 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.py[cod]
+*.so
+
+# Data files (ignore generated, keep scripts)
+data/*.csv
+data/*.txt
+data/raw/
+data/processed/
+
+# Results (ignore models, keep metrics)
+results/**/*.pt
+results/**/*.pth
+results/**/*.ckpt
+
+# Environment
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints
+
+# Logs
+*.log
