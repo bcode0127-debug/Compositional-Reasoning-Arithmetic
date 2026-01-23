@@ -85,6 +85,34 @@ class MathDataPipeline:
             "level2": self.get_dataloader(level=2, shuffle=False),
             "level3": self.get_dataloader(level=3, shuffle=False)
         }
+    def get_train_val_dataloaders(self, level: int, train_split: float = 0.8) -> Tuple[DataLoader, DataLoader]:
+        """Get train and validation dataloaders for a specific level with train/val split."""
+        print(f"Preparing Level {level} Data (Train/Val Split)")
+        print(f"{'='*60}")
+    
+        raw_data = self.load_data(str(level))
+        print(f"✓ Loaded {len(raw_data)} samples")
+    
+        # Split into train/val
+        split_idx = int(len(raw_data) * train_split)
+        train_data = raw_data[:split_idx]
+        val_data = raw_data[split_idx:]
+    
+        # Prepare sequences
+        enc_inputs_train, dec_inputs_train, dec_targets_train = self.prepare_sequences(train_data)
+        enc_inputs_val, dec_inputs_val, dec_targets_val = self.prepare_sequences(val_data)
+    
+        # Create dataloaders
+        train_dataset = TensorDataset(enc_inputs_train, dec_inputs_train, dec_targets_train)
+        val_dataset = TensorDataset(enc_inputs_val, dec_inputs_val, dec_targets_val)
+    
+        train_loader = DataLoader(train_dataset, batch_size=self.batch_size, shuffle=True)
+        val_loader = DataLoader(val_dataset, batch_size=self.batch_size, shuffle=False)
+    
+        print(f"✓ Train samples: {len(train_data)}, batches: {len(train_loader)}")
+        print(f"✓ Val samples: {len(val_data)}, batches: {len(val_loader)}\n")
+    
+        return train_loader, val_loader
 
 def get_dataloaders(batch_size: int = 128) -> Dict[str, DataLoader]:
     """Utility function to get dataloaders for all levels."""
