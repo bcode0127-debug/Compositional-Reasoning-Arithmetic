@@ -1,34 +1,28 @@
+cd ~/Desktop/Projects/Math-reasoning-research
+
+# Create .gitignore
+cat > .gitignore << 'EOF'
+# Datasets (too large for git)
+datasets/study1/
+datasets/study2/
+datasets/sanity_temp/
+
+# Model checkpoints and results
+results/
+*.pt
+*.pth
+
 # Python
-.venv/
 __pycache__/
 *.pyc
-*.py[cod]
-*.so
-
-# Data files (ignore generated, keep scripts)
-data/*.csv
-data/*.txt
-data/raw/
-data/processed/
-
-# Results (ignore models, keep metrics)
-results/**/*.pt
-results/**/*.pth
-results/**/*.ckpt
-
-# Environment
-.env
-
-# IDE
-.vscode/
-.idea/
+*.pyo
+.venv/
+*.egg-info/
 
 # OS
 .DS_Store
-Thumbs.db
+.ipynb_checkpoints/
 
-# Jupyter
-.ipynb_checkpoints
-
-# Logs
-*.log
+# Keep verification samples
+!datasets/verification/
+EOF

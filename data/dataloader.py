@@ -6,10 +6,10 @@ from torch.utils.data import TensorDataset, DataLoader
 from data.tokenizer import MathTokenizer, create_tokenizer
 
 class MathDataPipeline:
-    """Data pipeline for loading and batching math expression datasets."""
+    # Data pipeline for loading and batching math expression datasets.
     
     def __init__(self, data_dir: str = "datasets", max_input_len: int = 20, max_output_len: int = 10, batch_size: int = 128):
-        """Initialize the data pipeline."""
+        # Initialize the data pipeline.
         self.data_dir = data_dir
         self.max_input_len = max_input_len
         self.max_output_len = max_output_len
@@ -17,7 +17,7 @@ class MathDataPipeline:
         self.tokenizer = create_tokenizer()
     
     def load_data(self, level: str) -> list:
-        """Load dataset split and return DataLoader."""
+        # Load dataset split and return DataLoader.
         file_path = os.path.join(self.data_dir, f"level{level}")
 
         target_file = [
@@ -40,7 +40,7 @@ class MathDataPipeline:
         return data_json['data']
     
     def prepare_sequences(self, raw_data: list) -> tuple:
-        """Prepare input and output sequences from raw data."""
+        # Prepare input and output sequences from raw data.
         encoder_inputs = []
         decoder_inputs = []
         decoder_targets = []
@@ -74,7 +74,7 @@ class MathDataPipeline:
         )
 
     def get_dataloader(self, level: int, shuffle: bool = True) -> DataLoader:
-        """Get DataLoader for specified level."""
+        # Get DataLoader for specified level.
         print(f"Preparing Level {level} Data")
         print(f"{'='*60}")
 
@@ -90,16 +90,28 @@ class MathDataPipeline:
         
         return dataloader
 
-    def get_all_dataloaders(self) -> Dict[str, DataLoader]:
-        """Get DataLoaders for all levels."""
+    def get_dataloaders_file(self, filename: str, shuffle: bool = True) -> DataLoader:
+        # Get DataLoaders for all levels.
+        file_path = os.path.join(self.data_dir, filename)
+        if not os.path.exists(file_path):
+            raise FileNotFoundError(f"No dataset file found: {file_path}")
+        
+        print(f"Loading data from {filename}")
+        with open(file_path, 'r', encoding='utf-8') as f:
+            data_json = json.load(f)
+        raw_data = data_json['data']
+        print(f"✓ Loaded {len(raw_data)} samples")
 
-        return {
-            "level1": self.get_dataloader(level=1, shuffle=True),
-            "level2": self.get_dataloader(level=2, shuffle=False),
-            "level3": self.get_dataloader(level=3, shuffle=False)
-        }
+        enc_inputs, dec_inputs, dec_targets = self.prepare_sequences(raw_data)
+        print(f"✓ Tokenized to shapes: {enc_inputs.shape}, {dec_inputs.shape}, {dec_targets.shape}")
+
+        dataset = TensorDataset(enc_inputs, dec_inputs, dec_targets)
+        dataloader = DataLoader(dataset, batch_size=self.batch_size, shuffle=shuffle)
+        print(f"✓ DataLoader created: {len(dataloader)} batches\n")
+
+        return dataloader
     def get_train_val_dataloaders(self, level: int, train_split: float = 0.8) -> Tuple[DataLoader, DataLoader]:
-        """Get train and validation dataloaders for a specific level with train/val split."""
+        # Get train and validation dataloaders for a specific level with train/val split.
         print(f"Preparing Level {level} Data (Train/Val Split)")
         print(f"{'='*60}")
     
@@ -128,6 +140,6 @@ class MathDataPipeline:
         return train_loader, val_loader
 
 def get_dataloaders(batch_size: int = 128) -> Dict[str, DataLoader]:
-    """Utility function to get dataloaders for all levels."""
+    # Utility function to get dataloaders for all levels.
     pipeline = MathDataPipeline(data_dir="datasets", batch_size=batch_size)
     return pipeline.get_all_dataloaders()
