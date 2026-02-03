@@ -5,85 +5,11 @@ from typing import Dict, Tuple, Optional
 import time
 
 
-def calculate_accuracy(
-    predictions: torch.Tensor,
-    targets: torch.Tensor,
-    pad_idx: int = 0
-) -> float:
-
-    # Get predicted tokens
-    pred_tokens = predictions.argmax(dim=1)  # [batch*seq_len]
-    
-    # Create mask for non-padding tokens
-    mask = targets != pad_idx
-    
-    # Calculate accuracy only on non-padding tokens
-    correct = (pred_tokens == targets) & mask
-    accuracy = correct.sum().item() / mask.sum().item() * 100
-    
-    return accuracy
-
-
-def train_epoch(
-    model: nn.Module,
-    dataloader: DataLoader,
-    optimizer: torch.optim.Optimizer,
-    criterion: nn.Module,
-    device: str = "cpu",
-    pad_idx: int = 0
-) -> Tuple[float, float]:
-    
-    model.train()
-    total_loss = 0.0
-    total_accuracy = 0.0
-    num_batches = len(dataloader)
-    
-    for batch_idx, (enc_input, dec_input, dec_target) in enumerate(dataloader):
-        enc_input = enc_input.to(device)
-        dec_input = dec_input.to(device)
-        dec_target = dec_target.to(device)
-        
-        optimizer.zero_grad()
-        
-        # Forward pass
-        output = model(enc_input, dec_input)  # [batch, seq_len, vocab_size]
-        
-        # Reshape for loss calculation
-        output_flat = output.view(-1, output.size(-1))  # [batch*seq_len, vocab_size]
-        target_flat = dec_target.view(-1)               # [batch*seq_len]
-        
-        # Calculate loss
-        loss = criterion(output_flat, target_flat)
-        
-        # Calculate accuracy
-        accuracy = calculate_accuracy(output_flat, target_flat, pad_idx)
-        
-        # Backward pass
-        loss.backward()
-        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
-        optimizer.step()
-        
-        total_loss += loss.item()
-        total_accuracy += accuracy
-    
-    avg_loss = total_loss / num_batches
-    avg_accuracy = total_accuracy / num_batches
-    
-    return avg_loss, avg_accuracy
-
-
-def evaluate(
-    model: nn.Module,
-    dataloader: DataLoader,
-    criterion: nn.Module,
-    device: str = "cpu",
-    pad_idx: int = 0
-) -> Tuple[float, float]:
-    
+def calculate_accuracy(model, dataloader, device, pad_idx=0):
+    # Calculate sequence-level accuracy (exact match)
     model.eval()
-    total_loss = 0.0
-    total_accuracy = 0.0
-    num_batches = len(dataloader)
+    correct = 0
+    total = 0
     
     with torch.no_grad():
         for enc_input, dec_input, dec_target in dataloader:
@@ -91,24 +17,64 @@ def evaluate(
             dec_input = dec_input.to(device)
             dec_target = dec_target.to(device)
             
-            # Forward pass
+            # Get predictions
+            output = model(enc_input, dec_input)  # [batch, seq_len, vocab]
+            predictions = output.argmax(dim=-1)   # [batch, seq_len]
+            
+            # Check exact sequence match for each sample
+            batch_size = predictions.size(0)
+            for i in range(batch_size):
+                target_seq = dec_target[i]
+                pred_seq = predictions[i]
+                
+                # Find where padding starts
+                mask = (target_seq != pad_idx)
+                
+                # Compare only non-padding tokens
+                if torch.equal(pred_seq[mask], target_seq[mask]):
+                    correct += 1
+                total += 1
+    
+    return 100.0 * correct / total if total > 0 else 0.0
+
+
+def train_epoch(model, dataloader, optimizer, criterion, device, pad_idx=0):
+    # Train for one epoch - return loss only
+    model.train()
+    total_loss = 0.0
+    
+    for enc_input, dec_input, dec_target in dataloader:
+        enc_input = enc_input.to(device)
+        dec_input = dec_input.to(device)
+        dec_target = dec_target.to(device)
+        
+        optimizer.zero_grad()
+        output = model(enc_input, dec_input)
+        loss = criterion(output.view(-1, output.size(-1)), dec_target.view(-1))
+        loss.backward()
+        optimizer.step()
+        
+        total_loss += loss.item()
+    
+    return total_loss / len(dataloader)  # Return loss only
+
+
+def evaluate(model, dataloader, criterion, device, pad_idx=0):
+    # Evaluate - return loss only
+    model.eval()
+    total_loss = 0.0
+    
+    with torch.no_grad():
+        for enc_input, dec_input, dec_target in dataloader:
+            enc_input = enc_input.to(device)
+            dec_input = dec_input.to(device)
+            dec_target = dec_target.to(device)
+            
             output = model(enc_input, dec_input)
-            
-            # Reshape for loss calculation
-            output_flat = output.view(-1, output.size(-1))
-            target_flat = dec_target.view(-1)
-            
-            # Calculate loss and accuracy
-            loss = criterion(output_flat, target_flat)
-            accuracy = calculate_accuracy(output_flat, target_flat, pad_idx)
-            
+            loss = criterion(output.view(-1, output.size(-1)), dec_target.view(-1))
             total_loss += loss.item()
-            total_accuracy += accuracy
     
-    avg_loss = total_loss / num_batches
-    avg_accuracy = total_accuracy / num_batches
-    
-    return avg_loss, avg_accuracy
+    return total_loss / len(dataloader)  # Return loss only
 
 
 def train_model(
@@ -149,15 +115,19 @@ def train_model(
     for epoch in range(num_epochs):
         start_time = time.time()
         
-        # Train
-        train_loss, train_acc = train_epoch(
+        # Train one epoch
+        train_loss = train_epoch(
             model, train_loader, optimizer, criterion, device, pad_idx
         )
         
-        # Validate
-        val_loss, val_acc = evaluate(
+        # Evaluate on validation set
+        val_loss = evaluate(
             model, val_loader, criterion, device, pad_idx
         )
+        
+        # Calculate accuracies (expensive, so only once per epoch)
+        train_acc = calculate_accuracy(model, train_loader, device, pad_idx)
+        val_acc = calculate_accuracy(model, val_loader, device, pad_idx)
         
         # Record history
         train_losses.append(train_loss)
