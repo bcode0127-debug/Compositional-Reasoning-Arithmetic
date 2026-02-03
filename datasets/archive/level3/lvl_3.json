@@ -1,0 +1,8004 @@
+{
+  "data": [
+    {
+      "seed_id": 0,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -120,
+      "input": "((-15 * 8) + (-8 - -8))",
+      "output": "-120"
+    },
+    {
+      "seed_id": 1,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 3,
+      "input": "((3 + -2) - (-15 - -13))",
+      "output": "3"
+    },
+    {
+      "seed_id": 2,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -14,
+      "input": "((-8 * -1) - (10 + 12))",
+      "output": "-14"
+    },
+    {
+      "seed_id": 3,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -292,
+      "input": "(((-13 * 2) * 11) + (3 + -9))",
+      "output": "-292"
+    },
+    {
+      "seed_id": 4,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -33,
+      "input": "((-7 * -1) - (-10 * -4))",
+      "output": "-33"
+    },
+    {
+      "seed_id": 5,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 23,
+      "input": "(((7 + 14) - 4) - (2 - 8))",
+      "output": "23"
+    },
+    {
+      "seed_id": 6,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 4,
+      "input": "(((-3 - -7) * 6) - (11 + 9))",
+      "output": "4"
+    },
+    {
+      "seed_id": 7,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 60,
+      "input": "((10 / 1) * (-7 - -13))",
+      "output": "60"
+    },
+    {
+      "seed_id": 8,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -8,
+      "input": "((-4 - -8) + (1 + -13))",
+      "output": "-8"
+    },
+    {
+      "seed_id": 9,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -84,
+      "input": "((1 + -7) * (6 + 8))",
+      "output": "-84"
+    },
+    {
+      "seed_id": 10,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -3390,
+      "input": "(((-15 * 15) - 1) * (1 + 14))",
+      "output": "-3390"
+    },
+    {
+      "seed_id": 11,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -119,
+      "input": "((-11 - -4) * (2 + 15))",
+      "output": "-119"
+    },
+    {
+      "seed_id": 12,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 2346,
+      "input": "(((-15 * -12) * 13) + (-8 - -14))",
+      "output": "2346"
+    },
+    {
+      "seed_id": 13,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 12,
+      "input": "((8 + 11) - (9 - 2))",
+      "output": "12"
+    },
+    {
+      "seed_id": 14,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 129,
+      "input": "(((13 / 1) - -12) + (-8 * -13))",
+      "output": "129"
+    },
+    {
+      "seed_id": 15,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 1,
+      "input": "((3 + -8) - (-13 + 7))",
+      "output": "1"
+    },
+    {
+      "seed_id": 16,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 2548,
+      "input": "((13 * -14) * (-13 - 1))",
+      "output": "2548"
+    },
+    {
+      "seed_id": 17,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 0,
+      "input": "(((10 - -2) + -12) / 1)",
+      "output": "0"
+    },
+    {
+      "seed_id": 18,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 59,
+      "input": "(((-1 + 12) + 6) + (-14 * -3))",
+      "output": "59"
+    },
+    {
+      "seed_id": 19,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -81,
+      "input": "((-9 / -1) * (-11 - -2))",
+      "output": "-81"
+    },
+    {
+      "seed_id": 20,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -6,
+      "input": "(((-8 + 12) + -1) + (-14 + 5))",
+      "output": "-6"
+    },
+    {
+      "seed_id": 21,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -93,
+      "input": "((-6 / -1) - (-11 * -9))",
+      "output": "-93"
+    },
+    {
+      "seed_id": 22,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 14,
+      "input": "((3 + 8) + (8 + -5))",
+      "output": "14"
+    },
+    {
+      "seed_id": 23,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -25,
+      "input": "(((1 - 14) + -14) + (12 + -10))",
+      "output": "-25"
+    },
+    {
+      "seed_id": 24,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 16,
+      "input": "((-3 - -12) + (3 + 4))",
+      "output": "16"
+    },
+    {
+      "seed_id": 25,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 306,
+      "input": "(((6 * 3) * 14) - (-9 * 6))",
+      "output": "306"
+    },
+    {
+      "seed_id": 26,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -10,
+      "input": "(((-3 * -11) * -1) + (14 + 9))",
+      "output": "-10"
+    },
+    {
+      "seed_id": 27,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 160,
+      "input": "(((4 + 3) - -13) * (1 - -7))",
+      "output": "160"
+    },
+    {
+      "seed_id": 28,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 308,
+      "input": "((11 * 2) * (4 + 10))",
+      "output": "308"
+    },
+    {
+      "seed_id": 29,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 21,
+      "input": "((15 - 13) - (-7 + -12))",
+      "output": "21"
+    },
+    {
+      "seed_id": 30,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 39,
+      "input": "(((11 + -7) * -15) - (9 * -11))",
+      "output": "39"
+    },
+    {
+      "seed_id": 31,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 28,
+      "input": "(((2 + -15) - -13) - (2 * -14))",
+      "output": "28"
+    },
+    {
+      "seed_id": 32,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 133,
+      "input": "(((-11 * -14) + -4) - (13 - -4))",
+      "output": "133"
+    },
+    {
+      "seed_id": 33,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -4,
+      "input": "((4 - 8) - (14 - 14))",
+      "output": "-4"
+    },
+    {
+      "seed_id": 34,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -1620,
+      "input": "((-5 + -7) * (15 * 9))",
+      "output": "-1620"
+    },
+    {
+      "seed_id": 35,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 237,
+      "input": "(((6 * 11) + 15) - (-12 * 13))",
+      "output": "237"
+    },
+    {
+      "seed_id": 36,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 544,
+      "input": "(((-4 * 8) + -2) * (-3 - 13))",
+      "output": "544"
+    },
+    {
+      "seed_id": 37,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -65,
+      "input": "((7 + -2) * (1 - 14))",
+      "output": "-65"
+    },
+    {
+      "seed_id": 38,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 8,
+      "input": "(((6 - 8) * 4) * (-3 + 2))",
+      "output": "8"
+    },
+    {
+      "seed_id": 39,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -3,
+      "input": "(((10 - 13) + 6) + (-6 * 1))",
+      "output": "-3"
+    },
+    {
+      "seed_id": 40,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 31,
+      "input": "((6 - -6) + (10 - -9))",
+      "output": "31"
+    },
+    {
+      "seed_id": 41,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 4,
+      "input": "((-8 + 4) / -1)",
+      "output": "4"
+    },
+    {
+      "seed_id": 42,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 57,
+      "input": "(((-1 - -7) * 11) - (9 / 1))",
+      "output": "57"
+    },
+    {
+      "seed_id": 43,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -94,
+      "input": "(((-1 * -13) * -8) - (-5 + -5))",
+      "output": "-94"
+    },
+    {
+      "seed_id": 44,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 39,
+      "input": "((-15 * -3) - (6 / 1))",
+      "output": "39"
+    },
+    {
+      "seed_id": 45,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -3780,
+      "input": "(((-10 * -14) * -3) * (-9 * -1))",
+      "output": "-3780"
+    },
+    {
+      "seed_id": 46,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 8,
+      "input": "(((-7 + 11) + -15) + (15 - -4))",
+      "output": "8"
+    },
+    {
+      "seed_id": 47,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 22,
+      "input": "((9 - -15) - (-9 + 11))",
+      "output": "22"
+    },
+    {
+      "seed_id": 48,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -43,
+      "input": "((7 * -7) - (-10 + 4))",
+      "output": "-43"
+    },
+    {
+      "seed_id": 49,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -89,
+      "input": "(((-3 - 15) - -13) + (-12 * 7))",
+      "output": "-89"
+    },
+    {
+      "seed_id": 50,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 8,
+      "input": "((-4 / -1) * (6 + -4))",
+      "output": "8"
+    },
+    {
+      "seed_id": 51,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -15,
+      "input": "((-1 * -2) + (-5 - 12))",
+      "output": "-15"
+    },
+    {
+      "seed_id": 52,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 40,
+      "input": "(((13 * 4) + 2) + (1 - 15))",
+      "output": "40"
+    },
+    {
+      "seed_id": 53,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -32,
+      "input": "((2 * 1) * (-2 * 8))",
+      "output": "-32"
+    },
+    {
+      "seed_id": 54,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -38,
+      "input": "(((-7 * -6) + -8) + (8 * -9))",
+      "output": "-38"
+    },
+    {
+      "seed_id": 55,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -47,
+      "input": "((-9 / -1) + (-7 * 8))",
+      "output": "-47"
+    },
+    {
+      "seed_id": 56,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 64,
+      "input": "((-6 * -8) - (-10 + -6))",
+      "output": "64"
+    },
+    {
+      "seed_id": 57,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 4,
+      "input": "(((-12 + 12) * 3) + (-1 - -5))",
+      "output": "4"
+    },
+    {
+      "seed_id": 58,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 31,
+      "input": "(((-13 + 3) - -11) + (10 * 3))",
+      "output": "31"
+    },
+    {
+      "seed_id": 59,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -22,
+      "input": "((-6 + 3) - (4 + 15))",
+      "output": "-22"
+    },
+    {
+      "seed_id": 60,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -3,
+      "input": "((-7 + 6) + (-10 - -8))",
+      "output": "-3"
+    },
+    {
+      "seed_id": 61,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 41,
+      "input": "((-12 - 2) - (5 * -11))",
+      "output": "41"
+    },
+    {
+      "seed_id": 62,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 364,
+      "input": "((-1 + -13) * (13 * -2))",
+      "output": "364"
+    },
+    {
+      "seed_id": 63,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 33,
+      "input": "((-13 + -8) + (9 * 6))",
+      "output": "33"
+    },
+    {
+      "seed_id": 64,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 260,
+      "input": "((11 + 9) * (-1 * -13))",
+      "output": "260"
+    },
+    {
+      "seed_id": 65,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 4,
+      "input": "(((-12 - -15) - 7) / -1)",
+      "output": "4"
+    },
+    {
+      "seed_id": 66,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -11,
+      "input": "((-8 + 11) - (-1 + 15))",
+      "output": "-11"
+    },
+    {
+      "seed_id": 67,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 6,
+      "input": "(((-8 - -1) - -3) + (14 - 4))",
+      "output": "6"
+    },
+    {
+      "seed_id": 68,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 22,
+      "input": "(((2 * -4) / -1) - (-1 * 14))",
+      "output": "22"
+    },
+    {
+      "seed_id": 69,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -261,
+      "input": "((-3 - 6) * (15 - -14))",
+      "output": "-261"
+    },
+    {
+      "seed_id": 70,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 24,
+      "input": "((12 / 1) + (-12 / -1))",
+      "output": "24"
+    },
+    {
+      "seed_id": 71,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 1820,
+      "input": "((-2 - 12) * (-13 * 10))",
+      "output": "1820"
+    },
+    {
+      "seed_id": 72,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 459,
+      "input": "(((15 / 1) + 12) * (4 - -13))",
+      "output": "459"
+    },
+    {
+      "seed_id": 73,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 7,
+      "input": "((-12 + 9) + (-1 * -10))",
+      "output": "7"
+    },
+    {
+      "seed_id": 74,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -13,
+      "input": "((4 - 6) - (14 - 3))",
+      "output": "-13"
+    },
+    {
+      "seed_id": 75,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 420,
+      "input": "(((15 * -4) / -1) * (7 / 1))",
+      "output": "420"
+    },
+    {
+      "seed_id": 76,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 12,
+      "input": "((3 * -4) / -1)",
+      "output": "12"
+    },
+    {
+      "seed_id": 77,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 94,
+      "input": "(((11 * 13) - 9) - (4 * 10))",
+      "output": "94"
+    },
+    {
+      "seed_id": 78,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -77,
+      "input": "((4 - -7) * (5 + -12))",
+      "output": "-77"
+    },
+    {
+      "seed_id": 79,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 9100,
+      "input": "(((-14 * 3) - 8) * (-13 * 14))",
+      "output": "9100"
+    },
+    {
+      "seed_id": 80,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -11,
+      "input": "(((-10 - -9) * 10) - (1 * 1))",
+      "output": "-11"
+    },
+    {
+      "seed_id": 81,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 228,
+      "input": "(((15 - -13) - 9) * (12 / 1))",
+      "output": "228"
+    },
+    {
+      "seed_id": 82,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -33,
+      "input": "((-4 * 6) + (3 * -3))",
+      "output": "-33"
+    },
+    {
+      "seed_id": 83,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -50,
+      "input": "((-15 * 4) + (14 - 4))",
+      "output": "-50"
+    },
+    {
+      "seed_id": 84,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 10,
+      "input": "(((-12 + -11) + 15) - (-6 + -12))",
+      "output": "10"
+    },
+    {
+      "seed_id": 85,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 90,
+      "input": "((4 * -2) - (-14 * 7))",
+      "output": "90"
+    },
+    {
+      "seed_id": 86,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 126,
+      "input": "(((-13 - 6) + 5) - (-14 * 10))",
+      "output": "126"
+    },
+    {
+      "seed_id": 87,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 31,
+      "input": "((10 - 3) - (-13 - 11))",
+      "output": "31"
+    },
+    {
+      "seed_id": 88,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -322,
+      "input": "((-5 - 9) * (10 + 13))",
+      "output": "-322"
+    },
+    {
+      "seed_id": 89,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -22,
+      "input": "((-11 * 2) + (10 + -10))",
+      "output": "-22"
+    },
+    {
+      "seed_id": 90,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -9,
+      "input": "((-15 - -4) - (3 + -5))",
+      "output": "-9"
+    },
+    {
+      "seed_id": 91,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -52,
+      "input": "(((1 + -8) * 8) + (-1 + 5))",
+      "output": "-52"
+    },
+    {
+      "seed_id": 92,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 715,
+      "input": "(((-13 + 13) - -5) * (-13 * -11))",
+      "output": "715"
+    },
+    {
+      "seed_id": 93,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 6,
+      "input": "(((4 * 1) / 1) - (-12 + 10))",
+      "output": "6"
+    },
+    {
+      "seed_id": 94,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 234,
+      "input": "(((8 * -12) * -2) - (6 * -7))",
+      "output": "234"
+    },
+    {
+      "seed_id": 95,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 122,
+      "input": "(((-13 + -13) / -1) - (-12 * 8))",
+      "output": "122"
+    },
+    {
+      "seed_id": 96,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -2340,
+      "input": "((12 + 14) * (15 * -6))",
+      "output": "-2340"
+    },
+    {
+      "seed_id": 97,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -44,
+      "input": "((-8 + 12) + (-4 * 12))",
+      "output": "-44"
+    },
+    {
+      "seed_id": 98,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 8400,
+      "input": "(((12 + 2) * 4) * (-15 * -10))",
+      "output": "8400"
+    },
+    {
+      "seed_id": 99,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -276,
+      "input": "(((-5 * -10) * -6) + (9 + 15))",
+      "output": "-276"
+    },
+    {
+      "seed_id": 100,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 24,
+      "input": "((6 / 1) * (4 / 1))",
+      "output": "24"
+    },
+    {
+      "seed_id": 101,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -60,
+      "input": "((9 + 1) * (-4 + -2))",
+      "output": "-60"
+    },
+    {
+      "seed_id": 102,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 21,
+      "input": "(((1 * 6) - -14) + (-3 + 4))",
+      "output": "21"
+    },
+    {
+      "seed_id": 103,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 2079,
+      "input": "((-6 - 15) * (9 * -11))",
+      "output": "2079"
+    },
+    {
+      "seed_id": 104,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 575,
+      "input": "(((12 * -6) * -8) + (9 + -10))",
+      "output": "575"
+    },
+    {
+      "seed_id": 105,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 129,
+      "input": "((13 * 9) - (-4 - 8))",
+      "output": "129"
+    },
+    {
+      "seed_id": 106,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -18,
+      "input": "((-11 - -7) + (-10 - 4))",
+      "output": "-18"
+    },
+    {
+      "seed_id": 107,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 24,
+      "input": "((6 * 14) - (12 * 5))",
+      "output": "24"
+    },
+    {
+      "seed_id": 108,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 88,
+      "input": "(((-13 * -1) * 10) + (3 * -14))",
+      "output": "88"
+    },
+    {
+      "seed_id": 109,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 33,
+      "input": "(((-1 + -1) * -14) + (11 + -6))",
+      "output": "33"
+    },
+    {
+      "seed_id": 110,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 119,
+      "input": "(((1 + -11) + -1) + (10 * 13))",
+      "output": "119"
+    },
+    {
+      "seed_id": 111,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -180,
+      "input": "((-2 * 9) * (6 + 4))",
+      "output": "-180"
+    },
+    {
+      "seed_id": 112,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 8,
+      "input": "((-6 - -7) * (-5 - -13))",
+      "output": "8"
+    },
+    {
+      "seed_id": 113,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 24,
+      "input": "(((15 / 1) + -11) * (-6 / -1))",
+      "output": "24"
+    },
+    {
+      "seed_id": 114,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -5,
+      "input": "((1 + -4) - (-4 - -6))",
+      "output": "-5"
+    },
+    {
+      "seed_id": 115,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -6,
+      "input": "(((-9 - -8) + -11) + (-6 + 12))",
+      "output": "-6"
+    },
+    {
+      "seed_id": 116,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 5,
+      "input": "(((13 - 9) / 1) - (-11 - -10))",
+      "output": "5"
+    },
+    {
+      "seed_id": 117,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 8,
+      "input": "(((-1 * 9) / -1) - (1 / 1))",
+      "output": "8"
+    },
+    {
+      "seed_id": 118,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 152,
+      "input": "((12 + -4) * (7 + 12))",
+      "output": "152"
+    },
+    {
+      "seed_id": 119,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -39,
+      "input": "((-13 - 15) + (11 * -1))",
+      "output": "-39"
+    },
+    {
+      "seed_id": 120,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 303,
+      "input": "(((-13 - -4) * -15) - (14 * -12))",
+      "output": "303"
+    },
+    {
+      "seed_id": 121,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 0,
+      "input": "((-1 + 4) * (13 + -13))",
+      "output": "0"
+    },
+    {
+      "seed_id": 122,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 119,
+      "input": "((11 / 1) - (-12 * 9))",
+      "output": "119"
+    },
+    {
+      "seed_id": 123,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 4,
+      "input": "(((-10 + 6) * 1) / -1)",
+      "output": "4"
+    },
+    {
+      "seed_id": 124,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 180,
+      "input": "(((-4 + -7) + -4) * (-4 + -8))",
+      "output": "180"
+    },
+    {
+      "seed_id": 125,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 2,
+      "input": "((7 - 5) / 1)",
+      "output": "2"
+    },
+    {
+      "seed_id": 126,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -15,
+      "input": "((-6 + -9) * (10 + -9))",
+      "output": "-15"
+    },
+    {
+      "seed_id": 127,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -882,
+      "input": "(((-7 - -14) * -6) * (12 + 9))",
+      "output": "-882"
+    },
+    {
+      "seed_id": 128,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 960,
+      "input": "(((-12 * 10) / -1) * (8 / 1))",
+      "output": "960"
+    },
+    {
+      "seed_id": 129,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -23,
+      "input": "((-13 - -2) + (2 * -6))",
+      "output": "-23"
+    },
+    {
+      "seed_id": 130,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -36,
+      "input": "((-5 * 6) - (-6 / -1))",
+      "output": "-36"
+    },
+    {
+      "seed_id": 131,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -48,
+      "input": "(((-4 + -1) * 8) + (4 * -2))",
+      "output": "-48"
+    },
+    {
+      "seed_id": 132,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 1800,
+      "input": "((-14 + -11) * (-8 * 9))",
+      "output": "1800"
+    },
+    {
+      "seed_id": 133,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -84,
+      "input": "(((15 + 3) - 4) * (6 * -1))",
+      "output": "-84"
+    },
+    {
+      "seed_id": 134,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 7,
+      "input": "(((9 - -13) * 1) - (-3 * -5))",
+      "output": "7"
+    },
+    {
+      "seed_id": 135,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 46,
+      "input": "((-15 - 8) * (1 + -3))",
+      "output": "46"
+    },
+    {
+      "seed_id": 136,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 227,
+      "input": "(((12 - -10) * 10) - (1 + -8))",
+      "output": "227"
+    },
+    {
+      "seed_id": 137,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 49,
+      "input": "((-15 * -4) + (-1 - 10))",
+      "output": "49"
+    },
+    {
+      "seed_id": 138,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 18,
+      "input": "((-1 * 6) - (-11 - 13))",
+      "output": "18"
+    },
+    {
+      "seed_id": 139,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 37,
+      "input": "(((1 + 14) + 11) - (1 * -11))",
+      "output": "37"
+    },
+    {
+      "seed_id": 140,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -79,
+      "input": "((-5 - 14) + (-4 * 15))",
+      "output": "-79"
+    },
+    {
+      "seed_id": 141,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 489,
+      "input": "(((-9 * 5) * -11) - (4 + 2))",
+      "output": "489"
+    },
+    {
+      "seed_id": 142,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -35,
+      "input": "((-10 * 6) + (11 + 14))",
+      "output": "-35"
+    },
+    {
+      "seed_id": 143,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 585,
+      "input": "((4 + 5) * (13 * 5))",
+      "output": "585"
+    },
+    {
+      "seed_id": 144,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 0,
+      "input": "(((-6 + -1) + 7) / 1)",
+      "output": "0"
+    },
+    {
+      "seed_id": 145,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 251,
+      "input": "(((-8 + -11) * -14) - (15 / 1))",
+      "output": "251"
+    },
+    {
+      "seed_id": 146,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -25,
+      "input": "((1 - -1) + (-9 * 3))",
+      "output": "-25"
+    },
+    {
+      "seed_id": 147,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -16,
+      "input": "((-6 + 2) - (12 / 1))",
+      "output": "-16"
+    },
+    {
+      "seed_id": 148,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 44,
+      "input": "(((8 / 1) + -4) * (-3 - -14))",
+      "output": "44"
+    },
+    {
+      "seed_id": 149,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 80,
+      "input": "(((-4 * 10) * 2) / -1)",
+      "output": "80"
+    },
+    {
+      "seed_id": 150,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -18,
+      "input": "((1 - -1) * (4 - 13))",
+      "output": "-18"
+    },
+    {
+      "seed_id": 151,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 1,
+      "input": "(((-5 - -2) - -2) + (-2 / -1))",
+      "output": "1"
+    },
+    {
+      "seed_id": 152,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -54,
+      "input": "((1 * -9) * (6 / 1))",
+      "output": "-54"
+    },
+    {
+      "seed_id": 153,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -10,
+      "input": "((-9 - 15) - (-7 * 2))",
+      "output": "-10"
+    },
+    {
+      "seed_id": 154,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 30,
+      "input": "(((13 * -3) - 15) + (-6 * -14))",
+      "output": "30"
+    },
+    {
+      "seed_id": 155,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 1133,
+      "input": "(((-9 * -9) * 14) - (-11 - -12))",
+      "output": "1133"
+    },
+    {
+      "seed_id": 156,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -10,
+      "input": "((6 - 13) + (5 + -8))",
+      "output": "-10"
+    },
+    {
+      "seed_id": 157,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 234,
+      "input": "(((5 * -9) * -5) - (5 + -14))",
+      "output": "234"
+    },
+    {
+      "seed_id": 158,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -15,
+      "input": "((14 - 14) + (-2 - 13))",
+      "output": "-15"
+    },
+    {
+      "seed_id": 159,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 1827,
+      "input": "(((10 * -10) + 13) * (-15 + -6))",
+      "output": "1827"
+    },
+    {
+      "seed_id": 160,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -3,
+      "input": "(((-7 + -9) - -5) - (8 * -1))",
+      "output": "-3"
+    },
+    {
+      "seed_id": 161,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -37,
+      "input": "((8 * -5) - (3 - 6))",
+      "output": "-37"
+    },
+    {
+      "seed_id": 162,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -34,
+      "input": "(((9 * -7) + -6) - (-7 * 5))",
+      "output": "-34"
+    },
+    {
+      "seed_id": 163,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -504,
+      "input": "((6 * 1) * (7 * -12))",
+      "output": "-504"
+    },
+    {
+      "seed_id": 164,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 7,
+      "input": "((9 - 2) / 1)",
+      "output": "7"
+    },
+    {
+      "seed_id": 165,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 14,
+      "input": "(((-13 + 14) - -14) - (3 - 2))",
+      "output": "14"
+    },
+    {
+      "seed_id": 166,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 62,
+      "input": "(((-1 + 3) / 1) + (6 * 10))",
+      "output": "62"
+    },
+    {
+      "seed_id": 167,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 4,
+      "input": "(((4 + 6) + -8) - (-3 - -1))",
+      "output": "4"
+    },
+    {
+      "seed_id": 168,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 968,
+      "input": "((-11 * 1) * (-8 * 11))",
+      "output": "968"
+    },
+    {
+      "seed_id": 169,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 13,
+      "input": "((-6 + -7) / -1)",
+      "output": "13"
+    },
+    {
+      "seed_id": 170,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 83,
+      "input": "(((15 - -2) - -3) + (-7 * -9))",
+      "output": "83"
+    },
+    {
+      "seed_id": 171,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 20,
+      "input": "(((12 + -4) - 2) + (-14 / -1))",
+      "output": "20"
+    },
+    {
+      "seed_id": 172,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 2052,
+      "input": "((-9 - 10) * (-9 * 12))",
+      "output": "2052"
+    },
+    {
+      "seed_id": 173,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 23,
+      "input": "((-9 - 14) / -1)",
+      "output": "23"
+    },
+    {
+      "seed_id": 174,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -51,
+      "input": "((7 - 4) * (-3 - 14))",
+      "output": "-51"
+    },
+    {
+      "seed_id": 175,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 12,
+      "input": "(((-1 * -10) - -10) - (8 / 1))",
+      "output": "12"
+    },
+    {
+      "seed_id": 176,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 13,
+      "input": "((1 + -14) + (15 + 11))",
+      "output": "13"
+    },
+    {
+      "seed_id": 177,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 435,
+      "input": "(((-15 * -15) * 2) - (-15 / -1))",
+      "output": "435"
+    },
+    {
+      "seed_id": 178,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 1872,
+      "input": "((14 - -12) * (-8 * -9))",
+      "output": "1872"
+    },
+    {
+      "seed_id": 179,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -11,
+      "input": "(((-1 - 3) - 7) + (-6 + 6))",
+      "output": "-11"
+    },
+    {
+      "seed_id": 180,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 15,
+      "input": "((-3 / -1) - (2 + -14))",
+      "output": "15"
+    },
+    {
+      "seed_id": 181,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -9,
+      "input": "((12 * -2) + (3 + 12))",
+      "output": "-9"
+    },
+    {
+      "seed_id": 182,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 63,
+      "input": "((-7 + -14) + (6 * 14))",
+      "output": "63"
+    },
+    {
+      "seed_id": 183,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 198,
+      "input": "((14 * 12) - (-15 - 15))",
+      "output": "198"
+    },
+    {
+      "seed_id": 184,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 1377,
+      "input": "(((6 * 13) - -3) * (10 + 7))",
+      "output": "1377"
+    },
+    {
+      "seed_id": 185,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -115,
+      "input": "((-13 * 9) + (10 + -8))",
+      "output": "-115"
+    },
+    {
+      "seed_id": 186,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -1,
+      "input": "(((-11 - -3) / -1) + (-5 + -4))",
+      "output": "-1"
+    },
+    {
+      "seed_id": 187,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -13,
+      "input": "((-4 * 9) - (-12 + -11))",
+      "output": "-13"
+    },
+    {
+      "seed_id": 188,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 2,
+      "input": "(((-3 + 9) - 8) / -1)",
+      "output": "2"
+    },
+    {
+      "seed_id": 189,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 95,
+      "input": "((-11 * -7) - (-7 + -11))",
+      "output": "95"
+    },
+    {
+      "seed_id": 190,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 24,
+      "input": "(((-7 * -2) + 10) / 1)",
+      "output": "24"
+    },
+    {
+      "seed_id": 191,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 0,
+      "input": "((11 - 11) / 1)",
+      "output": "0"
+    },
+    {
+      "seed_id": 192,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 10,
+      "input": "(((10 + -3) / 1) + (3 / 1))",
+      "output": "10"
+    },
+    {
+      "seed_id": 193,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -4,
+      "input": "(((7 + 13) - -12) - (6 * 6))",
+      "output": "-4"
+    },
+    {
+      "seed_id": 194,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 27,
+      "input": "((-12 + -15) / -1)",
+      "output": "27"
+    },
+    {
+      "seed_id": 195,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 6,
+      "input": "(((-3 - -1) + -4) + (-12 / -1))",
+      "output": "6"
+    },
+    {
+      "seed_id": 196,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 61,
+      "input": "((-5 * -13) + (-14 + 10))",
+      "output": "61"
+    },
+    {
+      "seed_id": 197,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 33,
+      "input": "(((5 - -12) - 14) * (1 - -10))",
+      "output": "33"
+    },
+    {
+      "seed_id": 198,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 214,
+      "input": "(((-15 - 7) * -9) + (9 + 7))",
+      "output": "214"
+    },
+    {
+      "seed_id": 199,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -58,
+      "input": "((4 * -10) - (14 + 4))",
+      "output": "-58"
+    },
+    {
+      "seed_id": 200,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 5,
+      "input": "(((5 - 2) - 2) * (-6 - -11))",
+      "output": "5"
+    },
+    {
+      "seed_id": 201,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -117,
+      "input": "(((-10 + -13) - 10) - (-6 * -14))",
+      "output": "-117"
+    },
+    {
+      "seed_id": 202,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -57,
+      "input": "(((2 + 1) + 3) + (-7 * 9))",
+      "output": "-57"
+    },
+    {
+      "seed_id": 203,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -19,
+      "input": "(((-12 - 8) + -6) + (-1 * -7))",
+      "output": "-19"
+    },
+    {
+      "seed_id": 204,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -48,
+      "input": "(((-10 - 4) - 10) * (11 + -9))",
+      "output": "-48"
+    },
+    {
+      "seed_id": 205,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -28,
+      "input": "(((4 - 2) * -5) + (-6 * 3))",
+      "output": "-28"
+    },
+    {
+      "seed_id": 206,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -203,
+      "input": "((14 * -14) - (12 - 5))",
+      "output": "-203"
+    },
+    {
+      "seed_id": 207,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 42,
+      "input": "((-1 + -13) * (-3 * 1))",
+      "output": "42"
+    },
+    {
+      "seed_id": 208,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 14,
+      "input": "(((15 + -5) + 12) + (8 * -1))",
+      "output": "14"
+    },
+    {
+      "seed_id": 209,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -12,
+      "input": "(((-15 - -12) / -1) - (-15 / -1))",
+      "output": "-12"
+    },
+    {
+      "seed_id": 210,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -55,
+      "input": "((13 * 5) + (-10 * 12))",
+      "output": "-55"
+    },
+    {
+      "seed_id": 211,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 43,
+      "input": "(((-7 * -13) - 6) - (-14 * -3))",
+      "output": "43"
+    },
+    {
+      "seed_id": 212,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 112,
+      "input": "(((-13 + 8) * -12) - (-4 * 13))",
+      "output": "112"
+    },
+    {
+      "seed_id": 213,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 5,
+      "input": "(((9 - 11) - 5) - (-13 + 1))",
+      "output": "5"
+    },
+    {
+      "seed_id": 214,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -31,
+      "input": "(((-4 - 8) - 5) - (14 / 1))",
+      "output": "-31"
+    },
+    {
+      "seed_id": 215,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 0,
+      "input": "((-5 - 10) - (-8 + -7))",
+      "output": "0"
+    },
+    {
+      "seed_id": 216,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 66,
+      "input": "(((5 + 4) + 1) - (-4 * 14))",
+      "output": "66"
+    },
+    {
+      "seed_id": 217,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 1,
+      "input": "(((15 + 9) + -15) + (-15 - -7))",
+      "output": "1"
+    },
+    {
+      "seed_id": 218,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 73,
+      "input": "((-13 - 5) + (-7 * -13))",
+      "output": "73"
+    },
+    {
+      "seed_id": 219,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 0,
+      "input": "((10 * -11) * (-3 + 3))",
+      "output": "0"
+    },
+    {
+      "seed_id": 220,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -4,
+      "input": "(((-12 + -1) - -6) + (-12 - -15))",
+      "output": "-4"
+    },
+    {
+      "seed_id": 221,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 360,
+      "input": "((15 * -4) * (-10 - -4))",
+      "output": "360"
+    },
+    {
+      "seed_id": 222,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 26,
+      "input": "((-1 * 1) * (-14 - 12))",
+      "output": "26"
+    },
+    {
+      "seed_id": 223,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -14,
+      "input": "((-7 + 9) - (13 + 3))",
+      "output": "-14"
+    },
+    {
+      "seed_id": 224,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 84,
+      "input": "((-8 - -5) * (-2 * 14))",
+      "output": "84"
+    },
+    {
+      "seed_id": 225,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -8,
+      "input": "((3 + -4) - (1 + 6))",
+      "output": "-8"
+    },
+    {
+      "seed_id": 226,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 7,
+      "input": "((-15 - -4) - (-6 * 3))",
+      "output": "7"
+    },
+    {
+      "seed_id": 227,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 203,
+      "input": "(((15 - -14) * 7) / 1)",
+      "output": "203"
+    },
+    {
+      "seed_id": 228,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -384,
+      "input": "(((-13 + 3) - -2) * (-8 * -6))",
+      "output": "-384"
+    },
+    {
+      "seed_id": 229,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -28,
+      "input": "(((-7 + -8) - 15) - (-11 + 9))",
+      "output": "-28"
+    },
+    {
+      "seed_id": 230,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -70,
+      "input": "((-10 / -1) * (-5 + -2))",
+      "output": "-70"
+    },
+    {
+      "seed_id": 231,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 135,
+      "input": "((-7 + 12) + (-13 * -10))",
+      "output": "135"
+    },
+    {
+      "seed_id": 232,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 264,
+      "input": "((11 * 12) * (-11 - -13))",
+      "output": "264"
+    },
+    {
+      "seed_id": 233,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 7,
+      "input": "(((1 * -14) - -7) / -1)",
+      "output": "7"
+    },
+    {
+      "seed_id": 234,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -13,
+      "input": "((-12 + -1) + (10 - 10))",
+      "output": "-13"
+    },
+    {
+      "seed_id": 235,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 11,
+      "input": "((-4 + 6) + (3 * 3))",
+      "output": "11"
+    },
+    {
+      "seed_id": 236,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 155,
+      "input": "((10 + -11) + (13 * 12))",
+      "output": "155"
+    },
+    {
+      "seed_id": 237,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 21,
+      "input": "((-15 / -1) - (-10 - -4))",
+      "output": "21"
+    },
+    {
+      "seed_id": 238,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 192,
+      "input": "(((-14 * -13) - -3) + (-2 - -9))",
+      "output": "192"
+    },
+    {
+      "seed_id": 239,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -207,
+      "input": "(((-7 + -10) - -5) + (-15 * 13))",
+      "output": "-207"
+    },
+    {
+      "seed_id": 240,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 70,
+      "input": "(((1 - -4) + -10) * (-8 - 6))",
+      "output": "70"
+    },
+    {
+      "seed_id": 241,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -1440,
+      "input": "((-4 - 14) * (-10 * -8))",
+      "output": "-1440"
+    },
+    {
+      "seed_id": 242,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 37,
+      "input": "((7 * 7) - (15 - 3))",
+      "output": "37"
+    },
+    {
+      "seed_id": 243,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -12,
+      "input": "(((2 - -6) + -14) + (-14 - -8))",
+      "output": "-12"
+    },
+    {
+      "seed_id": 244,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 240,
+      "input": "(((-15 - -5) - 10) * (-5 - 7))",
+      "output": "240"
+    },
+    {
+      "seed_id": 245,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -112,
+      "input": "((-15 - -11) + (9 * -12))",
+      "output": "-112"
+    },
+    {
+      "seed_id": 246,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 120,
+      "input": "(((10 / 1) * 5) - (-10 * 7))",
+      "output": "120"
+    },
+    {
+      "seed_id": 247,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 61,
+      "input": "((12 + 9) - (-10 * 4))",
+      "output": "61"
+    },
+    {
+      "seed_id": 248,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -3234,
+      "input": "((14 * -11) * (8 - -13))",
+      "output": "-3234"
+    },
+    {
+      "seed_id": 249,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -70,
+      "input": "(((-10 + 5) * 11) - (-1 * -15))",
+      "output": "-70"
+    },
+    {
+      "seed_id": 250,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -88,
+      "input": "((7 * -13) + (-7 + 10))",
+      "output": "-88"
+    },
+    {
+      "seed_id": 251,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 39,
+      "input": "((13 * -3) / -1)",
+      "output": "39"
+    },
+    {
+      "seed_id": 252,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -242,
+      "input": "((-10 + -1) * (10 + 12))",
+      "output": "-242"
+    },
+    {
+      "seed_id": 253,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -34,
+      "input": "((-10 + 8) * (2 + 15))",
+      "output": "-34"
+    },
+    {
+      "seed_id": 254,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -342,
+      "input": "(((-10 + -14) - -5) * (-9 * -2))",
+      "output": "-342"
+    },
+    {
+      "seed_id": 255,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 12,
+      "input": "(((-9 + -12) - -9) / -1)",
+      "output": "12"
+    },
+    {
+      "seed_id": 256,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 84,
+      "input": "((-14 / -1) * (-1 - -7))",
+      "output": "84"
+    },
+    {
+      "seed_id": 257,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 23,
+      "input": "((13 + 12) + (1 - 3))",
+      "output": "23"
+    },
+    {
+      "seed_id": 258,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -211,
+      "input": "(((-9 - 11) * 11) + (-5 + 14))",
+      "output": "-211"
+    },
+    {
+      "seed_id": 259,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -42,
+      "input": "(((-12 - -2) + -11) * (14 + -12))",
+      "output": "-42"
+    },
+    {
+      "seed_id": 260,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 147,
+      "input": "(((-14 * -10) - -3) + (4 / 1))",
+      "output": "147"
+    },
+    {
+      "seed_id": 261,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 74,
+      "input": "(((8 * 9) + 11) + (1 - 10))",
+      "output": "74"
+    },
+    {
+      "seed_id": 262,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -5,
+      "input": "(((7 / 1) + -11) + (-10 - -9))",
+      "output": "-5"
+    },
+    {
+      "seed_id": 263,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -270,
+      "input": "((-14 + -1) * (14 - -4))",
+      "output": "-270"
+    },
+    {
+      "seed_id": 264,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 336,
+      "input": "(((11 / 1) + 5) * (6 - -15))",
+      "output": "336"
+    },
+    {
+      "seed_id": 265,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 153,
+      "input": "(((3 * 2) - -4) + (11 * 13))",
+      "output": "153"
+    },
+    {
+      "seed_id": 266,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -28,
+      "input": "(((-15 + -3) - -10) - (12 - -8))",
+      "output": "-28"
+    },
+    {
+      "seed_id": 267,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 40,
+      "input": "(((5 + -2) + 12) + (14 - -11))",
+      "output": "40"
+    },
+    {
+      "seed_id": 268,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -54,
+      "input": "((-6 / -1) * (3 + -12))",
+      "output": "-54"
+    },
+    {
+      "seed_id": 269,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 0,
+      "input": "(((-6 + 6) * -13) * (-7 * 5))",
+      "output": "0"
+    },
+    {
+      "seed_id": 270,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 36,
+      "input": "(((5 * 7) - -9) + (1 - 9))",
+      "output": "36"
+    },
+    {
+      "seed_id": 271,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 4620,
+      "input": "(((14 * 15) * 1) * (12 - -10))",
+      "output": "4620"
+    },
+    {
+      "seed_id": 272,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 176,
+      "input": "((-11 * 8) * (8 - 10))",
+      "output": "176"
+    },
+    {
+      "seed_id": 273,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 48,
+      "input": "((13 + -9) * (12 / 1))",
+      "output": "48"
+    },
+    {
+      "seed_id": 274,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -30,
+      "input": "(((-11 - -5) + 9) * (-5 - 5))",
+      "output": "-30"
+    },
+    {
+      "seed_id": 275,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 33,
+      "input": "((-15 * -1) - (-9 - 9))",
+      "output": "33"
+    },
+    {
+      "seed_id": 276,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -80,
+      "input": "(((-3 + -15) - 2) * (8 + -4))",
+      "output": "-80"
+    },
+    {
+      "seed_id": 277,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -6,
+      "input": "((-15 + 6) - (5 - 8))",
+      "output": "-6"
+    },
+    {
+      "seed_id": 278,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -1173,
+      "input": "(((-6 + -11) * -3) * (-10 + -13))",
+      "output": "-1173"
+    },
+    {
+      "seed_id": 279,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -14,
+      "input": "(((-15 - -8) - 8) - (-9 + 8))",
+      "output": "-14"
+    },
+    {
+      "seed_id": 280,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -36,
+      "input": "((-4 + 7) + (-3 * 13))",
+      "output": "-36"
+    },
+    {
+      "seed_id": 281,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 234,
+      "input": "((7 - -11) * (7 + 6))",
+      "output": "234"
+    },
+    {
+      "seed_id": 282,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -67,
+      "input": "(((6 * -12) - 4) + (-2 + 11))",
+      "output": "-67"
+    },
+    {
+      "seed_id": 283,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 112,
+      "input": "(((-12 + 10) - -9) * (9 - -7))",
+      "output": "112"
+    },
+    {
+      "seed_id": 284,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 208,
+      "input": "(((-11 + 15) + 9) * (8 + 8))",
+      "output": "208"
+    },
+    {
+      "seed_id": 285,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 21,
+      "input": "((-1 * -6) - (-1 + -14))",
+      "output": "21"
+    },
+    {
+      "seed_id": 286,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 17,
+      "input": "((8 + -12) + (12 + 9))",
+      "output": "17"
+    },
+    {
+      "seed_id": 287,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 1260,
+      "input": "((15 * 4) * (13 + 8))",
+      "output": "1260"
+    },
+    {
+      "seed_id": 288,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 9,
+      "input": "(((10 - -2) - -12) - (7 + 8))",
+      "output": "9"
+    },
+    {
+      "seed_id": 289,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -50,
+      "input": "((-1 + -14) + (-7 * 5))",
+      "output": "-50"
+    },
+    {
+      "seed_id": 290,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 90,
+      "input": "((15 * 6) / 1)",
+      "output": "90"
+    },
+    {
+      "seed_id": 291,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 0,
+      "input": "((-11 + 11) / 1)",
+      "output": "0"
+    },
+    {
+      "seed_id": 292,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 14,
+      "input": "(((-1 + -5) + 8) + (-12 / -1))",
+      "output": "14"
+    },
+    {
+      "seed_id": 293,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 75,
+      "input": "((15 * -5) / -1)",
+      "output": "75"
+    },
+    {
+      "seed_id": 294,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 42,
+      "input": "(((7 * 6) / 1) + (-12 - -12))",
+      "output": "42"
+    },
+    {
+      "seed_id": 295,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -83,
+      "input": "(((-4 * 11) * 2) - (7 + -12))",
+      "output": "-83"
+    },
+    {
+      "seed_id": 296,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -119,
+      "input": "(((-11 / -1) * -12) + (4 - -9))",
+      "output": "-119"
+    },
+    {
+      "seed_id": 297,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 0,
+      "input": "(((-14 + 14) / 1) / 1)",
+      "output": "0"
+    },
+    {
+      "seed_id": 298,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 9,
+      "input": "((14 - 1) - (7 - 3))",
+      "output": "9"
+    },
+    {
+      "seed_id": 299,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -126,
+      "input": "((-2 - 4) * (-7 * -3))",
+      "output": "-126"
+    },
+    {
+      "seed_id": 300,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -119,
+      "input": "(((10 - -11) * -2) - (11 * 7))",
+      "output": "-119"
+    },
+    {
+      "seed_id": 301,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -46,
+      "input": "((-9 * 4) - (6 - -4))",
+      "output": "-46"
+    },
+    {
+      "seed_id": 302,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 252,
+      "input": "(((7 * -12) / -1) * (3 / 1))",
+      "output": "252"
+    },
+    {
+      "seed_id": 303,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -225,
+      "input": "(((-11 + -14) * -9) * (9 - 10))",
+      "output": "-225"
+    },
+    {
+      "seed_id": 304,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 0,
+      "input": "(((-11 + 11) * 7) * (-9 + 9))",
+      "output": "0"
+    },
+    {
+      "seed_id": 305,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 8,
+      "input": "(((-12 - 4) / -1) + (-8 * 1))",
+      "output": "8"
+    },
+    {
+      "seed_id": 306,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 141,
+      "input": "(((-3 * -2) + 15) - (-15 * 8))",
+      "output": "141"
+    },
+    {
+      "seed_id": 307,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -97,
+      "input": "(((11 * -8) - 9) * (9 - 8))",
+      "output": "-97"
+    },
+    {
+      "seed_id": 308,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 166,
+      "input": "(((-14 * -2) * 2) + (-11 * -10))",
+      "output": "166"
+    },
+    {
+      "seed_id": 309,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 54,
+      "input": "(((-1 - 7) - -14) * (14 + -5))",
+      "output": "54"
+    },
+    {
+      "seed_id": 310,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -381,
+      "input": "(((10 * 3) * -13) + (1 - -8))",
+      "output": "-381"
+    },
+    {
+      "seed_id": 311,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 11,
+      "input": "((-2 / -1) - (-13 - -4))",
+      "output": "11"
+    },
+    {
+      "seed_id": 312,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -149,
+      "input": "(((2 + 11) * -12) + (-1 - -8))",
+      "output": "-149"
+    },
+    {
+      "seed_id": 313,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -17,
+      "input": "(((-3 + 14) * -3) + (2 * 8))",
+      "output": "-17"
+    },
+    {
+      "seed_id": 314,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 14,
+      "input": "(((-14 - -6) + -5) + (15 - -12))",
+      "output": "14"
+    },
+    {
+      "seed_id": 315,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -3,
+      "input": "((-9 - 6) + (12 / 1))",
+      "output": "-3"
+    },
+    {
+      "seed_id": 316,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 18,
+      "input": "((5 + 11) + (8 - 6))",
+      "output": "18"
+    },
+    {
+      "seed_id": 317,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 129,
+      "input": "(((7 + -5) + -13) + (-14 * -10))",
+      "output": "129"
+    },
+    {
+      "seed_id": 318,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 7,
+      "input": "((6 + -12) + (5 + 8))",
+      "output": "7"
+    },
+    {
+      "seed_id": 319,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -50,
+      "input": "((-4 + 14) + (-6 * 10))",
+      "output": "-50"
+    },
+    {
+      "seed_id": 320,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 49,
+      "input": "(((10 * 10) - 15) + (-6 * 6))",
+      "output": "49"
+    },
+    {
+      "seed_id": 321,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -50,
+      "input": "((2 + 2) - (-6 * -9))",
+      "output": "-50"
+    },
+    {
+      "seed_id": 322,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 50,
+      "input": "(((13 - 5) - -10) - (-8 * 4))",
+      "output": "50"
+    },
+    {
+      "seed_id": 323,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 0,
+      "input": "((5 + 2) * (-6 + 6))",
+      "output": "0"
+    },
+    {
+      "seed_id": 324,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -92,
+      "input": "((15 * -5) + (-11 - 6))",
+      "output": "-92"
+    },
+    {
+      "seed_id": 325,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -18,
+      "input": "(((-1 * -5) - 7) * (3 * 3))",
+      "output": "-18"
+    },
+    {
+      "seed_id": 326,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 1,
+      "input": "(((2 - -12) + 5) - (11 - -7))",
+      "output": "1"
+    },
+    {
+      "seed_id": 327,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 108,
+      "input": "(((5 - 9) / -1) - (-8 * 13))",
+      "output": "108"
+    },
+    {
+      "seed_id": 328,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -22,
+      "input": "(((1 + 1) * -3) - (1 - -15))",
+      "output": "-22"
+    },
+    {
+      "seed_id": 329,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 116,
+      "input": "((-8 * -13) - (-4 + -8))",
+      "output": "116"
+    },
+    {
+      "seed_id": 330,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 420,
+      "input": "(((13 + -14) * 5) * (-12 * 7))",
+      "output": "420"
+    },
+    {
+      "seed_id": 331,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -67,
+      "input": "((-4 * 11) - (10 + 13))",
+      "output": "-67"
+    },
+    {
+      "seed_id": 332,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -20,
+      "input": "(((-10 + -8) * 1) - (-9 - -11))",
+      "output": "-20"
+    },
+    {
+      "seed_id": 333,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -15,
+      "input": "(((4 + 7) - 6) + (-2 * 10))",
+      "output": "-15"
+    },
+    {
+      "seed_id": 334,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 38,
+      "input": "(((6 - -9) / 1) - (-15 + -8))",
+      "output": "38"
+    },
+    {
+      "seed_id": 335,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 4,
+      "input": "((-11 + 5) + (13 - 3))",
+      "output": "4"
+    },
+    {
+      "seed_id": 336,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 111,
+      "input": "((4 + 3) + (13 * 8))",
+      "output": "111"
+    },
+    {
+      "seed_id": 337,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 9,
+      "input": "((12 - -10) - (11 - -2))",
+      "output": "9"
+    },
+    {
+      "seed_id": 338,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 17,
+      "input": "(((11 + -11) / 1) + (13 + 4))",
+      "output": "17"
+    },
+    {
+      "seed_id": 339,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -1,
+      "input": "((-7 + -9) + (7 + 8))",
+      "output": "-1"
+    },
+    {
+      "seed_id": 340,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -80,
+      "input": "((-4 - -12) * (-2 * 5))",
+      "output": "-80"
+    },
+    {
+      "seed_id": 341,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 12,
+      "input": "(((3 * -4) / -1) / 1)",
+      "output": "12"
+    },
+    {
+      "seed_id": 342,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -11,
+      "input": "((8 + -11) - (8 / 1))",
+      "output": "-11"
+    },
+    {
+      "seed_id": 343,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 4,
+      "input": "((-9 / -1) - (10 + -5))",
+      "output": "4"
+    },
+    {
+      "seed_id": 344,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 30,
+      "input": "(((15 + 5) + 10) / 1)",
+      "output": "30"
+    },
+    {
+      "seed_id": 345,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -64,
+      "input": "((14 * -3) - (7 + 15))",
+      "output": "-64"
+    },
+    {
+      "seed_id": 346,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 163,
+      "input": "(((-1 - -15) * 12) - (-9 - -14))",
+      "output": "163"
+    },
+    {
+      "seed_id": 347,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -20,
+      "input": "((-3 - 3) + (1 + -15))",
+      "output": "-20"
+    },
+    {
+      "seed_id": 348,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 17,
+      "input": "(((14 + -3) - -7) + (-2 + 1))",
+      "output": "17"
+    },
+    {
+      "seed_id": 349,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -50,
+      "input": "(((6 + -1) * -12) - (-13 - -3))",
+      "output": "-50"
+    },
+    {
+      "seed_id": 350,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -106,
+      "input": "(((-2 * 15) + 1) - (7 * 11))",
+      "output": "-106"
+    },
+    {
+      "seed_id": 351,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -52,
+      "input": "(((-13 * -3) - -13) * (-5 - -4))",
+      "output": "-52"
+    },
+    {
+      "seed_id": 352,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -10,
+      "input": "((15 - 8) - (8 - -9))",
+      "output": "-10"
+    },
+    {
+      "seed_id": 353,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -56,
+      "input": "(((-9 - -8) - 11) - (11 * 4))",
+      "output": "-56"
+    },
+    {
+      "seed_id": 354,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -20,
+      "input": "((3 * -12) - (-4 * 4))",
+      "output": "-20"
+    },
+    {
+      "seed_id": 355,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -12,
+      "input": "(((-7 - -1) - 3) + (3 - 6))",
+      "output": "-12"
+    },
+    {
+      "seed_id": 356,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -13,
+      "input": "(((-6 + -7) + -3) - (7 + -10))",
+      "output": "-13"
+    },
+    {
+      "seed_id": 357,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -448,
+      "input": "(((11 + 5) * -1) * (-7 * -4))",
+      "output": "-448"
+    },
+    {
+      "seed_id": 358,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 0,
+      "input": "(((-15 + -2) - -4) * (3 - 3))",
+      "output": "0"
+    },
+    {
+      "seed_id": 359,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 58,
+      "input": "(((13 / 1) * 4) - (-1 - 5))",
+      "output": "58"
+    },
+    {
+      "seed_id": 360,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 1560,
+      "input": "(((12 + 14) - -13) * (-5 * -8))",
+      "output": "1560"
+    },
+    {
+      "seed_id": 361,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -380,
+      "input": "(((-2 - -10) + 12) * (-11 - 8))",
+      "output": "-380"
+    },
+    {
+      "seed_id": 362,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -6,
+      "input": "((2 + -14) + (9 + -3))",
+      "output": "-6"
+    },
+    {
+      "seed_id": 363,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 22,
+      "input": "(((-6 - -8) * 8) - (-1 - 5))",
+      "output": "22"
+    },
+    {
+      "seed_id": 364,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -15,
+      "input": "((-1 * 12) - (2 - -1))",
+      "output": "-15"
+    },
+    {
+      "seed_id": 365,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -620,
+      "input": "(((-7 * -11) + -15) * (1 - 11))",
+      "output": "-620"
+    },
+    {
+      "seed_id": 366,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -49,
+      "input": "(((11 - -3) + -7) * (-2 - 5))",
+      "output": "-49"
+    },
+    {
+      "seed_id": 367,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 17,
+      "input": "(((5 * 8) - -2) - (12 - -13))",
+      "output": "17"
+    },
+    {
+      "seed_id": 368,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -8,
+      "input": "(((-9 + -5) + -11) + (2 - -15))",
+      "output": "-8"
+    },
+    {
+      "seed_id": 369,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -8,
+      "input": "(((-4 + -1) + -5) + (11 - 9))",
+      "output": "-8"
+    },
+    {
+      "seed_id": 370,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -17,
+      "input": "(((-8 + 8) / 1) - (8 + 9))",
+      "output": "-17"
+    },
+    {
+      "seed_id": 371,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -257,
+      "input": "(((-3 * 6) * 14) + (-10 + 5))",
+      "output": "-257"
+    },
+    {
+      "seed_id": 372,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 13,
+      "input": "(((5 - -6) + -4) + (12 - 6))",
+      "output": "13"
+    },
+    {
+      "seed_id": 373,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 140,
+      "input": "((5 * -2) + (-15 * -10))",
+      "output": "140"
+    },
+    {
+      "seed_id": 374,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -74,
+      "input": "(((-13 * 6) + 14) + (-14 - -4))",
+      "output": "-74"
+    },
+    {
+      "seed_id": 375,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 20,
+      "input": "((8 + -9) - (7 * -3))",
+      "output": "20"
+    },
+    {
+      "seed_id": 376,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -36,
+      "input": "(((-7 - 12) - -13) * (-1 * -6))",
+      "output": "-36"
+    },
+    {
+      "seed_id": 377,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -40,
+      "input": "(((8 + -10) * 4) * (9 - 4))",
+      "output": "-40"
+    },
+    {
+      "seed_id": 378,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 63,
+      "input": "((-9 / -1) * (9 - 2))",
+      "output": "63"
+    },
+    {
+      "seed_id": 379,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -15,
+      "input": "(((-2 * 5) + -12) + (1 + 6))",
+      "output": "-15"
+    },
+    {
+      "seed_id": 380,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -4,
+      "input": "((6 * 1) + (-14 - -4))",
+      "output": "-4"
+    },
+    {
+      "seed_id": 381,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 0,
+      "input": "((14 - 14) / 1)",
+      "output": "0"
+    },
+    {
+      "seed_id": 382,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 28,
+      "input": "((-4 / -1) * (11 + -4))",
+      "output": "28"
+    },
+    {
+      "seed_id": 383,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -132,
+      "input": "((8 * -13) + (-13 - 15))",
+      "output": "-132"
+    },
+    {
+      "seed_id": 384,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 8,
+      "input": "((8 / 1) - (-9 - -9))",
+      "output": "8"
+    },
+    {
+      "seed_id": 385,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 21,
+      "input": "(((13 - -12) - 10) - (2 * -3))",
+      "output": "21"
+    },
+    {
+      "seed_id": 386,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 84,
+      "input": "(((11 * 8) - 4) / 1)",
+      "output": "84"
+    },
+    {
+      "seed_id": 387,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -24,
+      "input": "(((-15 + 8) + -6) + (1 * -11))",
+      "output": "-24"
+    },
+    {
+      "seed_id": 388,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -1068,
+      "input": "(((-8 * -9) * -15) + (14 - 2))",
+      "output": "-1068"
+    },
+    {
+      "seed_id": 389,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -74,
+      "input": "((-1 - -4) - (-11 * -7))",
+      "output": "-74"
+    },
+    {
+      "seed_id": 390,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 21,
+      "input": "((-10 + 11) + (4 * 5))",
+      "output": "21"
+    },
+    {
+      "seed_id": 391,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 0,
+      "input": "(((-2 + 14) - 12) / 1)",
+      "output": "0"
+    },
+    {
+      "seed_id": 392,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 35,
+      "input": "((-6 + 1) * (-5 - 2))",
+      "output": "35"
+    },
+    {
+      "seed_id": 393,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -6,
+      "input": "((-3 - 5) - (2 - 4))",
+      "output": "-6"
+    },
+    {
+      "seed_id": 394,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 0,
+      "input": "((-4 - -4) * (-5 + -4))",
+      "output": "0"
+    },
+    {
+      "seed_id": 395,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 26,
+      "input": "((-14 - 14) - (-9 * 6))",
+      "output": "26"
+    },
+    {
+      "seed_id": 396,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 92,
+      "input": "((-12 + 8) * (-8 - 15))",
+      "output": "92"
+    },
+    {
+      "seed_id": 397,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 8,
+      "input": "((-5 + 7) + (-6 / -1))",
+      "output": "8"
+    },
+    {
+      "seed_id": 398,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 151,
+      "input": "(((-9 - 8) * -9) + (2 - 4))",
+      "output": "151"
+    },
+    {
+      "seed_id": 399,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -184,
+      "input": "(((3 + 13) - -7) * (-14 - -6))",
+      "output": "-184"
+    },
+    {
+      "seed_id": 400,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 156,
+      "input": "((-1 + 5) * (-13 * -3))",
+      "output": "156"
+    },
+    {
+      "seed_id": 401,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 1792,
+      "input": "((2 + 14) * (-14 * -8))",
+      "output": "1792"
+    },
+    {
+      "seed_id": 402,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -3960,
+      "input": "(((-3 - 8) * -15) * (6 * -4))",
+      "output": "-3960"
+    },
+    {
+      "seed_id": 403,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -6,
+      "input": "((13 + 11) - (15 * 2))",
+      "output": "-6"
+    },
+    {
+      "seed_id": 404,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -3,
+      "input": "((2 - -11) - (5 - -11))",
+      "output": "-3"
+    },
+    {
+      "seed_id": 405,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -18,
+      "input": "(((7 - 7) - -2) * (5 - 14))",
+      "output": "-18"
+    },
+    {
+      "seed_id": 406,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -1,
+      "input": "((2 + 2) + (-10 - -5))",
+      "output": "-1"
+    },
+    {
+      "seed_id": 407,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 16,
+      "input": "(((-6 * -1) - -11) + (-12 - -11))",
+      "output": "16"
+    },
+    {
+      "seed_id": 408,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 6,
+      "input": "(((4 - 3) - 4) * (-8 + 6))",
+      "output": "6"
+    },
+    {
+      "seed_id": 409,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -24,
+      "input": "((-11 / -1) - (7 * 5))",
+      "output": "-24"
+    },
+    {
+      "seed_id": 410,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -63,
+      "input": "(((-11 - -10) + -8) * (-2 + 9))",
+      "output": "-63"
+    },
+    {
+      "seed_id": 411,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 22,
+      "input": "(((4 + 15) + 1) - (-1 + -1))",
+      "output": "22"
+    },
+    {
+      "seed_id": 412,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -270,
+      "input": "(((1 + 9) * -9) * (-1 * -3))",
+      "output": "-270"
+    },
+    {
+      "seed_id": 413,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 24,
+      "input": "(((-10 * -2) + 4) / 1)",
+      "output": "24"
+    },
+    {
+      "seed_id": 414,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 99,
+      "input": "(((-13 * -7) - 7) + (7 + 8))",
+      "output": "99"
+    },
+    {
+      "seed_id": 415,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -20,
+      "input": "((7 * -1) - (-13 / -1))",
+      "output": "-20"
+    },
+    {
+      "seed_id": 416,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -29,
+      "input": "(((2 + -3) - 9) - (14 - -5))",
+      "output": "-29"
+    },
+    {
+      "seed_id": 417,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 14,
+      "input": "((-6 - 5) - (-12 - 13))",
+      "output": "14"
+    },
+    {
+      "seed_id": 418,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 95,
+      "input": "((-13 + 4) - (-8 * 13))",
+      "output": "95"
+    },
+    {
+      "seed_id": 419,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -22,
+      "input": "((-10 + -11) - (5 + -4))",
+      "output": "-22"
+    },
+    {
+      "seed_id": 420,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 27,
+      "input": "((6 * 3) + (-5 + 14))",
+      "output": "27"
+    },
+    {
+      "seed_id": 421,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 0,
+      "input": "((8 * 3) * (14 + -14))",
+      "output": "0"
+    },
+    {
+      "seed_id": 422,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -105,
+      "input": "(((8 * 7) * -2) - (-7 * 1))",
+      "output": "-105"
+    },
+    {
+      "seed_id": 423,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 116,
+      "input": "(((10 - -10) * 7) + (-9 + -15))",
+      "output": "116"
+    },
+    {
+      "seed_id": 424,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -640,
+      "input": "(((-2 * -14) - -4) * (-15 - 5))",
+      "output": "-640"
+    },
+    {
+      "seed_id": 425,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -4680,
+      "input": "(((10 * -13) * -6) * (9 + -15))",
+      "output": "-4680"
+    },
+    {
+      "seed_id": 426,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 3432,
+      "input": "(((13 * 12) / 1) * (14 + 8))",
+      "output": "3432"
+    },
+    {
+      "seed_id": 427,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 104,
+      "input": "(((2 + 2) * -9) + (10 * 14))",
+      "output": "104"
+    },
+    {
+      "seed_id": 428,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 4,
+      "input": "((-7 + 11) / 1)",
+      "output": "4"
+    },
+    {
+      "seed_id": 429,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 36,
+      "input": "((4 * -12) + (7 * 12))",
+      "output": "36"
+    },
+    {
+      "seed_id": 430,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 113,
+      "input": "(((13 * -8) * -1) - (-9 * 1))",
+      "output": "113"
+    },
+    {
+      "seed_id": 431,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 110,
+      "input": "((8 * 12) + (9 - -5))",
+      "output": "110"
+    },
+    {
+      "seed_id": 432,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -5,
+      "input": "((-9 + 8) + (-1 + -3))",
+      "output": "-5"
+    },
+    {
+      "seed_id": 433,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 0,
+      "input": "(((14 + -14) / 1) * (13 + -14))",
+      "output": "0"
+    },
+    {
+      "seed_id": 434,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -216,
+      "input": "((3 * 9) * (5 - 13))",
+      "output": "-216"
+    },
+    {
+      "seed_id": 435,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 38,
+      "input": "((6 * -12) + (-11 * -10))",
+      "output": "38"
+    },
+    {
+      "seed_id": 436,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -342,
+      "input": "((15 + 4) * (-9 * 2))",
+      "output": "-342"
+    },
+    {
+      "seed_id": 437,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 9,
+      "input": "(((2 + -1) + -11) + (13 + 6))",
+      "output": "9"
+    },
+    {
+      "seed_id": 438,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 35,
+      "input": "(((-12 * -1) / 1) - (-8 - 15))",
+      "output": "35"
+    },
+    {
+      "seed_id": 439,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 67,
+      "input": "(((-12 / -1) - -1) - (-6 * 9))",
+      "output": "67"
+    },
+    {
+      "seed_id": 440,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -24,
+      "input": "((-3 + 11) * (-5 + 2))",
+      "output": "-24"
+    },
+    {
+      "seed_id": 441,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 84,
+      "input": "(((-12 / -1) + -5) * (11 - -1))",
+      "output": "84"
+    },
+    {
+      "seed_id": 442,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 13,
+      "input": "(((-5 + 5) - -13) - (11 + -11))",
+      "output": "13"
+    },
+    {
+      "seed_id": 443,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -150,
+      "input": "((12 * -11) + (-14 + -4))",
+      "output": "-150"
+    },
+    {
+      "seed_id": 444,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -1056,
+      "input": "(((-12 * 12) + 12) * (-8 / -1))",
+      "output": "-1056"
+    },
+    {
+      "seed_id": 445,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 159,
+      "input": "(((11 * 14) / 1) - (-11 - -6))",
+      "output": "159"
+    },
+    {
+      "seed_id": 446,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 392,
+      "input": "((14 * 2) * (-14 / -1))",
+      "output": "392"
+    },
+    {
+      "seed_id": 447,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 36,
+      "input": "((1 + -13) * (-8 + 5))",
+      "output": "36"
+    },
+    {
+      "seed_id": 448,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 8,
+      "input": "((13 + -5) * (-1 / -1))",
+      "output": "8"
+    },
+    {
+      "seed_id": 449,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 5292,
+      "input": "(((-4 * 15) - -6) * (-14 * 7))",
+      "output": "5292"
+    },
+    {
+      "seed_id": 450,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -40,
+      "input": "((5 - 3) + (3 * -14))",
+      "output": "-40"
+    },
+    {
+      "seed_id": 451,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 0,
+      "input": "(((-4 - 10) - -7) * (-10 + 10))",
+      "output": "0"
+    },
+    {
+      "seed_id": 452,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 5,
+      "input": "((9 - -3) - (6 - -1))",
+      "output": "5"
+    },
+    {
+      "seed_id": 453,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -840,
+      "input": "(((4 * 14) * -5) * (-7 + 10))",
+      "output": "-840"
+    },
+    {
+      "seed_id": 454,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -108,
+      "input": "(((-1 - 9) - 8) * (1 - -5))",
+      "output": "-108"
+    },
+    {
+      "seed_id": 455,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -26,
+      "input": "((6 + -15) + (-15 + -2))",
+      "output": "-26"
+    },
+    {
+      "seed_id": 456,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 10,
+      "input": "(((-4 * -8) - -7) + (-14 + -15))",
+      "output": "10"
+    },
+    {
+      "seed_id": 457,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 41,
+      "input": "((15 + 4) + (7 + 15))",
+      "output": "41"
+    },
+    {
+      "seed_id": 458,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -225,
+      "input": "((-3 - 6) * (13 - -12))",
+      "output": "-225"
+    },
+    {
+      "seed_id": 459,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 70,
+      "input": "(((-1 + 6) / 1) * (14 / 1))",
+      "output": "70"
+    },
+    {
+      "seed_id": 460,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 1,
+      "input": "(((-10 + 9) + -7) + (-3 * -3))",
+      "output": "1"
+    },
+    {
+      "seed_id": 461,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 26,
+      "input": "(((-11 + 5) + 14) - (6 * -3))",
+      "output": "26"
+    },
+    {
+      "seed_id": 462,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 15,
+      "input": "(((13 + -3) / 1) - (-2 + -3))",
+      "output": "15"
+    },
+    {
+      "seed_id": 463,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -17,
+      "input": "((-14 + 5) + (-4 * 2))",
+      "output": "-17"
+    },
+    {
+      "seed_id": 464,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 173,
+      "input": "(((13 * -12) / -1) + (8 - -9))",
+      "output": "173"
+    },
+    {
+      "seed_id": 465,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 70,
+      "input": "((15 + -15) + (-5 * -14))",
+      "output": "70"
+    },
+    {
+      "seed_id": 466,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 0,
+      "input": "(((15 - 6) - 8) - (14 + -13))",
+      "output": "0"
+    },
+    {
+      "seed_id": 467,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -900,
+      "input": "(((14 + 14) - -8) * (-15 + -10))",
+      "output": "-900"
+    },
+    {
+      "seed_id": 468,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 9,
+      "input": "((-1 - 4) + (11 + 3))",
+      "output": "9"
+    },
+    {
+      "seed_id": 469,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -9,
+      "input": "((-5 - -12) + (-5 - 11))",
+      "output": "-9"
+    },
+    {
+      "seed_id": 470,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -1,
+      "input": "((9 + -10) + (13 + -13))",
+      "output": "-1"
+    },
+    {
+      "seed_id": 471,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -5,
+      "input": "((-2 - -8) - (4 + 7))",
+      "output": "-5"
+    },
+    {
+      "seed_id": 472,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 101,
+      "input": "(((4 + 15) * 5) - (-4 + -2))",
+      "output": "101"
+    },
+    {
+      "seed_id": 473,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 11,
+      "input": "((9 - 5) + (-7 - -14))",
+      "output": "11"
+    },
+    {
+      "seed_id": 474,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 1400,
+      "input": "((-10 + -10) * (-14 * 5))",
+      "output": "1400"
+    },
+    {
+      "seed_id": 475,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -38,
+      "input": "((-14 + -12) - (14 - 2))",
+      "output": "-38"
+    },
+    {
+      "seed_id": 476,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -9,
+      "input": "((3 * 3) - (-2 * -9))",
+      "output": "-9"
+    },
+    {
+      "seed_id": 477,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -21,
+      "input": "((-5 + -8) - (-8 / -1))",
+      "output": "-21"
+    },
+    {
+      "seed_id": 478,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -81,
+      "input": "(((8 * -9) - -7) + (-5 + -11))",
+      "output": "-81"
+    },
+    {
+      "seed_id": 479,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 113,
+      "input": "(((-1 - -2) * 9) - (-8 * 13))",
+      "output": "113"
+    },
+    {
+      "seed_id": 480,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 11,
+      "input": "((10 + 10) + (-1 + -8))",
+      "output": "11"
+    },
+    {
+      "seed_id": 481,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -99,
+      "input": "(((15 - -9) * -4) + (-8 + 5))",
+      "output": "-99"
+    },
+    {
+      "seed_id": 482,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 112,
+      "input": "(((-10 * 10) / -1) + (7 + 5))",
+      "output": "112"
+    },
+    {
+      "seed_id": 483,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 80,
+      "input": "(((13 * 7) + 1) - (-6 * -2))",
+      "output": "80"
+    },
+    {
+      "seed_id": 484,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 1144,
+      "input": "((4 * 13) * (8 + 14))",
+      "output": "1144"
+    },
+    {
+      "seed_id": 485,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 108,
+      "input": "((-12 * -3) * (-1 + 4))",
+      "output": "108"
+    },
+    {
+      "seed_id": 486,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -13,
+      "input": "(((-10 + 5) - 2) + (-11 - -5))",
+      "output": "-13"
+    },
+    {
+      "seed_id": 487,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -30,
+      "input": "(((7 * 2) * -1) - (10 + 6))",
+      "output": "-30"
+    },
+    {
+      "seed_id": 488,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 9,
+      "input": "(((-13 / -1) - 13) + (-6 + 15))",
+      "output": "9"
+    },
+    {
+      "seed_id": 489,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -18,
+      "input": "((-7 - -12) + (-11 - 12))",
+      "output": "-18"
+    },
+    {
+      "seed_id": 490,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 56,
+      "input": "(((-2 - 6) / -1) * (-1 + 8))",
+      "output": "56"
+    },
+    {
+      "seed_id": 491,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -125,
+      "input": "((-1 - -6) - (13 * 10))",
+      "output": "-125"
+    },
+    {
+      "seed_id": 492,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 175,
+      "input": "(((15 - -10) * 7) - (-10 - -10))",
+      "output": "175"
+    },
+    {
+      "seed_id": 493,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 21,
+      "input": "((-7 - -4) * (-9 + 2))",
+      "output": "21"
+    },
+    {
+      "seed_id": 494,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 25,
+      "input": "(((4 - 11) * -1) - (-13 + -5))",
+      "output": "25"
+    },
+    {
+      "seed_id": 495,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 12,
+      "input": "((6 + 6) / 1)",
+      "output": "12"
+    },
+    {
+      "seed_id": 496,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -61,
+      "input": "(((-11 + 11) - -11) + (-6 * 12))",
+      "output": "-61"
+    },
+    {
+      "seed_id": 497,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 69,
+      "input": "(((5 * 14) - -2) - (2 - -1))",
+      "output": "69"
+    },
+    {
+      "seed_id": 498,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 924,
+      "input": "((11 * -3) * (2 * -14))",
+      "output": "924"
+    },
+    {
+      "seed_id": 499,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -51,
+      "input": "(((-12 * 5) - -2) + (14 - 7))",
+      "output": "-51"
+    },
+    {
+      "seed_id": 500,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -156,
+      "input": "((-13 * 4) * (3 / 1))",
+      "output": "-156"
+    },
+    {
+      "seed_id": 501,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 33,
+      "input": "(((7 + 11) + -4) + (12 - -7))",
+      "output": "33"
+    },
+    {
+      "seed_id": 502,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 56,
+      "input": "((-5 - -1) * (-4 + -10))",
+      "output": "56"
+    },
+    {
+      "seed_id": 503,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 145,
+      "input": "(((-2 * 5) * -14) - (-6 + 1))",
+      "output": "145"
+    },
+    {
+      "seed_id": 504,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -210,
+      "input": "((9 - -12) * (2 * -5))",
+      "output": "-210"
+    },
+    {
+      "seed_id": 505,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -504,
+      "input": "(((6 * 7) * -12) - (11 + -11))",
+      "output": "-504"
+    },
+    {
+      "seed_id": 506,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 27,
+      "input": "(((-2 - -5) - -12) - (-11 - 1))",
+      "output": "27"
+    },
+    {
+      "seed_id": 507,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -26,
+      "input": "((-2 + -1) + (-12 - 11))",
+      "output": "-26"
+    },
+    {
+      "seed_id": 508,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -513,
+      "input": "(((13 * 4) * -10) - (-15 + 8))",
+      "output": "-513"
+    },
+    {
+      "seed_id": 509,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 61,
+      "input": "((12 - 7) - (7 * -8))",
+      "output": "61"
+    },
+    {
+      "seed_id": 510,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -14,
+      "input": "((9 + -2) + (-9 + -12))",
+      "output": "-14"
+    },
+    {
+      "seed_id": 511,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -182,
+      "input": "(((-12 * 14) + -14) + (-6 + 6))",
+      "output": "-182"
+    },
+    {
+      "seed_id": 512,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 20,
+      "input": "((14 - 4) - (3 - 13))",
+      "output": "20"
+    },
+    {
+      "seed_id": 513,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -1080,
+      "input": "(((-15 - -13) * 12) * (15 * 3))",
+      "output": "-1080"
+    },
+    {
+      "seed_id": 514,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 15,
+      "input": "((12 - 1) + (1 + 3))",
+      "output": "15"
+    },
+    {
+      "seed_id": 515,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 31,
+      "input": "((1 - -9) + (15 - -6))",
+      "output": "31"
+    },
+    {
+      "seed_id": 516,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -16,
+      "input": "((-4 - 7) - (-1 + 6))",
+      "output": "-16"
+    },
+    {
+      "seed_id": 517,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 22,
+      "input": "(((-3 - -2) - 1) + (-2 * -12))",
+      "output": "22"
+    },
+    {
+      "seed_id": 518,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -116,
+      "input": "(((-12 - 1) * 9) + (7 + -6))",
+      "output": "-116"
+    },
+    {
+      "seed_id": 519,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 18,
+      "input": "(((-1 + 1) - -12) - (-3 + -3))",
+      "output": "18"
+    },
+    {
+      "seed_id": 520,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 16,
+      "input": "((1 - -7) + (9 + -1))",
+      "output": "16"
+    },
+    {
+      "seed_id": 521,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -80,
+      "input": "(((6 - -15) * -3) + (-11 + -6))",
+      "output": "-80"
+    },
+    {
+      "seed_id": 522,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 0,
+      "input": "(((-1 + -1) - -14) - (2 * 6))",
+      "output": "0"
+    },
+    {
+      "seed_id": 523,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 197,
+      "input": "(((4 * 6) * 9) + (-5 + -14))",
+      "output": "197"
+    },
+    {
+      "seed_id": 524,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -792,
+      "input": "((11 * -4) * (10 + 8))",
+      "output": "-792"
+    },
+    {
+      "seed_id": 525,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 14,
+      "input": "(((-12 * -2) / 1) - (-4 - -14))",
+      "output": "14"
+    },
+    {
+      "seed_id": 526,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -21,
+      "input": "((5 + -6) * (14 + 7))",
+      "output": "-21"
+    },
+    {
+      "seed_id": 527,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 15,
+      "input": "((-5 + -10) / -1)",
+      "output": "15"
+    },
+    {
+      "seed_id": 528,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -40,
+      "input": "(((3 / 1) + -7) * (7 + 3))",
+      "output": "-40"
+    },
+    {
+      "seed_id": 529,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -132,
+      "input": "(((3 * -3) + 3) * (10 - -12))",
+      "output": "-132"
+    },
+    {
+      "seed_id": 530,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 100,
+      "input": "(((1 * 10) * -10) / -1)",
+      "output": "100"
+    },
+    {
+      "seed_id": 531,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 13,
+      "input": "((11 - 12) * (-6 + -7))",
+      "output": "13"
+    },
+    {
+      "seed_id": 532,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -6,
+      "input": "(((10 + -8) + 7) + (3 * -5))",
+      "output": "-6"
+    },
+    {
+      "seed_id": 533,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 1540,
+      "input": "(((-2 * -9) + 10) * (5 * 11))",
+      "output": "1540"
+    },
+    {
+      "seed_id": 534,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 10,
+      "input": "(((6 - 9) + 13) / 1)",
+      "output": "10"
+    },
+    {
+      "seed_id": 535,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -27,
+      "input": "((-7 * 11) - (5 * -10))",
+      "output": "-27"
+    },
+    {
+      "seed_id": 536,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -83,
+      "input": "(((2 / 1) + 5) - (-9 * -10))",
+      "output": "-83"
+    },
+    {
+      "seed_id": 537,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -66,
+      "input": "((-7 * 10) + (6 - 2))",
+      "output": "-66"
+    },
+    {
+      "seed_id": 538,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -13,
+      "input": "(((10 + -15) + 12) + (-5 * 4))",
+      "output": "-13"
+    },
+    {
+      "seed_id": 539,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -240,
+      "input": "(((13 + -4) - -3) * (-8 + -12))",
+      "output": "-240"
+    },
+    {
+      "seed_id": 540,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 2700,
+      "input": "(((13 - -13) + 4) * (9 * 10))",
+      "output": "2700"
+    },
+    {
+      "seed_id": 541,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -70,
+      "input": "(((-9 + -11) - -10) * (-7 / -1))",
+      "output": "-70"
+    },
+    {
+      "seed_id": 542,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -144,
+      "input": "((6 * -8) * (13 - 10))",
+      "output": "-144"
+    },
+    {
+      "seed_id": 543,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -62,
+      "input": "(((7 * -4) + -15) - (11 + 8))",
+      "output": "-62"
+    },
+    {
+      "seed_id": 544,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -53,
+      "input": "(((2 * -3) * 5) - (13 + 10))",
+      "output": "-53"
+    },
+    {
+      "seed_id": 545,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 570,
+      "input": "(((14 * 14) + -6) * (14 - 11))",
+      "output": "570"
+    },
+    {
+      "seed_id": 546,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -21,
+      "input": "((8 * -2) - (7 + -2))",
+      "output": "-21"
+    },
+    {
+      "seed_id": 547,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 32,
+      "input": "(((1 * -13) * -2) + (-1 + 7))",
+      "output": "32"
+    },
+    {
+      "seed_id": 548,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -72,
+      "input": "((5 - -1) * (-15 - -3))",
+      "output": "-72"
+    },
+    {
+      "seed_id": 549,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 0,
+      "input": "(((3 + -13) - -10) / 1)",
+      "output": "0"
+    },
+    {
+      "seed_id": 550,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -108,
+      "input": "(((-1 - 12) - -7) * (6 * 3))",
+      "output": "-108"
+    },
+    {
+      "seed_id": 551,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 4,
+      "input": "((15 - 11) - (-15 + 15))",
+      "output": "4"
+    },
+    {
+      "seed_id": 552,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 4,
+      "input": "((-1 * -9) + (7 - 12))",
+      "output": "4"
+    },
+    {
+      "seed_id": 553,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 0,
+      "input": "(((4 * -2) + -11) + (15 - -4))",
+      "output": "0"
+    },
+    {
+      "seed_id": 554,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 540,
+      "input": "((-12 - -8) * (-9 * 15))",
+      "output": "540"
+    },
+    {
+      "seed_id": 555,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 324,
+      "input": "(((7 * -2) + -13) * (2 + -14))",
+      "output": "324"
+    },
+    {
+      "seed_id": 556,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 14,
+      "input": "((-6 * -3) - (-11 + 15))",
+      "output": "14"
+    },
+    {
+      "seed_id": 557,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 154,
+      "input": "(((-10 / -1) * 14) + (13 - -1))",
+      "output": "154"
+    },
+    {
+      "seed_id": 558,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -60,
+      "input": "(((7 / 1) * -11) - (-12 + -5))",
+      "output": "-60"
+    },
+    {
+      "seed_id": 559,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -660,
+      "input": "(((4 * 11) * 1) * (-2 - 13))",
+      "output": "-660"
+    },
+    {
+      "seed_id": 560,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 1,
+      "input": "(((9 - 15) / -1) + (-14 - -9))",
+      "output": "1"
+    },
+    {
+      "seed_id": 561,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 27,
+      "input": "((-1 - -12) - (-12 + -4))",
+      "output": "27"
+    },
+    {
+      "seed_id": 562,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -178,
+      "input": "(((-10 - 11) * 8) + (3 - 13))",
+      "output": "-178"
+    },
+    {
+      "seed_id": 563,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 15,
+      "input": "((-4 + 3) + (11 - -5))",
+      "output": "15"
+    },
+    {
+      "seed_id": 564,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -50,
+      "input": "((-1 * 5) * (4 + 6))",
+      "output": "-50"
+    },
+    {
+      "seed_id": 565,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -60,
+      "input": "((-5 - 15) * (-9 + 12))",
+      "output": "-60"
+    },
+    {
+      "seed_id": 566,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -35,
+      "input": "(((10 + -14) / -1) - (-13 * -3))",
+      "output": "-35"
+    },
+    {
+      "seed_id": 567,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 560,
+      "input": "((8 * 10) * (13 - 6))",
+      "output": "560"
+    },
+    {
+      "seed_id": 568,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 189,
+      "input": "((-13 * -14) - (-1 - 6))",
+      "output": "189"
+    },
+    {
+      "seed_id": 569,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -202,
+      "input": "(((6 * 8) * -4) + (3 + -13))",
+      "output": "-202"
+    },
+    {
+      "seed_id": 570,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -855,
+      "input": "(((4 * 10) - -5) * (-9 + -10))",
+      "output": "-855"
+    },
+    {
+      "seed_id": 571,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -18,
+      "input": "((-2 + 2) + (-15 + -3))",
+      "output": "-18"
+    },
+    {
+      "seed_id": 572,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 60,
+      "input": "((5 / 1) * (12 / 1))",
+      "output": "60"
+    },
+    {
+      "seed_id": 573,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -9,
+      "input": "(((10 + -6) - -11) + (-15 + -9))",
+      "output": "-9"
+    },
+    {
+      "seed_id": 574,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 165,
+      "input": "((15 / 1) * (3 - -8))",
+      "output": "165"
+    },
+    {
+      "seed_id": 575,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -90,
+      "input": "(((4 * 15) / 1) - (-15 * -10))",
+      "output": "-90"
+    },
+    {
+      "seed_id": 576,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 32,
+      "input": "(((15 * -2) / -1) - (10 - 12))",
+      "output": "32"
+    },
+    {
+      "seed_id": 577,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 720,
+      "input": "(((15 - -6) + -9) * (-15 * -4))",
+      "output": "720"
+    },
+    {
+      "seed_id": 578,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 161,
+      "input": "((-7 * -5) - (9 * -14))",
+      "output": "161"
+    },
+    {
+      "seed_id": 579,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 7,
+      "input": "((10 + -1) + (-12 + 10))",
+      "output": "7"
+    },
+    {
+      "seed_id": 580,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 103,
+      "input": "((-10 + 5) - (12 * -9))",
+      "output": "103"
+    },
+    {
+      "seed_id": 581,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -825,
+      "input": "(((7 / 1) + 8) * (-11 * 5))",
+      "output": "-825"
+    },
+    {
+      "seed_id": 582,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -21,
+      "input": "((-12 - 12) - (-1 + -2))",
+      "output": "-21"
+    },
+    {
+      "seed_id": 583,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -10,
+      "input": "(((13 * -1) + 15) + (-1 + -11))",
+      "output": "-10"
+    },
+    {
+      "seed_id": 584,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -25,
+      "input": "((-14 + -3) + (6 - 14))",
+      "output": "-25"
+    },
+    {
+      "seed_id": 585,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 480,
+      "input": "(((-2 * -3) * 8) * (14 + -4))",
+      "output": "480"
+    },
+    {
+      "seed_id": 586,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -2,
+      "input": "((8 - 8) - (1 * 2))",
+      "output": "-2"
+    },
+    {
+      "seed_id": 587,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 8,
+      "input": "((1 * 2) + (1 - -5))",
+      "output": "8"
+    },
+    {
+      "seed_id": 588,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 484,
+      "input": "((1 + -12) * (11 * -4))",
+      "output": "484"
+    },
+    {
+      "seed_id": 589,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -21,
+      "input": "((-5 - -8) - (-4 * -6))",
+      "output": "-21"
+    },
+    {
+      "seed_id": 590,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -168,
+      "input": "(((1 - 8) * -12) * (1 - 3))",
+      "output": "-168"
+    },
+    {
+      "seed_id": 591,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 29,
+      "input": "(((8 - -2) - -11) + (7 - -1))",
+      "output": "29"
+    },
+    {
+      "seed_id": 592,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 43,
+      "input": "((-1 - -14) + (15 * 2))",
+      "output": "43"
+    },
+    {
+      "seed_id": 593,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 417,
+      "input": "(((-12 * -12) * 3) + (-14 - 1))",
+      "output": "417"
+    },
+    {
+      "seed_id": 594,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 49,
+      "input": "(((-6 * -4) / 1) - (-15 - 10))",
+      "output": "49"
+    },
+    {
+      "seed_id": 595,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -116,
+      "input": "(((8 + -7) - 12) + (7 * -15))",
+      "output": "-116"
+    },
+    {
+      "seed_id": 596,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -4,
+      "input": "((1 + 13) + (-12 - 6))",
+      "output": "-4"
+    },
+    {
+      "seed_id": 597,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -3458,
+      "input": "(((-13 * 10) + -3) * (12 + 14))",
+      "output": "-3458"
+    },
+    {
+      "seed_id": 598,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -154,
+      "input": "(((-10 + -2) * 12) + (-3 + -7))",
+      "output": "-154"
+    },
+    {
+      "seed_id": 599,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 90,
+      "input": "((2 * -10) + (-11 * -10))",
+      "output": "90"
+    },
+    {
+      "seed_id": 600,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -64,
+      "input": "((6 + -10) - (4 * 15))",
+      "output": "-64"
+    },
+    {
+      "seed_id": 601,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -134,
+      "input": "((7 * -14) - (-3 * -12))",
+      "output": "-134"
+    },
+    {
+      "seed_id": 602,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -63,
+      "input": "(((13 * -5) + -3) - (-14 - -9))",
+      "output": "-63"
+    },
+    {
+      "seed_id": 603,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 170,
+      "input": "(((5 + -8) + -7) * (-8 - 9))",
+      "output": "170"
+    },
+    {
+      "seed_id": 604,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 8,
+      "input": "(((-1 - -13) - 10) - (-4 - 2))",
+      "output": "8"
+    },
+    {
+      "seed_id": 605,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 1080,
+      "input": "(((-4 - 11) * 3) * (-14 + -10))",
+      "output": "1080"
+    },
+    {
+      "seed_id": 606,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -2808,
+      "input": "((-9 * 4) * (13 * 6))",
+      "output": "-2808"
+    },
+    {
+      "seed_id": 607,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 46,
+      "input": "(((-7 * -8) - -5) + (-1 * 15))",
+      "output": "46"
+    },
+    {
+      "seed_id": 608,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 30,
+      "input": "((5 + 14) - (4 + -15))",
+      "output": "30"
+    },
+    {
+      "seed_id": 609,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 67,
+      "input": "(((11 * 4) - -3) + (11 + 9))",
+      "output": "67"
+    },
+    {
+      "seed_id": 610,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 0,
+      "input": "(((-4 - 14) + -1) * (-8 + 8))",
+      "output": "0"
+    },
+    {
+      "seed_id": 611,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -13,
+      "input": "(((-9 * -13) - 10) + (-8 * 15))",
+      "output": "-13"
+    },
+    {
+      "seed_id": 612,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 156,
+      "input": "(((-12 * 12) / -1) - (-10 - 2))",
+      "output": "156"
+    },
+    {
+      "seed_id": 613,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 32,
+      "input": "((3 + -11) * (-11 - -7))",
+      "output": "32"
+    },
+    {
+      "seed_id": 614,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 165,
+      "input": "((-15 / -1) * (5 + 6))",
+      "output": "165"
+    },
+    {
+      "seed_id": 615,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 27,
+      "input": "(((12 * -2) / -1) - (-4 + 1))",
+      "output": "27"
+    },
+    {
+      "seed_id": 616,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 24,
+      "input": "((2 * -1) * (-15 - -3))",
+      "output": "24"
+    },
+    {
+      "seed_id": 617,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 24,
+      "input": "((13 + 3) + (8 / 1))",
+      "output": "24"
+    },
+    {
+      "seed_id": 618,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 71,
+      "input": "((-9 * -10) + (-6 + -13))",
+      "output": "71"
+    },
+    {
+      "seed_id": 619,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 42,
+      "input": "(((-2 + 10) * 3) + (11 - -7))",
+      "output": "42"
+    },
+    {
+      "seed_id": 620,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -93,
+      "input": "(((-8 * 15) + 11) + (11 - -5))",
+      "output": "-93"
+    },
+    {
+      "seed_id": 621,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -15,
+      "input": "(((3 + -12) + -14) - (-3 + -5))",
+      "output": "-15"
+    },
+    {
+      "seed_id": 622,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -18,
+      "input": "((1 - -5) + (-12 + -12))",
+      "output": "-18"
+    },
+    {
+      "seed_id": 623,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 50,
+      "input": "((13 - 3) * (5 * 1))",
+      "output": "50"
+    },
+    {
+      "seed_id": 624,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 17,
+      "input": "(((8 / 1) - -10) + (-11 + 10))",
+      "output": "17"
+    },
+    {
+      "seed_id": 625,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 90,
+      "input": "((-6 / -1) * (1 * 15))",
+      "output": "90"
+    },
+    {
+      "seed_id": 626,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 76,
+      "input": "((-11 * -6) - (-6 + -4))",
+      "output": "76"
+    },
+    {
+      "seed_id": 627,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -9,
+      "input": "((-8 + 1) - (-2 - -4))",
+      "output": "-9"
+    },
+    {
+      "seed_id": 628,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 196,
+      "input": "((7 / 1) * (4 * 7))",
+      "output": "196"
+    },
+    {
+      "seed_id": 629,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -95,
+      "input": "(((-9 - -3) + 11) * (-4 + -15))",
+      "output": "-95"
+    },
+    {
+      "seed_id": 630,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -70,
+      "input": "((2 - -12) * (-6 - -1))",
+      "output": "-70"
+    },
+    {
+      "seed_id": 631,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -24,
+      "input": "((-15 - -9) * (-6 - -10))",
+      "output": "-24"
+    },
+    {
+      "seed_id": 632,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 2,
+      "input": "((-5 - 12) - (-10 + -9))",
+      "output": "2"
+    },
+    {
+      "seed_id": 633,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -18,
+      "input": "(((14 + -12) - 11) * (-3 + 5))",
+      "output": "-18"
+    },
+    {
+      "seed_id": 634,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 35,
+      "input": "((-6 - -1) - (-4 * 10))",
+      "output": "35"
+    },
+    {
+      "seed_id": 635,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 33,
+      "input": "(((13 + 7) - -12) - (13 - 14))",
+      "output": "33"
+    },
+    {
+      "seed_id": 636,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -15,
+      "input": "((5 + -8) * (9 - 4))",
+      "output": "-15"
+    },
+    {
+      "seed_id": 637,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -63,
+      "input": "((-5 + -8) - (5 * 10))",
+      "output": "-63"
+    },
+    {
+      "seed_id": 638,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 229,
+      "input": "(((13 - -3) * 14) - (-7 + 2))",
+      "output": "229"
+    },
+    {
+      "seed_id": 639,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 4,
+      "input": "((1 * 4) / 1)",
+      "output": "4"
+    },
+    {
+      "seed_id": 640,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -95,
+      "input": "(((-8 + -7) + -4) * (-6 + 11))",
+      "output": "-95"
+    },
+    {
+      "seed_id": 641,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -240,
+      "input": "((-12 + -12) * (-4 - -14))",
+      "output": "-240"
+    },
+    {
+      "seed_id": 642,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 18,
+      "input": "((6 * -5) - (-6 * 8))",
+      "output": "18"
+    },
+    {
+      "seed_id": 643,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 12,
+      "input": "((15 + -3) / 1)",
+      "output": "12"
+    },
+    {
+      "seed_id": 644,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 16,
+      "input": "((-8 - 8) / -1)",
+      "output": "16"
+    },
+    {
+      "seed_id": 645,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 147,
+      "input": "(((-9 / -1) + 12) * (-4 - -11))",
+      "output": "147"
+    },
+    {
+      "seed_id": 646,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 79,
+      "input": "((9 * 9) + (-5 + 3))",
+      "output": "79"
+    },
+    {
+      "seed_id": 647,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 88,
+      "input": "((5 * 13) - (-13 + -10))",
+      "output": "88"
+    },
+    {
+      "seed_id": 648,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 18,
+      "input": "((-14 + -4) / -1)",
+      "output": "18"
+    },
+    {
+      "seed_id": 649,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -46,
+      "input": "((15 - 13) * (-11 - 12))",
+      "output": "-46"
+    },
+    {
+      "seed_id": 650,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 5,
+      "input": "(((-1 - -3) + 7) - (-3 + 7))",
+      "output": "5"
+    },
+    {
+      "seed_id": 651,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -111,
+      "input": "((-7 * 13) - (6 + 14))",
+      "output": "-111"
+    },
+    {
+      "seed_id": 652,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -131,
+      "input": "(((-11 * 11) - 11) + (-10 + 11))",
+      "output": "-131"
+    },
+    {
+      "seed_id": 653,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 36,
+      "input": "((9 - -9) - (-4 - 14))",
+      "output": "36"
+    },
+    {
+      "seed_id": 654,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -27,
+      "input": "((-15 + -2) + (-15 - -5))",
+      "output": "-27"
+    },
+    {
+      "seed_id": 655,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 29,
+      "input": "((15 + 13) - (10 - 11))",
+      "output": "29"
+    },
+    {
+      "seed_id": 656,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 54,
+      "input": "((-2 + 1) - (11 * -5))",
+      "output": "54"
+    },
+    {
+      "seed_id": 657,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 1,
+      "input": "((14 / 1) - (15 + -2))",
+      "output": "1"
+    },
+    {
+      "seed_id": 658,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 124,
+      "input": "((-8 * -13) + (5 * 4))",
+      "output": "124"
+    },
+    {
+      "seed_id": 659,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -152,
+      "input": "((-12 - 7) * (-7 + 15))",
+      "output": "-152"
+    },
+    {
+      "seed_id": 660,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 69,
+      "input": "(((-3 - 1) + 1) * (-8 + -15))",
+      "output": "69"
+    },
+    {
+      "seed_id": 661,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 19,
+      "input": "((8 - -2) - (4 + -13))",
+      "output": "19"
+    },
+    {
+      "seed_id": 662,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -6144,
+      "input": "(((5 * 11) + 9) * (-8 * 12))",
+      "output": "-6144"
+    },
+    {
+      "seed_id": 663,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -7,
+      "input": "((-9 + 2) - (14 - 14))",
+      "output": "-7"
+    },
+    {
+      "seed_id": 664,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 10,
+      "input": "(((-13 - 15) - -14) + (15 - -9))",
+      "output": "10"
+    },
+    {
+      "seed_id": 665,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 10,
+      "input": "((8 * -1) - (-10 - 8))",
+      "output": "10"
+    },
+    {
+      "seed_id": 666,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 336,
+      "input": "(((-10 - 4) * -6) * (3 - -1))",
+      "output": "336"
+    },
+    {
+      "seed_id": 667,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 88,
+      "input": "(((-2 + 12) * 9) - (4 - 2))",
+      "output": "88"
+    },
+    {
+      "seed_id": 668,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 45,
+      "input": "(((15 * -3) / -1) / 1)",
+      "output": "45"
+    },
+    {
+      "seed_id": 669,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 99,
+      "input": "((14 - 3) * (-9 / -1))",
+      "output": "99"
+    },
+    {
+      "seed_id": 670,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -236,
+      "input": "(((8 - -8) * -14) - (5 + 7))",
+      "output": "-236"
+    },
+    {
+      "seed_id": 671,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 13,
+      "input": "(((4 - -1) - -7) + (4 - 3))",
+      "output": "13"
+    },
+    {
+      "seed_id": 672,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 82,
+      "input": "((9 + 13) - (-12 * 5))",
+      "output": "82"
+    },
+    {
+      "seed_id": 673,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 24,
+      "input": "(((3 - 11) - -10) - (-14 - 8))",
+      "output": "24"
+    },
+    {
+      "seed_id": 674,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 2,
+      "input": "(((6 + 9) + -15) + (-7 + 9))",
+      "output": "2"
+    },
+    {
+      "seed_id": 675,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -320,
+      "input": "((-5 * -4) * (-5 - 11))",
+      "output": "-320"
+    },
+    {
+      "seed_id": 676,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 4,
+      "input": "(((-3 + 4) * -4) / -1)",
+      "output": "4"
+    },
+    {
+      "seed_id": 677,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -30,
+      "input": "(((8 - 11) + -15) - (12 * 1))",
+      "output": "-30"
+    },
+    {
+      "seed_id": 678,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -120,
+      "input": "(((1 - -2) * -15) + (-15 * 5))",
+      "output": "-120"
+    },
+    {
+      "seed_id": 679,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -30,
+      "input": "(((-6 - 4) - 7) - (12 + 1))",
+      "output": "-30"
+    },
+    {
+      "seed_id": 680,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 11,
+      "input": "(((6 - 2) - -8) + (-10 + 9))",
+      "output": "11"
+    },
+    {
+      "seed_id": 681,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 347,
+      "input": "(((7 - -15) * 14) - (13 * -3))",
+      "output": "347"
+    },
+    {
+      "seed_id": 682,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 29,
+      "input": "(((6 + 15) - 6) + (14 / 1))",
+      "output": "29"
+    },
+    {
+      "seed_id": 683,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 75,
+      "input": "(((5 / 1) - 10) * (-8 + -7))",
+      "output": "75"
+    },
+    {
+      "seed_id": 684,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 161,
+      "input": "((-12 * -13) + (8 - 3))",
+      "output": "161"
+    },
+    {
+      "seed_id": 685,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 5,
+      "input": "(((3 + 8) + -6) / 1)",
+      "output": "5"
+    },
+    {
+      "seed_id": 686,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -60,
+      "input": "(((-5 * 9) - 10) + (1 - 6))",
+      "output": "-60"
+    },
+    {
+      "seed_id": 687,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 308,
+      "input": "(((-5 * -11) - 11) * (6 - -1))",
+      "output": "308"
+    },
+    {
+      "seed_id": 688,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -6,
+      "input": "((8 + 6) + (4 * -5))",
+      "output": "-6"
+    },
+    {
+      "seed_id": 689,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 146,
+      "input": "(((5 - 11) / -1) - (-14 * 10))",
+      "output": "146"
+    },
+    {
+      "seed_id": 690,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -11,
+      "input": "((12 - 8) - (7 + 8))",
+      "output": "-11"
+    },
+    {
+      "seed_id": 691,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 34,
+      "input": "(((5 - -10) / 1) - (-6 - 13))",
+      "output": "34"
+    },
+    {
+      "seed_id": 692,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 26,
+      "input": "((10 - 8) * (8 + 5))",
+      "output": "26"
+    },
+    {
+      "seed_id": 693,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 0,
+      "input": "((6 - 11) * (14 + -14))",
+      "output": "0"
+    },
+    {
+      "seed_id": 694,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 60,
+      "input": "(((-10 + 15) * -12) / -1)",
+      "output": "60"
+    },
+    {
+      "seed_id": 695,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 144,
+      "input": "((9 + 7) * (9 / 1))",
+      "output": "144"
+    },
+    {
+      "seed_id": 696,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -48,
+      "input": "(((-4 + -15) + -12) + (-12 - 5))",
+      "output": "-48"
+    },
+    {
+      "seed_id": 697,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 30,
+      "input": "(((11 + 7) / 1) - (-13 + 1))",
+      "output": "30"
+    },
+    {
+      "seed_id": 698,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 8,
+      "input": "((10 + -5) - (-14 - -11))",
+      "output": "8"
+    },
+    {
+      "seed_id": 699,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -780,
+      "input": "((2 + -7) * (-13 * -12))",
+      "output": "-780"
+    },
+    {
+      "seed_id": 700,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -182,
+      "input": "((-2 + 15) * (-8 + -6))",
+      "output": "-182"
+    },
+    {
+      "seed_id": 701,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -34,
+      "input": "(((7 * -5) - 4) - (7 + -12))",
+      "output": "-34"
+    },
+    {
+      "seed_id": 702,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 98,
+      "input": "((-9 * -11) - (12 - 11))",
+      "output": "98"
+    },
+    {
+      "seed_id": 703,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 5,
+      "input": "((-1 * -13) - (6 - -2))",
+      "output": "5"
+    },
+    {
+      "seed_id": 704,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -80,
+      "input": "((5 * 8) * (5 - 7))",
+      "output": "-80"
+    },
+    {
+      "seed_id": 705,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -8,
+      "input": "((-3 - -15) + (-13 + -7))",
+      "output": "-8"
+    },
+    {
+      "seed_id": 706,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 56,
+      "input": "(((-13 + -5) * -4) - (9 - -7))",
+      "output": "56"
+    },
+    {
+      "seed_id": 707,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -89,
+      "input": "(((-12 * 1) * 7) + (2 + -7))",
+      "output": "-89"
+    },
+    {
+      "seed_id": 708,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -12,
+      "input": "((3 * -11) - (-15 - 6))",
+      "output": "-12"
+    },
+    {
+      "seed_id": 709,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 187,
+      "input": "((-3 * 3) - (-14 * 14))",
+      "output": "187"
+    },
+    {
+      "seed_id": 710,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 80,
+      "input": "(((7 - -1) * -1) * (10 * -1))",
+      "output": "80"
+    },
+    {
+      "seed_id": 711,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -12,
+      "input": "(((9 + -5) + 5) + (-13 - 8))",
+      "output": "-12"
+    },
+    {
+      "seed_id": 712,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 7,
+      "input": "((10 + 12) - (15 / 1))",
+      "output": "7"
+    },
+    {
+      "seed_id": 713,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 1,
+      "input": "(((7 * 2) + -8) - (4 - -1))",
+      "output": "1"
+    },
+    {
+      "seed_id": 714,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 9,
+      "input": "((-13 - -4) / -1)",
+      "output": "9"
+    },
+    {
+      "seed_id": 715,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -352,
+      "input": "(((-3 * -10) * -12) + (14 - 6))",
+      "output": "-352"
+    },
+    {
+      "seed_id": 716,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -98,
+      "input": "(((-9 * 14) + 14) + (14 / 1))",
+      "output": "-98"
+    },
+    {
+      "seed_id": 717,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 58,
+      "input": "(((-9 - -13) + -2) * (14 - -15))",
+      "output": "58"
+    },
+    {
+      "seed_id": 718,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -24,
+      "input": "((-3 * -4) * (-4 - -2))",
+      "output": "-24"
+    },
+    {
+      "seed_id": 719,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 660,
+      "input": "((-10 * -11) * (8 + -2))",
+      "output": "660"
+    },
+    {
+      "seed_id": 720,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -43,
+      "input": "((-2 * 8) - (13 - -14))",
+      "output": "-43"
+    },
+    {
+      "seed_id": 721,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 108,
+      "input": "(((-11 + -12) + 10) + (-11 * -11))",
+      "output": "108"
+    },
+    {
+      "seed_id": 722,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 84,
+      "input": "((-14 * 6) / -1)",
+      "output": "84"
+    },
+    {
+      "seed_id": 723,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 300,
+      "input": "(((-8 - 4) - 8) * (-8 + -7))",
+      "output": "300"
+    },
+    {
+      "seed_id": 724,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -1,
+      "input": "((-9 + 7) - (7 - 8))",
+      "output": "-1"
+    },
+    {
+      "seed_id": 725,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -38,
+      "input": "((-8 - -12) - (-3 * -14))",
+      "output": "-38"
+    },
+    {
+      "seed_id": 726,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 13,
+      "input": "((-2 - -15) / 1)",
+      "output": "13"
+    },
+    {
+      "seed_id": 727,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 840,
+      "input": "(((5 * -14) * -12) / 1)",
+      "output": "840"
+    },
+    {
+      "seed_id": 728,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -16,
+      "input": "((-5 + 13) + (-10 + -14))",
+      "output": "-16"
+    },
+    {
+      "seed_id": 729,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 168,
+      "input": "(((-4 * -5) + -12) * (6 - -15))",
+      "output": "168"
+    },
+    {
+      "seed_id": 730,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 680,
+      "input": "(((8 * 10) * 8) - (-8 * 5))",
+      "output": "680"
+    },
+    {
+      "seed_id": 731,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 6,
+      "input": "(((-13 + 13) + -11) - (-14 - 3))",
+      "output": "6"
+    },
+    {
+      "seed_id": 732,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 576,
+      "input": "(((9 - -9) - -14) * (-9 * -2))",
+      "output": "576"
+    },
+    {
+      "seed_id": 733,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -1200,
+      "input": "(((-13 + -2) * -10) * (7 - 15))",
+      "output": "-1200"
+    },
+    {
+      "seed_id": 734,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 18,
+      "input": "((15 + 3) / 1)",
+      "output": "18"
+    },
+    {
+      "seed_id": 735,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -8,
+      "input": "(((-3 * 4) - -9) + (-15 - -10))",
+      "output": "-8"
+    },
+    {
+      "seed_id": 736,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -29,
+      "input": "(((1 * 7) - -6) + (-6 * 7))",
+      "output": "-29"
+    },
+    {
+      "seed_id": 737,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 48,
+      "input": "((-8 - -14) * (-6 - -14))",
+      "output": "48"
+    },
+    {
+      "seed_id": 738,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 18,
+      "input": "((-7 + 12) + (5 - -8))",
+      "output": "18"
+    },
+    {
+      "seed_id": 739,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -85,
+      "input": "((5 * -4) - (-5 * -13))",
+      "output": "-85"
+    },
+    {
+      "seed_id": 740,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 752,
+      "input": "(((13 * 4) + -5) * (5 + 11))",
+      "output": "752"
+    },
+    {
+      "seed_id": 741,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 103,
+      "input": "((8 * 15) + (-10 + -7))",
+      "output": "103"
+    },
+    {
+      "seed_id": 742,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 756,
+      "input": "(((15 * 5) - 12) * (11 - -1))",
+      "output": "756"
+    },
+    {
+      "seed_id": 743,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -1,
+      "input": "(((-8 / -1) - -4) - (13 / 1))",
+      "output": "-1"
+    },
+    {
+      "seed_id": 744,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 44,
+      "input": "(((15 - 8) * 5) - (-15 - -6))",
+      "output": "44"
+    },
+    {
+      "seed_id": 745,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -27,
+      "input": "(((-3 + -15) + 11) - (9 + 11))",
+      "output": "-27"
+    },
+    {
+      "seed_id": 746,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -113,
+      "input": "((9 * -13) + (-11 + 15))",
+      "output": "-113"
+    },
+    {
+      "seed_id": 747,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -3,
+      "input": "((2 * 8) - (12 + 7))",
+      "output": "-3"
+    },
+    {
+      "seed_id": 748,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -990,
+      "input": "((9 / 1) * (11 * -10))",
+      "output": "-990"
+    },
+    {
+      "seed_id": 749,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -31,
+      "input": "(((-11 + -8) * 2) + (5 + 2))",
+      "output": "-31"
+    },
+    {
+      "seed_id": 750,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -36,
+      "input": "((-12 * 2) - (-12 / -1))",
+      "output": "-36"
+    },
+    {
+      "seed_id": 751,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -2,
+      "input": "((14 + -8) - (-8 / -1))",
+      "output": "-2"
+    },
+    {
+      "seed_id": 752,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 864,
+      "input": "(((6 + 13) + -10) * (-8 * -12))",
+      "output": "864"
+    },
+    {
+      "seed_id": 753,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 9,
+      "input": "((4 + -5) + (-4 + 14))",
+      "output": "9"
+    },
+    {
+      "seed_id": 754,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -6292,
+      "input": "((-11 * 13) * (4 * 11))",
+      "output": "-6292"
+    },
+    {
+      "seed_id": 755,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 0,
+      "input": "((6 * -4) + (10 + 14))",
+      "output": "0"
+    },
+    {
+      "seed_id": 756,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 4,
+      "input": "((11 + -13) - (3 * -2))",
+      "output": "4"
+    },
+    {
+      "seed_id": 757,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -162,
+      "input": "((-5 - -11) * (9 * -3))",
+      "output": "-162"
+    },
+    {
+      "seed_id": 758,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 17,
+      "input": "(((1 - 3) + 7) - (-8 + -4))",
+      "output": "17"
+    },
+    {
+      "seed_id": 759,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 8,
+      "input": "((-4 / -1) + (15 + -11))",
+      "output": "8"
+    },
+    {
+      "seed_id": 760,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 16,
+      "input": "(((-11 / -1) - -8) - (11 + -8))",
+      "output": "16"
+    },
+    {
+      "seed_id": 761,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 18,
+      "input": "((-4 + -14) / -1)",
+      "output": "18"
+    },
+    {
+      "seed_id": 762,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 167,
+      "input": "((-15 * -11) + (-11 - -13))",
+      "output": "167"
+    },
+    {
+      "seed_id": 763,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -144,
+      "input": "((-2 * 8) * (-1 + 10))",
+      "output": "-144"
+    },
+    {
+      "seed_id": 764,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -20,
+      "input": "((-11 + -14) - (4 - 9))",
+      "output": "-20"
+    },
+    {
+      "seed_id": 765,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -28,
+      "input": "((2 * 7) - (14 * 3))",
+      "output": "-28"
+    },
+    {
+      "seed_id": 766,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 18,
+      "input": "(((15 - -11) + -3) + (-8 - -3))",
+      "output": "18"
+    },
+    {
+      "seed_id": 767,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 124,
+      "input": "(((-10 * -14) / 1) + (-9 + -7))",
+      "output": "124"
+    },
+    {
+      "seed_id": 768,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -136,
+      "input": "((-4 * 4) - (-15 * -8))",
+      "output": "-136"
+    },
+    {
+      "seed_id": 769,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -148,
+      "input": "((-13 + -9) - (9 * 14))",
+      "output": "-148"
+    },
+    {
+      "seed_id": 770,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 4,
+      "input": "((5 + 14) + (-8 + -7))",
+      "output": "4"
+    },
+    {
+      "seed_id": 771,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 21,
+      "input": "(((1 * -9) / -1) + (8 - -4))",
+      "output": "21"
+    },
+    {
+      "seed_id": 772,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 10,
+      "input": "(((-2 + 13) - 1) / 1)",
+      "output": "10"
+    },
+    {
+      "seed_id": 773,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 9,
+      "input": "((-6 - -10) + (6 + -1))",
+      "output": "9"
+    },
+    {
+      "seed_id": 774,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 44,
+      "input": "((13 - -9) * (9 - 7))",
+      "output": "44"
+    },
+    {
+      "seed_id": 775,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -96,
+      "input": "(((12 - 4) * -1) * (1 * 12))",
+      "output": "-96"
+    },
+    {
+      "seed_id": 776,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 12,
+      "input": "((6 / 1) + (-7 + 13))",
+      "output": "12"
+    },
+    {
+      "seed_id": 777,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 18,
+      "input": "((7 + 11) * (-11 + 12))",
+      "output": "18"
+    },
+    {
+      "seed_id": 778,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 85,
+      "input": "(((12 - -2) * 6) + (-10 + 11))",
+      "output": "85"
+    },
+    {
+      "seed_id": 779,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 9,
+      "input": "(((11 - -15) - -13) + (-5 * 6))",
+      "output": "9"
+    },
+    {
+      "seed_id": 780,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 14,
+      "input": "((13 - -1) / 1)",
+      "output": "14"
+    },
+    {
+      "seed_id": 781,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 14,
+      "input": "(((1 + 8) - -1) + (5 + -1))",
+      "output": "14"
+    },
+    {
+      "seed_id": 782,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 35,
+      "input": "((7 - 2) * (4 - -3))",
+      "output": "35"
+    },
+    {
+      "seed_id": 783,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -38,
+      "input": "((15 + -9) + (-4 * 11))",
+      "output": "-38"
+    },
+    {
+      "seed_id": 784,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 0,
+      "input": "(((-2 - -4) - 2) * (2 / 1))",
+      "output": "0"
+    },
+    {
+      "seed_id": 785,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 10,
+      "input": "(((1 + 3) * 6) - (12 - -2))",
+      "output": "10"
+    },
+    {
+      "seed_id": 786,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 1410,
+      "input": "(((-15 * 15) - 10) * (1 * -6))",
+      "output": "1410"
+    },
+    {
+      "seed_id": 787,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 1,
+      "input": "(((13 - -5) - -2) + (-12 - 7))",
+      "output": "1"
+    },
+    {
+      "seed_id": 788,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 108,
+      "input": "(((11 * 9) - 11) + (15 - -5))",
+      "output": "108"
+    },
+    {
+      "seed_id": 789,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -21,
+      "input": "((-15 + -2) + (5 - 9))",
+      "output": "-21"
+    },
+    {
+      "seed_id": 790,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -50,
+      "input": "((5 * 5) * (-10 - -8))",
+      "output": "-50"
+    },
+    {
+      "seed_id": 791,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 8,
+      "input": "((9 + -7) + (-7 - -13))",
+      "output": "8"
+    },
+    {
+      "seed_id": 792,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -1716,
+      "input": "((-12 + -1) * (-12 * -11))",
+      "output": "-1716"
+    },
+    {
+      "seed_id": 793,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 29,
+      "input": "((10 - -10) + (-6 - -15))",
+      "output": "29"
+    },
+    {
+      "seed_id": 794,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -2,
+      "input": "((4 + 4) + (-10 * 1))",
+      "output": "-2"
+    },
+    {
+      "seed_id": 795,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -11,
+      "input": "((4 + -15) - (1 - 1))",
+      "output": "-11"
+    },
+    {
+      "seed_id": 796,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 394,
+      "input": "(((-12 - 13) * -15) - (-11 + -8))",
+      "output": "394"
+    },
+    {
+      "seed_id": 797,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -36,
+      "input": "(((-2 / -1) - 14) * (-7 - -10))",
+      "output": "-36"
+    },
+    {
+      "seed_id": 798,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -154,
+      "input": "(((-2 * -9) + -4) * (-1 + -10))",
+      "output": "-154"
+    },
+    {
+      "seed_id": 799,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 5832,
+      "input": "(((10 * -10) + -8) * (-9 * 6))",
+      "output": "5832"
+    },
+    {
+      "seed_id": 800,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -80,
+      "input": "((9 + -5) * (-15 + -5))",
+      "output": "-80"
+    },
+    {
+      "seed_id": 801,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 80,
+      "input": "((-6 - 4) * (1 + -9))",
+      "output": "80"
+    },
+    {
+      "seed_id": 802,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 2,
+      "input": "((-14 / -1) - (-12 / -1))",
+      "output": "2"
+    },
+    {
+      "seed_id": 803,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 206,
+      "input": "(((12 + 5) * 11) + (15 + 4))",
+      "output": "206"
+    },
+    {
+      "seed_id": 804,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -90,
+      "input": "((-8 + -10) + (-9 * 8))",
+      "output": "-90"
+    },
+    {
+      "seed_id": 805,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 174,
+      "input": "((-7 + 13) + (-12 * -14))",
+      "output": "174"
+    },
+    {
+      "seed_id": 806,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -30,
+      "input": "(((-7 - 7) - 14) - (3 + -1))",
+      "output": "-30"
+    },
+    {
+      "seed_id": 807,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 1027,
+      "input": "(((-8 * -13) * 9) - (7 * -13))",
+      "output": "1027"
+    },
+    {
+      "seed_id": 808,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 17,
+      "input": "((7 + -13) - (-14 + -9))",
+      "output": "17"
+    },
+    {
+      "seed_id": 809,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 500,
+      "input": "(((7 - -1) + 12) * (14 - -11))",
+      "output": "500"
+    },
+    {
+      "seed_id": 810,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 119,
+      "input": "(((-9 * -13) - -2) - (6 + -6))",
+      "output": "119"
+    },
+    {
+      "seed_id": 811,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -98,
+      "input": "(((13 + -12) + -8) * (13 - -1))",
+      "output": "-98"
+    },
+    {
+      "seed_id": 812,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -5,
+      "input": "((6 / 1) + (-4 + -7))",
+      "output": "-5"
+    },
+    {
+      "seed_id": 813,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 8,
+      "input": "(((1 + -2) + 6) - (5 + -8))",
+      "output": "8"
+    },
+    {
+      "seed_id": 814,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 9,
+      "input": "((-14 + 13) + (3 - -7))",
+      "output": "9"
+    },
+    {
+      "seed_id": 815,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -20,
+      "input": "((-9 - -10) * (-4 * 5))",
+      "output": "-20"
+    },
+    {
+      "seed_id": 816,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 29,
+      "input": "((8 - -6) - (-10 + -5))",
+      "output": "29"
+    },
+    {
+      "seed_id": 817,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -8,
+      "input": "((-11 + 15) + (6 * -2))",
+      "output": "-8"
+    },
+    {
+      "seed_id": 818,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -24,
+      "input": "((-7 + 13) * (-10 + 6))",
+      "output": "-24"
+    },
+    {
+      "seed_id": 819,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -97,
+      "input": "(((-12 + -14) * 3) - (11 - -8))",
+      "output": "-97"
+    },
+    {
+      "seed_id": 820,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -576,
+      "input": "((-12 * -6) * (-1 * 8))",
+      "output": "-576"
+    },
+    {
+      "seed_id": 821,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 1003,
+      "input": "(((-15 * 11) * -6) + (13 / 1))",
+      "output": "1003"
+    },
+    {
+      "seed_id": 822,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -42,
+      "input": "(((3 * -2) - -6) + (-14 * 3))",
+      "output": "-42"
+    },
+    {
+      "seed_id": 823,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 840,
+      "input": "(((6 * -11) - 4) * (-6 + -6))",
+      "output": "840"
+    },
+    {
+      "seed_id": 824,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 18,
+      "input": "((-1 - -14) + (-6 + 11))",
+      "output": "18"
+    },
+    {
+      "seed_id": 825,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -72,
+      "input": "(((-4 + 6) * -14) - (-11 * -4))",
+      "output": "-72"
+    },
+    {
+      "seed_id": 826,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 455,
+      "input": "((-2 + -3) * (13 * -7))",
+      "output": "455"
+    },
+    {
+      "seed_id": 827,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -13,
+      "input": "((3 * -2) - (10 - 3))",
+      "output": "-13"
+    },
+    {
+      "seed_id": 828,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -8,
+      "input": "(((-13 - 9) * 4) - (10 * -8))",
+      "output": "-8"
+    },
+    {
+      "seed_id": 829,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 11,
+      "input": "(((-11 + -3) / -1) + (11 + -14))",
+      "output": "11"
+    },
+    {
+      "seed_id": 830,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -41,
+      "input": "(((4 - 7) + -12) + (-15 + -11))",
+      "output": "-41"
+    },
+    {
+      "seed_id": 831,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -23,
+      "input": "((-3 + -14) - (-6 / -1))",
+      "output": "-23"
+    },
+    {
+      "seed_id": 832,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 31,
+      "input": "((12 + 6) - (-2 + -11))",
+      "output": "31"
+    },
+    {
+      "seed_id": 833,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -180,
+      "input": "((-6 + -6) * (15 / 1))",
+      "output": "-180"
+    },
+    {
+      "seed_id": 834,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 19,
+      "input": "(((-3 + -3) / -1) + (11 - -2))",
+      "output": "19"
+    },
+    {
+      "seed_id": 835,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 462,
+      "input": "(((4 - 6) * 3) * (-11 * 7))",
+      "output": "462"
+    },
+    {
+      "seed_id": 836,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -66,
+      "input": "(((-3 - -11) * -9) - (-1 * 6))",
+      "output": "-66"
+    },
+    {
+      "seed_id": 837,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 0,
+      "input": "((11 - 1) + (-13 + 3))",
+      "output": "0"
+    },
+    {
+      "seed_id": 838,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -13,
+      "input": "((1 * -4) + (4 - 13))",
+      "output": "-13"
+    },
+    {
+      "seed_id": 839,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -1,
+      "input": "(((12 + -13) * -11) - (-12 / -1))",
+      "output": "-1"
+    },
+    {
+      "seed_id": 840,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 960,
+      "input": "((4 * 2) * (-15 * -8))",
+      "output": "960"
+    },
+    {
+      "seed_id": 841,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -18,
+      "input": "(((7 + -4) - 12) - (15 + -6))",
+      "output": "-18"
+    },
+    {
+      "seed_id": 842,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 45,
+      "input": "(((-3 + 4) + 2) + (3 * 14))",
+      "output": "45"
+    },
+    {
+      "seed_id": 843,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 24,
+      "input": "((-5 * -2) - (-9 + -5))",
+      "output": "24"
+    },
+    {
+      "seed_id": 844,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -1,
+      "input": "((2 * 11) - (14 + 9))",
+      "output": "-1"
+    },
+    {
+      "seed_id": 845,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -8,
+      "input": "(((1 * -8) / -1) + (-6 - 10))",
+      "output": "-8"
+    },
+    {
+      "seed_id": 846,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -108,
+      "input": "((2 + -11) * (-1 * -12))",
+      "output": "-108"
+    },
+    {
+      "seed_id": 847,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -23,
+      "input": "((-5 + -2) + (-8 + -8))",
+      "output": "-23"
+    },
+    {
+      "seed_id": 848,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 31,
+      "input": "((-2 + 8) + (10 - -15))",
+      "output": "31"
+    },
+    {
+      "seed_id": 849,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 16,
+      "input": "((-10 + -6) * (-5 - -4))",
+      "output": "16"
+    },
+    {
+      "seed_id": 850,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 6,
+      "input": "((6 + -12) / -1)",
+      "output": "6"
+    },
+    {
+      "seed_id": 851,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 61,
+      "input": "(((13 - 14) * -1) - (15 * -4))",
+      "output": "61"
+    },
+    {
+      "seed_id": 852,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -80,
+      "input": "(((-7 - -13) - 14) * (11 - 1))",
+      "output": "-80"
+    },
+    {
+      "seed_id": 853,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -462,
+      "input": "((15 + -12) * (11 * -14))",
+      "output": "-462"
+    },
+    {
+      "seed_id": 854,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -90,
+      "input": "(((-1 - 8) + -11) + (-7 * 10))",
+      "output": "-90"
+    },
+    {
+      "seed_id": 855,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -28,
+      "input": "((-14 * 4) + (-4 * -7))",
+      "output": "-28"
+    },
+    {
+      "seed_id": 856,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 18,
+      "input": "((-6 * 3) / -1)",
+      "output": "18"
+    },
+    {
+      "seed_id": 857,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -162,
+      "input": "(((5 - 12) + -2) * (3 + 15))",
+      "output": "-162"
+    },
+    {
+      "seed_id": 858,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 73,
+      "input": "(((-10 * -7) / 1) - (-11 - -8))",
+      "output": "73"
+    },
+    {
+      "seed_id": 859,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -7,
+      "input": "((3 + -5) + (2 - 7))",
+      "output": "-7"
+    },
+    {
+      "seed_id": 860,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 75,
+      "input": "(((-7 * -15) + 2) + (4 * -8))",
+      "output": "75"
+    },
+    {
+      "seed_id": 861,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -14,
+      "input": "((1 + -1) - (1 - -13))",
+      "output": "-14"
+    },
+    {
+      "seed_id": 862,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -7410,
+      "input": "(((-2 * 13) * 15) * (4 - -15))",
+      "output": "-7410"
+    },
+    {
+      "seed_id": 863,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -3,
+      "input": "((-6 - 14) + (14 + 3))",
+      "output": "-3"
+    },
+    {
+      "seed_id": 864,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 14,
+      "input": "((11 + 3) / 1)",
+      "output": "14"
+    },
+    {
+      "seed_id": 865,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 31,
+      "input": "((15 - -13) + (3 / 1))",
+      "output": "31"
+    },
+    {
+      "seed_id": 866,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -31,
+      "input": "((-5 - -7) - (11 * 3))",
+      "output": "-31"
+    },
+    {
+      "seed_id": 867,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 77,
+      "input": "(((-8 * 10) / -1) - (-5 + 8))",
+      "output": "77"
+    },
+    {
+      "seed_id": 868,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -720,
+      "input": "(((6 - 3) * 4) * (10 * -6))",
+      "output": "-720"
+    },
+    {
+      "seed_id": 869,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 208,
+      "input": "((13 * -2) * (-11 - -3))",
+      "output": "208"
+    },
+    {
+      "seed_id": 870,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -58,
+      "input": "((-5 * 13) + (3 + 4))",
+      "output": "-58"
+    },
+    {
+      "seed_id": 871,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 1,
+      "input": "((7 - -11) - (8 + 9))",
+      "output": "1"
+    },
+    {
+      "seed_id": 872,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -34,
+      "input": "((-10 * 1) - (15 + 9))",
+      "output": "-34"
+    },
+    {
+      "seed_id": 873,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -1344,
+      "input": "(((1 * -7) * -12) * (-6 + -10))",
+      "output": "-1344"
+    },
+    {
+      "seed_id": 874,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -55,
+      "input": "(((-1 - -8) * -6) - (4 + 9))",
+      "output": "-55"
+    },
+    {
+      "seed_id": 875,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 10,
+      "input": "(((-11 - -12) - 2) - (-15 + 4))",
+      "output": "10"
+    },
+    {
+      "seed_id": 876,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -2,
+      "input": "((8 - -1) + (11 * -1))",
+      "output": "-2"
+    },
+    {
+      "seed_id": 877,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 6,
+      "input": "((-7 - -13) * (-7 + 8))",
+      "output": "6"
+    },
+    {
+      "seed_id": 878,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 102,
+      "input": "((8 - 10) - (8 * -13))",
+      "output": "102"
+    },
+    {
+      "seed_id": 879,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -197,
+      "input": "(((-12 * 14) + -9) - (15 + 5))",
+      "output": "-197"
+    },
+    {
+      "seed_id": 880,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -36,
+      "input": "((-11 - 11) - (8 - -6))",
+      "output": "-36"
+    },
+    {
+      "seed_id": 881,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 14,
+      "input": "((7 / 1) * (5 - 3))",
+      "output": "14"
+    },
+    {
+      "seed_id": 882,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 44,
+      "input": "(((10 / 1) * 4) - (2 + -6))",
+      "output": "44"
+    },
+    {
+      "seed_id": 883,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 193,
+      "input": "((15 * 13) - (-2 * -1))",
+      "output": "193"
+    },
+    {
+      "seed_id": 884,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -300,
+      "input": "(((-2 * -3) + 14) * (-7 - 8))",
+      "output": "-300"
+    },
+    {
+      "seed_id": 885,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 17,
+      "input": "((-6 / -1) - (-8 - 3))",
+      "output": "17"
+    },
+    {
+      "seed_id": 886,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 218,
+      "input": "((15 * 15) + (-11 + 4))",
+      "output": "218"
+    },
+    {
+      "seed_id": 887,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -1620,
+      "input": "(((-13 * 9) * 14) + (9 + 9))",
+      "output": "-1620"
+    },
+    {
+      "seed_id": 888,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -80,
+      "input": "((12 - 7) * (-6 - 10))",
+      "output": "-80"
+    },
+    {
+      "seed_id": 889,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 20,
+      "input": "(((-2 - -9) + 15) + (-14 + 12))",
+      "output": "20"
+    },
+    {
+      "seed_id": 890,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -151,
+      "input": "(((10 - -14) * -6) + (-15 - -8))",
+      "output": "-151"
+    },
+    {
+      "seed_id": 891,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 87,
+      "input": "(((5 - -3) * 11) + (12 + -13))",
+      "output": "87"
+    },
+    {
+      "seed_id": 892,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 0,
+      "input": "(((-15 - -15) / 1) * (-9 * 11))",
+      "output": "0"
+    },
+    {
+      "seed_id": 893,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 540,
+      "input": "(((1 + 8) * -6) * (-1 + -9))",
+      "output": "540"
+    },
+    {
+      "seed_id": 894,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -47,
+      "input": "(((-6 - 14) + -3) + (8 * -3))",
+      "output": "-47"
+    },
+    {
+      "seed_id": 895,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -16,
+      "input": "(((3 * -12) - -5) + (10 + 5))",
+      "output": "-16"
+    },
+    {
+      "seed_id": 896,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 27,
+      "input": "((-7 * -2) + (8 - -5))",
+      "output": "27"
+    },
+    {
+      "seed_id": 897,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -10,
+      "input": "(((12 + -12) / 1) - (-10 / -1))",
+      "output": "-10"
+    },
+    {
+      "seed_id": 898,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -100,
+      "input": "(((-6 * 8) * 1) - (4 * 13))",
+      "output": "-100"
+    },
+    {
+      "seed_id": 899,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -280,
+      "input": "((-6 - 1) * (10 * 4))",
+      "output": "-280"
+    },
+    {
+      "seed_id": 900,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 5,
+      "input": "(((-1 * -9) - 14) + (-10 / -1))",
+      "output": "5"
+    },
+    {
+      "seed_id": 901,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 8,
+      "input": "(((-2 - -10) + -13) - (-6 - 7))",
+      "output": "8"
+    },
+    {
+      "seed_id": 902,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 54,
+      "input": "((4 + -10) * (-4 - 5))",
+      "output": "54"
+    },
+    {
+      "seed_id": 903,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 96,
+      "input": "((3 * 8) * (-4 / -1))",
+      "output": "96"
+    },
+    {
+      "seed_id": 904,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 320,
+      "input": "((-13 - 3) * (-12 - 8))",
+      "output": "320"
+    },
+    {
+      "seed_id": 905,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -1,
+      "input": "((-9 + -10) + (10 - -8))",
+      "output": "-1"
+    },
+    {
+      "seed_id": 906,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -180,
+      "input": "((12 * -15) - (-13 + 13))",
+      "output": "-180"
+    },
+    {
+      "seed_id": 907,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -322,
+      "input": "(((7 * -4) * 11) - (1 - -13))",
+      "output": "-322"
+    },
+    {
+      "seed_id": 908,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 35,
+      "input": "(((-9 - 4) * -3) - (-10 + 14))",
+      "output": "35"
+    },
+    {
+      "seed_id": 909,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 4500,
+      "input": "(((-4 - 1) * -15) * (-5 * -12))",
+      "output": "4500"
+    },
+    {
+      "seed_id": 910,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 40,
+      "input": "((-3 * -14) + (-7 + 5))",
+      "output": "40"
+    },
+    {
+      "seed_id": 911,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 47,
+      "input": "(((-10 + 8) * -14) - (-15 - 4))",
+      "output": "47"
+    },
+    {
+      "seed_id": 912,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 225,
+      "input": "((-13 + -2) * (-14 + -1))",
+      "output": "225"
+    },
+    {
+      "seed_id": 913,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 72,
+      "input": "((12 * 2) * (12 + -9))",
+      "output": "72"
+    },
+    {
+      "seed_id": 914,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 44,
+      "input": "(((-2 + 11) - -13) * (11 - 9))",
+      "output": "44"
+    },
+    {
+      "seed_id": 915,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 11,
+      "input": "((-10 + -1) / -1)",
+      "output": "11"
+    },
+    {
+      "seed_id": 916,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 55,
+      "input": "((5 + 8) + (-6 * -7))",
+      "output": "55"
+    },
+    {
+      "seed_id": 917,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -20,
+      "input": "(((-13 + -12) + -10) - (-10 + -5))",
+      "output": "-20"
+    },
+    {
+      "seed_id": 918,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -540,
+      "input": "((-9 * 5) * (-1 - -13))",
+      "output": "-540"
+    },
+    {
+      "seed_id": 919,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 1,
+      "input": "((-8 - 11) - (-7 - 13))",
+      "output": "1"
+    },
+    {
+      "seed_id": 920,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 0,
+      "input": "(((-7 / -1) + -7) * (-4 * 3))",
+      "output": "0"
+    },
+    {
+      "seed_id": 921,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 285,
+      "input": "(((-4 * 5) * -9) + (7 * 15))",
+      "output": "285"
+    },
+    {
+      "seed_id": 922,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 18,
+      "input": "((6 + 3) * (-5 + 7))",
+      "output": "18"
+    },
+    {
+      "seed_id": 923,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 20,
+      "input": "((-10 / -1) - (-5 + -5))",
+      "output": "20"
+    },
+    {
+      "seed_id": 924,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 8,
+      "input": "(((2 + -10) / -1) / 1)",
+      "output": "8"
+    },
+    {
+      "seed_id": 925,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -3,
+      "input": "(((3 - -15) - 1) - (14 - -6))",
+      "output": "-3"
+    },
+    {
+      "seed_id": 926,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -7,
+      "input": "((6 + -5) * (-13 - -6))",
+      "output": "-7"
+    },
+    {
+      "seed_id": 927,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 0,
+      "input": "(((-15 - 6) - -9) - (-6 + -6))",
+      "output": "0"
+    },
+    {
+      "seed_id": 928,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -87,
+      "input": "((-13 - 8) + (-11 * 6))",
+      "output": "-87"
+    },
+    {
+      "seed_id": 929,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -1584,
+      "input": "(((6 + 8) - -8) * (9 * -8))",
+      "output": "-1584"
+    },
+    {
+      "seed_id": 930,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -15,
+      "input": "(((1 + 11) / 1) - (14 - -13))",
+      "output": "-15"
+    },
+    {
+      "seed_id": 931,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 52,
+      "input": "(((-11 * -6) / 1) - (-14 / -1))",
+      "output": "52"
+    },
+    {
+      "seed_id": 932,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 27,
+      "input": "((-3 + 6) * (-1 + 10))",
+      "output": "27"
+    },
+    {
+      "seed_id": 933,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 20,
+      "input": "((10 + 10) / 1)",
+      "output": "20"
+    },
+    {
+      "seed_id": 934,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 25,
+      "input": "(((-15 / -1) + -2) + (-6 * -2))",
+      "output": "25"
+    },
+    {
+      "seed_id": 935,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -21,
+      "input": "(((7 * -5) - -12) + (-2 / -1))",
+      "output": "-21"
+    },
+    {
+      "seed_id": 936,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -260,
+      "input": "((-1 + -4) * (13 * 4))",
+      "output": "-260"
+    },
+    {
+      "seed_id": 937,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -189,
+      "input": "(((-5 * 6) + 9) * (2 - -7))",
+      "output": "-189"
+    },
+    {
+      "seed_id": 938,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -40,
+      "input": "(((1 + 8) * -5) - (-2 + -3))",
+      "output": "-40"
+    },
+    {
+      "seed_id": 939,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 71,
+      "input": "(((15 - -12) * 3) + (-6 - 4))",
+      "output": "71"
+    },
+    {
+      "seed_id": 940,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -154,
+      "input": "(((-7 - 8) + -7) * (4 - -3))",
+      "output": "-154"
+    },
+    {
+      "seed_id": 941,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -68,
+      "input": "(((4 * 10) - -12) - (-8 * -15))",
+      "output": "-68"
+    },
+    {
+      "seed_id": 942,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 400,
+      "input": "((14 + 2) * (-5 * -5))",
+      "output": "400"
+    },
+    {
+      "seed_id": 943,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 16,
+      "input": "(((6 + -1) - -11) / 1)",
+      "output": "16"
+    },
+    {
+      "seed_id": 944,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -4,
+      "input": "((-8 - -3) + (-3 + 4))",
+      "output": "-4"
+    },
+    {
+      "seed_id": 945,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 338,
+      "input": "(((2 * -2) - 9) * (-2 * 13))",
+      "output": "338"
+    },
+    {
+      "seed_id": 946,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 17,
+      "input": "(((-2 - -2) + 5) + (4 - -8))",
+      "output": "17"
+    },
+    {
+      "seed_id": 947,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -14,
+      "input": "(((2 - 1) - 12) - (-1 - -4))",
+      "output": "-14"
+    },
+    {
+      "seed_id": 948,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 31,
+      "input": "(((14 - 7) - -5) - (-6 + -13))",
+      "output": "31"
+    },
+    {
+      "seed_id": 949,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -59,
+      "input": "(((-8 - 10) + -1) - (10 * 4))",
+      "output": "-59"
+    },
+    {
+      "seed_id": 950,
+      "depth": 2,
+      "num_operations": 2,
+      "result": 7,
+      "input": "((-1 + 8) / 1)",
+      "output": "7"
+    },
+    {
+      "seed_id": 951,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 150,
+      "input": "(((15 + -7) + 7) * (-1 + 11))",
+      "output": "150"
+    },
+    {
+      "seed_id": 952,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 15,
+      "input": "(((-2 + 10) - -12) - (12 + -7))",
+      "output": "15"
+    },
+    {
+      "seed_id": 953,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -91,
+      "input": "(((-2 * 6) - -11) + (10 * -9))",
+      "output": "-91"
+    },
+    {
+      "seed_id": 954,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -864,
+      "input": "(((5 + 7) / 1) * (9 * -8))",
+      "output": "-864"
+    },
+    {
+      "seed_id": 955,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -900,
+      "input": "(((7 * -7) + 4) * (9 - -11))",
+      "output": "-900"
+    },
+    {
+      "seed_id": 956,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 1248,
+      "input": "((-8 * 13) * (3 * -4))",
+      "output": "1248"
+    },
+    {
+      "seed_id": 957,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 22,
+      "input": "((3 * 5) - (7 * -1))",
+      "output": "22"
+    },
+    {
+      "seed_id": 958,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -8,
+      "input": "((-11 * 4) - (12 * -3))",
+      "output": "-8"
+    },
+    {
+      "seed_id": 959,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 864,
+      "input": "((12 * -9) * (-11 + 3))",
+      "output": "864"
+    },
+    {
+      "seed_id": 960,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -36,
+      "input": "(((8 / 1) - 4) * (-4 - 5))",
+      "output": "-36"
+    },
+    {
+      "seed_id": 961,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -7,
+      "input": "(((-15 + 6) - -5) - (-6 - -9))",
+      "output": "-7"
+    },
+    {
+      "seed_id": 962,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 13,
+      "input": "(((4 + 9) - 5) - (-4 + -1))",
+      "output": "13"
+    },
+    {
+      "seed_id": 963,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 4,
+      "input": "((-4 + 6) * (-3 + 5))",
+      "output": "4"
+    },
+    {
+      "seed_id": 964,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 3,
+      "input": "((3 - 1) - (-8 - -7))",
+      "output": "3"
+    },
+    {
+      "seed_id": 965,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 980,
+      "input": "((7 / 1) * (-10 * -14))",
+      "output": "980"
+    },
+    {
+      "seed_id": 966,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 0,
+      "input": "((8 + -9) * (13 - 13))",
+      "output": "0"
+    },
+    {
+      "seed_id": 967,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -18,
+      "input": "((-1 + -12) - (-5 + 10))",
+      "output": "-18"
+    },
+    {
+      "seed_id": 968,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 22,
+      "input": "(((-12 + -1) + -9) / -1)",
+      "output": "22"
+    },
+    {
+      "seed_id": 969,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -300,
+      "input": "(((5 * -10) / -1) * (1 * -6))",
+      "output": "-300"
+    },
+    {
+      "seed_id": 970,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 31,
+      "input": "((-5 * -7) - (5 + -1))",
+      "output": "31"
+    },
+    {
+      "seed_id": 971,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 10,
+      "input": "(((6 + -6) / 1) - (-5 - 5))",
+      "output": "10"
+    },
+    {
+      "seed_id": 972,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -102,
+      "input": "((9 - -8) * (-6 * 1))",
+      "output": "-102"
+    },
+    {
+      "seed_id": 973,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 258,
+      "input": "(((-12 * 6) - 14) * (3 - 6))",
+      "output": "258"
+    },
+    {
+      "seed_id": 974,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -11,
+      "input": "((-9 / -1) - (10 - -10))",
+      "output": "-11"
+    },
+    {
+      "seed_id": 975,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -57,
+      "input": "(((15 / 1) / 1) - (9 * 8))",
+      "output": "-57"
+    },
+    {
+      "seed_id": 976,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 5160,
+      "input": "(((14 * 12) - -4) * (-6 * -5))",
+      "output": "5160"
+    },
+    {
+      "seed_id": 977,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 35,
+      "input": "(((-4 - 5) * -1) - (-15 - 11))",
+      "output": "35"
+    },
+    {
+      "seed_id": 978,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -68,
+      "input": "(((-5 - 2) - 10) * (4 / 1))",
+      "output": "-68"
+    },
+    {
+      "seed_id": 979,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 650,
+      "input": "((-14 + -12) * (5 * -5))",
+      "output": "650"
+    },
+    {
+      "seed_id": 980,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 66,
+      "input": "(((11 - -11) * 3) / 1)",
+      "output": "66"
+    },
+    {
+      "seed_id": 981,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -13,
+      "input": "((-5 * 3) + (2 * 1))",
+      "output": "-13"
+    },
+    {
+      "seed_id": 982,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 2160,
+      "input": "((9 + 9) * (12 * 10))",
+      "output": "2160"
+    },
+    {
+      "seed_id": 983,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 9,
+      "input": "(((-4 - -5) * 6) - (-7 + 4))",
+      "output": "9"
+    },
+    {
+      "seed_id": 984,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 10,
+      "input": "((10 + -14) + (14 * 1))",
+      "output": "10"
+    },
+    {
+      "seed_id": 985,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 192,
+      "input": "(((-14 * 15) / -1) + (-6 * 3))",
+      "output": "192"
+    },
+    {
+      "seed_id": 986,
+      "depth": 2,
+      "num_operations": 3,
+      "result": -14,
+      "input": "((-1 - 13) - (5 + -5))",
+      "output": "-14"
+    },
+    {
+      "seed_id": 987,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 5,
+      "input": "(((-1 / -1) + 13) + (-3 * 3))",
+      "output": "5"
+    },
+    {
+      "seed_id": 988,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 0,
+      "input": "(((-15 - -15) / 1) * (-11 - -7))",
+      "output": "0"
+    },
+    {
+      "seed_id": 989,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -9,
+      "input": "(((5 - 6) * 9) - (13 - 13))",
+      "output": "-9"
+    },
+    {
+      "seed_id": 990,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 24,
+      "input": "((-9 - -6) - (-12 + -15))",
+      "output": "24"
+    },
+    {
+      "seed_id": 991,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -2362,
+      "input": "(((15 * -13) * 12) - (14 - -8))",
+      "output": "-2362"
+    },
+    {
+      "seed_id": 992,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 23,
+      "input": "(((-10 * -2) - -8) - (9 + -4))",
+      "output": "23"
+    },
+    {
+      "seed_id": 993,
+      "depth": 3,
+      "num_operations": 4,
+      "result": -18,
+      "input": "(((-15 - -1) + -3) - (-1 / -1))",
+      "output": "-18"
+    },
+    {
+      "seed_id": 994,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 29,
+      "input": "((9 + -3) - (-13 + -10))",
+      "output": "29"
+    },
+    {
+      "seed_id": 995,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 8,
+      "input": "((-7 + 1) + (15 + -1))",
+      "output": "8"
+    },
+    {
+      "seed_id": 996,
+      "depth": 3,
+      "num_operations": 4,
+      "result": 41,
+      "input": "(((10 / 1) + 15) + (-4 * -4))",
+      "output": "41"
+    },
+    {
+      "seed_id": 997,
+      "depth": 3,
+      "num_operations": 3,
+      "result": 172,
+      "input": "(((15 * 12) + -8) / 1)",
+      "output": "172"
+    },
+    {
+      "seed_id": 998,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 265,
+      "input": "((15 * 15) + (8 * 5))",
+      "output": "265"
+    },
+    {
+      "seed_id": 999,
+      "depth": 2,
+      "num_operations": 3,
+      "result": 2,
+      "input": "((12 - -8) - (3 - -15))",
+      "output": "2"
+    }
+  ]
+}

@@ -18,13 +18,26 @@ class MathDataPipeline:
     
     def load_data(self, level: str) -> list:
         """Load dataset split and return DataLoader."""
-        file_path = os.path.join(self.data_dir, f"level{level}", f"lvl_{level}.json")
-        print(f"Loading data from {file_path}...")
+        file_path = os.path.join(self.data_dir, f"level{level}")
 
-        with open(file_path, "r", encoding="utf-8") as f:
-            data = json.load(f)
+        target_file = [
+            os.path.join(file_path, f"lvl_{level}_controlled.json"),
+            os.path.join(file_path, f"lvl_{level}.json")
+        ]
 
-        return data['data'] # Return only the data part
+        file_path = None
+        for target_file in target_file:
+            if os.path.exists(target_file):
+                file_path = target_file
+                break
+        
+        if file_path is None:
+            raise FileNotFoundError(f"No dataset file found for level {level} in {self.data_dir}")
+        
+        print(f"Loading data from {file_path}")
+        with open(file_path, 'r', encoding='utf-8') as f:
+            data_json = json.load(f)
+        return data_json['data']
     
     def prepare_sequences(self, raw_data: list) -> tuple:
         """Prepare input and output sequences from raw data."""
@@ -116,5 +129,5 @@ class MathDataPipeline:
 
 def get_dataloaders(batch_size: int = 128) -> Dict[str, DataLoader]:
     """Utility function to get dataloaders for all levels."""
-    pipeline = MathDataPipeline(batch_size=batch_size)
+    pipeline = MathDataPipeline(data_dir="datasets", batch_size=batch_size)
     return pipeline.get_all_dataloaders()

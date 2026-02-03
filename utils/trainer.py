@@ -1,8 +1,3 @@
-"""
-Training utilities for Seq2Seq models.
-Includes training loops, validation, and evaluation with accuracy metrics.
-"""
-
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
@@ -15,17 +10,7 @@ def calculate_accuracy(
     targets: torch.Tensor,
     pad_idx: int = 0
 ) -> float:
-    """
-    Calculate token-level accuracy, ignoring padding.
-    
-    Args:
-        predictions: [batch*seq_len, vocab_size]
-        targets: [batch*seq_len]
-        pad_idx: Padding token index to ignore
-    
-    Returns:
-        Accuracy as percentage
-    """
+
     # Get predicted tokens
     pred_tokens = predictions.argmax(dim=1)  # [batch*seq_len]
     
@@ -47,20 +32,7 @@ def train_epoch(
     device: str = "cpu",
     pad_idx: int = 0
 ) -> Tuple[float, float]:
-    """
-    Train model for one epoch.
     
-    Args:
-        model: Seq2Seq model
-        dataloader: Training dataloader
-        optimizer: Optimizer
-        criterion: Loss function
-        device: Device to train on
-        pad_idx: Padding token index
-    
-    Returns:
-        Tuple of (average_loss, average_accuracy)
-    """
     model.train()
     total_loss = 0.0
     total_accuracy = 0.0
@@ -107,19 +79,7 @@ def evaluate(
     device: str = "cpu",
     pad_idx: int = 0
 ) -> Tuple[float, float]:
-    """
-    Evaluate model on validation/test set.
     
-    Args:
-        model: Seq2Seq model
-        dataloader: Validation/test dataloader
-        criterion: Loss function
-        device: Device to evaluate on
-        pad_idx: Padding token index
-    
-    Returns:
-        Tuple of (average_loss, average_accuracy)
-    """
     model.eval()
     total_loss = 0.0
     total_accuracy = 0.0
@@ -162,23 +122,7 @@ def train_model(
     pad_idx: int = 0,
     early_stopping_patience: int = 5
 ) -> Dict[str, list]:
-    """
-    Full training loop with validation and early stopping.
     
-    Args:
-        model: Seq2Seq model
-        train_loader: Training dataloader
-        val_loader: Validation dataloader
-        num_epochs: Number of epochs to train
-        learning_rate: Learning rate
-        device: Device to train on
-        save_path: Path to save best model
-        pad_idx: Padding token index
-        early_stopping_patience: Epochs to wait before early stopping
-    
-    Returns:
-        Dictionary with training history
-    """
     model = model.to(device)
     criterion = nn.CrossEntropyLoss(ignore_index=pad_idx)
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
@@ -261,15 +205,3 @@ def train_model(
         "best_val_loss": best_val_loss
     }
 
-
-if __name__ == "__main__":
-    print("Testing training utilities...")
-    
-    # Test accuracy calculation
-    predictions = torch.randn(100, 21)  # [batch*seq, vocab_size]
-    targets = torch.randint(0, 21, (100,))  # [batch*seq]
-    
-    acc = calculate_accuracy(predictions, targets, pad_idx=0)
-    print(f"Sample accuracy: {acc:.2f}%")
-    
-    print("\n✅ Training utilities test complete!")

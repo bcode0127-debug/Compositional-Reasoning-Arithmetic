@@ -16,7 +16,7 @@ class MathTokenizer:
         self.SOS_TOKEN = '<SOS>'
         self.EOS_TOKEN = '<EOS>'
         
-        chars = list('0123456789+-*/() .')
+        chars = list('0123456789+-*/() ')
         self.vocab = [self.PAD_TOKEN, self.SOS_TOKEN, self.EOS_TOKEN] + chars
         self.char_to_idx = {char: idx for idx, char in enumerate(self.vocab)}
         self.idx_to_char = {idx: char for idx, char in enumerate(self.vocab)}
