@@ -3,6 +3,7 @@ import json
 import argparse
 from pathlib import Path
 import torch
+import data
 from data.generate_controlled import (
     save_dataset,
     generate_controlled_dataset,
@@ -372,7 +373,13 @@ def evaluate_model(study: str, dataset_split: str, checkpoint_path: str, device:
     # Load dataset
     data_path = Path("datasets") / study / f"{dataset_split}.json"
     with open(data_path, 'r') as f:
-        dataset = json.load(f)
+        data = json.load(f)
+
+    # Handle wrapped format
+    if isinstance(data, dict) and 'data' in data:
+        dataset = data['data']
+    else:
+        dataset = data
     
     correct, total = 0, len(dataset)
     errors = []
