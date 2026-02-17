@@ -320,10 +320,10 @@ def main():
     print_verification_samples(samples)
     save_verification_samples(samples, args.output)
     
-    print("\n✅ VERIFICATION COMPLETE!")
+    print("\nVERIFICATION COMPLETE!")
     
     print("\n" + SEP)
-    print("✅ DATASET GENERATION COMPLETE!")
+    print("DATASET GENERATION COMPLETE!")
     print(SEP)
 
 if __name__ == "__main__":

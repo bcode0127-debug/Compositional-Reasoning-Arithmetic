@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 
 class GerationError(Exception):
-    """Exception raised for errors during generation."""
+    # Exception raised for errors during generation.
     pass
 
 

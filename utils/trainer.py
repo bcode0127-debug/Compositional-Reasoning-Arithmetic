@@ -6,7 +6,7 @@ import time
 
 
 def calculate_accuracy(model, dataloader, device, pad_idx=0):
-    # Calculate sequence-level accuracy (exact match)
+
     model.eval()
     correct = 0
     total = 0
@@ -18,8 +18,8 @@ def calculate_accuracy(model, dataloader, device, pad_idx=0):
             dec_target = dec_target.to(device)
             
             # Get predictions
-            output = model(enc_input, dec_input)  # [batch, seq_len, vocab]
-            predictions = output.argmax(dim=-1)   # [batch, seq_len]
+            output = model(enc_input, dec_input)  
+            predictions = output.argmax(dim=-1)   
             
             # Check exact sequence match for each sample
             batch_size = predictions.size(0)
@@ -56,7 +56,7 @@ def train_epoch(model, dataloader, optimizer, criterion, device, pad_idx=0):
         
         total_loss += loss.item()
     
-    return total_loss / len(dataloader)  # Return loss only
+    return total_loss / len(dataloader)  
 
 
 def evaluate(model, dataloader, criterion, device, pad_idx=0):
@@ -74,7 +74,7 @@ def evaluate(model, dataloader, criterion, device, pad_idx=0):
             loss = criterion(output.view(-1, output.size(-1)), dec_target.view(-1))
             total_loss += loss.item()
     
-    return total_loss / len(dataloader)  # Return loss only
+    return total_loss / len(dataloader)  
 
 
 def train_model(
@@ -102,16 +102,16 @@ def train_model(
     epochs_without_improvement = 0
     
     print("="*80)
-    print("TRAINING LSTM SEQ2SEQ MODEL")
+    print("TRAINING MODEL")
     print("="*80)
-    print(f"Device: {device}")
+    print(f"Model type: {type(model).__name__}") 
+    print(f"Model parameters: {sum(p.numel() for p in model.parameters()):,}")  
+    print(f"Device: {device}")  
     print(f"Learning rate: {learning_rate}")
     print(f"Epochs: {num_epochs}")
     print(f"Early stopping patience: {early_stopping_patience}")
     print("-"*80)
     print(f"{'Epoch':<8} {'Train Loss':<12} {'Train Acc':<12} {'Val Loss':<12} {'Val Acc':<12} {'Best':<8}")
-    print("-"*80)
-    
     for epoch in range(num_epochs):
         start_time = time.time()
         
@@ -162,7 +162,7 @@ def train_model(
             break
     
     print("="*80)
-    print(f"✅ TRAINING COMPLETE!")
+    print(f"TRAINING COMPLETE!")
     print(f"Best validation loss: {best_val_loss:.4f}")
     print(f"Final validation accuracy: {val_accuracies[-1]:.2f}%")
     print("="*80)
