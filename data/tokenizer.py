@@ -1,17 +1,13 @@
-"""
-Character-level tokenizer for mathematical expressions.
-Handles encoding/decoding and padding.
-"""
 
 from typing import List
 import torch
 
 
 class MathTokenizer:
-    """Character-level tokenizer for math expressions."""
+    # Character-level tokenizer for math expressions.
     
     def __init__(self):
-        """Initialize tokenizer with vocabulary."""
+        # Initialize tokenizer with vocabulary.
         self.PAD_TOKEN = '<PAD>'
         self.SOS_TOKEN = '<SOS>'
         self.EOS_TOKEN = '<EOS>'
@@ -27,17 +23,17 @@ class MathTokenizer:
         self.eos_idx = self.char_to_idx[self.EOS_TOKEN]
     
     def encode(self, text: str) -> List[int]:
-        """Convert text to list of token indices."""
+        # Convert text to list of token indices.
         return [self.char_to_idx.get(char, self.char_to_idx[self.PAD_TOKEN]) for char in text]
     
     def decode(self, indices: List[int]) -> str:
-        """Convert list of indices back to text."""
+        # Convert list of indices back to text.
         chars = [self.idx_to_char.get(idx, '') for idx in indices 
                  if idx not in [self.pad_idx, self.sos_idx, self.eos_idx]]
         return ''.join(chars).strip()
     
     def encode_batch(self, texts: List[str], max_length: int, add_sos: bool = False, add_eos: bool = False) -> torch.Tensor:
-        """Encode batch of texts with padding."""
+        # Encode batch of texts with padding.
         batch = []
         for text in texts:
             indices = self.encode(text)
@@ -53,10 +49,10 @@ class MathTokenizer:
         return torch.LongTensor(batch)
     
     def decode_batch(self, tensor: torch.Tensor) -> List[str]:
-        """Decode batch of tensors to strings."""
+        # Decode batch of tensors to strings.
         return [self.decode(indices.tolist()) for indices in tensor]
 
 
 def create_tokenizer() -> MathTokenizer:
-    """Create and return a tokenizer instance."""
+    # Create and return a tokenizer instance.
     return MathTokenizer()

@@ -1,27 +1,74 @@
-import os
 import json
 import argparse
 from pathlib import Path
 import torch
-import data
 from data.generate_controlled import (
     save_dataset,
     generate_controlled_dataset,
-    generate_verification_samples,
-    print_verification_samples,
-    save_verification_samples,
 )
 from data.tokenizer import create_tokenizer
 from data.dataloader import MathDataPipeline
 from models.lstm import create_lstm_model
 from utils.trainer import train_model
-from torch.utils.data import random_split, DataLoader
+from models.transformer import create_transformer_model 
 
 SEP = "=" * 60
+# Configuration dictionaries for adjustments
+MODEL_CONFIG = {
+    'lstm': {
+        'embedding_dim': 128,
+        'hidden_size': 256,
+    },
+    'transformer': {
+        'd_model': 256,
+        'nhead': 8,
+        'num_encoder_layers': 3,
+        'num_decoder_layers': 3,
+    }
+}
 
+TRAINING_CONFIG = {
+    'max_input_len': 20,
+    'max_output_len': 10,
+    'learning_rate': {
+        'lstm': 0.001,
+        'transformer': 0.0001,
+    }
+}
+
+# Helper functions
+def create_model(model_type: str, vocab_size: int) -> torch.nn.Module:
+    """
+    Create a model based on type and config.
+    Single source of truth for model instantiation.
+    """
+    if model_type == 'lstm':
+        return create_lstm_model(
+            embedding_dim=MODEL_CONFIG['lstm']['embedding_dim'],
+            hidden_size=MODEL_CONFIG['lstm']['hidden_size'],
+            vocab_size=vocab_size
+        )
+    elif model_type == 'transformer':
+        return create_transformer_model(
+            vocab_size=vocab_size,
+            d_model=MODEL_CONFIG['transformer']['d_model'],
+            nhead=MODEL_CONFIG['transformer']['nhead'],
+            num_encoder_layers=MODEL_CONFIG['transformer']['num_encoder_layers'],
+            num_decoder_layers=MODEL_CONFIG['transformer']['num_decoder_layers']
+        )
+    else:
+        raise ValueError(f"Unknown model type: {model_type}")
+    
 # Tokenizer tests
 def test_tokenizer():
-    # Function to test the MathTokenizer
+    """
+    Test the MathTokenizer with encoding/decoding operations.
+
+    validates:
+    - Single expression encoding and decoding accuracy
+    - Batch encoding with special tokens (SOS, EOS)
+    - Round-trip consistency (encode - decode matches original)
+    """
     print(SEP)
     print("TESTING MATH TOKENIZER")
     print(SEP)
@@ -64,29 +111,18 @@ def test_tokenizer():
     print("TOKENIZER TESTS COMPLETE!")
     print(SEP)
 
-def generate_verification(num_samples: int = 40, seed: int = 42):
-    # Generate 40 verification samples for professor review.
-    print("\n" + SEP)
-    print("GENERATING VERIFICATION SAMPLES")
-    print(SEP)
-    
-    # Generate samples
-    samples = generate_verification_samples(num_samples=40, seed=42)
-    
-    # Print to console
-    print_verification_samples(samples)
-    
-    # Save to JSON
-    verification_dir = Path(__file__).parent / "datasets" / "verification"
-    verification_dir.mkdir(parents=True, exist_ok=True)
-    save_verification_samples(samples, str(verification_dir / "samples_40.json"))   
-    
-    print("\n" + SEP)
-    print("✅ VERIFICATION COMPLETE!")
-    print(SEP)
-
 def generate_study_datasets():
-    # Generate controlled datasets for studies
+    """
+    Generate controlled datasets for generalization studies.
+
+    Study 1: Length Generalization
+    - Train/Val: 2-3 operations, depth ≤ 3
+    - OOD: 4-7 operations, depth ≤ 3 
+
+    Study 2: Depth Generalization
+    - Train/Val: 3 operations, depth ≤ 2
+    - OOD: 3 operations, depth ≤ 3 
+    """
     print("\n" + SEP)
     print("GENERATING CONTROLLED DATASETS")
     print(SEP)
@@ -116,7 +152,7 @@ def generate_study_datasets():
     save_dataset(study1_train, str(study1_dir / "train.json"))
     save_dataset(study1_val, str(study1_dir / "val.json"))
     save_dataset(study1_ood, str(study1_dir / "ood.json"))
-    print(f"✅ Study 1 saved to {study1_dir}\n")
+    print(f"Study 1 saved to {study1_dir}\n")
 
     print("Generating Study 2 (Depth Generalization)...")
     study2_train = generate_controlled_dataset(
@@ -143,43 +179,26 @@ def generate_study_datasets():
     save_dataset(study2_train, str(study2_dir / "train.json"))
     save_dataset(study2_val, str(study2_dir / "val.json"))
     save_dataset(study2_ood, str(study2_dir / "ood.json"))
-    print(f"✅ Study 2 saved to {study2_dir}\n")
+    print(f"Study 2 saved to {study2_dir}\n")
 
     print("\n" + SEP)
-    print("✅ DATASET GENERATION COMPLETE!")
+    print("DATASET GENERATION COMPLETE!")
     print(SEP)
    
 
-# Data Pipeline Testing
-def test_dataloader(data_dir: str = "datasets"):
-    # Test the data pipeline and DataLoaders
-    print("\n" + SEP)
-    print("TESTING DATA PIPELINE")
-    print(SEP + "\n")
-    
-    pipeline = MathDataPipeline(data_dir=data_dir, batch_size=128)
-    dataloaders = pipeline.get_all_dataloaders()
-    
-    for level, dataloader in dataloaders.items():
-        print(f"\n{level.upper()}:")
-        print(f"  Total batches: {len(dataloader)}")
-        
-        # Get first batch
-        batch = next(iter(dataloader))
-        enc_input, dec_input, dec_target = batch
-        
-        print(f"Batch shapes:")
-        print(f"Encoder input: {enc_input.shape}")
-        print(f"Decoder input: {dec_input.shape}")
-        print(f"Decoder target: {dec_target.shape}")
-    
-    print("\n" + SEP)
-    print("DATA PIPELINE TESTS COMPLETE!")
-    print(SEP)
-
 # LSTM model testing
-def test_lstm():
-    # Test LSTM model architecture
+def test_lstm(model_type: str = 'lstm'):
+    """
+    Test LSTM model architecture.
+
+    Validates:
+    - Model forward pass works correctly
+    - Output shapes match expectations
+    - No NaN or gradient issues
+
+    Args:
+    model_type (str): Type of model to test ('lstm' or 'transformer')
+    """
     print("\n" + SEP)
     print("TESTING LSTM MODEL ARCHITECTURE")
     print(SEP + "\n")
@@ -187,8 +206,9 @@ def test_lstm():
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Device: {device}\n")
     
-    # Create model
-    model = create_lstm_model(embedding_dim=128, hidden_size=256, vocab_size=21)
+    # Create model based on model_type parameter
+    tokenizer = create_tokenizer()
+    model = create_model(model_type, tokenizer.vocab_size)
     model = model.to(device)
     print(f"Model created successfully")
     print(f"Model parameters: {sum(p.numel() for p in model.parameters()):,}\n")
@@ -209,8 +229,18 @@ def test_lstm():
     print(SEP)
 
 # Sanity Check: Overfit on tiny dataset
-def overfit_sanity_check(num_samples: int = 30, num_epochs: int = 50):
-    # Verify the model can overfit on a tiny dataset
+def overfit_sanity_check(model_type: str = 'lstm', num_samples: int = 30, num_epochs: int = 150):
+    """
+    Sanity check to see if model can overfit a tiny dataset.
+
+    Trains the model on a tiny dataset to confirm the architecture and 
+    training pipeline work correctly before full-scale training.
+
+    Args:
+    model_type (str): Type of model to test ('lstm' or 'transformer')
+    num_samples (int): Number of samples in the tiny dataset
+    num_epochs (int): Number of epochs to train for overfitting
+    """
     print("\n" + SEP)
     print("SANITY CHECK: Overfit Test")
     print(f"Testing if model can memorize {num_samples} samples")
@@ -238,12 +268,8 @@ def overfit_sanity_check(num_samples: int = 30, num_epochs: int = 50):
 
     print(f"Dataset size: {len(tiny_data)} samples")
 
-    # Create model
-    model = create_lstm_model(
-        embedding_dim=128, 
-        hidden_size=256, 
-        vocab_size=21
-    )
+    tokenizer = create_tokenizer()
+    model = create_model(model_type, tokenizer.vocab_size)
 
     # Train
     checkpoint_dir = Path(__file__).parent / "results" / "lstm_baseline" / "sanity_check"
@@ -255,7 +281,7 @@ def overfit_sanity_check(num_samples: int = 30, num_epochs: int = 50):
         train_loader=train_loader,
         val_loader=val_loader,
         num_epochs=num_epochs,
-        learning_rate=0.001,
+        learning_rate=0.0005,
         device=device,
         save_path=str(checkpoint_dir / "sanity_model.pt"), 
         pad_idx=0,
@@ -266,6 +292,12 @@ def overfit_sanity_check(num_samples: int = 30, num_epochs: int = 50):
     final_train_acc = history['train_accuracies'][-1]
     final_val_acc = history['val_accuracies'][-1]
     
+    # After creating the model
+    print("\n" + SEP)
+    print("MODEL ARCHITECTURE")
+    print(SEP)
+    print(model)
+    print(SEP + "\n")
     print("\n" + SEP)
     print("SANITY CHECK RESULTS")
     print(SEP)
@@ -277,10 +309,10 @@ def overfit_sanity_check(num_samples: int = 30, num_epochs: int = 50):
     passed = final_val_acc >= threshold
     
     if passed:
-        print(f"\n✅ PASS: Model achieved {final_val_acc:.2f}% (>= {threshold}%)")
+        print(f"\nPASS: Model achieved {final_val_acc:.2f}% (>= {threshold}%)")
         print("Architecture is working correctly. Model can memorize.")
     else:
-        print(f"\n❌ FAIL: Model only achieved {final_val_acc:.2f}% (< {threshold}%)")
+        print(f"\nFAIL: Model only achieved {final_val_acc:.2f}% (< {threshold}%)")
         print("Possible issues:")
         print("- Model architecture may have bugs.")
     
@@ -293,34 +325,48 @@ def overfit_sanity_check(num_samples: int = 30, num_epochs: int = 50):
     return passed
     
 # Training
-def train_lstm_model(study: str, dataset_split: str = "train", num_epochs: int = 20, batch_size: int = 32, learning_rate: float = 0.001, data_dir: str = "datasets") -> dict:
-    # Train LSTM model on a specific study and dataset split
+def train_model_on_study(model_type: str, study: str, dataset_split: str = "train", num_epochs: int = 20, batch_size: int = 32, learning_rate: float = 0.001, data_dir: str = "datasets") -> dict:
+    """
+    Train an LSTM or Transformer model on a specified dataset split.
+
+    Args:
+    model_type (str): Type of model to train ('lstm' or 'transformer')
+    study (str): Which study dataset to use ('study1' or 'study2')
+    dataset_split (str): Which split to train on ('train', 'val', or 'ood')
+    num_epochs (int): Number of training epochs
+    batch_size (int): Training batch size
+    learning_rate (float): Learning rate for optimizer
+    data_dir (str): Base directory where datasets are stored
+    """
     print("\n" + SEP)
-    print(f"TRAINING LSTM ON {study.upper()} - {dataset_split.upper()}")
+    print(f"TRAINING {model_type.upper()} ON {study.upper()} - {dataset_split.upper()}")
     print(SEP + "\n")
     
     device = "cuda" if torch.cuda.is_available() else "cpu"
     
-    # Load data from study JSON file
     data_path = Path(data_dir) / study / f"{dataset_split}.json"
     with open(data_path, 'r') as f:
         dataset = json.load(f)
     
-    # Create dataloaders
     pipeline = MathDataPipeline(data_dir=data_dir, batch_size=batch_size)
-    data_file = f"{study}/{dataset_split}.json"
-    train_loader = pipeline.get_dataloaders_file(data_file, shuffle=True)
-    val_loader = pipeline.get_dataloaders_file(data_file, shuffle=False)
+    train_file = f"{study}/train.json"
+    val_file = f"{study}/val.json"
+    train_loader = pipeline.get_dataloaders_file(train_file, shuffle=True)
+    val_loader = pipeline.get_dataloaders_file(val_file, shuffle=False)
     
-    # Create model
-    model = create_lstm_model(embedding_dim=128, hidden_size=256, vocab_size=21)
+    tokenizer = create_tokenizer()
+    model = create_model(model_type, tokenizer.vocab_size)
     
-    # Setup checkpoint directory per study
-    checkpoint_dir = Path(__file__).parent / "results" / "lstm_baseline" / study
+    if model_type == 'lstm':
+        results_base = Path(__file__).parent / "results" / "lstm_baseline"
+    elif model_type == 'transformer':
+        results_base = Path(__file__).parent / "results" / "transformer"
+    else:
+        results_base = Path(__file__).parent / "results" / "unknown_model"
+    checkpoint_dir = results_base / study
     checkpoint_dir.mkdir(parents=True, exist_ok=True)
     save_path = checkpoint_dir / f"{dataset_split}_best_model.pt"
     
-    # Train
     history = train_model(
         model=model,
         train_loader=train_loader,
@@ -330,33 +376,43 @@ def train_lstm_model(study: str, dataset_split: str = "train", num_epochs: int =
         device=device,
         save_path=str(save_path),
         pad_idx=0,
-        early_stopping_patience=5
+        early_stopping_patience=25
     )
     
-    # Save training history
     history_path = checkpoint_dir / f"{dataset_split}_history.json"
     with open(history_path, 'w') as f:
         json.dump(history, f, indent=2)
     
-    print(f"\n✅ Training complete for {study} ({dataset_split})!")
+    print(f"\nTraining complete for {study} ({dataset_split})!")
     print(f"Best model saved to: {save_path}")
     print(f"History saved to: {history_path}")
     
     return history
 
 # Evaluation
-def evaluate_model(study: str, dataset_split: str, checkpoint_path: str, device: str = "cpu") -> dict:
-    # Evaluation of a trained LSTM
+def evaluate_model(model_type: str, study: str, dataset_split: str, checkpoint_path: str, device: str = "cpu") -> dict:
+    """
+    Evaluate a trained model on a specified dataset split.
+
+    Args:
+    model_type (str): Type of model to evaluate ('lstm' or 'transformer')
+    study (str): Which study dataset to evaluate on ('study1' or 'study2')
+    dataset_split (str): Which split to evaluate on ('train', 'val', or 'ood')
+    checkpoint_path (str): Path to the trained model checkpoint
+    device (str): Device to run evaluation on ('cpu' or 'cuda')
+    """
     print("\n" + SEP)
     print(f"EVALUATING {study.upper()} - {dataset_split.upper()}")
     print(SEP + "\n")
 
     # Load model
-    vocab_size = 21
-    max_input_len = 20
-    max_output_len = 10
+    tokenizer = create_tokenizer()
+    vocab_size = tokenizer.vocab_size
+    max_input_len = TRAINING_CONFIG['max_input_len']
+    max_output_len = TRAINING_CONFIG['max_output_len']
 
-    model = create_lstm_model(embedding_dim=128, hidden_size=256, vocab_size=vocab_size)
+    tokenizer = create_tokenizer()
+    model = create_model(model_type, vocab_size)
     checkpoint = torch.load(checkpoint_path, map_location=device)
     
     # Handle both checkpoint types
@@ -387,7 +443,7 @@ def evaluate_model(study: str, dataset_split: str, checkpoint_path: str, device:
     with torch.no_grad():
         for sample in dataset:
             expr = sample["input"]
-            target = sample["output"]
+            target = str(sample["output"])  # Convert to string for comparison
 
             try:
                 # Encode source expression
@@ -400,17 +456,17 @@ def evaluate_model(study: str, dataset_split: str, checkpoint_path: str, device:
                 dec_token_ids = [tokenizer.sos_idx]
                 pred_ids = []
 
-                for step in range(max_output_len):
+                dec_token_ids = [tokenizer.sos_idx]
+                for step in range(max_output_len - 1):
                     # Pad current sequence
                     current_dec = dec_token_ids + [tokenizer.pad_idx] * (max_output_len - len(dec_token_ids))
                     current_dec = current_dec[:max_output_len]
                     dec_tensor = torch.tensor([current_dec], dtype=torch.long).to(device)
 
-                    logits = model(src_tensor, dec_tensor)  # [1, seq_len, vocab_size]
+                    logits = model(src_tensor, dec_tensor) 
 
                     # Get next token 
-                    nxt_token_id = logits[0, step, :].argmax(dim=-1).item()
-                    pred_ids.append(nxt_token_id)
+                    nxt_token_id = logits[0, len(dec_token_ids) - 1, :].argmax(dim=-1).item()
 
                     # stop at <EOS> or <PAD>
                     if nxt_token_id == tokenizer.eos_idx or nxt_token_id == tokenizer.pad_idx:
@@ -420,7 +476,7 @@ def evaluate_model(study: str, dataset_split: str, checkpoint_path: str, device:
                     dec_token_ids.append(nxt_token_id)
 
                 # Decode predicted 
-                pred_str = tokenizer.decode(pred_ids)
+                pred_str = tokenizer.decode(dec_token_ids[1:])
 
                 # Compare
                 if pred_str == target:
@@ -446,74 +502,101 @@ def evaluate_model(study: str, dataset_split: str, checkpoint_path: str, device:
         print("\nSample errors:")
         for e in errors:
             if "error" in e:
-                print(f"  Input: {e['input']}")
-                print(f"  Error: {e['error']}\n")
+                print(f"Input: {e['input']}")
+                print(f"Error: {e['error']}\n")
             else:
-                print(f"  Input    : {e['input']}")
-                print(f"  Expected : {e['expected']}")
-                print(f"  Got      : {e['predicted']}\n")
+                print(f"Input    : {e['input']}")
+                print(f"Expected : {e['expected']}")
+                print(f"Got      : {e['predicted']}\n")
     
     return {"accuracy": acc, "correct": correct, "total": total}
 
 # Main Entry point
 def main() -> None:
-    # Main entry point for the pipeline.
+    """
+    Main entry point for the pipeline.
+
+    This function parses command-line arguments to determine which mode to run in:
+    - verify: Generate and save verification samples for manual inspection.
+    - generate: Create controlled datasets for the generalization studies.
+    - sanity: Run a sanity check to see if the model can overfit a tiny dataset.
+    - train: Train the model on the specified datasets. 
+    - eval: Evaluate the trained model on validation and OOD sets.
+    - test: Run unit tests for the tokenizer and model architecture.
+    """
     parser = argparse.ArgumentParser(
-        description="Math Reasoning LSTM Baseeline"
+        description="Math Reasoning LSTM Baseline"
     )
-    parser.add_argument(
-        "--mode",
-        choices=["verify", "generate", "train", "eval", "test", "sanity"],
-        default="generate",
-        help="Which stages to run"
-    )
-    parser.add_argument("--num-epochs", type=int, default=20, help="Number of training epochs")
+    parser.add_argument('--mode', type=str, default='train',
+                choices=['verify', 'generate', 'sanity', 'train', 'eval', 'test'],
+                help='Mode to run')
+    parser.add_argument('--model', type=str, default='lstm', choices=['lstm', 'transformer'],
+                    help='Model architecture to use')
+    parser.add_argument("--num-epochs", type=int, default=100, help="Number of training epochs")
     parser.add_argument("--batch-size", type=int, default=32, help="Batch size for training")
-    parser.add_argument("--lr", type=float, default=0.001, help="Learning rate")
+    parser.add_argument("--lr", type=float, default=None, help="Learning rate")
     args = parser.parse_args()
 
     # Mode routing
-    if args.mode == "verify":
-        generate_verification()
-
-    elif args.mode == "generate":
+    if args.mode == "generate":
         generate_study_datasets()
 
     elif args.mode == "sanity":
-        overfit_sanity_check()
+        overfit_sanity_check(model_type=args.model)
 
     elif args.mode == "train":
         print("\n" + SEP)
         print("TRAINING MODELS")
         print(SEP + "\n")
-        train_lstm_model("study1", "train", num_epochs=args.num_epochs, batch_size=args.batch_size, learning_rate=args.lr)
-        train_lstm_model("study2", "train", num_epochs=args.num_epochs, batch_size=args.batch_size, learning_rate=args.lr)
+        lr = TRAINING_CONFIG['learning_rate'].get(args.model, 0.001) if args.lr is None else args.lr
+        train_model_on_study(args.model, "study1", "train", num_epochs=args.num_epochs, batch_size=args.batch_size, learning_rate=lr)
+        train_model_on_study(args.model, "study2", "train", num_epochs=args.num_epochs, batch_size=args.batch_size, learning_rate=lr)
 
     elif args.mode == "eval":
         print("\n" + SEP)
         print("EVALUATING MODELS")
         print(SEP + "\n")
         device = "cuda" if torch.cuda.is_available() else "cpu"
-        
-        # Evaluate Study 1
-        checkpoint_s1 = Path(__file__).parent / "results" / "lstm_baseline" / "study1" / "train_best_model.pt"
-        if checkpoint_s1.exists():
-            evaluate_model("study1", "val", str(checkpoint_s1), device=device)
-            evaluate_model("study1", "ood", str(checkpoint_s1), device=device)
-        else:
-            print(f"⚠️ Study 1 checkpoint not found: {checkpoint_s1}")
-        
-        # Evaluate Study 2
-        checkpoint_s2 = Path(__file__).parent / "results" / "lstm_baseline" / "study2" / "train_best_model.pt"
-        if checkpoint_s2.exists():
-            evaluate_model("study2", "val", str(checkpoint_s2), device=device)
-            evaluate_model("study2", "ood", str(checkpoint_s2), device=device)
-        else:
-            print(f"⚠️ Study 2 checkpoint not found: {checkpoint_s2}")
 
-    elif args.mode == "test":
-        test_tokenizer()
-        test_lstm()
+        # Determine checkpoint base directory
+        if args.model == 'lstm':
+            checkpoint_base = Path(__file__).parent / "results" / "lstm_baseline"
+        elif args.model == 'transformer':
+            checkpoint_base = Path(__file__).parent / "results" / "transformer"
+        else:
+            checkpoint_base = Path(__file__).parent / "results" / f"{args.model}_baseline"
+        # Dictionary to store all results
+        eval_results = {}
+
+        # Evaluate Study 1
+        checkpoint_s1 = checkpoint_base / "study1" / "train_best_model.pt"
+        if checkpoint_s1.exists():
+            val_result = evaluate_model(args.model, "study1", "val", str(checkpoint_s1), device=device)
+            ood_result = evaluate_model(args.model, "study1", "ood", str(checkpoint_s1), device=device)
+            eval_results['study1'] = {
+            'val': val_result['accuracy'],
+            'ood': ood_result['accuracy']
+        }
+        else:
+            print(f"Study 1 checkpoint not found: {checkpoint_s1}")
+
+        # Evaluate Study 2
+        checkpoint_s2 = checkpoint_base / "study2" / "train_best_model.pt"
+        if checkpoint_s2.exists():
+            val_result = evaluate_model(args.model, "study2", "val", str(checkpoint_s2), device=device)
+            ood_result = evaluate_model(args.model, "study2", "ood", str(checkpoint_s2), device=device)
+            eval_results['study2'] = {
+                'val': val_result['accuracy'],
+                'ood': ood_result['accuracy']
+            }
+        else:
+            print(f"Study 2 checkpoint not found: {checkpoint_s2}")
+
+        # Save evaluation results
+        eval_results_path = checkpoint_base / "evaluation_results.json"
+        with open(eval_results_path, 'w') as f:
+            json.dump(eval_results, f, indent=2)
+        print(f"\n✅ Evaluation results saved to: {eval_results_path}")
 
     print("\n" + SEP)
     print("ALL DONE!")

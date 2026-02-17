@@ -6,10 +6,19 @@ from torch.utils.data import TensorDataset, DataLoader
 from data.tokenizer import MathTokenizer, create_tokenizer
 
 class MathDataPipeline:
-    # Data pipeline for loading and batching math expression datasets.
-    
+    """
+        Data pipeline for loading and batching math expression datasets.
+
+        Args:
+        data_dir (str): Directory where dataset files are located.
+        max_input_len (int): Maximum length of input token sequences.
+        max_output_len (int): Maximum length of output token sequences.
+        batch_size (int): Batch size for DataLoader.
+        tokenizer (MathTokenizer): Tokenizer instance for encoding/decoding expressions.
+        """
     def __init__(self, data_dir: str = "datasets", max_input_len: int = 20, max_output_len: int = 10, batch_size: int = 128):
-        # Initialize the data pipeline.
+        # Data pipeline for loading and batching math expression datasets.
+
         self.data_dir = data_dir
         self.max_input_len = max_input_len
         self.max_output_len = max_output_len
@@ -18,6 +27,7 @@ class MathDataPipeline:
     
     def load_data(self, level: str) -> list:
         # Load dataset split and return DataLoader.
+
         file_path = os.path.join(self.data_dir, f"level{level}")
 
         target_file = [
@@ -40,7 +50,14 @@ class MathDataPipeline:
         return data_json['data']
     
     def prepare_sequences(self, raw_data: list) -> tuple:
-        # Prepare input and output sequences from raw data.
+        """
+        Prepare encoder and decoder sequences from raw data.
+
+        For each sample:
+         - Encoder input: tokenized input expression (padded)
+         - Decoder input: <SOS> + tokenized answer (padded)
+         - Decoder target: tokenized answer + <EOS> (padded)
+         """
         encoder_inputs = []
         decoder_inputs = []
         decoder_targets = []
@@ -49,22 +66,26 @@ class MathDataPipeline:
             input_expr = item['input']
             output_expr = str(item['output'])
 
-           # Encode input expression (no special tokens)
+            # Encode input expression (no special tokens)
             enc_input = self.tokenizer.encode(input_expr)
             enc_input = enc_input + [self.tokenizer.pad_idx] * (self.max_input_len - len(enc_input))
             enc_input = enc_input[:self.max_input_len]
             encoder_inputs.append(enc_input)
-            
-            # Decode input: <SOS> + answer tokens
-            dec_input = [self.tokenizer.sos_idx] + self.tokenizer.encode(output_expr)
+        
+            # Encode output answer tokens
+            answer_tokens = self.tokenizer.encode(output_expr)
+        
+            # Decode input: <SOS> + answer tokens (teacher forcing input)
+            dec_input = [self.tokenizer.sos_idx] + answer_tokens
             dec_input = dec_input + [self.tokenizer.pad_idx] * (self.max_output_len - len(dec_input))
             dec_input = dec_input[:self.max_output_len]
             decoder_inputs.append(dec_input)
-            
-            # Decode target: answer tokens + <EOS>
-            dec_target = self.tokenizer.encode(output_expr) + [self.tokenizer.eos_idx]
-            dec_target = dec_target + [self.tokenizer.pad_idx] * (self.max_output_len - len(dec_target))
-            dec_target = dec_target[:self.max_output_len]
+        
+            # Decode target: answer tokens + <EOS> (what model should predict)
+            answer_with_eos = answer_tokens + [self.tokenizer.eos_idx]
+            dec_target = answer_with_eos[:self.max_output_len]
+            if len(dec_target) < self.max_output_len:
+                dec_target = dec_target + [self.tokenizer.pad_idx] * (self.max_output_len - len(dec_target))
             decoder_targets.append(dec_target)
 
         return (
@@ -72,9 +93,10 @@ class MathDataPipeline:
             torch.LongTensor(decoder_inputs),
             torch.LongTensor(decoder_targets)
         )
-
+    
     def get_dataloader(self, level: int, shuffle: bool = True) -> DataLoader:
         # Get DataLoader for specified level.
+
         print(f"Preparing Level {level} Data")
         print(f"{'='*60}")
 
@@ -92,6 +114,7 @@ class MathDataPipeline:
 
     def get_dataloaders_file(self, filename: str, shuffle: bool = True) -> DataLoader:
         # Get DataLoaders for all levels.
+
         file_path = os.path.join(self.data_dir, filename)
         if not os.path.exists(file_path):
             raise FileNotFoundError(f"No dataset file found: {file_path}")
@@ -112,6 +135,7 @@ class MathDataPipeline:
         return dataloader
     def get_train_val_dataloaders(self, level: int, train_split: float = 0.8) -> Tuple[DataLoader, DataLoader]:
         # Get train and validation dataloaders for a specific level with train/val split.
+
         print(f"Preparing Level {level} Data (Train/Val Split)")
         print(f"{'='*60}")
     
@@ -141,5 +165,6 @@ class MathDataPipeline:
 
 def get_dataloaders(batch_size: int = 128) -> Dict[str, DataLoader]:
     # Utility function to get dataloaders for all levels.
+    
     pipeline = MathDataPipeline(data_dir="datasets", batch_size=batch_size)
     return pipeline.get_all_dataloaders()

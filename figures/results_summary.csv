@@ -1,0 +1,5 @@
+Model,Study,Train Acc (%),Val Acc (%),OOD Acc (%),Gen Gap (%)
+LSTM,Study 1 (Length),95.1375,38.2,1.8,93.3375
+LSTM,Study 2 (Depth),89.1875,15.9,10.4,78.7875
+Transformer,Study 1 (Length),56.6625,12.1,0.4,56.2625
+Transformer,Study 2 (Depth),51.3375,5.7,2.3,49.0375
