@@ -2,7 +2,7 @@
 
 Investigating whether neural networks learn algorithmic reasoning or memorize patterns in arithmetic expression evaluation.
 
-**Status:** In Progress | **Current Phase:** LSTM Baseline Complete
+**Status:** In Progress | **Current Phase:** LSTM + Transformer Baselines Complete
 
 ---
 
@@ -19,7 +19,7 @@ Investigating whether neural networks learn algorithmic reasoning or memorize pa
 
 ## Overview
 
-This project systematically evaluates compositional generalization in neural sequence models through controlled arithmetic reasoning tasks. We test whether models learn underlying computational algorithms or surface-level pattern matching.
+This project systematically evaluates compositional generalization in neural sequence models through controlled arithmetic reasoning tasks. tested whether models learn underlying computational algorithms or surface-level pattern matching.
 
 ---
 
@@ -37,18 +37,38 @@ Compared LSTM and Transformer architectures to identify which architectural prop
 
 ## Results
 
-### LSTM Baseline COMPLETE
+### LSTM Baseline 
 
-| Study | Train Acc | Val (Held-Out) | OOD Acc | Generalization Gap |
-|-------|-----------|----------------|---------|-------------------|
-| **Study 1** (Length: 2-3 → 4-7 ops) | 99.41% | 39.70% | **0.80%** | -98.61% |
-| **Study 2** (Depth: d=2 → d=3) | 99.45% | 14.40% | **13.80%** | -85.65% |
+| Study | Train Acc | Val Acc | OOD Acc | Gen Gap |
+|-------|-----------|---------|---------|---------|
+| **Study 1** (Length: 2-3 → 4-7 ops) | 95.1% | 38.2% | **1.8%** | 93.3% |
+| **Study 2** (Depth: d=2 → d=3) | 89.2% | 15.9% | **10.4%** | 78.8% |
 
-**Key Finding:** LSTM achieves near-perfect accuracy on training distribution but catastrophic failure on OOD examples.
+**Key Finding:** LSTM achieves high accuracy on training distribution but catastrophic failure on OOD examples, confirming surface-level pattern memorization over algorithmic reasoning.
 
-### Transformer Baseline IN PROGRESS
+---
 
-*Results pending*
+### Transformer  
+
+| Study | Train Acc | Val Acc | OOD Acc | Gen Gap |
+|-------|-----------|---------|---------|---------|
+| **Study 1** (Length: 2-3 → 4-7 ops) | 56.7% | 12.1% | **0.4%** | 56.3% |
+| **Study 2** (Depth: d=2 → d=3) | 51.3% | 5.7% | **2.3%** | 49.0% |
+
+**Key Finding:** Transformer underperforms LSTM on both train and OOD accuracy. Additionally shows autoregressive generation weakness - val accuracy (6-12%) is significantly lower than teacher-forced train accuracy (51-57%), indicating compounding error accumulation during inference.
+
+---
+
+### Overall Comparison
+
+| Model | Study | Train Acc | Val Acc | OOD Acc | Gen Gap |
+|-------|-------|-----------|---------|---------|---------|
+| LSTM | Study 1 (Length) | 95.1% | 38.2% | 1.8% | 93.3% |
+| LSTM | Study 2 (Depth) | 89.2% | 15.9% | 10.4% | 78.8% |
+| Transformer | Study 1 (Length) | 56.7% | 12.1% | 0.4% | 56.3% |
+| Transformer | Study 2 (Depth) | 51.3% | 5.7% | 2.3% | 49.0% |
+
+**Both architectures fail compositional generalization. Neither learns algorithmic reasoning.**
 
 ---
 
@@ -58,22 +78,21 @@ Compositional-Reasoning-Arithmetic/
 ├── main.py                     # Entry point
 ├── models/
 │   ├── lstm.py                 # LSTM encoder-decoder
-│   └── transformer.py          # [In Progress]
+│   └── transformer.py          # Transformer encoder-decoder
 ├── utils/
-│   ├── tokenizer.py            # Expression tokenization
 │   └── trainer.py              # Training logic
 ├── data/
-│   └── dataset.py              # Data loading
+│   ├── generate_controlled.py  # Dataset generation
+│   ├── tokenizer.py            # Expression tokenization
+│   └── dataloader.py           # Data loading
 ├── datasets/
 │   ├── study1/                 # Length generalization (10K samples)
-│   ├── study2/                 # Depth generalization (10K samples)
-│   └── verification/           # 40 controlled validation samples
+│   └── study2/                 # Depth generalization (10K samples)
 ├── results/
-│   ├── lstm_baseline/          # Training histories + evaluation
-│   └── transformer_baseline/   # [Pending]
+│   ├── lstm_baseline/          # LSTM training histories + checkpoints
+│   └── transformer/            # Transformer training histories + checkpoints
 ├── figures/                    # Publication-quality plots
-├── notebooks/
-│   └── lstm_training.ipynb     # Reproducible training workflow
+├── notebooks/                  # Analysis and visualization
 ├── requirements.txt
 └── README.md
 ```
@@ -85,12 +104,11 @@ Compositional-Reasoning-Arithmetic/
 ### Requirements
 - Python 3.8+
 - PyTorch 2.0+ with CUDA
-- 16GB+ GPU RAM (A100)
 
 ### Installation
 ```bash
 git clone https://github.com/bcode0127-debug/Compositional-Reasoning-Arithmetic.git
-cd Math-reasoning-research
+cd Compositional-Reasoning-Arithmetic
 pip install -r requirements.txt
 ```
 
@@ -104,24 +122,19 @@ python main.py --mode generate
 ```
 Creates 20,000 controlled samples across two generalization studies.
 
-### 2. Run Sanity Check
+### 2. Train Model
 ```bash
-python main.py --mode sanity
-```
-Verifies model can memorize 30 samples (expected: 100% accuracy).
+# LSTM (auto lr=0.001)
+python main.py --mode train --model lstm --num-epochs 100
 
-### 3. Train Model
-```bash
-# LSTM (complete)
-python main.py --mode train --model lstm --num-epochs 100 --batch-size 32 --lr 0.001
-
-# Transformer (in progress)
-python main.py --mode train --model transformer --num-epochs 100 --batch-size 32 --lr 0.001
+# Transformer (auto lr=0.0001)
+python main.py --mode train --model transformer --num-epochs 100
 ```
 
-### 4. Evaluate
+### 3. Evaluate
 ```bash
 python main.py --mode eval --model lstm
+python main.py --mode eval --model transformer
 ```
 
 ---
@@ -133,8 +146,7 @@ All expressions maintain:
 - **Operand range:** 1-20
 - **Result magnitude:** ≤1000
 - **Operations:** +, -, *, / (balanced)
-- **Format:** Fully parenthesized prefix notation
-- **Verification:** 40 hand-crafted samples for validation
+- **Format:** Fully parenthesized infix notation
 
 ### Study 1: Length Generalization
 
@@ -156,18 +168,23 @@ All expressions maintain:
 | Val | 2 | 1,000 | `((10 + 5) * (3 - 1))` → `30` |
 | OOD | 3 | 1,000 | `((18 - 8) * (20 + 19))` → `390` |
 
-### Model Architecture
+### Model Architectures
 
-**LSTM Encoder-Decoder** 
+**LSTM Encoder-Decoder**
 - Embedding: 128-dim
-- Hidden: 256-dim  
-- Vocabulary: 21 tokens
+- Hidden: 256-dim
+- Parameters: 2,120,724
 - Optimizer: Adam (lr=0.001)
-- Training: Teacher forcing + early stopping (patience=5)
+- Training: Teacher forcing + early stopping (patience=25)
 
-**Transformer** 
-- [Details pending]
+**Transformer Encoder-Decoder**
+- Model dim: 256
+- Attention heads: 8
+- Encoder/Decoder layers: 3
+- Parameters: 5,546,004
+- Optimizer: Adam (lr=0.0001)
+- Training: Teacher forcing + early stopping (patience=25)
 
 ---
 
-**Last Updated:** February 4, 2026
+**Last Updated:** February 17, 2026
