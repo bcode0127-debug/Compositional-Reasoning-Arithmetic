@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environments
+.venv/
+.venv-1/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Model checkpoints
+*.pt
+*.pth
+
+# macOS
+.DS_Store
+
+# Archives
+*.zip
+
+# Scratch/private files
+Untitled0.ipynb
+check_checkpoint.py
+proejct_document.md
+
+# Archive folders
+data/archive/
+datasets/archive/
+results/archive/
+notebooks/
+
+# Verification samples
+datasets/verification/
