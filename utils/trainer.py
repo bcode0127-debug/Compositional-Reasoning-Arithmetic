@@ -81,7 +81,7 @@ def train_model(
     model: nn.Module,
     train_loader: DataLoader,
     val_loader: DataLoader,
-    num_epochs: int = 20,
+    num_epochs: int = 100,  # callers override this; aligned to 100 to match real cap
     learning_rate: float = 0.001,
     device: str = "cpu",
     save_path: Optional[str] = None,

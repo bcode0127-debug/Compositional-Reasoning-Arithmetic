@@ -331,7 +331,7 @@ def overfit_sanity_check(model_type: str = 'lstm', num_samples: int = 30, num_ep
     return passed
     
 # Training
-def train_model_on_study(model_type: str, study: str, dataset_split: str = "train", num_epochs: int = 20, batch_size: int = 32, learning_rate: float = 0.001, data_dir: str = "datasets") -> dict:
+def train_model_on_study(model_type: str, study: str, dataset_split: str = "train", num_epochs: int = 100, batch_size: int = 32, learning_rate: float = 0.001, data_dir: str = "datasets") -> dict:  # real cap; CLI default is 100
     """
     Train an LSTM or Transformer model on a specified dataset split.
 
