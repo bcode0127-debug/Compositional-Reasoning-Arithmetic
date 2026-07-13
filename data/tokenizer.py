@@ -25,6 +25,20 @@ class MathTokenizer:
     def encode(self, text: str) -> List[int]:
         # Convert text to list of token indices.
         return [self.char_to_idx.get(char, self.char_to_idx[self.PAD_TOKEN]) for char in text]
+
+    def encode_checked(self, text: str, max_length: int, context: str = "") -> List[int]:
+        """Like encode(), but raises instead of allowing a silent downstream
+        truncation. Callers must check length BEFORE adding any SOS/EOS
+        tokens or padding, and BEFORE slicing to max_length."""
+        indices = self.encode(text)
+        if len(indices) > max_length:
+            where = f" ({context})" if context else ""
+            raise ValueError(
+                f"Sequence exceeds configured max_length={max_length}{where}: "
+                f"length={len(indices)}, text={text!r}. Truncation is disabled; "
+                f"raise max_length instead of silently corrupting the input."
+            )
+        return indices
     
     def decode(self, indices: List[int]) -> str:
         # Convert list of indices back to text.

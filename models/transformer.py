@@ -24,11 +24,17 @@ class PositionalEncoding(nn.Module):
 
 class TransformerEncoderDecoder(nn.Module):
     def __init__(self, vocab_size, d_model=256, nhead=8, num_encoder_layers=3,
-                 num_decoder_layers=3, dim_feedforward=1024, dropout=0.1):
+                 num_decoder_layers=3, dim_feedforward=1024, dropout=0.1, pad_idx=None):
         super(TransformerEncoderDecoder, self).__init__()
 
         self.d_model = d_model
         self.vocab_size = vocab_size
+        # pad_idx=None (default) preserves the original forward() behavior
+        # exactly - no padding mask is built or passed, so pre-existing
+        # checkpoints and analysis code that construct this model without
+        # pad_idx keep producing bit-identical inference output. Pass an
+        # explicit pad_idx (e.g. 0) to opt into src/tgt padding masks.
+        self.pad_idx = pad_idx
 
         # Embedding layers
         self.encoder_embedding = nn.Embedding(vocab_size, d_model)
@@ -60,17 +66,35 @@ class TransformerEncoderDecoder(nn.Module):
         tgt_mask = self.generate_square_subsequent_mask(
             tgt.size(1)).to(tgt.device)
 
+        # Padding masks: only built when pad_idx is explicitly set (see
+        # __init__ comment) - shape [batch, seq_len], True = ignore that
+        # position as a key. memory_key_padding_mask reuses src_key_padding_mask
+        # since the encoder memory has the same padding layout as src.
+        if self.pad_idx is not None:
+            src_key_padding_mask = (src == self.pad_idx)
+            tgt_key_padding_mask = (tgt == self.pad_idx)
+        else:
+            src_key_padding_mask = None
+            tgt_key_padding_mask = None
+
         src_emb = self.encoder_embedding(src) * math.sqrt(self.d_model)
         tgt_emb = self.decoder_embedding(tgt) * math.sqrt(self.d_model)
         src_emb = self.pos_encoder(src_emb)
         tgt_emb = self.pos_decoder(tgt_emb)
 
         if not return_attention:
-            # original path -untouched (fast training)
-            output = self.transformer(src_emb, tgt_emb, tgt_mask=tgt_mask)
+            # original path - untouched (fast training) when pad_idx is None;
+            # with pad_idx set, padding masks flow through here identically
+            # to the attention-extraction path below.
+            output = self.transformer(
+                src_emb, tgt_emb, tgt_mask=tgt_mask,
+                src_key_padding_mask=src_key_padding_mask,
+                tgt_key_padding_mask=tgt_key_padding_mask,
+                memory_key_padding_mask=src_key_padding_mask,
+            )
             return self.fc_out(output)
 
-        # attention path 
+        # attention path
         encoder_attention = []
         enc_out = src_emb
 
@@ -78,6 +102,7 @@ class TransformerEncoderDecoder(nn.Module):
             # 1. self-attention with weights
             attn_out, attn_w = layer.self_attn(
                 enc_out, enc_out, enc_out,
+                key_padding_mask=src_key_padding_mask,
                 need_weights=True,
                 average_attn_weights=False  # [batch, heads, src, src]
             )
@@ -97,6 +122,7 @@ class TransformerEncoderDecoder(nn.Module):
             self_out, _ = layer.self_attn(
                 dec_out, dec_out, dec_out,
                 attn_mask=tgt_mask,
+                key_padding_mask=tgt_key_padding_mask,
                 need_weights=False
             )
             dec_out = layer.norm1(dec_out + layer.dropout1(self_out))
@@ -104,6 +130,7 @@ class TransformerEncoderDecoder(nn.Module):
             # 2. cross-attention with weights
             cross_out, cross_w = layer.multihead_attn(
                 dec_out, enc_out, enc_out,
+                key_padding_mask=src_key_padding_mask,
                 need_weights=True,
                 average_attn_weights=False  # [batch, heads, tgt, src]
             )
@@ -127,7 +154,7 @@ class TransformerEncoderDecoder(nn.Module):
 
 
 def create_transformer_model(vocab_size, d_model=256, nhead=8,
-                             num_encoder_layers=3, num_decoder_layers=3):
+                             num_encoder_layers=3, num_decoder_layers=3, pad_idx=None):
     model = TransformerEncoderDecoder(
         vocab_size=vocab_size,
         d_model=d_model,
@@ -135,6 +162,7 @@ def create_transformer_model(vocab_size, d_model=256, nhead=8,
         num_encoder_layers=num_encoder_layers,
         num_decoder_layers=num_decoder_layers,
         dim_feedforward=1024,
-        dropout=0.1  
+        dropout=0.1,
+        pad_idx=pad_idx,
     )
     return model

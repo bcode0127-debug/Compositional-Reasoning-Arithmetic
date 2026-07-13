@@ -66,26 +66,39 @@ class MathDataPipeline:
             input_expr = item['input']
             output_expr = str(item['output'])
 
-            # Encoder input expression (no special tokens)
-            enc_input = self.tokenizer.encode(input_expr)
+            # Encoder input expression (no special tokens) - hard fail instead
+            # of silently truncating if it doesn't fit.
+            enc_input = self.tokenizer.encode_checked(
+                input_expr, self.max_input_len, context="encoder input"
+            )
             enc_input = enc_input + [self.tokenizer.pad_idx] * (self.max_input_len - len(enc_input))
-            enc_input = enc_input[:self.max_input_len]
             encoder_inputs.append(enc_input)
-        
+
             # Encoder output answer tokens
             answer_tokens = self.tokenizer.encode(output_expr)
-        
+
             # Decoder input: <SOS> + answer tokens (teacher forcing input)
             dec_input = [self.tokenizer.sos_idx] + answer_tokens
+            if len(dec_input) > self.max_output_len:
+                raise ValueError(
+                    f"Decoder input exceeds configured max_output_len="
+                    f"{self.max_output_len}: length={len(dec_input)}, "
+                    f"output={output_expr!r}. Truncation is disabled; "
+                    f"raise max_output_len instead of silently corrupting the target."
+                )
             dec_input = dec_input + [self.tokenizer.pad_idx] * (self.max_output_len - len(dec_input))
-            dec_input = dec_input[:self.max_output_len]
             decoder_inputs.append(dec_input)
-        
+
             # Decoder target: answer tokens + <EOS> (what model should predict)
             answer_with_eos = answer_tokens + [self.tokenizer.eos_idx]
-            dec_target = answer_with_eos[:self.max_output_len]
-            if len(dec_target) < self.max_output_len:
-                dec_target = dec_target + [self.tokenizer.pad_idx] * (self.max_output_len - len(dec_target))
+            if len(answer_with_eos) > self.max_output_len:
+                raise ValueError(
+                    f"Decoder target exceeds configured max_output_len="
+                    f"{self.max_output_len}: length={len(answer_with_eos)}, "
+                    f"output={output_expr!r}. Truncation is disabled; "
+                    f"raise max_output_len instead of silently corrupting the target."
+                )
+            dec_target = answer_with_eos + [self.tokenizer.pad_idx] * (self.max_output_len - len(answer_with_eos))
             decoder_targets.append(dec_target)
 
         return (
