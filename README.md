@@ -5,22 +5,28 @@
 
 ## Abstract
 
-Neural sequence models trained on arithmetic expressions achieve high 
-in-distribution accuracy but fail catastrophically on out-of-distribution 
-(OOD) inputs. This work provides empirical and mechanistic evidence that 
-neither LSTM nor Transformer encoder-decoder architectures learn 
-compositional reasoning - both rely on surface-level pattern memorization. 
-Attention analysis of the Transformer reveals that OOD failure is not due 
-to error accumulation during decoding, but rather an immediate breakdown in 
+Neural sequence models trained on arithmetic expressions fit the training
+distribution well under teacher forcing, yet their autoregressive generation
+degrades sharply on held-out in-distribution inputs and collapses on
+out-of-distribution (OOD) expressions. This work provides empirical and
+mechanistic evidence that neither LSTM nor Transformer encoder-decoder
+architectures learn compositional reasoning - both rely on surface-level
+pattern memorization. All accuracies are reported under autoregressive
+decoding. Attention analysis of the Transformer shows the OOD collapse is
+not error accumulation during decoding, but an immediate breakdown in
 encoder representations at the first decoding step.
 
 ---
 
 ## Key Findings
 
-- Both architectures generalize at under 12% OOD across all conditions, 
-  with generalization gaps exceeding 47%
-- Transformer Layer 3 encoder attention collapses to near-uniform 
+- Under autoregressive decoding, OOD accuracy collapses to 1.6% (LSTM) and
+  0.3% (Transformer) on length generalization; multiplication and division
+  reach 0.0% OOD
+- Length generalization shows a sharp in-distribution → OOD drop (LSTM
+  32.6% → 1.6%); depth accuracy is low both in- and out-of-distribution,
+  indicating the models never learned depth composition in the first place
+- Transformer Layer 3 encoder attention collapses to near-uniform
   distributions on OOD inputs while Layer 1 retains structure
 - No attention head shows meaningful OOD-specific sensitivity when ablated (top head's OOD-accuracy drop ≈ 0.000); ablation deltas are driven by in-distribution drops, not OOD-specific compositional work - failure is architecturally distributed, not localized in a single circuit
 - All four operations collapse to near-total OOD failure (0.00%-0.58%), with no meaningful ranking between them
@@ -33,14 +39,17 @@ encoder representations at the first decoding step.
 
 ### Baseline Accuracy
 
-*All val and OOD accuracies reported using autoregressive decoding at inference time.*
+*Val and OOD accuracies are reported under autoregressive decoding at inference
+time. Train accuracy is teacher-forced (training-time) and is shown only for
+reference; the Gap column is computed as Val − OOD so all compared numbers use
+the same decoding mode.*
 
-| Model | Study | Train | Val | OOD | Gap |
+| Model | Study | Train (TF) | Val | OOD | Gap (Val−OOD) |
 |---|---|---|---|---|---|
-| LSTM | Study 1 - Length (2-3 → 4-7 ops) | 95.1% | 32.6% | **1.6%** | 93.5% |
-| LSTM | Study 2 - Depth (d=2 → d=3) | 89.2% | 11.5% | **11.9%** | 77.3% |
-| Transformer | Study 1 - Length | 56.7% | 7.0% | **0.3%** | 56.4% |
-| Transformer | Study 2 - Depth | 51.3% | 3.9% | **4.0%** | 47.3% |
+| LSTM | Study 1 - Length (2-3 → 4-7 ops) | 95.1% | 32.6% | **1.6%** | 31.0 pp |
+| LSTM | Study 2 - Depth (d=2 → d=3) | 89.2% | 11.5% | **11.9%** | −0.4 pp |
+| Transformer | Study 1 - Length | 56.7% | 7.0% | **0.3%** | 6.7 pp |
+| Transformer | Study 2 - Depth | 51.3% | 3.9% | **4.0%** | −0.1 pp |
 
 ### Attention Analysis - Transformer (Study 1)
 
@@ -60,25 +69,25 @@ encoder representations at the first decoding step.
 
 ### Task
 
-Models receive a fully parenthesized arithmetic expression as input and 
-must produce the correct integer result as output. The task is formulated 
+Models receive a fully parenthesized arithmetic expression as input and
+must produce the correct integer result as output. The task is formulated
 as a sequence-to-sequence problem with character-level tokenization.
+
 ```
 Input:  ( ( 1 3 - 7 ) + ( 8 - 8 ) )
 Output: 6
 ```
-
 ### Controlled Studies
 
 Two generalization axes are tested independently:
 
 **Study 1 - Length Generalization**
-Train on expressions with 2–3 operations. Test on expressions with 4–7 
-operations. Tests whether learned computation rules extend to longer 
+Train on expressions with 2–3 operations. Test on expressions with 4–7
+operations. Tests whether learned computation rules extend to longer
 expression chains.
 
 **Study 2 - Depth Generalization**
-Train on expression trees of depth 2. Test on depth 3. Tests whether 
+Train on expression trees of depth 2. Test on depth 3. Tests whether
 learned subexpression evaluation extends to deeper nesting.
 
 ### Dataset Specification
@@ -94,18 +103,19 @@ learned subexpression evaluation extends to deeper nesting.
 ### Model Architectures
 
 **LSTM Encoder-Decoder**
-Bidirectional encoder, unidirectional decoder. Hidden dim 256, embedding 
-dim 128, ~2.1M parameters. Trained with teacher forcing, Adam (lr=0.001), 
+Bidirectional encoder, unidirectional decoder. Hidden dim 256, embedding
+dim 128, ~2.1M parameters. Trained with teacher forcing, Adam (lr=0.001),
 early stopping (patience=25).
 
 **Transformer Encoder-Decoder**
-3 encoder + 3 decoder layers, 8 attention heads, model dim 256, sinusoidal 
-positional encoding, ~5.5M parameters. Trained with teacher forcing, Adam 
+3 encoder + 3 decoder layers, 8 attention heads, model dim 256, sinusoidal
+positional encoding, ~5.5M parameters. Trained with teacher forcing, Adam
 (lr=0.0001), early stopping (patience=25).
 
 ---
 
 ## Repository Structure
+
 ```
 Compositional-Reasoning-Arithmetic/
 ├── main.py                      # Entry point — generate / train / eval
@@ -178,14 +188,14 @@ Saves all CP1–CP5 results to `experiments/results/`.
 
 ## Related Work
 
-- Dziri et al. (2023) - Transformers solve compositional tasks via 
+- Dziri et al. (2023) - Transformers solve compositional tasks via
   linearized pattern matching, not systematic reasoning
-- Stolfo et al. (2023) - Causal mediation analysis of arithmetic 
+- Stolfo et al. (2023) - Causal mediation analysis of arithmetic
   reasoning in language models
 - Elhage et al. (2021) - Mathematical framework for Transformer circuits
-- Zhang et al. (2025) - Complexity control and OOD generalization in 
+- Zhang et al. (2025) - Complexity control and OOD generalization in
   Transformers
-- Hahn et al. (2026) - Shattered compositionality; arithmetic subskills 
+- Hahn et al. (2026) - Shattered compositionality; arithmetic subskills
   acquired independently and subject to interference (arXiv:2601.22510)
 
 ---
