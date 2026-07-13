@@ -28,10 +28,10 @@ encoder representations at the first decoding step.
   indicating the models never learned depth composition in the first place
 - Transformer Layer 3 encoder attention collapses to near-uniform
   distributions on OOD inputs while Layer 1 retains structure
-- No attention head crosses the 0.01 compositional specialization threshold -
-  failure is architecturally distributed, not localized
-- 4 of 5 traced OOD failures occur at decoding Step 0, ruling out error
-  accumulation as the cause
+- No attention head shows meaningful OOD-specific sensitivity when ablated (top head's OOD-accuracy drop ≈ 0.000); ablation deltas are driven by in-distribution drops, not OOD-specific compositional work - failure is architecturally distributed, not localized in a single circuit
+- All four operations collapse to near-total OOD failure (0.00%-0.58%), with no meaningful ranking between them
+- 4 of 5 traced OOD failures occur at decoding Step 0, ruling out 
+  error accumulation as the cause
 
 ---
 
@@ -57,9 +57,11 @@ the same decoding mode.*
 |---|---|---|
 | CP1 | Encoder self-attention heatmaps (ID vs OOD) | Layer 1 heads structured on ID; Layer 3 collapses to uniform on OOD |
 | CP2 | Cross-attention per decoding step (ID vs OOD) | ID attention shifts selectively per step; OOD spreads flat across all tokens |
-| CP3 | Head ablation - ID drop vs OOD drop delta (48 heads) | No head crosses 0.01 threshold; failure is distributed across architecture |
-| CP4 | OOD accuracy by dominant operation type | `+`: 0.2%, `-`: 2.4%, `*`: 0.0%, `/`: 0.0% |
+| CP3 | Head ablation - ID drop vs OOD drop delta (48 heads) | Top head (`EL3H2`) OOD drop ≈ 0.000; ablation deltas are driven by ID drops, not OOD-specific effects - no head performs OOD-specific compositional work, failure is distributed across the architecture |
+| CP4 | OOD accuracy by dominant operation type | `+`: 1/441 = 0.23%, `-`: 2/347 = 0.58%, `*`: 1/201 = 0.50%, `/`: 0/11 = 0.00%* |
 | CP5 | Failure onset traces - first wrong decoding step | 4/5 failures at Step 0; immediate breakdown, not error accumulation |
+
+*CP4's `/` bucket has only 11 OOD examples; its exact 0.00% is not statistically reliable in isolation. CP5 traces 5 failures for illustration, not to establish a population failure rate.*
 
 ---
 

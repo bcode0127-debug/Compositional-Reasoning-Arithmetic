@@ -26,20 +26,20 @@
   {
     "label": "EL1H5",
     "id_drop": 0.0,
-    "ood_drop": 0.001,
-    "delta": 0.001
+    "ood_drop": 0.0,
+    "delta": 0.0
   },
   {
     "label": "EL1H6",
     "id_drop": -0.005,
-    "ood_drop": 0.0,
-    "delta": 0.005
+    "ood_drop": -0.001,
+    "delta": 0.004
   },
   {
     "label": "EL1H7",
     "id_drop": 0.0,
-    "ood_drop": 0.0,
-    "delta": 0.0
+    "ood_drop": 0.001,
+    "delta": 0.001
   },
   {
     "label": "EL1H8",
@@ -62,8 +62,8 @@
   {
     "label": "EL2H3",
     "id_drop": -0.01,
-    "ood_drop": 0.001,
-    "delta": 0.011
+    "ood_drop": -0.001,
+    "delta": 0.009000000000000001
   },
   {
     "label": "EL2H4",
@@ -74,14 +74,14 @@
   {
     "label": "EL2H5",
     "id_drop": 0.0,
-    "ood_drop": 0.001,
-    "delta": 0.001
+    "ood_drop": 0.0,
+    "delta": 0.0
   },
   {
     "label": "EL2H6",
     "id_drop": -0.01,
-    "ood_drop": 0.001,
-    "delta": 0.011
+    "ood_drop": -0.001,
+    "delta": 0.009000000000000001
   },
   {
     "label": "EL2H7",
@@ -92,8 +92,8 @@
   {
     "label": "EL2H8",
     "id_drop": -0.005,
-    "ood_drop": 0.0,
-    "delta": 0.005
+    "ood_drop": -0.001,
+    "delta": 0.004
   },
   {
     "label": "EL3H1",
@@ -104,38 +104,38 @@
   {
     "label": "EL3H2",
     "id_drop": -0.015,
-    "ood_drop": 0.001,
-    "delta": 0.016
+    "ood_drop": 0.0,
+    "delta": 0.015
   },
   {
     "label": "EL3H3",
     "id_drop": -0.005,
-    "ood_drop": 0.001,
-    "delta": 0.006
+    "ood_drop": 0.0,
+    "delta": 0.005
   },
   {
     "label": "EL3H4",
     "id_drop": -0.005,
-    "ood_drop": -0.001,
-    "delta": 0.004
+    "ood_drop": 0.0,
+    "delta": 0.005
   },
   {
     "label": "EL3H5",
     "id_drop": -0.005,
-    "ood_drop": -0.001,
-    "delta": 0.004
+    "ood_drop": 0.0,
+    "delta": 0.005
   },
   {
     "label": "EL3H6",
     "id_drop": 0.0,
-    "ood_drop": 0.0,
-    "delta": 0.0
+    "ood_drop": 0.001,
+    "delta": 0.001
   },
   {
     "label": "EL3H7",
     "id_drop": -0.005,
-    "ood_drop": 0.0,
-    "delta": 0.005
+    "ood_drop": 0.002,
+    "delta": 0.007
   },
   {
     "label": "EL3H8",
@@ -170,8 +170,8 @@
   {
     "label": "DL1H5",
     "id_drop": -0.005,
-    "ood_drop": 0.0,
-    "delta": 0.005
+    "ood_drop": -0.001,
+    "delta": 0.004
   },
   {
     "label": "DL1H6",
@@ -182,8 +182,8 @@
   {
     "label": "DL1H7",
     "id_drop": -0.01,
-    "ood_drop": 0.0,
-    "delta": 0.01
+    "ood_drop": -0.001,
+    "delta": 0.009000000000000001
   },
   {
     "label": "DL1H8",
@@ -194,8 +194,8 @@
   {
     "label": "DL2H1",
     "id_drop": -0.005,
-    "ood_drop": 0.001,
-    "delta": 0.006
+    "ood_drop": 0.0,
+    "delta": 0.005
   },
   {
     "label": "DL2H2",
@@ -212,8 +212,8 @@
   {
     "label": "DL2H4",
     "id_drop": -0.015,
-    "ood_drop": 0.0,
-    "delta": 0.015
+    "ood_drop": -0.001,
+    "delta": 0.013999999999999999
   },
   {
     "label": "DL2H5",
@@ -242,32 +242,32 @@
   {
     "label": "DL3H1",
     "id_drop": 0.0,
-    "ood_drop": 0.001,
-    "delta": 0.001
+    "ood_drop": 0.0,
+    "delta": 0.0
   },
   {
     "label": "DL3H2",
     "id_drop": 0.0,
-    "ood_drop": 0.0,
-    "delta": 0.0
+    "ood_drop": 0.001,
+    "delta": 0.001
   },
   {
     "label": "DL3H3",
     "id_drop": 0.0,
-    "ood_drop": 0.0,
-    "delta": 0.0
+    "ood_drop": 0.001,
+    "delta": 0.001
   },
   {
     "label": "DL3H4",
     "id_drop": -0.005,
-    "ood_drop": -0.002,
-    "delta": 0.003
+    "ood_drop": 0.001,
+    "delta": 0.006
   },
   {
     "label": "DL3H5",
     "id_drop": 0.0,
-    "ood_drop": 0.0,
-    "delta": 0.0
+    "ood_drop": 0.001,
+    "delta": 0.001
   },
   {
     "label": "DL3H6",
@@ -278,13 +278,13 @@
   {
     "label": "DL3H7",
     "id_drop": -0.015,
-    "ood_drop": 0.0,
-    "delta": 0.015
+    "ood_drop": -0.001,
+    "delta": 0.013999999999999999
   },
   {
     "label": "DL3H8",
     "id_drop": -0.005,
-    "ood_drop": 0.0,
-    "delta": 0.005
+    "ood_drop": 0.001,
+    "delta": 0.006
   }
 ]
