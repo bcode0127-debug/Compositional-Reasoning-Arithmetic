@@ -1,62 +1,30 @@
 [
   {
-    "expression": "(((2 + 1) - 7) - (17 + 20))",
-    "expected": "-41",
-    "num_ops": 4,
+    "expression": "(((8 + 13) - 17) + ((5 - 19) * 15))",
+    "expected": "-206",
+    "num_ops": 5,
     "steps": [
       {
         "step": 0,
         "expected": "-",
-        "predicted": "1",
+        "predicted": "4",
         "correct": false
       },
       {
         "step": 1,
-        "expected": "4",
-        "predicted": "2",
-        "correct": false
-      },
-      {
-        "step": 2,
-        "expected": "1",
-        "predicted": "<EOS>",
-        "correct": false
-      },
-      {
-        "step": 3,
-        "expected": "<EOS>",
-        "predicted": "<EOS>",
-        "correct": true
-      }
-    ],
-    "first_error_step": 0
-  },
-  {
-    "expression": "(((6 + 15) + (9 - 17)) * ((10 - 17) + (5 - 12)))",
-    "expected": "-182",
-    "num_ops": 7,
-    "steps": [
-      {
-        "step": 0,
-        "expected": "-",
-        "predicted": "2",
-        "correct": false
-      },
-      {
-        "step": 1,
-        "expected": "1",
-        "predicted": "2",
-        "correct": false
-      },
-      {
-        "step": 2,
-        "expected": "8",
+        "expected": "2",
         "predicted": "6",
         "correct": false
       },
       {
+        "step": 2,
+        "expected": "0",
+        "predicted": "<EOS>",
+        "correct": false
+      },
+      {
         "step": 3,
-        "expected": "2",
+        "expected": "6",
         "predicted": "<EOS>",
         "correct": false
       },
@@ -70,30 +38,24 @@
     "first_error_step": 0
   },
   {
-    "expression": "(((17 + 15) * (8 + 8)) + ((1 - 19) + (19 + 8)))",
-    "expected": "521",
-    "num_ops": 7,
+    "expression": "(((4 + 5) + 12) + (13 - 9))",
+    "expected": "25",
+    "num_ops": 4,
     "steps": [
       {
         "step": 0,
-        "expected": "5",
-        "predicted": "1",
+        "expected": "2",
+        "predicted": "4",
         "correct": false
       },
       {
         "step": 1,
-        "expected": "2",
+        "expected": "5",
         "predicted": "<EOS>",
         "correct": false
       },
       {
         "step": 2,
-        "expected": "1",
-        "predicted": "<EOS>",
-        "correct": false
-      },
-      {
-        "step": 3,
         "expected": "<EOS>",
         "predicted": "<EOS>",
         "correct": true
@@ -102,19 +64,19 @@
     "first_error_step": 0
   },
   {
-    "expression": "(((7 + 4) * 14) + ((14 / 1) + 2))",
-    "expected": "170",
-    "num_ops": 5,
+    "expression": "(((3 - 11) * 6) - (12 / 1))",
+    "expected": "-60",
+    "num_ops": 4,
     "steps": [
       {
         "step": 0,
-        "expected": "1",
-        "predicted": "1",
-        "correct": true
+        "expected": "-",
+        "predicted": "<EOS>",
+        "correct": false
       },
       {
         "step": 1,
-        "expected": "7",
+        "expected": "6",
         "predicted": "<EOS>",
         "correct": false
       },
@@ -131,29 +93,61 @@
         "correct": true
       }
     ],
+    "first_error_step": 0
+  },
+  {
+    "expression": "(((12 / 1) * 9) + (12 - 5))",
+    "expected": "115",
+    "num_ops": 4,
+    "steps": [
+      {
+        "step": 0,
+        "expected": "1",
+        "predicted": "1",
+        "correct": true
+      },
+      {
+        "step": 1,
+        "expected": "1",
+        "predicted": "<EOS>",
+        "correct": false
+      },
+      {
+        "step": 2,
+        "expected": "5",
+        "predicted": "<EOS>",
+        "correct": false
+      },
+      {
+        "step": 3,
+        "expected": "<EOS>",
+        "predicted": "<EOS>",
+        "correct": true
+      }
+    ],
     "first_error_step": 1
   },
   {
-    "expression": "(((17 - 17) - (2 + 17)) + ((3 + 20) - (8 + 13)))",
-    "expected": "-17",
+    "expression": "(((5 + 5) + (16 - 1)) + ((11 + 2) * (18 / 1)))",
+    "expected": "259",
     "num_ops": 7,
     "steps": [
       {
         "step": 0,
-        "expected": "-",
+        "expected": "2",
         "predicted": "1",
         "correct": false
       },
       {
         "step": 1,
-        "expected": "1",
-        "predicted": "2",
+        "expected": "5",
+        "predicted": "<EOS>",
         "correct": false
       },
       {
         "step": 2,
-        "expected": "7",
-        "predicted": "6",
+        "expected": "9",
+        "predicted": "<EOS>",
         "correct": false
       },
       {

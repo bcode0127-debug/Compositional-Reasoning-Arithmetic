@@ -1,22 +1,22 @@
 {
   "+": {
-    "correct": 0,
-    "total": 470,
-    "accuracy": 0.0
+    "correct": 1,
+    "total": 441,
+    "accuracy": 0.0023
   },
   "-": {
-    "correct": 4,
-    "total": 333,
-    "accuracy": 0.012
+    "correct": 2,
+    "total": 347,
+    "accuracy": 0.0058
   },
   "*": {
-    "correct": 0,
-    "total": 189,
-    "accuracy": 0.0
+    "correct": 1,
+    "total": 201,
+    "accuracy": 0.005
   },
   "/": {
     "correct": 0,
-    "total": 8,
+    "total": 11,
     "accuracy": 0.0
   }
 }
