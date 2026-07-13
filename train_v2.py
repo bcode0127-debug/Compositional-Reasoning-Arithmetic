@@ -8,7 +8,7 @@ invocation; loop externally over the combinations you want (e.g. 2 models x
 
 Usage:
     python train_v2.py --model transformer --study 1 --seed 0
-    python train_v2.py --model lstm --study 2 --seed 0 --num-epochs 1
+    python train_v2.py --model lstm --study 2 --seed 0 --epochs 1
 """
 import argparse
 import json
@@ -38,9 +38,12 @@ TRAINING_CONFIG_V2 = {
         'transformer': 3e-4,  # raised from 1e-4 - safe with warmup
     },
     'warmup_steps': 400,
-    'batch_size': 32,
-    'num_epochs': 100,
-    'early_stopping_patience': 25,
+    'min_lr': 1e-5,
+    'scheduler': 'cosine',
+    'batch_size': 64,
+    'batch_size_fallback': 32,  # used if batch_size triggers an MPS OOM
+    'num_epochs': 200,
+    'early_stopping_patience': 50,
 }
 
 DATASET_VERSION = "datasets_v2"
@@ -105,7 +108,9 @@ def main():
     parser.add_argument('--model', choices=['lstm', 'transformer'], required=True)
     parser.add_argument('--study', choices=['1', '2'], required=True)
     parser.add_argument('--seed', type=int, required=True)
-    parser.add_argument('--num-epochs', type=int, default=TRAINING_CONFIG_V2['num_epochs'])
+    parser.add_argument('--epochs', type=int, default=TRAINING_CONFIG_V2['num_epochs'])
+    parser.add_argument('--patience', type=int, default=TRAINING_CONFIG_V2['early_stopping_patience'])
+    parser.add_argument('--scheduler', choices=['constant', 'cosine'], default=TRAINING_CONFIG_V2['scheduler'])
     parser.add_argument('--batch-size', type=int, default=TRAINING_CONFIG_V2['batch_size'])
     parser.add_argument('--data-dir', type=str, default='datasets_v2')
     parser.add_argument('--device', type=str, default=None,
@@ -127,15 +132,6 @@ def main():
     data_dir = Path(args.data_dir)
 
     tokenizer = create_tokenizer()
-    model = build_model(args.model, tokenizer.vocab_size, pad_idx=tokenizer.pad_idx)
-
-    pipeline = MathDataPipeline(
-        data_dir=str(data_dir), batch_size=args.batch_size,
-        max_input_len=TRAINING_CONFIG_V2['max_input_len'],
-        max_output_len=TRAINING_CONFIG_V2['max_output_len'],
-    )
-    train_loader = pipeline.get_dataloaders_file(f"{study_key}/train.json", shuffle=True)
-    val_loader = pipeline.get_dataloaders_file(f"{study_key}/val.json", shuffle=False)
 
     generator_commit = get_generator_commit(data_dir, study_key)
 
@@ -143,23 +139,61 @@ def main():
     results_dir.mkdir(parents=True, exist_ok=True)
     save_path = results_dir / "best_model.pt"
 
+    def build_loaders(batch_size):
+        pipeline = MathDataPipeline(
+            data_dir=str(data_dir), batch_size=batch_size,
+            max_input_len=TRAINING_CONFIG_V2['max_input_len'],
+            max_output_len=TRAINING_CONFIG_V2['max_output_len'],
+        )
+        train_loader = pipeline.get_dataloaders_file(f"{study_key}/train.json", shuffle=True)
+        val_loader = pipeline.get_dataloaders_file(f"{study_key}/val.json", shuffle=False)
+        return train_loader, val_loader
+
+    def is_oom_error(exc) -> bool:
+        msg = str(exc).lower()
+        return "out of memory" in msg or ("mps" in msg and "alloc" in msg)
+
+    def train_with_batch_size(batch_size):
+        model = build_model(args.model, tokenizer.vocab_size, pad_idx=tokenizer.pad_idx)
+        train_loader, val_loader = build_loaders(batch_size)
+        history = train_model(
+            model=model,
+            train_loader=train_loader,
+            val_loader=val_loader,
+            num_epochs=args.epochs,
+            learning_rate=TRAINING_CONFIG_V2['learning_rate'][args.model],
+            device=device,
+            save_path=str(save_path),
+            pad_idx=tokenizer.pad_idx,
+            early_stopping_patience=args.patience,
+            warmup_steps=TRAINING_CONFIG_V2['warmup_steps'],
+            scheduler_type=args.scheduler,
+            min_lr=TRAINING_CONFIG_V2['min_lr'],
+            seed=args.seed,
+            dataset_version=DATASET_VERSION,
+            generator_commit=generator_commit,
+        )
+        return model, history
+
+    batch_size_used = args.batch_size
+    fallback_note = None
     t_start = time.time()
-    history = train_model(
-        model=model,
-        train_loader=train_loader,
-        val_loader=val_loader,
-        num_epochs=args.num_epochs,
-        learning_rate=TRAINING_CONFIG_V2['learning_rate'][args.model],
-        device=device,
-        save_path=str(save_path),
-        pad_idx=tokenizer.pad_idx,
-        early_stopping_patience=TRAINING_CONFIG_V2['early_stopping_patience'],
-        warmup_steps=TRAINING_CONFIG_V2['warmup_steps'],
-        seed=args.seed,
-        dataset_version=DATASET_VERSION,
-        generator_commit=generator_commit,
-    )
+    try:
+        model, history = train_with_batch_size(batch_size_used)
+    except RuntimeError as e:
+        if not (device == "mps" and is_oom_error(e) and batch_size_used != TRAINING_CONFIG_V2['batch_size_fallback']):
+            raise
+        fallback_note = (
+            f"batch_size={batch_size_used} hit an MPS memory error "
+            f"({e}); falling back to batch_size={TRAINING_CONFIG_V2['batch_size_fallback']}"
+        )
+        print(f"\nWARNING: {fallback_note}\n", flush=True)
+        batch_size_used = TRAINING_CONFIG_V2['batch_size_fallback']
+        model, history = train_with_batch_size(batch_size_used)
     elapsed = time.time() - t_start
+    history['batch_size_used'] = batch_size_used
+    if fallback_note:
+        history['batch_size_fallback_note'] = fallback_note
 
     history_path = results_dir / "history.json"
     with open(history_path, 'w') as f:
@@ -174,7 +208,7 @@ def main():
     model.eval()
     print(f"\nEvaluating best checkpoint (epoch={ckpt['epoch']}, "
           f"val_accuracy={ckpt['val_accuracy']:.2f}%, val_loss={ckpt['val_loss']:.4f}) on OOD:")
-    ood_results = evaluate_ood(model, tokenizer, data_dir, study_key, args.batch_size, device)
+    ood_results = evaluate_ood(model, tokenizer, data_dir, study_key, batch_size_used, device)
 
     ood_path = results_dir / "ood_results.json"
     with open(ood_path, 'w') as f:

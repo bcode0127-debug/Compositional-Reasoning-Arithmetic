@@ -1,3 +1,4 @@
+import math
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
@@ -38,27 +39,6 @@ def calculate_accuracy(model, dataloader, device, pad_idx=0):
     return 100.0 * correct / total if total > 0 else 0.0
 
 
-def train_epoch(model, dataloader, optimizer, criterion, device, pad_idx=0):
-    # Train for one epoch - return loss only
-    model.train()
-    total_loss = 0.0
-    
-    for enc_input, dec_input, dec_target in dataloader:
-        enc_input = enc_input.to(device)
-        dec_input = dec_input.to(device)
-        dec_target = dec_target.to(device)
-        
-        optimizer.zero_grad()
-        output = model(enc_input, dec_input)
-        loss = criterion(output.view(-1, output.size(-1)), dec_target.view(-1))
-        loss.backward()
-        optimizer.step()
-        
-        total_loss += loss.item()
-    
-    return total_loss / len(dataloader)  
-
-
 def evaluate(model, dataloader, criterion, device, pad_idx=0):
     # Evaluate - return loss only
     model.eval()
@@ -77,14 +57,20 @@ def evaluate(model, dataloader, criterion, device, pad_idx=0):
     return total_loss / len(dataloader)  
 
 
-def _make_warmup_then_constant_lambda(warmup_steps: int):
-    # Linear warmup 0 -> 1 over warmup_steps optimizer steps, then constant at 1.
+def _make_scheduler_lambda(warmup_steps: int, total_steps: int, schedule: str, min_lr_ratio: float):
+    # Linear warmup 0 -> 1 over warmup_steps optimizer steps, then either:
+    #   "constant": hold at 1.0 (original no-decay behavior)
+    #   "cosine": cosine-decay 1.0 -> min_lr_ratio over the remaining steps
     # Multiplies the optimizer's base lr, so this composes with whatever lr
     # was passed to the optimizer (the "target lr" is reached at step warmup_steps).
     def lr_lambda(step: int) -> float:
-        if warmup_steps <= 0:
+        if warmup_steps > 0 and (step + 1) <= warmup_steps:
+            return (step + 1) / warmup_steps
+        if schedule != "cosine" or total_steps <= warmup_steps:
             return 1.0
-        return min(1.0, (step + 1) / warmup_steps)
+        progress = min(1.0, (step - warmup_steps) / max(1, total_steps - warmup_steps))
+        cosine_factor = 0.5 * (1 + math.cos(math.pi * progress))
+        return min_lr_ratio + (1.0 - min_lr_ratio) * cosine_factor
     return lr_lambda
 
 
@@ -124,34 +110,40 @@ def train_model(
     pad_idx: int = 0,
     early_stopping_patience: int = 5,
     warmup_steps: int = 0,
+    scheduler_type: str = "constant",
+    min_lr: float = 1e-5,
     seed: Optional[int] = None,
     dataset_version: Optional[str] = None,
     generator_commit: Optional[str] = None,
 ) -> Dict[str, list]:
     """
-    Checkpoint selection vs. early stopping (deliberately decoupled - see
-    the epoch-25-vs-44 divergence this was written to fix): the model
-    checkpoint written to save_path is selected by BEST VAL_ACCURACY, not
-    val_loss - CrossEntropy loss can keep rising from growing overconfidence
-    on wrong predictions even while exact-match accuracy is still improving,
-    which previously caused the saved "best" checkpoint to lag well behind
-    the run's actual best-accuracy epoch. Early stopping's PATIENCE COUNTER
-    still runs on val_loss plateauing/regressing, since that remains a
-    reasonable stopping signal - only the "what do we save" decision moved
-    to val_accuracy.
+    Checkpoint selection AND early stopping both now watch VAL_ACCURACY
+    (this superseded an earlier decoupled design - val_loss vs val_acc
+    tracking - now the same signal drives both: patience resets whenever
+    val_accuracy improves, and that same improvement is what triggers
+    saving the checkpoint). val_loss is still recorded in the returned
+    history for inspection, just no longer used to gate anything.
 
     warmup_steps: linear LR warmup from 0 to `learning_rate` over this many
-    optimizer steps (not epochs), then constant. Pass 0 to disable (matches
-    the original no-warmup behavior).
+    optimizer steps (not epochs). Pass 0 to disable.
+    scheduler_type: "constant" (hold at target lr after warmup - the
+    original no-decay behavior) or "cosine" (cosine-decay from target lr
+    down to `min_lr` over the remaining steps after warmup, computed as
+    num_epochs * steps_per_epoch).
     """
 
     model = model.to(device)
     criterion = nn.CrossEntropyLoss(ignore_index=pad_idx)
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+
+    steps_per_epoch = len(train_loader)
+    total_steps = num_epochs * steps_per_epoch
+    min_lr_ratio = (min_lr / learning_rate) if learning_rate > 0 else 0.0
     scheduler = None
-    if warmup_steps > 0:
+    if warmup_steps > 0 or scheduler_type == "cosine":
         scheduler = torch.optim.lr_scheduler.LambdaLR(
-            optimizer, lr_lambda=_make_warmup_then_constant_lambda(warmup_steps)
+            optimizer,
+            lr_lambda=_make_scheduler_lambda(warmup_steps, total_steps, scheduler_type, min_lr_ratio),
         )
 
     train_losses = []
@@ -169,12 +161,13 @@ def train_model(
     print(f"Model type: {type(model).__name__}")
     print(f"Model parameters: {sum(p.numel() for p in model.parameters()):,}")
     print(f"Device: {device}")
-    print(f"Learning rate: {learning_rate} (warmup_steps={warmup_steps})")
+    print(f"Learning rate: {learning_rate} (warmup_steps={warmup_steps}, scheduler={scheduler_type}, "
+          f"min_lr={min_lr if scheduler_type == 'cosine' else 'n/a'}, total_steps={total_steps})")
     print(f"Epochs: {num_epochs}")
-    print(f"Early stopping patience: {early_stopping_patience} (monitors val_loss)")
+    print(f"Early stopping patience: {early_stopping_patience} (monitors val_accuracy)")
     print(f"Checkpoint selection: best val_accuracy")
     print("-"*80)
-    print(f"{'Epoch':<8} {'Train Loss':<12} {'Train Acc':<12} {'Val Loss':<12} {'Val Acc':<12} {'Best':<8}")
+    print(f"{'Epoch':<8} {'Train Loss':<12} {'Train Acc':<12} {'Val Loss':<12} {'Val Acc':<12} {'LR':<12} {'Best':<8}")
     for epoch in range(num_epochs):
         start_time = time.time()
 
@@ -182,6 +175,7 @@ def train_model(
         train_loss = train_epoch(
             model, train_loader, optimizer, criterion, device, pad_idx, scheduler=scheduler
         )
+        current_lr = optimizer.param_groups[0]['lr']
 
         # Evaluate on validation set
         val_loss = evaluate(
@@ -197,19 +191,15 @@ def train_model(
         train_accuracies.append(train_acc)
         val_losses.append(val_loss)
         val_accuracies.append(val_acc)
-
-        # Early stopping patience: still keyed on val_loss (see docstring)
-        loss_improved = val_loss < best_val_loss
-        if loss_improved:
+        if val_loss < best_val_loss:
             best_val_loss = val_loss
-            epochs_without_improvement = 0
-        else:
-            epochs_without_improvement += 1
 
-        # Checkpoint save: keyed on val_accuracy (see docstring)
+        # Both early-stopping patience and checkpoint save are keyed on
+        # val_accuracy (see docstring)
         is_best = val_acc > best_val_accuracy
         if is_best:
             best_val_accuracy = val_acc
+            epochs_without_improvement = 0
             if save_path:
                 torch.save({
                     'epoch': epoch,
@@ -221,11 +211,13 @@ def train_model(
                     'dataset_version': dataset_version,
                     'generator_commit': generator_commit,
                 }, save_path)
+        else:
+            epochs_without_improvement += 1
 
         elapsed_time = time.time() - start_time
         best_marker = "✓" if is_best else ""
 
-        print(f"{epoch+1:<8} {train_loss:<12.4f} {train_acc:<12.2f}% {val_loss:<12.4f} {val_acc:<12.2f}% {best_marker:<8}")
+        print(f"{epoch+1:<8} {train_loss:<12.4f} {train_acc:<12.2f}% {val_loss:<12.4f} {val_acc:<12.2f}% {current_lr:<12.6f} {best_marker:<8}")
 
         # Early stopping
         if epochs_without_improvement >= early_stopping_patience:
