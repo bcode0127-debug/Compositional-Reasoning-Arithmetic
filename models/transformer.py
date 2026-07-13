@@ -54,7 +54,19 @@ class TransformerEncoderDecoder(nn.Module):
             dropout=dropout,
             batch_first=True
         )
-        
+        # Disable the encoder's nested-tensor fastpath: it only activates when
+        # a key_padding_mask is passed (never the case for pad_idx=None, so
+        # this doesn't affect old/no-mask behavior at all), and the op it
+        # needs (aten::_nested_tensor_from_mask_left_aligned) isn't
+        # implemented for the MPS backend - without this, any pad_idx-enabled
+        # forward pass crashes immediately on MPS. Note: forward() actually
+        # gates on `use_nested_tensor`, a separate attribute snapshotted from
+        # `enable_nested_tensor` at construction time - setting
+        # enable_nested_tensor post-construction is a no-op; use_nested_tensor
+        # is the one that must be set.
+        self.transformer.encoder.enable_nested_tensor = False
+        self.transformer.encoder.use_nested_tensor = False
+
         self.fc_out = nn.Linear(d_model, vocab_size)
 
     def generate_square_subsequent_mask(self, sz):
