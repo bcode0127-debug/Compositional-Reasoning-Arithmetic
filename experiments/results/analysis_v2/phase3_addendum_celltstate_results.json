@@ -1,0 +1,32 @@
+{
+  "ID_val_heldout": {
+    "n_positions": 2945,
+    "value_r2": -0.01918792724609375,
+    "depth_acc": 0.7168081494057725,
+    "depth_majority_baseline": 0.7290322580645161
+  },
+  "ops4": {
+    "n_positions": 4138,
+    "value_r2": -0.020319342613220215,
+    "depth_acc": 0.42435959400676654,
+    "depth_majority_baseline": 0.52730787820203
+  },
+  "ops5": {
+    "n_positions": 5086,
+    "value_r2": -0.04835999011993408,
+    "depth_acc": 0.2599292174596933,
+    "depth_majority_baseline": 0.4707038930397169
+  },
+  "ops6": {
+    "n_positions": 6099,
+    "value_r2": -0.03533589839935303,
+    "depth_acc": 0.14904082636497787,
+    "depth_majority_baseline": 0.5940318084931956
+  },
+  "ops7": {
+    "n_positions": 7101,
+    "value_r2": -0.03693985939025879,
+    "depth_acc": 0.11294183917758062,
+    "depth_majority_baseline": 0.6831432192648923
+  }
+}

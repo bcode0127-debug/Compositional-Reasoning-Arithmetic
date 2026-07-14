@@ -1,0 +1,68 @@
+{
+  "lstm_h_final": {
+    "ID_val_heldout": {
+      "n_examples": 150,
+      "value_r2": 0.007189154624938965
+    },
+    "ops4": {
+      "n_examples": 150,
+      "value_r2": -0.03940856456756592
+    },
+    "ops5": {
+      "n_examples": 150,
+      "value_r2": -0.08264315128326416
+    },
+    "ops6": {
+      "n_examples": 150,
+      "value_r2": -0.05885028839111328
+    },
+    "ops7": {
+      "n_examples": 150,
+      "value_r2": 0.0014081597328186035
+    }
+  },
+  "lstm_c_final": {
+    "ID_val_heldout": {
+      "n_examples": 150,
+      "value_r2": -1.2423882484436035
+    },
+    "ops4": {
+      "n_examples": 150,
+      "value_r2": -1.1055550575256348
+    },
+    "ops5": {
+      "n_examples": 150,
+      "value_r2": -1.8709030151367188
+    },
+    "ops6": {
+      "n_examples": 150,
+      "value_r2": -2.21142840385437
+    },
+    "ops7": {
+      "n_examples": 150,
+      "value_r2": -2.985731601715088
+    }
+  },
+  "transformer_meanpooled_final": {
+    "ID_val_heldout": {
+      "n_examples": 150,
+      "value_r2": 0.05020183324813843
+    },
+    "ops4": {
+      "n_examples": 150,
+      "value_r2": 0.012466967105865479
+    },
+    "ops5": {
+      "n_examples": 150,
+      "value_r2": -0.057507872581481934
+    },
+    "ops6": {
+      "n_examples": 150,
+      "value_r2": -0.08608579635620117
+    },
+    "ops7": {
+      "n_examples": 150,
+      "value_r2": -0.1322718858718872
+    }
+  }
+}
