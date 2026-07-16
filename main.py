@@ -392,6 +392,15 @@ def train_model_on_study(model_type: str, study: str, dataset_split: str = "trai
     return history
 
 # Evaluation
+# DEPRECATED - DO NOT USE FOR REPORTED NUMBERS.
+# This eval path silently truncates encoder input to TRAINING_CONFIG['max_input_len']
+# (20 chars) via src_ids[:max_input_len] below, with no error and no warning. Measured
+# against datasets/study1/ood.json: 99.0% of examples exceed 20 chars (max length 50);
+# datasets/study2/ood.json: 70.0%. Every number this produced - including the CP1-CP5
+# mechanistic analysis and the README's pre-v2 OOD headline - was computed on a chopped
+# prefix of nearly every OOD example, not the full expression. Retired, not fixed; kept
+# only as a historical record (see README's "Pre-v2 Results Invalidated" notice).
+# Use train_v2.py / cold_verify.py against datasets_v2/ instead.
 def evaluate_model(model_type: str, study: str, dataset_split: str, checkpoint_path: str, device: str = "cpu") -> dict:
     """
     Evaluate a trained model on a specified dataset split.

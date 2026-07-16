@@ -18,7 +18,47 @@ encoder representations at the first decoding step.
 
 ---
 
+## ⚠️ Pre-v2 Results Invalidated (Input-Truncation Bug)
+
+Every number below through the "Attention Analysis" table — the 1.6%/0.3%
+OOD headline and CP1–CP5 — was produced by `main.py`'s legacy eval path
+(`main.py::evaluate_model()`), which silently truncates encoder input to
+`max_input_len=20` characters (`src_ids[:max_input_len]`, no error, no
+warning). Measured directly against the datasets these numbers were
+computed on: 99.0% of `datasets/study1/ood.json` (max length 50) and 70.0%
+of `datasets/study2/ood.json` exceed 20 characters. That means the model
+was evaluated on a chopped prefix of nearly every OOD example - in most
+cases missing the operators and operands that determine the correct
+answer. The "catastrophic OOD collapse" these numbers report is
+substantially confounded by this truncation artifact, not a clean
+measurement of compositional failure. CP1–CP5's attention maps,
+cross-attention, head ablation, and failure traces all inherit the same
+truncated inputs, so their interpretation is compromised the same way.
+
+**These results are retired, not corrected.** They are left in place below
+as a historical record of what this repo previously reported, not as
+findings to cite. The legacy code path (`main.py`, `experiments/analysis.py`,
+`experiments/notebooks/analysis_plots.ipynb`) and the legacy `datasets/`
+directory are unchanged and still runnable, but no valid claim about
+compositional reasoning should be drawn from their output.
+
+The corrected, superseding results are the v2 pipeline (`train_v2.py` +
+`datasets_v2/`, `max_input_len=64` with hard-fail encode_checked instead of
+silent truncation) and mechanistic analysis v2:
+- Seed-matrix training results: [`matrix_summary.txt`](matrix_summary.txt),
+  [`CHECKPOINTS.md`](CHECKPOINTS.md)
+- Mechanistic v2 (behavioral + attention + probing, on verified checkpoints,
+  truncation-safe throughout): [`experiments/notebooks/analysis_v2.ipynb`](experiments/notebooks/analysis_v2.ipynb),
+  [`experiments/results/analysis_v2/`](experiments/results/analysis_v2/)
+
+---
+
 ## Key Findings
+
+*The findings below predate the v2 pipeline and are affected by the
+input-truncation bug described above. Retained as historical record only -
+see the notice above before citing any number in this section or the two
+tables that follow.*
 
 - Under autoregressive decoding, OOD accuracy collapses to 1.6% (LSTM) and
   0.3% (Transformer) on length generalization; multiplication and division
@@ -36,6 +76,8 @@ encoder representations at the first decoding step.
 ---
 
 ## Results
+
+*Historical / retired - see the input-truncation notice above.*
 
 ### Baseline Accuracy
 
@@ -174,15 +216,25 @@ python main.py --mode train --model transformer --num-epochs 100
 ```
 
 ### Evaluate
+
+*Retired - see the input-truncation notice above. `main.py --mode eval`
+silently truncates input to 20 characters and its output should not be
+treated as a valid measurement. Kept runnable as historical record only.*
 ```bash
 python main.py --mode eval --model lstm
 python main.py --mode eval --model transformer
 ```
 
+For a valid evaluation, use `train_v2.py` / `cold_verify.py` against
+`datasets_v2/` instead.
+
 ### Attention analysis
 
-Open `experiments/notebooks/analysis_plots.ipynb` and run all cells.
-Saves all CP1–CP5 results to `experiments/results/`.
+*Retired - see the input-truncation notice above.* Open
+`experiments/notebooks/analysis_plots.ipynb` and run all cells to
+reproduce the historical (truncation-affected) CP1–CP5 results, saved to
+`experiments/results/`. For the corrected analysis, use
+`experiments/notebooks/analysis_v2.ipynb`.
 
 ---
 
