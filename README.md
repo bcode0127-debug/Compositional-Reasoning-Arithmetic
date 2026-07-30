@@ -266,15 +266,16 @@ reproduce the historical (truncation-affected) CP1–CP5 results, saved to
 
 ## Related Work
 
-- Dziri et al. (2023) - Transformers solve compositional tasks via
-  linearized pattern matching, not systematic reasoning
-- Stolfo et al. (2023) - Causal mediation analysis of arithmetic
-  reasoning in language models
-- Elhage et al. (2021) - Mathematical framework for Transformer circuits
-- Zhang et al. (2025) - Complexity control and OOD generalization in
-  Transformers
-- Hahn et al. (2026) - Shattered compositionality; arithmetic subskills
-  acquired independently and subject to interference (arXiv:2601.22510)
+- Lake and Baroni (2018). Generalization without systematicity: On the compositional skills of sequence-to-sequence recurrent networks. Proceedings of the 35th International Conference on Machine Learning
+- Stolfo et al. (2023). A Mechanistic Interpretation of Arithmetic Reasoning in Language Models using Causal Mediation Analysis. Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing
+- Zhao et al. (2026). Shattered Compositionality: Counterintuitive Learning Dynamics of Transformers for Arithmetic. arXiv preprint arXiv:2601.22510
+- Nanda et al. (2023). Progress measures for grokking via mechanistic interpretability. International Conference on Learning Representations
+- Elhage et al. (2021). A Mathematical Framework for Transformer Circuits. Transformer Circuits Thread
+- Zhang and Nanda (2024). Towards Best Practices of Activation Patching in Language Models: Metrics and Methods. International Conference on Learning Representations
+- Makelov et al. (2023). Is This the Subspace You Are Looking For? An Interpretability Illusion for Subspace Activation Patching. Advances in Neural Information Processing Systems
+- Lan et al. (2026). Make Mechanistic Interpretability Auditable: A Call to Develop Guidelines via Continuous Collaborative Reviewing. arXiv preprint arXiv:2606.00033
+- Kazemnejad et al. (2023). The Impact of Positional Encoding on Length Generalization in Transformers. Advances in Neural Information Processing Systems
+- Delétang et al. (2023). Neural Networks and the Chomsky Hierarchy. International Conference on Learning Representations
 
 ---
 
