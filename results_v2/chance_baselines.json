@@ -1,0 +1,30 @@
+{
+  "ood_ops4.json": {
+    "n": 1000,
+    "most_common_answer": 1.2,
+    "length_conditioned_uniform": 0.9818737373737311,
+    "unigram": 0.16389292226932242,
+    "nn_edit_retrieval": 0.5
+  },
+  "ood_ops5.json": {
+    "n": 1000,
+    "most_common_answer": 1.6,
+    "length_conditioned_uniform": 0.7834616161616085,
+    "unigram": 0.13476255126410863,
+    "nn_edit_retrieval": 0.3
+  },
+  "ood_ops6.json": {
+    "n": 1000,
+    "most_common_answer": 1.4,
+    "length_conditioned_uniform": 0.592322222222216,
+    "unigram": 0.0973782702670598,
+    "nn_edit_retrieval": 0.6
+  },
+  "ood_ops7.json": {
+    "n": 1000,
+    "most_common_answer": 2.2,
+    "length_conditioned_uniform": 0.6617101010100956,
+    "unigram": 0.11276970732112016,
+    "nn_edit_retrieval": 0.3
+  }
+}
