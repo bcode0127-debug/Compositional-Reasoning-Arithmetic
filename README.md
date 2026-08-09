@@ -55,28 +55,30 @@ silent truncation) and mechanistic analysis v2:
 
 ## Results (v2 pipeline, current)
 
-*Values below are the canonical v2 numbers: mean [min-max] across seeds 0/1/2,
-read directly from `matrix_summary.txt` and each run's `ood_results.json`.
-Val and OOD are autoregressive exact-match (verified teacher-forced-equivalent
-under greedy decoding by `cold_verify.py`).*
+*Values below are the canonical v2 numbers, read directly from `matrix_summary.txt`,
+each run's `ood_results.json`, and `results_v2/test_set_results.json`. Val and OOD are
+mean [min-max] across seeds 0/1/2; Test is mean ± SD. All figures are autoregressive
+exact-match (verified teacher-forced-equivalent under greedy decoding by `cold_verify.py`).*
+
+**Validation selected the checkpoints; the test split is independently held out and was
+generated after training, so the Test column is the primary in-distribution result.**
 
 **Study 1 (Length Generalization)**
 
-| Model | Val | OOD ops4 | OOD ops5 | OOD ops6 | OOD ops7 |
-|---|---|---|---|---|---|
-| LSTM | 35.7% [35.1-36.1] | 14.8% [13.7-16.4] | 8.2% [7.5-9.5] | 2.7% [2.5-2.8] | 2.1% [1.8-2.5] |
-| Transformer | 7.3% [6.8-7.5] | 0.7% [0.4-1.2] | 0.6% [0.5-0.7] | 0.3% [0.1-0.5] | 0.4% [0.2-0.6] |
+| Model | Val | Test | OOD ops4 | OOD ops5 | OOD ops6 | OOD ops7 |
+|---|---|---|---|---|---|---|
+| LSTM | 35.7% [35.1-36.1] | 34.57% ± 0.95 | 14.8% [13.7-16.4] | 8.2% [7.5-9.5] | 2.7% [2.5-2.8] | 2.1% [1.8-2.5] |
+| Transformer | 7.3% [6.8-7.5] | 7.83% ± 0.12 | 0.7% [0.4-1.2] | 0.6% [0.5-0.7] | 0.3% [0.1-0.5] | 0.4% [0.2-0.6] |
 
 **Study 2 (Depth Generalization)**
 
-| Model | Val | OOD |
-|---|---|---|
-| LSTM | 31.5% [30.1-32.5] | 7.0% [6.3-7.8] |
-| Transformer | 3.9% [3.7-4.2] | 2.7% [2.0-3.1] |
+| Model | Val | Test | OOD |
+|---|---|---|---|
+| LSTM | 31.5% [30.1-32.5] | 30.47% ± 2.14 | 7.0% [6.3-7.8] |
+| Transformer | 3.9% [3.7-4.2] | 2.27% ± 0.47 | 2.7% [2.0-3.1] |
 
 Paper: *Catastrophic OOD Failure in Arithmetic Reasoning: A Mechanistic Comparison
 of LSTM and Transformer Encoder-Decoders* (arXiv ID pending).
-
 ---
 
 ## Key Findings
