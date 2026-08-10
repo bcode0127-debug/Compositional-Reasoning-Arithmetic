@@ -81,12 +81,18 @@ def build(model_type):
 
 
 def evaluate(model, items):
+    """Returns (accuracy_pct, n, per_example) where per_example is a list of
+    0/1 flags in dataset order. The per-example vector is what makes paired
+    example-level tests (McNemar, paired bootstrap) possible; aggregate
+    accuracy alone cannot support them."""
     correct = 0
+    per_example = []
     for it in items:
         pred = tokenizer.decode(autoregressive_decode(model, encode_input(it["input"])))
-        if pred == str(it["output"]):
-            correct += 1
-    return 100.0 * correct / len(items), len(items)
+        ok = int(pred == str(it["output"]))
+        per_example.append(ok)
+        correct += ok
+    return 100.0 * correct / len(items), len(items), per_example
 
 
 if __name__ == "__main__":
@@ -102,7 +108,7 @@ if __name__ == "__main__":
                 model.load_state_dict(ckpt["model_state_dict"])
                 model = model.to(DEVICE)
                 print(f"  evaluating {model_type}/{study}/seed{seed} on {len(items)} test items...", flush=True)
-                acc, n = evaluate(model, items)
+                acc, n, per_example = evaluate(model, items)
                 key = f"{model_type}_{study}_seed{seed}"
                 results[key] = {
                     "test_accuracy": acc,
@@ -110,6 +116,7 @@ if __name__ == "__main__":
                     "val_accuracy_fingerprint": ckpt["val_accuracy"],
                     "epoch": ckpt["epoch"],
                     "dataset_version": ckpt.get("dataset_version"),
+                    "per_example_correct": per_example,
                 }
                 print(f"{key}: test={acc:.2f}% (n={n}) | val(fingerprint)={ckpt['val_accuracy']:.2f}% epoch={ckpt['epoch']}", flush=True)
 
