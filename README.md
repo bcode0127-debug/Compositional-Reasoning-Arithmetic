@@ -77,7 +77,7 @@ generated after training, so the Test column is the primary in-distribution resu
 | LSTM | 31.5% [30.1-32.5] | 30.47% ± 2.14 | 7.0% [6.3-7.8] |
 | Transformer | 3.9% [3.7-4.2] | 2.27% ± 0.47 | 2.7% [2.0-3.1] |
 
-Paper: *Partial Competence and Memorization: Comparing LSTM and Transformer
+Paper: *Partial Competence and Limited Transfer: Comparing LSTM and Transformer
 Generalization on Arithmetic Expressions* (arXiv ID pending).
 ---
 
