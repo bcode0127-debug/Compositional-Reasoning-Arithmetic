@@ -88,5 +88,48 @@ def main():
     print("\nWrote results_v2/chance_baselines.json")
 
 
+def constant_output_all_populations():
+    """Constant-output baseline (always predict the modal TRAINING target) on
+    every population the paper reports, with per-example correctness recorded so
+    it can be paired against model predictions.
+
+    The modal target is computed per study from that study's own training split:
+    Study 2's training distribution differs from Study 1's, so reusing Study 1's
+    modal answer would not be the correct trivial baseline for Study 2.
+    """
+    from collections import Counter
+
+    POPS = {
+        "study1": ["val.json", "test.json",
+                   "ood_ops4.json", "ood_ops5.json", "ood_ops6.json", "ood_ops7.json"],
+        "study2": ["val.json", "test.json", "ood.json"],
+    }
+    out = {}
+    print("\n" + "=" * 78)
+    print("Constant-output baseline (modal training target) on all populations")
+    print("=" * 78)
+    for study, files in POPS.items():
+        root = Path("datasets_v2") / study
+        train_targets = [str(s["output"]) for s in json.loads((root / "train.json").read_text())["data"]]
+        modal, modal_n = Counter(train_targets).most_common(1)[0]
+        out[study] = {"modal_target": modal,
+                      "modal_train_count": modal_n,
+                      "modal_train_frac": modal_n / len(train_targets),
+                      "splits": {}}
+        print(f"\n{study}: modal training target = {modal!r} "
+              f"({modal_n}/{len(train_targets)} = {100*modal_n/len(train_targets):.2f}% of training)")
+        for f in files:
+            items = json.loads((root / f).read_text())["data"]
+            per_example = [int(str(it["output"]) == modal) for it in items]
+            acc = 100.0 * sum(per_example) / len(per_example)
+            out[study]["splits"][f] = {"n": len(items), "n_correct": sum(per_example),
+                                       "accuracy": acc, "per_example_correct": per_example}
+            print(f"  {f:<18} n={len(items):<6} correct={sum(per_example):<5} acc={acc:.2f}%")
+    Path("results_v2/constant_output_baseline.json").write_text(json.dumps(out, indent=2))
+    print("\nWrote results_v2/constant_output_baseline.json")
+    return out
+
+
 if __name__ == "__main__":
     main()
+    constant_output_all_populations()
