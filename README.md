@@ -1,20 +1,23 @@
-# Do Neural Sequence Models Learn Compositional Reasoning?
-### Mechanistic Evidence from Arithmetic Generalization
+# Partial Competence and Limited Transfer
+### Comparing LSTM and Transformer Generalization on Arithmetic Expressions
 
 ---
 
 ## Abstract
 
-Neural sequence models trained on arithmetic expressions fit the training
-distribution well under teacher forcing, yet their autoregressive generation
-degrades sharply on held-out in-distribution inputs and collapses on
-out-of-distribution (OOD) expressions. This work provides empirical and
-mechanistic evidence that neither LSTM nor Transformer encoder-decoder
-architectures learn compositional reasoning - both rely on surface-level
-pattern memorization. All accuracies are reported under autoregressive
-decoding. Attention analysis of the Transformer shows the OOD collapse is
-not error accumulation during decoding, but an immediate breakdown in
-encoder representations at the first decoding step.
+We train character-level LSTM and Transformer encoder-decoders, three seeds
+each, to evaluate fully parenthesized integer arithmetic expressions. Two
+controlled studies test generalization to longer expressions (2-3 → 4-7
+operations) and to deeper nesting (depth 2 → 3). Under greedy autoregressive
+decoding, the LSTM shows partial competence: it reaches 34.6% exact match on
+an independently generated in-distribution test set (Study 1) and 30.5%
+(Study 2). Its accuracy falls steadily as expressions grow, from 14.8% at 4
+operations to 2.1% at 7, and reaches 7.0% on deeper expressions. The
+Transformer stays near the floor throughout: 7.8% and 2.3% on the test sets,
+and at most 2.7% on any out-of-distribution split. Neither architecture
+transfers what it learns to substantially longer or deeper expressions at
+this data scale. All checkpoints and datasets are released on the Hugging
+Face Hub.
 
 ---
 
@@ -314,9 +317,9 @@ reproduce the historical (truncation-affected) CP1–CP5 results, saved to
 
 ## Citation
 ```bibtex
-@misc{jamanjyothi2026compositional,
-  title   = {Do Neural Sequence Models Learn Compositional Reasoning?
-             Mechanistic Evidence from Arithmetic Generalization},
+@misc{jamanjyothi2026partial,
+  title   = {Partial Competence and Limited Transfer: Comparing LSTM and
+             Transformer Generalization on Arithmetic Expressions},
   author  = {Jamanjyothi, Ajay},
   year    = {2026},
   note    = {arXiv preprint (cs.LG)}
