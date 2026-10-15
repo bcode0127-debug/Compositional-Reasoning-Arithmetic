@@ -6,11 +6,11 @@ set -uo pipefail  # deliberately NOT -e: one run's failure must not abort the ma
 REPO_DIR="/Users/zsy/Desktop/Compositional-Reasoning-Arithmetic"
 PYTHON="/private/tmp/claude-501/-Users-zsy-Desktop-Compositional-Reasoning-Arithmetic/72e84453-7e54-4e36-bf18-b297a07ea1ee/scratchpad/repo_venv/bin/python3"
 BACKUP_DIR="$HOME/Desktop/matrix_backup"
-MATRIX_LOG="$REPO_DIR/matrix.log"
+MATRIX_LOG="$REPO_DIR/logs/matrix.log"
 SUMMARY="$REPO_DIR/matrix_summary.txt"
 
 cd "$REPO_DIR"
-mkdir -p "$BACKUP_DIR"
+mkdir -p "$BACKUP_DIR" logs
 touch "$SUMMARY" "$MATRIX_LOG"
 
 is_complete_checkpoint() {

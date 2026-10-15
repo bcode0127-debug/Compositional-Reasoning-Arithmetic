@@ -58,7 +58,7 @@ silent truncation) and mechanistic analysis v2:
 *Values below are the canonical v2 numbers, read directly from `matrix_summary.txt`,
 each run's `ood_results.json`, and `results_v2/test_set_results.json`. Val and OOD are
 mean [min-max] across seeds 0/1/2; Test is mean ± SD. All figures are autoregressive
-exact-match (verified teacher-forced-equivalent under greedy decoding by `cold_verify.py`).*
+exact-match (verified teacher-forced-equivalent under greedy decoding by `scripts/eval/cold_verify.py`).*
 
 **Validation selected the checkpoints; the test split is independently held out and was
 generated after training, so the Test column is the primary in-distribution result.**
@@ -188,7 +188,15 @@ positional encoding, ~5.5M parameters. Trained with teacher forcing, Adam
 
 ```
 Compositional-Reasoning-Arithmetic/
-├── main.py                      # Entry point — generate / train / eval
+├── train_v2.py                  # v2 training entry point (one model/study/seed per run)
+├── matrix_summary.txt           # v2 seed-matrix summary (selected epoch, val accuracy)
+├── CHECKPOINTS.md               # Registry of all trained checkpoints
+├── main.py                      # Legacy entry point (eval path retired, see notice above)
+├── scripts/                     # Run from repo root: python -m scripts.<folder>.<name>
+│   ├── eval/                    # cold_verify, eval_test_splits, eval_all_per_example
+│   ├── analysis/                # Reviewer stats: baselines, paired tests, divisor check, items 8-10
+│   ├── datagen/                 # make_test_splits (independent test splits)
+│   └── training/                # run_matrix.sh (12-run seed matrix), overfit_test
 ├── data/
 │   ├── generate_controlled.py   # Controlled dataset generation
 │   ├── tokenizer.py             # Character-level math tokenizer
@@ -203,13 +211,14 @@ Compositional-Reasoning-Arithmetic/
 │   ├── config.py                # Checkpoint and path configuration
 │   ├── analysis.py              # CP4/CP5 programmatic analysis
 │   └── notebooks/
-│       └── analysis_plots.ipynb # CP1–CP5 attention visualizations
-├── datasets/
-│   ├── study1/                  # Length generalization splits
-│   └── study2/                  # Depth generalization splits
-├── results/
-│   ├── lstm_baseline/           # LSTM checkpoints + training histories
-│   └── transformer/             # Transformer checkpoints + training histories
+│       ├── analysis_plots.ipynb # CP1–CP5 attention visualizations (legacy)
+│       └── analysis_v2.ipynb    # Mechanistic analysis v2
+├── datasets/                    # Legacy splits (pre-v2)
+├── datasets_v2/                 # Current splits: study1 (train/val/test/ood_ops4-7), study2 (train/val/test/ood)
+├── results/                     # Legacy results (pre-v2)
+├── results_v2/                  # Per-run history/OOD results + analysis outputs (*.json)
+│   └── {lstm,transformer}/study{1,2}/seed{0,1,2}/
+├── figures/
 ├── requirements.txt
 └── README.md
 ```
@@ -217,6 +226,23 @@ Compositional-Reasoning-Arithmetic/
 ---
 
 ## Reproducing Results
+
+### Pretrained checkpoints and datasets (Hugging Face Hub)
+
+The twelve v2 checkpoints and the `datasets_v2` splits are published on the
+Hugging Face Hub, so results can be checked without retraining:
+
+- **Models:** [Ajay0728/Compositional-reasoning-arithmetic](https://huggingface.co/Ajay0728/Compositional-reasoning-arithmetic)
+  - `{lstm,transformer}/study{1,2}/seed{0,1,2}/best_model.pt`, the same files listed in [`CHECKPOINTS.md`](CHECKPOINTS.md)
+- **Datasets:** [Ajay0728/Compositional-reasoning-arithmetic-datasets](https://huggingface.co/datasets/Ajay0728/Compositional-reasoning-arithmetic-datasets)
+  - the same files as `datasets_v2/`, including `CHECKSUMS.txt`
+
+To place the checkpoints where the evaluation scripts expect them
+(`results_v2/...`):
+```bash
+pip install huggingface_hub
+hf download Ajay0728/Compositional-reasoning-arithmetic --include "*/best_model.pt" --local-dir results_v2
+```
 
 ### Setup
 ```bash
@@ -253,8 +279,13 @@ python main.py --mode eval --model lstm
 python main.py --mode eval --model transformer
 ```
 
-For a valid evaluation, use `train_v2.py` / `cold_verify.py` against
-`datasets_v2/` instead.
+For a valid evaluation, use `train_v2.py` / `scripts/eval/cold_verify.py`
+against `datasets_v2/` instead. Run scripts from the repo root as modules so
+their root-relative paths resolve:
+```bash
+python -m scripts.eval.eval_test_splits --device cpu
+python -m scripts.analysis.per_seed_and_paired_stats
+```
 
 ### Attention analysis
 

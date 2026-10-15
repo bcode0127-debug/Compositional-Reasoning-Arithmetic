@@ -36,3 +36,5 @@ results/archive/
 
 # Verification samples
 datasets/verification/
+# Private developer docs / learning notes
+developer_docs/
