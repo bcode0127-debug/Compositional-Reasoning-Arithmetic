@@ -1,8 +1,9 @@
 """Nonlinear (two-layer MLP) probe on all twelve v2 checkpoints, matched to the
 Phase 3 linear-probe protocol in experiments/notebooks/analysis_v2.ipynb.
 
-Revision plan Phase 0, referee item M5. For every checkpoint, encoder state,
-target (running value, paren depth) and split (ID held-out + OOD), this runs:
+Follow-up to the Phase 3 linear-probe run in analysis_v2.ipynb, whose nulls came
+from weak instruments. For every checkpoint, encoder state, target (running
+value, paren depth) and split (ID held-out + OOD), this runs:
   - the Phase 3 linear probes, unchanged (Ridge / LogisticRegression),
   - an MLP probe (3 probe seeds), epoch count by example-level early stopping
     on val[240:300], then refit on all of val[:300],
