@@ -1,0 +1,54 @@
+{
+  "transformer": {
+    "ID_val_heldout": {
+      "n_positions": 2945,
+      "n_examples": 150,
+      "value_r2_unmasked": -0.09866845607757568,
+      "depth_acc_unmasked": 0.6281833616298812,
+      "value_r2_masked": -0.1486191749572754,
+      "depth_acc_masked": 0.6275042444821731,
+      "value_r2_phase3_stored": -0.09872090816497803,
+      "depth_acc_phase3_stored": 0.6281833616298812
+    },
+    "ops4": {
+      "n_positions": 4138,
+      "n_examples": 150,
+      "value_r2_unmasked": -0.03303933143615723,
+      "depth_acc_unmasked": 0.4122764620589657,
+      "value_r2_masked": -0.004373788833618164,
+      "depth_acc_masked": 0.430642822619623,
+      "value_r2_phase3_stored": -0.03305554389953613,
+      "depth_acc_phase3_stored": 0.41203479942000965
+    },
+    "ops5": {
+      "n_positions": 5086,
+      "n_examples": 150,
+      "value_r2_unmasked": -0.0613476037979126,
+      "depth_acc_unmasked": 0.30062917813605977,
+      "value_r2_masked": -0.009057879447937012,
+      "depth_acc_masked": 0.29885961462839167,
+      "value_r2_phase3_stored": -0.061357855796813965,
+      "depth_acc_phase3_stored": 0.3008257963035785
+    },
+    "ops6": {
+      "n_positions": 6099,
+      "n_examples": 150,
+      "value_r2_unmasked": -0.056740760803222656,
+      "depth_acc_unmasked": 0.2321692080668962,
+      "value_r2_masked": -0.012050032615661621,
+      "depth_acc_masked": 0.2192162649614691,
+      "value_r2_phase3_stored": -0.05675637722015381,
+      "depth_acc_phase3_stored": 0.23200524676176423
+    },
+    "ops7": {
+      "n_positions": 7101,
+      "n_examples": 150,
+      "value_r2_unmasked": -0.1377013921737671,
+      "depth_acc_unmasked": 0.17025771018166455,
+      "value_r2_masked": -0.019437432289123535,
+      "depth_acc_masked": 0.1577242641881425,
+      "value_r2_phase3_stored": -0.13774466514587402,
+      "depth_acc_phase3_stored": 0.17011688494578228
+    }
+  }
+}

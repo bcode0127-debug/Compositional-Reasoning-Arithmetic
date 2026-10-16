@@ -5,6 +5,7 @@ Activations are cached in /tmp/nonlinear_probe_test_cache.
 """
 import importlib.util
 import json
+from collections import Counter
 from pathlib import Path
 
 import numpy as np
@@ -148,7 +149,11 @@ def test_schema(lstm_h_depth_block, tmp_path):
                     "verdict", "attention_mask", "study_label", "fit_status"}
     p = tmp_path / npr.out_name("lstm", "study1", 0, "h", "depth")
     p.write_text(json.dumps(lstm_h_depth_block))
-    files = [p] + sorted(npr.DEFAULT_OUT.glob("*_seed[012]_*.json"))
+    files = [p] + sorted(f for f in npr.DEFAULT_OUT.glob("*_seed[012]_*.json") if "bridge" not in f.name)
+    bridge = npr.DEFAULT_OUT / "transformer_study1_seed0_pooled_unmasked_bridge.json"
+    if bridge.exists():  # linear-only by design: check top level and splits
+        b = json.loads(bridge.read_text())
+        assert set(b.keys()) == {"transformer"} and tuple(b["transformer"]) == SPLITS
     for f in files:
         d = json.loads(f.read_text())
         assert set(d.keys()) <= ref_keys and len(d) == 1, (f.name, d.keys())
@@ -169,3 +174,82 @@ def test_control_sanity(lstm_h_depth_block):
               f"majority {e['majority']:.4f} train {e['control_train']:.4f} | mlp {e['mlp_mean']:.4f}")
     over = {s: e for s, e in lstm_h_depth_block["lstm"].items() if max(e["control_per_seed"]) > e["majority"] + 0.02}
     assert not over, list(over)
+
+
+def test_input_baseline_features():
+    items = npr.load_split_items("study1")["ID_val_heldout"]
+    a = npr.input_baseline_features(items)
+    V, L = npr.tokenizer.vocab_size, npr.MAX_INPUT_LEN
+    assert a["X"].shape == (2945, V + 2 * L + 1)
+    assert (a["X"].sum(1) == 3).all()  # exactly one char, one position, one length bit
+    first = items[0]["input"]
+    assert a["X"][0, npr.tokenizer.encode(first)[0]] == 1 and a["X"][0, V] == 1 and a["X"][0, V + L + len(first)] == 1
+    assert np.array_equal(a["depth"][:len(first)], npr.compute_position_targets(first)[0])
+
+
+def test_label_space_ceilings():
+    c = npr.label_space_ceilings("study1")
+    assert c["training_classes"] == [1, 2]
+    assert abs(c["training_majority"] - 0.554) < 5e-4
+    expected = {"ID_val_heldout": (1.0, 0.779), "ops4": (0.709, 0.577), "ops5": (0.529, 0.521),
+                "ops6": (0.406, 0.644), "ops7": (0.317, 0.733)}
+    print()
+    for s, (ceil, bar) in expected.items():
+        print(f"ceiling {s}: {c[s]['ceiling']:.4f} (expected {ceil}) bar {c[s]['bar']:.4f} (expected {bar})")
+        assert abs(c[s]["ceiling"] - ceil) < 5e-4 and abs(c[s]["bar"] - bar) < 5e-4
+
+
+def test_ordinal_baseline_features():
+    items = npr.load_split_items("study1")["ID_val_heldout"]
+    a = npr.ordinal_baseline_features(items)
+    V = npr.tokenizer.vocab_size
+    assert a["X"].shape == (2945, V + 3)
+    assert (a["X"][:, :V].sum(1) == 1).all()
+    first = items[0]["input"]
+    n = len(first)
+    assert a["X"][n - 1, V] == n - 1 and a["X"][n - 1, V + 1] == n
+    assert abs(a["X"][n - 1, V + 2] - (n - 1) / n) < 1e-6
+
+
+def test_stratified_split():
+    items, idx = npr.stratified_split_items()
+    tr, te = items["train"], items[npr.STRAT_SPLIT]
+    assert len(tr) == 300 and len(te) == 150
+    assert not set(idx["train_indices"]) & set(idx["test_indices"])
+    ops = lambda xs: sorted(Counter(x["num_operations"] for x in xs).items())
+    assert ops(tr) == [(2, 100), (3, 200)] and ops(te) == [(2, 50), (3, 100)]
+    assert ops(tr[:240]) == [(2, 80), (3, 160)] and ops(tr[240:]) == [(2, 20), (3, 40)]
+    assert npr.stratified_split_items()[1] == idx  # seeded: identical on repeat
+
+
+def test_transformer_layerwise_matches_pooled(models):
+    expr = npr.load_split_items("study1")["train"][0]["input"]
+    src = npr.encode_input(expr)
+    lw = npr.transformer_layerwise_masked(models["transformer"], src)
+    pooled = npr.transformer_encoder_states_mean_pooled_masked(models["transformer"], src)
+    assert np.array_equal(lw["mean_pool"], pooled)
+    assert np.allclose((lw["layer1"] + lw["layer2"] + lw["layer3"]) / 3, pooled, atol=1e-5)
+    assert lw["encoder_input"].shape == pooled.shape == (npr.MAX_INPUT_LEN, 256)
+
+
+def test_char_position_features():
+    items = npr.load_split_items("study1")["ID_val_heldout"]
+    a = npr.char_position_features(items)
+    assert a["X"].shape == (2945, npr.tokenizer.vocab_size + npr.MAX_INPUT_LEN)
+    assert (a["X"].sum(1) == 2).all()
+
+
+def test_transformer_memory_matches_encoder_output(models):
+    """The 'memory' feature equals nn.Transformer's own encoder output (layers + final norm) at real positions."""
+    tr = models["transformer"]
+    expr = npr.load_split_items("study1")["train"][0]["input"]
+    src = npr.encode_input(expr)
+    lw = npr.transformer_layerwise_masked(tr, src)
+    with torch.no_grad():
+        src_in = src.unsqueeze(0).to(npr.DEVICE)
+        x = tr.pos_encoder(tr.encoder_embedding(src_in) * (tr.d_model ** 0.5))
+        ref = tr.transformer.encoder(x, src_key_padding_mask=(src_in == tr.pad_idx))[0].cpu().numpy()
+    n = len(expr)
+    diff = np.abs(lw["memory"][:n] - ref[:n]).max()
+    print(f"\nmemory vs nn.Transformer encoder output, max|diff| over real positions: {diff:.2e}")
+    assert diff < 1e-4

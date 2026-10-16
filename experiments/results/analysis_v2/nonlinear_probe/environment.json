@@ -1,0 +1,448 @@
+{
+  "probe_environment": {
+    "python": "3.12.3",
+    "torch": "2.8.0+cu128",
+    "numpy": "2.5.2",
+    "sklearn": "1.9.1",
+    "huggingface_hub": "2.2.0",
+    "device": "cuda",
+    "cuda_version": "12.8",
+    "gpu": "NVIDIA L4",
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39"
+  },
+  "reference_evaluation_environment": {
+    "source": "CHECKPOINTS.md, Evaluation environment (test-set numbers)",
+    "torch": "2.13.0",
+    "numpy": "2.4.6",
+    "device": "cpu",
+    "sklearn": "not recorded",
+    "python": "not recorded"
+  },
+  "determinism": {
+    "torch.use_deterministic_algorithms": true,
+    "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+    "tf32": false,
+    "cudnn.benchmark": false
+  },
+  "repo_commit": "42b8bfb3b591921b55d329be2798b34f1c44ebe1",
+  "hf": {
+    "model_repo": "Ajay0728/Compositional-reasoning-arithmetic",
+    "model_commit": "516c5fc98ae8e75fc6363889231a12cb96c7418d",
+    "data_repo": "Ajay0728/Compositional-reasoning-arithmetic-datasets",
+    "data_commit": "df2dcff8828240910106c01851e5d57c8cdf6869"
+  },
+  "protocol": {
+    "hidden": 256,
+    "sweep_hidden": [
+      64,
+      256,
+      1024
+    ],
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "batch": 256,
+    "max_epochs": 200,
+    "patience": 10,
+    "probe_seeds": [
+      0,
+      1,
+      2
+    ],
+    "control_perm_seed": 12345,
+    "n_boot": 1000,
+    "boot_seed_base": 0,
+    "n_train": 300,
+    "n_carve": 240,
+    "n_id_test": 150,
+    "n_ood_test": 150
+  },
+  "files": {
+    "dataset:study1/train.json": {
+      "repo_id": "Ajay0728/Compositional-reasoning-arithmetic-datasets",
+      "repo_type": "dataset",
+      "hf_commit": "df2dcff8828240910106c01851e5d57c8cdf6869",
+      "filename": "study1/train.json",
+      "sha256": "8caff1f62e7cf68110d39c1f5821352320862576f8dd19653e744765294bf802",
+      "hub_lfs_sha256": null,
+      "local_path": "/root/.cache/huggingface/hub/datasets--Ajay0728--Compositional-reasoning-arithmetic-datasets/snapshots/df2dcff8828240910106c01851e5d57c8cdf6869/study1/train.json"
+    },
+    "dataset:study1/val.json": {
+      "repo_id": "Ajay0728/Compositional-reasoning-arithmetic-datasets",
+      "repo_type": "dataset",
+      "hf_commit": "df2dcff8828240910106c01851e5d57c8cdf6869",
+      "filename": "study1/val.json",
+      "sha256": "8b570c78f40d91aa8f6b095fa0e9d2fffafdeb2c5a6cb5156f9cd4165ad9898c",
+      "hub_lfs_sha256": null,
+      "local_path": "/root/.cache/huggingface/hub/datasets--Ajay0728--Compositional-reasoning-arithmetic-datasets/snapshots/df2dcff8828240910106c01851e5d57c8cdf6869/study1/val.json"
+    },
+    "dataset:study1/test.json": {
+      "repo_id": "Ajay0728/Compositional-reasoning-arithmetic-datasets",
+      "repo_type": "dataset",
+      "hf_commit": "df2dcff8828240910106c01851e5d57c8cdf6869",
+      "filename": "study1/test.json",
+      "sha256": "e516228da873a23266540a291539cf9d9bb926cb5bb3ccec0345518edb1b2493",
+      "hub_lfs_sha256": null,
+      "local_path": "/root/.cache/huggingface/hub/datasets--Ajay0728--Compositional-reasoning-arithmetic-datasets/snapshots/df2dcff8828240910106c01851e5d57c8cdf6869/study1/test.json"
+    },
+    "dataset:study1/ood_ops4.json": {
+      "repo_id": "Ajay0728/Compositional-reasoning-arithmetic-datasets",
+      "repo_type": "dataset",
+      "hf_commit": "df2dcff8828240910106c01851e5d57c8cdf6869",
+      "filename": "study1/ood_ops4.json",
+      "sha256": "0611018c68effd54df5fdd0ea7e8b734a64c7fab01c81e73c84a68cf15603546",
+      "hub_lfs_sha256": null,
+      "local_path": "/root/.cache/huggingface/hub/datasets--Ajay0728--Compositional-reasoning-arithmetic-datasets/snapshots/df2dcff8828240910106c01851e5d57c8cdf6869/study1/ood_ops4.json"
+    },
+    "dataset:study1/ood_ops5.json": {
+      "repo_id": "Ajay0728/Compositional-reasoning-arithmetic-datasets",
+      "repo_type": "dataset",
+      "hf_commit": "df2dcff8828240910106c01851e5d57c8cdf6869",
+      "filename": "study1/ood_ops5.json",
+      "sha256": "84363acae1a2ca8f3df1cad732de146e252f06909862e933a6c2b878f2dc0636",
+      "hub_lfs_sha256": null,
+      "local_path": "/root/.cache/huggingface/hub/datasets--Ajay0728--Compositional-reasoning-arithmetic-datasets/snapshots/df2dcff8828240910106c01851e5d57c8cdf6869/study1/ood_ops5.json"
+    },
+    "dataset:study1/ood_ops6.json": {
+      "repo_id": "Ajay0728/Compositional-reasoning-arithmetic-datasets",
+      "repo_type": "dataset",
+      "hf_commit": "df2dcff8828240910106c01851e5d57c8cdf6869",
+      "filename": "study1/ood_ops6.json",
+      "sha256": "c649378aad2bdc12f5afc5e572352577c755e39a7d8c1d8b3f0299c7f3fb87e5",
+      "hub_lfs_sha256": null,
+      "local_path": "/root/.cache/huggingface/hub/datasets--Ajay0728--Compositional-reasoning-arithmetic-datasets/snapshots/df2dcff8828240910106c01851e5d57c8cdf6869/study1/ood_ops6.json"
+    },
+    "dataset:study1/ood_ops7.json": {
+      "repo_id": "Ajay0728/Compositional-reasoning-arithmetic-datasets",
+      "repo_type": "dataset",
+      "hf_commit": "df2dcff8828240910106c01851e5d57c8cdf6869",
+      "filename": "study1/ood_ops7.json",
+      "sha256": "118932f93b2c237444547762f3f2fc21c87a8b6ca5db153ad801e73a8057a019",
+      "hub_lfs_sha256": null,
+      "local_path": "/root/.cache/huggingface/hub/datasets--Ajay0728--Compositional-reasoning-arithmetic-datasets/snapshots/df2dcff8828240910106c01851e5d57c8cdf6869/study1/ood_ops7.json"
+    },
+    "dataset:study2/train.json": {
+      "repo_id": "Ajay0728/Compositional-reasoning-arithmetic-datasets",
+      "repo_type": "dataset",
+      "hf_commit": "df2dcff8828240910106c01851e5d57c8cdf6869",
+      "filename": "study2/train.json",
+      "sha256": "af916f2d66a09496708db9c167a65fbb46513e057fc5ca51697e5eaf152e5616",
+      "hub_lfs_sha256": null,
+      "local_path": "/root/.cache/huggingface/hub/datasets--Ajay0728--Compositional-reasoning-arithmetic-datasets/snapshots/df2dcff8828240910106c01851e5d57c8cdf6869/study2/train.json"
+    },
+    "dataset:study2/val.json": {
+      "repo_id": "Ajay0728/Compositional-reasoning-arithmetic-datasets",
+      "repo_type": "dataset",
+      "hf_commit": "df2dcff8828240910106c01851e5d57c8cdf6869",
+      "filename": "study2/val.json",
+      "sha256": "eff26a990f9693369f2adc53e2aa2baea649b3fa214c3cf7fe49af6082acf6e8",
+      "hub_lfs_sha256": null,
+      "local_path": "/root/.cache/huggingface/hub/datasets--Ajay0728--Compositional-reasoning-arithmetic-datasets/snapshots/df2dcff8828240910106c01851e5d57c8cdf6869/study2/val.json"
+    },
+    "dataset:study2/test.json": {
+      "repo_id": "Ajay0728/Compositional-reasoning-arithmetic-datasets",
+      "repo_type": "dataset",
+      "hf_commit": "df2dcff8828240910106c01851e5d57c8cdf6869",
+      "filename": "study2/test.json",
+      "sha256": "35ce6b1d5d8f7163a467b312e212a9b583688bf13e260264366bffa9b0d912b3",
+      "hub_lfs_sha256": null,
+      "local_path": "/root/.cache/huggingface/hub/datasets--Ajay0728--Compositional-reasoning-arithmetic-datasets/snapshots/df2dcff8828240910106c01851e5d57c8cdf6869/study2/test.json"
+    },
+    "dataset:study2/ood.json": {
+      "repo_id": "Ajay0728/Compositional-reasoning-arithmetic-datasets",
+      "repo_type": "dataset",
+      "hf_commit": "df2dcff8828240910106c01851e5d57c8cdf6869",
+      "filename": "study2/ood.json",
+      "sha256": "ef21ec287bc48ed1534711bd05a04b5feb0269f5c1883a57003e4528a685b78e",
+      "hub_lfs_sha256": null,
+      "local_path": "/root/.cache/huggingface/hub/datasets--Ajay0728--Compositional-reasoning-arithmetic-datasets/snapshots/df2dcff8828240910106c01851e5d57c8cdf6869/study2/ood.json"
+    },
+    "model:transformer/study1/seed0/best_model.pt": {
+      "repo_id": "Ajay0728/Compositional-reasoning-arithmetic",
+      "repo_type": "model",
+      "hf_commit": "516c5fc98ae8e75fc6363889231a12cb96c7418d",
+      "filename": "transformer/study1/seed0/best_model.pt",
+      "sha256": "ef87bb5629c43e2748168684593472026c1da16f709be24dec74c781c03eb2a4",
+      "hub_lfs_sha256": "ef87bb5629c43e2748168684593472026c1da16f709be24dec74c781c03eb2a4",
+      "local_path": "/root/.cache/huggingface/hub/models--Ajay0728--Compositional-reasoning-arithmetic/snapshots/516c5fc98ae8e75fc6363889231a12cb96c7418d/transformer/study1/seed0/best_model.pt"
+    },
+    "model:lstm/study1/seed0/best_model.pt": {
+      "repo_id": "Ajay0728/Compositional-reasoning-arithmetic",
+      "repo_type": "model",
+      "hf_commit": "516c5fc98ae8e75fc6363889231a12cb96c7418d",
+      "filename": "lstm/study1/seed0/best_model.pt",
+      "sha256": "1f9c19d3ba3269bf7160fc6c9ec258fc21a57755be33777a49ac374b39ed3e42",
+      "hub_lfs_sha256": "1f9c19d3ba3269bf7160fc6c9ec258fc21a57755be33777a49ac374b39ed3e42",
+      "local_path": "/root/.cache/huggingface/hub/models--Ajay0728--Compositional-reasoning-arithmetic/snapshots/516c5fc98ae8e75fc6363889231a12cb96c7418d/lstm/study1/seed0/best_model.pt"
+    },
+    "model:lstm/study1/seed1/best_model.pt": {
+      "repo_id": "Ajay0728/Compositional-reasoning-arithmetic",
+      "repo_type": "model",
+      "hf_commit": "516c5fc98ae8e75fc6363889231a12cb96c7418d",
+      "filename": "lstm/study1/seed1/best_model.pt",
+      "sha256": "a2db5c7bd2c333a5a73410539d2632aee411fbe3127641c2ee2807fe401b79c2",
+      "hub_lfs_sha256": "a2db5c7bd2c333a5a73410539d2632aee411fbe3127641c2ee2807fe401b79c2",
+      "local_path": "/root/.cache/huggingface/hub/models--Ajay0728--Compositional-reasoning-arithmetic/snapshots/516c5fc98ae8e75fc6363889231a12cb96c7418d/lstm/study1/seed1/best_model.pt"
+    },
+    "model:lstm/study1/seed2/best_model.pt": {
+      "repo_id": "Ajay0728/Compositional-reasoning-arithmetic",
+      "repo_type": "model",
+      "hf_commit": "516c5fc98ae8e75fc6363889231a12cb96c7418d",
+      "filename": "lstm/study1/seed2/best_model.pt",
+      "sha256": "d2c7ae959f9eb6f5830e0ae911c8539f5473bbcb4ffd136a4409914643bca27e",
+      "hub_lfs_sha256": "d2c7ae959f9eb6f5830e0ae911c8539f5473bbcb4ffd136a4409914643bca27e",
+      "local_path": "/root/.cache/huggingface/hub/models--Ajay0728--Compositional-reasoning-arithmetic/snapshots/516c5fc98ae8e75fc6363889231a12cb96c7418d/lstm/study1/seed2/best_model.pt"
+    },
+    "model:lstm/study2/seed0/best_model.pt": {
+      "repo_id": "Ajay0728/Compositional-reasoning-arithmetic",
+      "repo_type": "model",
+      "hf_commit": "516c5fc98ae8e75fc6363889231a12cb96c7418d",
+      "filename": "lstm/study2/seed0/best_model.pt",
+      "sha256": "72100d77e153931f21b507331bc7c7140238d71f2557c6bbaf123ab4c19f56da",
+      "hub_lfs_sha256": "72100d77e153931f21b507331bc7c7140238d71f2557c6bbaf123ab4c19f56da",
+      "local_path": "/root/.cache/huggingface/hub/models--Ajay0728--Compositional-reasoning-arithmetic/snapshots/516c5fc98ae8e75fc6363889231a12cb96c7418d/lstm/study2/seed0/best_model.pt"
+    },
+    "model:lstm/study2/seed1/best_model.pt": {
+      "repo_id": "Ajay0728/Compositional-reasoning-arithmetic",
+      "repo_type": "model",
+      "hf_commit": "516c5fc98ae8e75fc6363889231a12cb96c7418d",
+      "filename": "lstm/study2/seed1/best_model.pt",
+      "sha256": "443612493d88a0286f92a17240a861b074716d3752c38ba0045e69a88f4bc358",
+      "hub_lfs_sha256": "443612493d88a0286f92a17240a861b074716d3752c38ba0045e69a88f4bc358",
+      "local_path": "/root/.cache/huggingface/hub/models--Ajay0728--Compositional-reasoning-arithmetic/snapshots/516c5fc98ae8e75fc6363889231a12cb96c7418d/lstm/study2/seed1/best_model.pt"
+    },
+    "model:lstm/study2/seed2/best_model.pt": {
+      "repo_id": "Ajay0728/Compositional-reasoning-arithmetic",
+      "repo_type": "model",
+      "hf_commit": "516c5fc98ae8e75fc6363889231a12cb96c7418d",
+      "filename": "lstm/study2/seed2/best_model.pt",
+      "sha256": "014d28a542810ddc74d0e84951198ff60fabaf4f83765f4b34b3a6ed1a3cb5c0",
+      "hub_lfs_sha256": "014d28a542810ddc74d0e84951198ff60fabaf4f83765f4b34b3a6ed1a3cb5c0",
+      "local_path": "/root/.cache/huggingface/hub/models--Ajay0728--Compositional-reasoning-arithmetic/snapshots/516c5fc98ae8e75fc6363889231a12cb96c7418d/lstm/study2/seed2/best_model.pt"
+    },
+    "model:transformer/study1/seed1/best_model.pt": {
+      "repo_id": "Ajay0728/Compositional-reasoning-arithmetic",
+      "repo_type": "model",
+      "hf_commit": "516c5fc98ae8e75fc6363889231a12cb96c7418d",
+      "filename": "transformer/study1/seed1/best_model.pt",
+      "sha256": "e771396ea0d9286ac7595a726606e80375cf9a84a8a620f719a7f2abb784ee03",
+      "hub_lfs_sha256": "e771396ea0d9286ac7595a726606e80375cf9a84a8a620f719a7f2abb784ee03",
+      "local_path": "/root/.cache/huggingface/hub/models--Ajay0728--Compositional-reasoning-arithmetic/snapshots/516c5fc98ae8e75fc6363889231a12cb96c7418d/transformer/study1/seed1/best_model.pt"
+    },
+    "model:transformer/study1/seed2/best_model.pt": {
+      "repo_id": "Ajay0728/Compositional-reasoning-arithmetic",
+      "repo_type": "model",
+      "hf_commit": "516c5fc98ae8e75fc6363889231a12cb96c7418d",
+      "filename": "transformer/study1/seed2/best_model.pt",
+      "sha256": "4429be2b23facf6d370b064d9d512282802d4b11d0cf681b6fdf5d13d4b0f29e",
+      "hub_lfs_sha256": "4429be2b23facf6d370b064d9d512282802d4b11d0cf681b6fdf5d13d4b0f29e",
+      "local_path": "/root/.cache/huggingface/hub/models--Ajay0728--Compositional-reasoning-arithmetic/snapshots/516c5fc98ae8e75fc6363889231a12cb96c7418d/transformer/study1/seed2/best_model.pt"
+    },
+    "model:transformer/study2/seed0/best_model.pt": {
+      "repo_id": "Ajay0728/Compositional-reasoning-arithmetic",
+      "repo_type": "model",
+      "hf_commit": "516c5fc98ae8e75fc6363889231a12cb96c7418d",
+      "filename": "transformer/study2/seed0/best_model.pt",
+      "sha256": "860a3468202a5d0e0c3457a1700693d89c95282ff1f7faf721498779b1ff7653",
+      "hub_lfs_sha256": "860a3468202a5d0e0c3457a1700693d89c95282ff1f7faf721498779b1ff7653",
+      "local_path": "/root/.cache/huggingface/hub/models--Ajay0728--Compositional-reasoning-arithmetic/snapshots/516c5fc98ae8e75fc6363889231a12cb96c7418d/transformer/study2/seed0/best_model.pt"
+    },
+    "model:transformer/study2/seed1/best_model.pt": {
+      "repo_id": "Ajay0728/Compositional-reasoning-arithmetic",
+      "repo_type": "model",
+      "hf_commit": "516c5fc98ae8e75fc6363889231a12cb96c7418d",
+      "filename": "transformer/study2/seed1/best_model.pt",
+      "sha256": "641145425094cbe02d30575322303351307589c928d8ac7fd6c802ad63e5800b",
+      "hub_lfs_sha256": "641145425094cbe02d30575322303351307589c928d8ac7fd6c802ad63e5800b",
+      "local_path": "/root/.cache/huggingface/hub/models--Ajay0728--Compositional-reasoning-arithmetic/snapshots/516c5fc98ae8e75fc6363889231a12cb96c7418d/transformer/study2/seed1/best_model.pt"
+    },
+    "model:transformer/study2/seed2/best_model.pt": {
+      "repo_id": "Ajay0728/Compositional-reasoning-arithmetic",
+      "repo_type": "model",
+      "hf_commit": "516c5fc98ae8e75fc6363889231a12cb96c7418d",
+      "filename": "transformer/study2/seed2/best_model.pt",
+      "sha256": "0d5f150ed840df92bb3c4b64ed9ac88b339ccea1c98407798c4b1bd557e2ebe3",
+      "hub_lfs_sha256": "0d5f150ed840df92bb3c4b64ed9ac88b339ccea1c98407798c4b1bd557e2ebe3",
+      "local_path": "/root/.cache/huggingface/hub/models--Ajay0728--Compositional-reasoning-arithmetic/snapshots/516c5fc98ae8e75fc6363889231a12cb96c7418d/transformer/study2/seed2/best_model.pt"
+    }
+  },
+  "checkpoint_metadata": {
+    "transformer/study1/seed0": {
+      "epoch": 114,
+      "val_accuracy": 7.5,
+      "val_loss": 3.2949230819940567,
+      "seed": 0,
+      "dataset_version": "datasets_v2",
+      "generator_commit": "f5044574212d2a41e5091456096e0841cf5ae6f8"
+    },
+    "lstm/study1/seed0": {
+      "epoch": 43,
+      "val_accuracy": 35.1,
+      "val_loss": 0.9785438999533653,
+      "seed": 0,
+      "dataset_version": "datasets_v2",
+      "generator_commit": "f5044574212d2a41e5091456096e0841cf5ae6f8"
+    },
+    "lstm/study1/seed1": {
+      "epoch": 46,
+      "val_accuracy": 35.9,
+      "val_loss": 0.9940367080271244,
+      "seed": 1,
+      "dataset_version": "datasets_v2",
+      "generator_commit": "f5044574212d2a41e5091456096e0841cf5ae6f8"
+    },
+    "lstm/study1/seed2": {
+      "epoch": 51,
+      "val_accuracy": 36.1,
+      "val_loss": 1.1237263418734074,
+      "seed": 2,
+      "dataset_version": "datasets_v2",
+      "generator_commit": "f5044574212d2a41e5091456096e0841cf5ae6f8"
+    },
+    "lstm/study2/seed0": {
+      "epoch": 57,
+      "val_accuracy": 32.5,
+      "val_loss": 1.1826078407466412,
+      "seed": 0,
+      "dataset_version": "datasets_v2",
+      "generator_commit": "f5044574212d2a41e5091456096e0841cf5ae6f8"
+    },
+    "lstm/study2/seed1": {
+      "epoch": 195,
+      "val_accuracy": 30.1,
+      "val_loss": 2.1283585280179977,
+      "seed": 1,
+      "dataset_version": "datasets_v2",
+      "generator_commit": "f5044574212d2a41e5091456096e0841cf5ae6f8"
+    },
+    "lstm/study2/seed2": {
+      "epoch": 66,
+      "val_accuracy": 32.0,
+      "val_loss": 1.3190548121929169,
+      "seed": 2,
+      "dataset_version": "datasets_v2",
+      "generator_commit": "f5044574212d2a41e5091456096e0841cf5ae6f8"
+    },
+    "transformer/study1/seed1": {
+      "epoch": 160,
+      "val_accuracy": 6.8,
+      "val_loss": 4.223975971341133,
+      "seed": 1,
+      "dataset_version": "datasets_v2",
+      "generator_commit": "f5044574212d2a41e5091456096e0841cf5ae6f8"
+    },
+    "transformer/study1/seed2": {
+      "epoch": 160,
+      "val_accuracy": 7.5,
+      "val_loss": 3.9785922914743423,
+      "seed": 2,
+      "dataset_version": "datasets_v2",
+      "generator_commit": "f5044574212d2a41e5091456096e0841cf5ae6f8"
+    },
+    "transformer/study2/seed0": {
+      "epoch": 34,
+      "val_accuracy": 3.7,
+      "val_loss": 1.471701756119728,
+      "seed": 0,
+      "dataset_version": "datasets_v2",
+      "generator_commit": "f5044574212d2a41e5091456096e0841cf5ae6f8"
+    },
+    "transformer/study2/seed1": {
+      "epoch": 162,
+      "val_accuracy": 4.2,
+      "val_loss": 3.8162454068660736,
+      "seed": 1,
+      "dataset_version": "datasets_v2",
+      "generator_commit": "f5044574212d2a41e5091456096e0841cf5ae6f8"
+    },
+    "transformer/study2/seed2": {
+      "epoch": 51,
+      "val_accuracy": 3.8,
+      "val_loss": 1.5684214234352112,
+      "seed": 2,
+      "dataset_version": "datasets_v2",
+      "generator_commit": "f5044574212d2a41e5091456096e0841cf5ae6f8"
+    }
+  },
+  "data_checksums_vs_CHECKSUMS_txt": {
+    "study1/train.json": {
+      "expected": "8caff1f62e7cf68110d39c1f5821352320862576f8dd19653e744765294bf802",
+      "actual": "8caff1f62e7cf68110d39c1f5821352320862576f8dd19653e744765294bf802",
+      "pass": true
+    },
+    "study1/val.json": {
+      "expected": "8b570c78f40d91aa8f6b095fa0e9d2fffafdeb2c5a6cb5156f9cd4165ad9898c",
+      "actual": "8b570c78f40d91aa8f6b095fa0e9d2fffafdeb2c5a6cb5156f9cd4165ad9898c",
+      "pass": true
+    },
+    "study1/test.json": {
+      "expected": "e516228da873a23266540a291539cf9d9bb926cb5bb3ccec0345518edb1b2493",
+      "actual": "e516228da873a23266540a291539cf9d9bb926cb5bb3ccec0345518edb1b2493",
+      "pass": true
+    },
+    "study1/ood_ops4.json": {
+      "expected": "0611018c68effd54df5fdd0ea7e8b734a64c7fab01c81e73c84a68cf15603546",
+      "actual": "0611018c68effd54df5fdd0ea7e8b734a64c7fab01c81e73c84a68cf15603546",
+      "pass": true
+    },
+    "study1/ood_ops5.json": {
+      "expected": "84363acae1a2ca8f3df1cad732de146e252f06909862e933a6c2b878f2dc0636",
+      "actual": "84363acae1a2ca8f3df1cad732de146e252f06909862e933a6c2b878f2dc0636",
+      "pass": true
+    },
+    "study1/ood_ops6.json": {
+      "expected": "c649378aad2bdc12f5afc5e572352577c755e39a7d8c1d8b3f0299c7f3fb87e5",
+      "actual": "c649378aad2bdc12f5afc5e572352577c755e39a7d8c1d8b3f0299c7f3fb87e5",
+      "pass": true
+    },
+    "study1/ood_ops7.json": {
+      "expected": "118932f93b2c237444547762f3f2fc21c87a8b6ca5db153ad801e73a8057a019",
+      "actual": "118932f93b2c237444547762f3f2fc21c87a8b6ca5db153ad801e73a8057a019",
+      "pass": true
+    },
+    "study2/train.json": {
+      "expected": "af916f2d66a09496708db9c167a65fbb46513e057fc5ca51697e5eaf152e5616",
+      "actual": "af916f2d66a09496708db9c167a65fbb46513e057fc5ca51697e5eaf152e5616",
+      "pass": true
+    },
+    "study2/val.json": {
+      "expected": "eff26a990f9693369f2adc53e2aa2baea649b3fa214c3cf7fe49af6082acf6e8",
+      "actual": "eff26a990f9693369f2adc53e2aa2baea649b3fa214c3cf7fe49af6082acf6e8",
+      "pass": true
+    },
+    "study2/test.json": {
+      "expected": "35ce6b1d5d8f7163a467b312e212a9b583688bf13e260264366bffa9b0d912b3",
+      "actual": "35ce6b1d5d8f7163a467b312e212a9b583688bf13e260264366bffa9b0d912b3",
+      "pass": true
+    },
+    "study2/ood.json": {
+      "expected": "ef21ec287bc48ed1534711bd05a04b5feb0269f5c1883a57003e4528a685b78e",
+      "actual": "ef21ec287bc48ed1534711bd05a04b5feb0269f5c1883a57003e4528a685b78e",
+      "pass": true
+    }
+  },
+  "wall_time_seconds": {
+    "download_and_checksums": 2.2,
+    "bridge": 8.8,
+    "grid": 1051.0,
+    "sweep": 342.0,
+    "report": 1.3,
+    "addenda": 708.7,
+    "download_and_checksums [run 2]": 0.5,
+    "report [run 2]": 1.1,
+    "download_and_checksums [run 3]": 0.5,
+    "addenda4c": 583.0,
+    "download_and_checksums [run 4]": 0.5,
+    "report [run 3]": 1.1,
+    "download_and_checksums [run 5]": 0.5,
+    "addenda4d": 247.4,
+    "download_and_checksums [run 6]": 0.5,
+    "report [run 4]": 1.1,
+    "download_and_checksums [run 7]": 0.4,
+    "addenda4e": 479.1,
+    "download_and_checksums [run 8]": 0.5,
+    "report [run 5]": 1.1,
+    "download_and_checksums [run 9]": 0.5,
+    "report [run 6]": 1.1
+  },
+  "wall_time_note": "addenda/report [run 2] are the STEP 4b invocations; the 4b addenda invocation download time was overwritten by the 4b report invocation before the no-overwrite fix (value 0.5 s is the report invocation)."
+}
