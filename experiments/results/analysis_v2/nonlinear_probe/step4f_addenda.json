@@ -736,5 +736,88 @@
       }
     }
   },
-  "wall_time_seconds": 41.1
+  "wall_time_seconds": 41.1,
+  "matched_lstm_final_position": {
+    "h": {
+      "train_r2": 0.1767944097518921,
+      "n_train": 300,
+      "ID_val_heldout": {
+        "stored": 0.007189154624938965,
+        "rerun": 0.007189154624938965,
+        "delta": 0.0,
+        "n_examples": 150
+      },
+      "ops4": {
+        "stored": -0.03940856456756592,
+        "rerun": -0.03940856456756592,
+        "delta": 0.0,
+        "n_examples": 150
+      },
+      "ops5": {
+        "stored": -0.08264315128326416,
+        "rerun": -0.08264327049255371,
+        "delta": -1.1920928955078125e-07,
+        "n_examples": 150
+      },
+      "ops6": {
+        "stored": -0.05885028839111328,
+        "rerun": -0.05885028839111328,
+        "delta": 0.0,
+        "n_examples": 150
+      },
+      "ops7": {
+        "stored": 0.0014081597328186035,
+        "rerun": 0.0014081597328186035,
+        "delta": 0.0,
+        "n_examples": 150
+      },
+      "max_abs_delta": 1.1920928955078125e-07,
+      "within_tolerance": true
+    },
+    "c": {
+      "train_r2": 0.24164986610412598,
+      "n_train": 300,
+      "ID_val_heldout": {
+        "stored": -1.2423882484436035,
+        "rerun": -1.2423796653747559,
+        "delta": 8.58306884765625e-06,
+        "n_examples": 150
+      },
+      "ops4": {
+        "stored": -1.1055550575256348,
+        "rerun": -1.1055190563201904,
+        "delta": 3.600120544433594e-05,
+        "n_examples": 150
+      },
+      "ops5": {
+        "stored": -1.8709030151367188,
+        "rerun": -1.870828628540039,
+        "delta": 7.43865966796875e-05,
+        "n_examples": 150
+      },
+      "ops6": {
+        "stored": -2.21142840385437,
+        "rerun": -2.211333990097046,
+        "delta": 9.441375732421875e-05,
+        "n_examples": 150
+      },
+      "ops7": {
+        "stored": -2.985731601715088,
+        "rerun": -2.985635995864868,
+        "delta": 9.560585021972656e-05,
+        "n_examples": 150
+      },
+      "max_abs_delta": 9.560585021972656e-05,
+      "within_tolerance": true
+    },
+    "definition": "analysis_v2.ipynb cell 32 reproduced for lstm_h_final and lstm_c_final (study1 seed 0): state at the final real position, Ridge(alpha=1.0) on raw features, trained on val[:300]; held-out R\u00b2 must match the stored value within \u00b10.02; train_r2 is the fit on those 300 training vectors",
+    "environment": {
+      "python": "3.9.6",
+      "torch": "2.8.0",
+      "numpy": "2.0.2",
+      "sklearn": "1.6.1",
+      "device": "cpu"
+    },
+    "wall_time_seconds": 9.6
+  }
 }
