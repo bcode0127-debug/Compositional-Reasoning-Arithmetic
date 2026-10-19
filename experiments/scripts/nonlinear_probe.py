@@ -1771,6 +1771,21 @@ def step4f_sections(a):
                      f"({', '.join(f'{x:.3f}' for x in e['control_train_per_seed'])}) | {j(e['bootstrap_ci'])} | "
                      f"{j(e['bootstrap_ci_vs_length_baseline'])} | {e['verdict']} | "
                      f"{'; '.join(e['flags']) if e['flags'] else '–'} |")
+    lstm = {k: e for k, e in st["rows"].items() if k.startswith("lstm")}
+    above = [(k, sd) for k, e in lstm.items() for sd, (lo, hi) in e["bootstrap_ci"].items() if lo > 0]
+    by_row = {}
+    for k, sd in above:
+        by_row.setdefault(k, []).append(sd.replace("seed", ""))
+    all3 = [k for k, e in lstm.items() if all(lo > 0 for lo, hi in e["bootstrap_ci"].values())]
+    n_len = sum(len(e["bootstrap_ci_vs_length_baseline"]) for e in st["rows"].values())
+    excl = sum(1 for e in st["rows"].values() for lo, hi in e["bootstrap_ci_vs_length_baseline"].values() if lo > 0 or hi < 0)
+    desc = "; ".join(f"{k.replace('lstm_study1_', '').replace('_final', '').replace('_', ' ')} on probe seed{'s' if len(v) > 1 else ''} "
+                     f"{' and '.join(v)}" for k, v in by_row.items())
+    lines += ["", f"**Paired CIs.** {len(above)} of the {sum(len(e['bootstrap_ci']) for e in lstm.values())} LSTM "
+              f"seed-level intervals against the control lie above zero ({desc}), "
+              + (f"no row on all three probe seeds" if not all3 else f"rows on all three probe seeds: {', '.join(all3)}")
+              + f", and {'none' if not excl else excl} of the {n_len} intervals against the length baseline "
+              f"exclude{'s' if excl in (0, 1) else ''} zero."]
     ml = a.get("matched_lstm_final_position")
     if ml:
         sp = eval_split_names("study1")

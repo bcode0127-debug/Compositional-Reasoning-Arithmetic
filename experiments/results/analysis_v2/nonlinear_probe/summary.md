@@ -419,4 +419,6 @@ n = 300 train / 150 test single vectors. Template control, one-hot(length): Ridg
 | transformer_study1_seed1_pooled_final | -0.206 (0.800) | -0.074 ± 0.031 | 0.843, 0.876, 0.824 | -0.139 (0.110, 0.117, 0.132) | [-0.881, +0.285]; [-0.885, +0.358]; [-0.626, +0.405] | [-1.025, +0.205]; [-1.054, +0.245]; [-0.899, +0.233] | signal, below threshold | – |
 | transformer_study1_seed2_pooled_final | 0.068 (0.792) | 0.211 ± 0.022 | 0.620, 0.701, 0.624 | -0.119 (0.100, 0.178, 0.119) | [-0.315, +0.643]; [-0.166, +0.581]; [-0.149, +0.606] | [-0.449, +0.441]; [-0.266, +0.474]; [-0.341, +0.429] | signal, below threshold | – |
 
+**Paired CIs.** 6 of the 18 LSTM seed-level intervals against the control lie above zero (seed0 h on probe seed 1; seed0 c on probe seed 1; seed1 h on probe seed 0; seed1 c on probe seed 0; seed2 h on probe seeds 1 and 2), no row on all three probe seeds, and none of the 27 intervals against the length baseline excludes zero.
+
 **Matched LSTM seed 0, final position (STEP 4g).** Stored held-out R² reproduced (max |delta| h 1.2e-07, c 9.6e-05); training R² on the 300 vectors: h 0.177, c 0.242, against held-out h -0.083 to 0.007 and c -2.986 to -1.106.
