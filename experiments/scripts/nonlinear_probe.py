@@ -30,6 +30,8 @@ Stages (run in order by --stage all):
           seeds), per-layer identity probes -> step4e_addenda.json.
   addenda4f STEP 4f additions: final-position final-answer probes (Transformer
           matched, masked; stratified LSTM h/c and Transformer) -> step4f_addenda.json.
+  addenda4g STEP 4g: training R² beside the stored held-out R² for the matched
+          LSTM seed-0 final-position rows -> step4f_addenda.json[matched_lstm_final_position].
   report  summary.md, figures (reads the JSONs written by the stages above).
 
 Usage:
@@ -1692,6 +1694,54 @@ def stage_addenda4f(out_dir, cache_dir):
         json.dump(res, f, indent=2)
 
 
+LSTM_FINAL_TOL = 0.02
+
+
+def matched_lstm_final_position(cache_dir):
+    """Matched protocol, LSTM study1 seed 0, h and c: the Phase 3 addendum's final-position
+    Ridge (cell 32), reproduced, with the training R² the notebook did not record."""
+    stored = json.loads((PHASE3_DIR / "phase3_addendum_final_answer_results.json").read_text())
+    items = load_split_items("study1")
+    splits = eval_split_names("study1")
+    model = load_model("lstm", "study1", 0)
+    out = {}
+    for state in ("h", "c"):
+        fn = STATE_FNS[("lstm", state)]
+        acts = final_answer_acts(lambda s_: fn(model, s_), items,
+                                 Path(cache_dir) / f"final_lstm_study1_seed0_{state}_matched.npz")
+        r = ridge_final(acts, splits)
+        ref = stored[f"lstm_{state}_final"]
+        out[state] = {"train_r2": r["train"], "n_train": int(len(acts["train"]["value"])),
+                      **{s: {"stored": ref[s]["value_r2"], "rerun": r[s], "delta": r[s] - ref[s]["value_r2"],
+                             "n_examples": ref[s]["n_examples"]} for s in splits}}
+        out[state]["max_abs_delta"] = max(abs(out[state][s]["delta"]) for s in splits)
+        out[state]["within_tolerance"] = out[state]["max_abs_delta"] <= LSTM_FINAL_TOL
+    return out
+
+
+def stage_addenda4g(out_dir, cache_dir):
+    import sklearn
+    import platform
+    t0 = time.time()
+    path = out_dir / "step4f_addenda.json"
+    a = json.loads(path.read_text())
+    block = matched_lstm_final_position(cache_dir)
+    for state, e in block.items():
+        assert e["within_tolerance"], f"LSTM {state} final-position reproduction outside ±{LSTM_FINAL_TOL}: {e}"
+        print(f"[4g] LSTM {state} final-position (stored / rerun, train R² {e['train_r2']:.3f}): " + " ".join(
+            f"{s}={e[s]['stored']:.3f}/{e[s]['rerun']:.3f}" for s in eval_split_names("study1")), flush=True)
+    block["definition"] = ("analysis_v2.ipynb cell 32 reproduced for lstm_h_final and lstm_c_final (study1 seed 0): "
+                           "state at the final real position, Ridge(alpha=1.0) on raw features, trained on val[:300]; "
+                           f"held-out R² must match the stored value within ±{LSTM_FINAL_TOL}; train_r2 is the fit on "
+                           "those 300 training vectors")
+    block["environment"] = {"python": platform.python_version(), "torch": torch.__version__, "numpy": np.__version__,
+                            "sklearn": sklearn.__version__, "device": DEVICE}
+    block["wall_time_seconds"] = round(time.time() - t0, 1)
+    a["matched_lstm_final_position"] = block
+    with open(path, "w") as f:
+        json.dump(a, f, indent=2)
+
+
 def step4f_sections(a):
     j = lambda d: "; ".join(f"[{lo:+.3f}, {hi:+.3f}]" for lo, hi in d.values())
     mt = a["matched_transformer"]
@@ -1721,6 +1771,29 @@ def step4f_sections(a):
                      f"({', '.join(f'{x:.3f}' for x in e['control_train_per_seed'])}) | {j(e['bootstrap_ci'])} | "
                      f"{j(e['bootstrap_ci_vs_length_baseline'])} | {e['verdict']} | "
                      f"{'; '.join(e['flags']) if e['flags'] else '–'} |")
+    lstm = {k: e for k, e in st["rows"].items() if k.startswith("lstm")}
+    above = [(k, sd) for k, e in lstm.items() for sd, (lo, hi) in e["bootstrap_ci"].items() if lo > 0]
+    by_row = {}
+    for k, sd in above:
+        by_row.setdefault(k, []).append(sd.replace("seed", ""))
+    all3 = [k for k, e in lstm.items() if all(lo > 0 for lo, hi in e["bootstrap_ci"].values())]
+    n_len = sum(len(e["bootstrap_ci_vs_length_baseline"]) for e in st["rows"].values())
+    excl = sum(1 for e in st["rows"].values() for lo, hi in e["bootstrap_ci_vs_length_baseline"].values() if lo > 0 or hi < 0)
+    desc = "; ".join(f"{k.replace('lstm_study1_', '').replace('_final', '').replace('_', ' ')} on probe seed{'s' if len(v) > 1 else ''} "
+                     f"{' and '.join(v)}" for k, v in by_row.items())
+    lines += ["", f"**Paired CIs.** {len(above)} of the {sum(len(e['bootstrap_ci']) for e in lstm.values())} LSTM "
+              f"seed-level intervals against the control lie above zero ({desc}), "
+              + (f"no row on all three probe seeds" if not all3 else f"rows on all three probe seeds: {', '.join(all3)}")
+              + f", and {'none' if not excl else excl} of the {n_len} intervals against the length baseline "
+              f"exclude{'s' if excl in (0, 1) else ''} zero."]
+    ml = a.get("matched_lstm_final_position")
+    if ml:
+        sp = eval_split_names("study1")
+        lines += ["", "**Matched LSTM seed 0, final position (STEP 4g).** Stored held-out R² reproduced (max |delta| h "
+                  f"{ml['h']['max_abs_delta']:.1e}, c {ml['c']['max_abs_delta']:.1e}); training R² on the 300 vectors: "
+                  f"h {ml['h']['train_r2']:.3f}, c {ml['c']['train_r2']:.3f}, against held-out h "
+                  f"{min(ml['h'][s]['rerun'] for s in sp):.3f} to {max(ml['h'][s]['rerun'] for s in sp):.3f} and c "
+                  f"{min(ml['c'][s]['rerun'] for s in sp):.3f} to {max(ml['c'][s]['rerun'] for s in sp):.3f}."]
     lines.append("")
     return lines
 
@@ -2297,7 +2370,7 @@ def environment_record(out_dir, stage_times, checksums=None):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--stage", choices=("bridge", "grid", "sweep", "addenda", "addenda4c", "addenda4d", "addenda4e", "addenda4f", "report", "all"), default="all")
+    ap.add_argument("--stage", choices=("bridge", "grid", "sweep", "addenda", "addenda4c", "addenda4d", "addenda4e", "addenda4f", "addenda4g", "report", "all"), default="all")
     ap.add_argument("--device", default="auto", choices=("auto", "cpu", "cuda"))
     ap.add_argument("--out-dir", type=Path, default=DEFAULT_OUT)
     ap.add_argument("--cache-dir", type=Path, default=Path("/tmp/nonlinear_probe_cache"))
@@ -2307,14 +2380,14 @@ def main():
                     help="leave environment.json untouched (addenda4f records its environment in its own JSON)")
     ap.add_argument("--skip-figures", action="store_true", help="report stage: do not redraw the figures")
     args = ap.parse_args()
-    if args.stage == "addenda4f":
+    if args.stage in ("addenda4f", "addenda4g"):
         args.no_env_record = True
 
     configure_device(args.device)
     args.out_dir.mkdir(parents=True, exist_ok=True)
     print(f"device={DEVICE} torch={torch.__version__} out={args.out_dir}")
 
-    stages = ("bridge", "grid", "sweep", "addenda", "addenda4c", "addenda4d", "addenda4e", "addenda4f", "report") if args.stage == "all" else (args.stage,)
+    stages = ("bridge", "grid", "sweep", "addenda", "addenda4c", "addenda4d", "addenda4e", "addenda4f", "addenda4g", "report") if args.stage == "all" else (args.stage,)
     t = time.time()
     checksums = verify_data_checksums()
     bad = [k for k, v in checksums.items() if not v["pass"]]
@@ -2340,6 +2413,8 @@ def main():
             stage_addenda4e(args.out_dir, args.cache_dir)
         elif st == "addenda4f":
             stage_addenda4f(args.out_dir, args.cache_dir)
+        elif st == "addenda4g":
+            stage_addenda4g(args.out_dir, args.cache_dir)
         elif st == "report":
             stage_report(args.out_dir, figures=not args.skip_figures)
         key = st if not (st == "grid" and args.only) else f"grid[{','.join(args.only)}]"

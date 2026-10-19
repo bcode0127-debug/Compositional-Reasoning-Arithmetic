@@ -268,3 +268,14 @@ def test_final_position_extraction_shape(models):
         assert np.array_equal(a["X"][0], fn(models[m], npr.encode_input(expr))[len(expr) - 1])
     b = npr.final_length_features(items)["train"]
     assert b["X"].shape == (5, npr.MAX_INPUT_LEN + 1) and (b["X"].sum(1) == 1).all()
+
+
+def test_lstm_final_position_reproduction():
+    """Phase 3 addendum (cell 32): LSTM seed-0 final-position Ridge R² reproduces the stored rows within ±0.02."""
+    block = npr.matched_lstm_final_position(CACHE)
+    print()
+    for state in ("h", "c"):
+        e = block[state]
+        print(f"LSTM {state} final position, train R² {e['train_r2']:.3f}: " + " ".join(
+            f"{s} {e[s]['rerun']:+.3f} (stored {e[s]['stored']:+.3f})" for s in SPLITS))
+        assert e["within_tolerance"], (state, e["max_abs_delta"])
