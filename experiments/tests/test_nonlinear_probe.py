@@ -253,3 +253,18 @@ def test_transformer_memory_matches_encoder_output(models):
     diff = np.abs(lw["memory"][:n] - ref[:n]).max()
     print(f"\nmemory vs nn.Transformer encoder output, max|diff| over real positions: {diff:.2e}")
     assert diff < 1e-4
+
+
+def test_final_position_extraction_shape(models):
+    """Final-position final-answer extraction (cell 32): one vector per example, taken at len(expr) - 1."""
+    items = {"train": npr.load_split_items("study1")["train"][:5]}
+    for (m, state), dim in ((("lstm", "h"), 512), (("lstm", "c"), 512), (("transformer", "pooled"), 256),
+                            (("transformer", "pooled_unmasked"), 256)):
+        fn = npr.STATE_FNS[(m, state)]
+        a = npr.final_answer_acts(lambda s: fn(models[m], s), items)["train"]
+        assert a["X"].shape == (5, dim) and a["offsets"].tolist() == list(range(6))
+        assert a["value"].tolist() == [int(it["output"]) for it in items["train"]]
+        expr = items["train"][0]["input"]
+        assert np.array_equal(a["X"][0], fn(models[m], npr.encode_input(expr))[len(expr) - 1])
+    b = npr.final_length_features(items)["train"]
+    assert b["X"].shape == (5, npr.MAX_INPUT_LEN + 1) and (b["X"].sum(1) == 1).all()

@@ -386,3 +386,35 @@ Metric: R² for value, accuracy for depth. mlp = 300-refit mean ± std over prob
 | transformer | pooled | depth | ops5 | 0.270 (no) | 0.269 (no) | 0.258 (no) |
 | transformer | pooled | depth | ops6 | 0.207 (no) | 0.205 (no) | 0.202 (no) |
 | transformer | pooled | depth | ops7 | 0.151 (no) | 0.151 (no) | 0.147 (no) |
+
+## STEP 4f: final-position final-answer probes
+
+**Pooling.** analysis_v2.ipynb cell 32: state at the final real position (len(expr) - 1) only; the Transformer state is transformer_encoder_states_mean_pooled, i.e. the mean over the 3 encoder layers at each position (pooling over layers, not over positions), unmasked; Ridge(alpha=1.0) on raw features; target = int(output). The restatement is identical, except the Transformer layer outputs are computed with the source key-padding mask (transformer_encoder_states_mean_pooled_masked). Run on cpu (torch 2.8.0, sklearn 1.6.1).
+
+### Matched protocol, Transformer seed 0 (Ridge R²)
+
+Unmasked rerun vs stored: max |diff| 2.38e-06. Train R²: unmasked 0.636, masked 0.894.
+
+| split | n | stored (unmasked) | unmasked rerun | masked (restated) |
+|---|---|---|---|---|
+| ID_val_heldout | 150 | 0.050 | 0.050 | -0.495 |
+| ops4 | 150 | 0.012 | 0.012 | -0.066 |
+| ops5 | 150 | -0.058 | -0.058 | -0.050 |
+| ops6 | 150 | -0.086 | -0.086 | -0.016 |
+| ops7 | 150 | -0.132 | -0.132 | -0.057 |
+
+### Stratified split (strat0), final-position final answer (R²)
+
+n = 300 train / 150 test single vectors. Template control, one-hot(length): Ridge 0.011 (train 0.050), MLP 0.005 ± 0.001 (train 0.048, 0.048, 0.047), control -0.009. Held-out R² below -0.5 is flagged as small-n instability.
+
+| row | Ridge (train) | MLP mean ± std | MLP train (s0, s1, s2) | control (train) | boot CI MLP − control | boot CI MLP − length baseline | rule verdict | flags |
+|---|---|---|---|---|---|---|---|---|
+| lstm_study1_seed0_h_final | 0.020 (0.087) | -0.006 ± 0.000 | 0.120, 0.196, 0.181 | -0.100 (-0.027, 0.001, 0.061) | [-0.198, +0.298]; [+0.005, +0.337]; [-0.040, +0.168] | [-0.267, +0.093]; [-0.220, +0.075]; [-0.205, +0.077] | no | – |
+| lstm_study1_seed0_c_final | 0.026 (0.176) | -0.008 ± 0.006 | 0.054, 0.176, 0.128 | -0.122 (-0.041, -0.069, 0.075) | [-0.014, +0.251]; [+0.026, +0.645]; [-0.058, +0.177] | [-0.136, +0.040]; [-0.147, +0.054]; [-0.121, +0.057] | no | – |
+| lstm_study1_seed1_h_final | 0.004 (0.131) | 0.004 ± 0.036 | 0.157, -0.109, 0.231 | -0.162 (-0.207, 0.029, 0.033) | [+0.194, +0.641]; [-0.100, +0.232]; [-0.289, +0.264] | [-0.128, +0.130]; [-0.413, +0.075]; [-0.356, +0.113] | no | – |
+| lstm_study1_seed1_c_final | 0.021 (0.242) | -0.027 ± 0.060 | 0.261, -0.269, 0.224 | -0.191 (-0.164, 0.130, 0.027) | [+0.168, +0.627]; [-0.287, +0.190]; [-0.003, +0.363] | [-0.135, +0.103]; [-0.555, +0.001]; [-0.163, +0.102] | no | – |
+| lstm_study1_seed2_h_final | 0.066 (0.140) | 0.080 ± 0.023 | 0.161, 0.233, 0.167 | -0.064 (0.097, 0.040, 0.134) | [-0.048, +0.222]; [+0.009, +0.334]; [+0.030, +0.265] | [-0.123, +0.202]; [-0.321, +0.211]; [-0.069, +0.207] | no | – |
+| lstm_study1_seed2_c_final | 0.086 (0.218) | 0.060 ± 0.022 | 0.133, 0.141, 0.223 | -0.199 (-0.070, -0.034, -0.177) | [-0.005, +0.441]; [-0.027, +0.441]; [-0.049, +0.581] | [-0.128, +0.182]; [-0.121, +0.135]; [-0.147, +0.143] | no | – |
+| transformer_study1_seed0_pooled_final | -0.004 (0.862) | 0.132 ± 0.028 | 0.997, 0.919, 0.916 | -0.142 (0.102, 0.314, 0.292) | [-0.775, +0.537]; [-0.345, +0.597]; [-0.405, +0.564] | [-0.941, +0.464]; [-0.722, +0.458]; [-0.675, +0.396] | signal, below threshold | – |
+| transformer_study1_seed1_pooled_final | -0.206 (0.800) | -0.074 ± 0.031 | 0.843, 0.876, 0.824 | -0.139 (0.110, 0.117, 0.132) | [-0.881, +0.285]; [-0.885, +0.358]; [-0.626, +0.405] | [-1.025, +0.205]; [-1.054, +0.245]; [-0.899, +0.233] | signal, below threshold | – |
+| transformer_study1_seed2_pooled_final | 0.068 (0.792) | 0.211 ± 0.022 | 0.620, 0.701, 0.624 | -0.119 (0.100, 0.178, 0.119) | [-0.315, +0.643]; [-0.166, +0.581]; [-0.149, +0.606] | [-0.449, +0.441]; [-0.266, +0.474]; [-0.341, +0.429] | signal, below threshold | – |
