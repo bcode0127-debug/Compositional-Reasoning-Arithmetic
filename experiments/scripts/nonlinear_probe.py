@@ -28,6 +28,8 @@ Stages (run in order by --stage all):
   addenda4e STEP 4e additions: linear paired bootstraps (stratified depth),
           layer-wise depth for Transformer seeds 1-2 (+ decoder memory for all
           seeds), per-layer identity probes -> step4e_addenda.json.
+  addenda4f STEP 4f additions: final-position final-answer probes (Transformer
+          matched, masked; stratified LSTM h/c and Transformer) -> step4f_addenda.json.
   report  summary.md, figures (reads the JSONs written by the stages above).
 
 Usage:
@@ -1524,6 +1526,206 @@ def stage_addenda4e(out_dir, cache_dir):
 
 
 # ---------------------------------------------------------------------------
+# STEP 4f addenda: final-position final-answer probes. The Phase 3 addendum
+# (analysis_v2.ipynb cell 32) reads each encoder state at the final real
+# position only; for the Transformer that state is the mean over the 3 encoder
+# layers (no pooling over positions), extracted without the pad mask.
+# Writes step4f_addenda.json only.
+# ---------------------------------------------------------------------------
+
+FINAL_INSTABILITY = -0.5  # held-out R² below this is flagged as small-n instability
+
+
+# Source: analysis_v2.ipynb cell 32 (build_final_answer_dataset), verbatim.
+def build_final_answer_dataset(state_fn, items):
+    X, y = [], []
+    for item in items:
+        expr = item["input"]
+        src = encode_input(expr)
+        states = state_fn(src)
+        final_pos = len(expr) - 1
+        X.append(states[final_pos])
+        y.append(int(item["output"]))
+    return np.array(X), np.array(y)
+
+
+def final_answer_acts(state_fn, items_by_split, cache_file=None):
+    """{split: dict(X, value, depth, offsets)}: one vector per example, so offsets = 0..n."""
+    if cache_file is not None and Path(cache_file).exists():
+        z = np.load(cache_file, allow_pickle=False)
+        return {s: {"X": z[f"{s}__X"], "value": z[f"{s}__y"], "depth": np.zeros(len(z[f"{s}__y"]), dtype=np.int64),
+                    "offsets": np.arange(len(z[f"{s}__y"]) + 1)} for s in items_by_split}
+    out, flat = {}, {}
+    for s, its in items_by_split.items():
+        X, y = build_final_answer_dataset(state_fn, its)
+        out[s] = {"X": X, "value": y, "depth": np.zeros(len(y), dtype=np.int64), "offsets": np.arange(len(y) + 1)}
+        flat[f"{s}__X"], flat[f"{s}__y"] = X, y
+    if cache_file is not None:
+        Path(cache_file).parent.mkdir(parents=True, exist_ok=True)
+        np.savez(cache_file, **flat)
+    return out
+
+
+def final_length_features(items_by_split):
+    """one-hot(expression length) only: the template control for a final-answer probe."""
+    out = {}
+    for s, its in items_by_split.items():
+        X = np.zeros((len(its), MAX_INPUT_LEN + 1), dtype=np.float32)
+        for i, it in enumerate(its):
+            X[i, len(it["input"])] = 1.0
+        y = np.array([int(it["output"]) for it in its])
+        out[s] = {"X": X, "value": y, "depth": np.zeros(len(y), dtype=np.int64), "offsets": np.arange(len(y) + 1)}
+    return out
+
+
+def ridge_final(acts, splits):
+    """Ridge(alpha=1.0) on raw features, as cell 32. Returns held-out R² per split and train R²."""
+    from sklearn.linear_model import Ridge
+    from sklearn.metrics import r2_score
+    probe = Ridge(alpha=1.0)
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        probe.fit(acts["train"]["X"], acts["train"]["value"])
+    out = {s: float(r2_score(acts[s]["value"], probe.predict(acts[s]["X"]))) for s in splits}
+    out["train"] = float(r2_score(acts["train"]["value"], probe.predict(acts["train"]["X"])))
+    return out
+
+
+def final_flags(e, ridge):
+    flags = []
+    if ridge[STRAT_SPLIT] < FINAL_INSTABILITY:
+        flags.append(f"Ridge {ridge[STRAT_SPLIT]:.3f}")
+    for k, v in zip(PROBE_SEEDS, e["mlp_per_seed"]):
+        if v < FINAL_INSTABILITY:
+            flags.append(f"MLP s{k} {v:.3f}")
+    for k, v in zip(PROBE_SEEDS, e["control_per_seed"]):
+        if v < FINAL_INSTABILITY:
+            flags.append(f"control s{k} {v:.3f}")
+    return flags
+
+
+def stage_addenda4f(out_dir, cache_dir):
+    import sklearn
+    import platform
+    t0 = time.time()
+    res = {"definitions": {
+        "addendum_pooling": "analysis_v2.ipynb cell 32: state at the final real position (len(expr) - 1) only; the "
+                            "Transformer state is transformer_encoder_states_mean_pooled, i.e. the mean over the 3 "
+                            "encoder layers at each position (pooling over layers, not over positions), unmasked; "
+                            "Ridge(alpha=1.0) on raw features; target = int(output)",
+        "restatement": "identical, except the Transformer layer outputs are computed with the source key-padding "
+                       "mask (transformer_encoder_states_mean_pooled_masked)",
+        "stratified": "strat0 split (300 train / 150 test single vectors); Ridge as cell 32; MLP protocol as the "
+                      "grid (3 probe seeds, 240/60 carve-out, refit on 300) with the shuffled-label control and the "
+                      "example-level paired bootstrap; template control = one-hot(expression length)",
+        "instability_flag": f"held-out R² < {FINAL_INSTABILITY}: small-n instability (n = 300 training vectors), "
+                            "as the paper reads the -2.99"},
+        "environment": {"python": platform.python_version(), "torch": torch.__version__, "numpy": np.__version__,
+                        "sklearn": sklearn.__version__, "device": DEVICE, "platform": platform.platform()},
+        "matched_transformer": {}, "stratified": {}}
+
+    # 1. Matched protocol: Transformer final-position, masked restatement (+ unmasked rerun as the gate).
+    items = load_split_items("study1")
+    splits = eval_split_names("study1")
+    stored = json.loads((PHASE3_DIR / "phase3_addendum_final_answer_results.json").read_text())
+    stored = stored["transformer_meanpooled_final"]
+    model = load_model("transformer", "study1", 0)
+    m = {}
+    for tag, state in (("unmasked", "pooled_unmasked"), ("masked", "pooled")):
+        fn = STATE_FNS[("transformer", state)]
+        acts = final_answer_acts(lambda s_: fn(model, s_), items,
+                                 Path(cache_dir) / f"final_transformer_study1_seed0_{state}_matched.npz")
+        m[tag] = ridge_final(acts, splits)
+    res["matched_transformer"] = {
+        s: {"stored_unmasked": stored[s]["value_r2"], "rerun_unmasked": m["unmasked"][s], "masked": m["masked"][s],
+            "n_examples": stored[s]["n_examples"]} for s in splits}
+    res["matched_transformer"]["train_r2"] = {"unmasked": m["unmasked"]["train"], "masked": m["masked"]["train"]}
+    res["matched_transformer"]["rerun_max_abs_diff_vs_stored"] = max(
+        abs(m["unmasked"][s] - stored[s]["value_r2"]) for s in splits)
+    print("[4f] matched Transformer final-position R² (stored / unmasked rerun / masked): " + " ".join(
+        f"{s}={stored[s]['value_r2']:.3f}/{m['unmasked'][s]:.3f}/{m['masked'][s]:.3f}" for s in splits), flush=True)
+    del model
+
+    # 2. Stratified split: LSTM h, c and Transformer (masked), all checkpoint seeds.
+    sitems, _ = stratified_split_items()
+    ss = (STRAT_SPLIT,)
+    acts_len = final_length_features(sitems)
+    ridge_len = ridge_final(acts_len, ss)
+    prot_len = run_mlp_protocol("value", acts_len, ss, HIDDEN)
+    e_len = assemble_split("value", STRAT_SPLIT, acts_len, {STRAT_SPLIT: ridge_len[STRAT_SPLIT]}, prot_len)
+    res["stratified"]["length_baseline"] = {
+        "ridge": ridge_len[STRAT_SPLIT], "ridge_train": ridge_len["train"], "mlp_mean": e_len["mlp_mean"],
+        "mlp_std": e_len["mlp_std"], "mlp_per_seed": e_len["mlp_per_seed"], "mlp_train_per_seed": e_len["mlp_train_per_seed"],
+        "control": e_len["control"], "control_per_seed": e_len["control_per_seed"],
+        "control_train_per_seed": e_len["control_train_per_seed"], "bootstrap_ci": e_len["bootstrap_ci"],
+        "flags": final_flags(e_len, ridge_len), "n_examples": e_len["n_examples"]}
+    print(f"[4f] length baseline: Ridge {ridge_len[STRAT_SPLIT]:.3f} (train {ridge_len['train']:.3f}) MLP "
+          f"{e_len['mlp_mean']:.3f}", flush=True)
+    rows = {}
+    for model_name in MODELS:
+        for seed in SEEDS:
+            model = None
+            for state in STATES[model_name]:
+                cf = Path(cache_dir) / f"final_{model_name}_study1_seed{seed}_{state}_strat{STRAT_SEED}.npz"
+                if model is None and not cf.exists():
+                    model = load_model(model_name, "study1", seed)
+                fn = STATE_FNS[(model_name, state)]
+                acts = final_answer_acts(lambda s_: fn(model, s_), sitems, cf)
+                rg = ridge_final(acts, ss)
+                prot = run_mlp_protocol("value", acts, ss, HIDDEN)
+                e = assemble_split("value", STRAT_SPLIT, acts, {STRAT_SPLIT: rg[STRAT_SPLIT]}, prot)
+                row = {k: e[k] for k in ("linear", "mlp_mean", "mlp_std", "mlp_per_seed", "mlp_train_per_seed",
+                                         "control", "control_per_seed", "control_train_per_seed", "bootstrap_ci",
+                                         "epochs_chosen", "verdict", "n_examples")}
+                row["ridge_train"] = rg["train"]
+                row["bootstrap_ci_vs_length_baseline"] = paired_cis(prot, prot_len, STRAT_SPLIT, e["n_examples"], "value")
+                row["flags"] = final_flags(e, rg)
+                row["attention_mask"] = "masked" if model_name == "transformer" else "n/a (lstm)"
+                key = f"{model_name}_study1_seed{seed}_{state}_final"
+                rows[key] = row
+                print(f"[4f] stratified {key}: Ridge {rg[STRAT_SPLIT]:.3f} (train {rg['train']:.3f}) MLP "
+                      f"{e['mlp_mean']:.3f}±{e['mlp_std']:.3f} control {e['control']:.3f} flags {row['flags']}", flush=True)
+            del model
+    res["stratified"]["rows"] = rows
+    res["wall_time_seconds"] = round(time.time() - t0, 1)
+    with open(out_dir / "step4f_addenda.json", "w") as f:
+        json.dump(res, f, indent=2)
+
+
+def step4f_sections(a):
+    j = lambda d: "; ".join(f"[{lo:+.3f}, {hi:+.3f}]" for lo, hi in d.values())
+    mt = a["matched_transformer"]
+    lines = ["## STEP 4f: final-position final-answer probes", "",
+             f"**Pooling.** {a['definitions']['addendum_pooling']}. The restatement is {a['definitions']['restatement']}. "
+             f"Run on {a['environment']['device']} (torch {a['environment']['torch']}, sklearn {a['environment']['sklearn']}).", "",
+             "### Matched protocol, Transformer seed 0 (Ridge R²)", "",
+             f"Unmasked rerun vs stored: max |diff| {mt['rerun_max_abs_diff_vs_stored']:.2e}. Train R²: unmasked "
+             f"{mt['train_r2']['unmasked']:.3f}, masked {mt['train_r2']['masked']:.3f}.", "",
+             "| split | n | stored (unmasked) | unmasked rerun | masked (restated) |", "|---|---|---|---|---|"]
+    for s in eval_split_names("study1"):
+        e = mt[s]
+        lines.append(f"| {s} | {e['n_examples']} | {e['stored_unmasked']:.3f} | {e['rerun_unmasked']:.3f} | {e['masked']:.3f} |")
+    st = a["stratified"]
+    lb = st["length_baseline"]
+    lines += ["", "### Stratified split (strat0), final-position final answer (R²)", "",
+              f"n = 300 train / 150 test single vectors. Template control, one-hot(length): Ridge {lb['ridge']:.3f} "
+              f"(train {lb['ridge_train']:.3f}), MLP {lb['mlp_mean']:.3f} ± {lb['mlp_std']:.3f} (train "
+              f"{', '.join(f'{x:.3f}' for x in lb['mlp_train_per_seed'])}), control {lb['control']:.3f}. Held-out "
+              f"R² below {FINAL_INSTABILITY} is flagged as small-n instability.", "",
+              "| row | Ridge (train) | MLP mean ± std | MLP train (s0, s1, s2) | control (train) | boot CI MLP − control | "
+              "boot CI MLP − length baseline | rule verdict | flags |",
+              "|---|---|---|---|---|---|---|---|---|"]
+    for k, e in st["rows"].items():
+        lines.append(f"| {k} | {e['linear']:.3f} ({e['ridge_train']:.3f}) | {e['mlp_mean']:.3f} ± {e['mlp_std']:.3f} | "
+                     f"{', '.join(f'{x:.3f}' for x in e['mlp_train_per_seed'])} | {e['control']:.3f} "
+                     f"({', '.join(f'{x:.3f}' for x in e['control_train_per_seed'])}) | {j(e['bootstrap_ci'])} | "
+                     f"{j(e['bootstrap_ci_vs_length_baseline'])} | {e['verdict']} | "
+                     f"{'; '.join(e['flags']) if e['flags'] else '–'} |")
+    lines.append("")
+    return lines
+
+
+# ---------------------------------------------------------------------------
 # Report: summary.md + figures
 # ---------------------------------------------------------------------------
 
@@ -1868,7 +2070,7 @@ def step4e_sections(a4d, a4e):
     return lines
 
 
-def stage_report(out_dir):
+def stage_report(out_dir, figures=True):
     rows = load_grid(out_dir)
     lines = ["# Nonlinear MLP probe: 12 checkpoints, matched to the Phase 3 linear protocol", "",
              VERDICT_RULE, ""]
@@ -1992,9 +2194,14 @@ def stage_report(out_dir):
                         lines.append(f"| {model_name} | {state} | {target} | {s} | " + " | ".join(cells) + " |")
         lines.append("")
 
+    ap4f = out_dir / "step4f_addenda.json"
+    if ap4f.exists():
+        lines += step4f_sections(json.loads(ap4f.read_text()))
+
     (out_dir / "summary.md").write_text("\n".join(lines))
-    make_figures(rows, out_dir)
-    print(f"[report] wrote summary.md ({len(rows)} rows) and figures")
+    if figures:
+        make_figures(rows, out_dir)
+    print(f"[report] wrote summary.md ({len(rows)} rows)" + (" and figures" if figures else "; figures skipped"))
 
 
 def make_figures(rows, out_dir):
@@ -2090,25 +2297,31 @@ def environment_record(out_dir, stage_times, checksums=None):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--stage", choices=("bridge", "grid", "sweep", "addenda", "addenda4c", "addenda4d", "addenda4e", "report", "all"), default="all")
+    ap.add_argument("--stage", choices=("bridge", "grid", "sweep", "addenda", "addenda4c", "addenda4d", "addenda4e", "addenda4f", "report", "all"), default="all")
     ap.add_argument("--device", default="auto", choices=("auto", "cpu", "cuda"))
     ap.add_argument("--out-dir", type=Path, default=DEFAULT_OUT)
     ap.add_argument("--cache-dir", type=Path, default=Path("/tmp/nonlinear_probe_cache"))
     ap.add_argument("--only", nargs="*", help="checkpoint tags for --stage grid, e.g. lstm_study1_seed0")
     ap.add_argument("--force", action="store_true", help="recompute outputs that already exist")
+    ap.add_argument("--no-env-record", action="store_true",
+                    help="leave environment.json untouched (addenda4f records its environment in its own JSON)")
+    ap.add_argument("--skip-figures", action="store_true", help="report stage: do not redraw the figures")
     args = ap.parse_args()
+    if args.stage == "addenda4f":
+        args.no_env_record = True
 
     configure_device(args.device)
     args.out_dir.mkdir(parents=True, exist_ok=True)
     print(f"device={DEVICE} torch={torch.__version__} out={args.out_dir}")
 
-    stages = ("bridge", "grid", "sweep", "addenda", "addenda4c", "addenda4d", "addenda4e", "report") if args.stage == "all" else (args.stage,)
+    stages = ("bridge", "grid", "sweep", "addenda", "addenda4c", "addenda4d", "addenda4e", "addenda4f", "report") if args.stage == "all" else (args.stage,)
     t = time.time()
     checksums = verify_data_checksums()
     bad = [k for k, v in checksums.items() if not v["pass"]]
     assert not bad, f"data checksum mismatch vs CHECKSUMS.txt: {bad}"
     times = {"download_and_checksums": round(time.time() - t, 1)}
-    environment_record(args.out_dir, times, checksums)
+    if not args.no_env_record:
+        environment_record(args.out_dir, times, checksums)
     for st in stages:
         t = time.time()
         if st == "bridge":
@@ -2125,10 +2338,13 @@ def main():
             stage_addenda4d(args.out_dir, args.cache_dir)
         elif st == "addenda4e":
             stage_addenda4e(args.out_dir, args.cache_dir)
+        elif st == "addenda4f":
+            stage_addenda4f(args.out_dir, args.cache_dir)
         elif st == "report":
-            stage_report(args.out_dir)
+            stage_report(args.out_dir, figures=not args.skip_figures)
         key = st if not (st == "grid" and args.only) else f"grid[{','.join(args.only)}]"
-        environment_record(args.out_dir, {key: round(time.time() - t, 1)})
+        if not args.no_env_record:
+            environment_record(args.out_dir, {key: round(time.time() - t, 1)})
 
 
 if __name__ == "__main__":
