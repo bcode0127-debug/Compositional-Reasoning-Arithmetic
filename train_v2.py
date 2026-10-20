@@ -9,9 +9,16 @@ invocation; loop externally over the combinations you want (e.g. 2 models x
 Usage:
     python train_v2.py --model transformer --study 1 --seed 0
     python train_v2.py --model lstm --study 2 --seed 0 --epochs 1
+    python train_v2.py --model transformer --study 1 --seed 0 --positional_encoding rope
+
+--positional_encoding selects a positional-encoding sweep arm
+(docs/design/pos-encoding-sweep.md); non-default arms write to
+results_v2/pos_sweep/<arm>/study<k>/seed<s>/. The default, sinusoidal, is the
+paper's model and keeps the paper's output path.
 """
 import argparse
 import json
+import platform
 import random
 import time
 from pathlib import Path
@@ -22,6 +29,7 @@ import torch
 from data.dataloader import MathDataPipeline
 from data.tokenizer import create_tokenizer
 from models.lstm import create_lstm_model
+from models.positional import POSITIONAL_ENCODINGS
 from models.transformer import create_transformer_model
 from utils.trainer import train_model, calculate_accuracy
 
@@ -67,7 +75,28 @@ def get_generator_commit(data_dir: Path, study: str) -> str:
     return payload.get('generator_commit', 'unknown')
 
 
-def build_model(model_type: str, vocab_size: int, pad_idx: int):
+def environment_block(device: str) -> dict:
+    """Library and hardware versions, recorded per run in history.json."""
+    cuda = torch.cuda.is_available()
+    return {
+        "python": platform.python_version(),
+        "torch": torch.__version__,
+        "numpy": np.__version__,
+        "cuda": torch.version.cuda,
+        "cudnn": torch.backends.cudnn.version() if cuda else None,
+        "gpu": torch.cuda.get_device_name(0) if cuda else None,
+        "device": device,
+        "platform": platform.platform(),
+    }
+
+
+def results_dir_for(model_type: str, study_key: str, seed: int, positional_encoding: str) -> Path:
+    if positional_encoding == "sinusoidal":
+        return Path("results_v2") / model_type / study_key / f"seed{seed}"
+    return Path("results_v2") / "pos_sweep" / positional_encoding / study_key / f"seed{seed}"
+
+
+def build_model(model_type: str, vocab_size: int, pad_idx: int, positional_encoding: str = "sinusoidal"):
     if model_type == 'lstm':
         return create_lstm_model(vocab_size=vocab_size, embedding_dim=128, hidden_size=256)
     elif model_type == 'transformer':
@@ -78,6 +107,7 @@ def build_model(model_type: str, vocab_size: int, pad_idx: int):
         return create_transformer_model(
             vocab_size=vocab_size, d_model=256, nhead=8,
             num_encoder_layers=3, num_decoder_layers=3, pad_idx=pad_idx,
+            positional_encoding=positional_encoding,
         )
     else:
         raise ValueError(f"Unknown model_type: {model_type}")
@@ -115,7 +145,15 @@ def main():
     parser.add_argument('--data-dir', type=str, default='datasets_v2')
     parser.add_argument('--device', type=str, default=None,
                          help="cpu/cuda/mps; default auto-detects")
+    parser.add_argument('--positional_encoding', choices=POSITIONAL_ENCODINGS, default='sinusoidal',
+                        help="positional-encoding sweep arm (transformer only); default is the paper's model")
+    parser.add_argument('--max-train-examples', type=int, default=None,
+                        help="train on the first N training examples only (smoke tests)")
+    parser.add_argument('--output-dir', type=str, default=None,
+                        help="override the results directory (smoke tests)")
     args = parser.parse_args()
+    if args.model == 'lstm' and args.positional_encoding != 'sinusoidal':
+        parser.error("--positional_encoding applies to the transformer only")
 
     set_all_seeds(args.seed)
 
@@ -135,7 +173,8 @@ def main():
 
     generator_commit = get_generator_commit(data_dir, study_key)
 
-    results_dir = Path("results_v2") / args.model / study_key / f"seed{args.seed}"
+    results_dir = (Path(args.output_dir) if args.output_dir
+                   else results_dir_for(args.model, study_key, args.seed, args.positional_encoding))
     results_dir.mkdir(parents=True, exist_ok=True)
     save_path = results_dir / "best_model.pt"
 
@@ -147,6 +186,9 @@ def main():
         )
         train_loader = pipeline.get_dataloaders_file(f"{study_key}/train.json", shuffle=True)
         val_loader = pipeline.get_dataloaders_file(f"{study_key}/val.json", shuffle=False)
+        if args.max_train_examples is not None:
+            subset = torch.utils.data.Subset(train_loader.dataset, range(args.max_train_examples))
+            train_loader = torch.utils.data.DataLoader(subset, batch_size=batch_size, shuffle=True)
         return train_loader, val_loader
 
     def is_oom_error(exc) -> bool:
@@ -154,7 +196,13 @@ def main():
         return "out of memory" in msg or ("mps" in msg and "alloc" in msg)
 
     def train_with_batch_size(batch_size):
-        model = build_model(args.model, tokenizer.vocab_size, pad_idx=tokenizer.pad_idx)
+        model = build_model(args.model, tokenizer.vocab_size, pad_idx=tokenizer.pad_idx,
+                            positional_encoding=args.positional_encoding)
+        extra = None
+        if args.model == 'transformer':
+            extra = {'positional_encoding': args.positional_encoding}
+            if model.learned_pos_std is not None:
+                extra['learned_pos_std'] = round(model.learned_pos_std, 4)
         train_loader, val_loader = build_loaders(batch_size)
         history = train_model(
             model=model,
@@ -172,6 +220,7 @@ def main():
             seed=args.seed,
             dataset_version=DATASET_VERSION,
             generator_commit=generator_commit,
+            extra_checkpoint_metadata=extra,
         )
         return model, history
 
@@ -192,6 +241,12 @@ def main():
         model, history = train_with_batch_size(batch_size_used)
     elapsed = time.time() - t_start
     history['batch_size_used'] = batch_size_used
+    history['environment'] = environment_block(device)
+    history['wall_time_seconds'] = round(elapsed, 1)
+    if args.model == 'transformer':
+        history['positional_encoding'] = args.positional_encoding
+    if args.max_train_examples is not None:
+        history['max_train_examples'] = args.max_train_examples
     if fallback_note:
         history['batch_size_fallback_note'] = fallback_note
 

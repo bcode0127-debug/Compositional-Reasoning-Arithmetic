@@ -89,6 +89,19 @@ The OOD curve (ops4–7) is recorded but is not an endpoint: the Transformer sit
 
 (empty at pre-registration)
 
+### 2026-10-19: Specifications added before the first run
+
+Added on branch `feat/pos-encoding-sweep`, before any training run. None of them changes an arm, an endpoint, a prediction or a decision rule above.
+
+1. **Learned-table initialization.** The learned absolute tables (encoder and decoder) are initialized N(0, σ), with σ the RMS of the sinusoidal table over positions 0–63, so the learned arm starts at the same position-to-token signal ratio as the sinusoidal baseline (token embeddings are scaled by √256 = 16; sinusoidal amplitude is at most 1). For d_model 256, σ = √(1/2) = 0.7071, recorded to four decimals in each learned checkpoint's metadata (`learned_pos_std`). N(0, 0.02) was rejected because that convention assumes unscaled token embeddings.
+2. **Runner.** The sweep runs from a separate script, `scripts/training/run_pos_sweep.sh`; `scripts/training/run_matrix.sh` stays untouched as the record of how the paper's checkpoints were made. A test parses both scripts and asserts that their training flags (`--epochs 200 --patience 50`, the learning-rate schedule and batch size from `train_v2.py`'s defaults) are identical apart from `--positional_encoding` and the output root (`results_v2/pos_sweep/<arm>/`).
+3. **Output files and the two accuracy measures.** Each run keeps `train_v2.py`'s `ood_results.json`; the in-distribution test accuracy (the secondary endpoint) comes from `scripts/eval/eval_test_splits.py --run-dir`, written beside it as `test_results.json`. The two accuracies are different measures and are never interchanged: the `val_accuracy` stored in every checkpoint, and used for checkpoint selection, is teacher-forced exact match (`utils/trainer.calculate_accuracy`); the test accuracy is free-running autoregressive greedy decoding with exact match (`eval_test_splits.py`), the protocol of every test number in the paper. The sinusoidal load check therefore reproduces stored `val_accuracy` with `calculate_accuracy`, and the secondary endpoint uses `eval_test_splits.py`, never the other way round.
+4. **No re-injecting arm injected.** If neither RoPE nor ALiBi passes the layer-1 injection check, P2 and the fifth-arm trigger are not evaluated; the sweep reports "no re-injecting arm injected" and stops for a bug hunt before any further run.
+
+### 2026-10-19: Probe extraction path
+
+Probe extraction runs on PyTorch's standard (hooked) path for every arm; the paper's committed numbers at 185b127 were produced on the fused eval path and differ by at most 5.4e-4 in activations and 0.0007 in probe accuracy; the sweep re-probes the paper's sinusoidal checkpoints through the hooks rather than reusing the committed numbers, so all five arms share one path.
+
 ## References
 
 Chi, T.-C., et al. (2023). Latent positional information is in the self-attention variance of transformer language models without positional embeddings. arXiv:2305.13571.

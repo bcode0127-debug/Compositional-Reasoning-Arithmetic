@@ -115,6 +115,7 @@ def train_model(
     seed: Optional[int] = None,
     dataset_version: Optional[str] = None,
     generator_commit: Optional[str] = None,
+    extra_checkpoint_metadata: Optional[dict] = None,
 ) -> Dict[str, list]:
     """
     Checkpoint selection AND early stopping both now watch VAL_ACCURACY
@@ -210,6 +211,7 @@ def train_model(
                     'seed': seed,
                     'dataset_version': dataset_version,
                     'generator_commit': generator_commit,
+                    **(extra_checkpoint_metadata or {}),
                 }, save_path)
         else:
             epochs_without_improvement += 1
