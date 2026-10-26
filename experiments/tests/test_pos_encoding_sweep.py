@@ -268,6 +268,31 @@ def _standard_layer(layer, x, mask):
         h.remove()
 
 
+def test_hooks_disable_encoder_fast_path():
+    """A no-op forward hook changes the output of the stock sinusoidal nn.TransformerEncoderLayer in eval mode.
+
+    PyTorch's fused fast path requires, among other conditions, that no forward pre-/hooks are attached to the
+    module; with a hook attached the layer runs the standard path, which sums in a different order. So the
+    outputs differ by float rounding only: more than 1e-6 (the paths really differ) and less than 1e-3.
+    This is why every arm, including sinusoidal, is probed on the standard path.
+    """
+    torch.manual_seed(0)
+    layer = torch.nn.TransformerEncoderLayer(256, 8, 1024, 0.1, batch_first=True).eval()
+    x = torch.randn(4, 12, 256) * 16
+    mask = torch.zeros(4, 12, dtype=torch.bool)
+    mask[:, 9:] = True
+    with torch.no_grad():
+        fused = layer(x, src_key_padding_mask=mask)
+        h = layer.register_forward_hook(lambda *a: None)
+        try:
+            standard = layer(x, src_key_padding_mask=mask)
+        finally:
+            h.remove()
+    diff = (fused - standard)[~mask].abs().max().item()
+    print(f"fast-path vs standard-path max abs difference: {diff:.3e}")
+    assert 1e-6 < diff < 1e-3
+
+
 def test_hooked_extraction_matches_committed_masked(transformer_s1_seed0):
     """Hooked states vs the committed masked extraction (nonlinear_probe.py at 185b127), Transformer study1
     seed 0, sinusoidal, 75 expressions, real positions.
