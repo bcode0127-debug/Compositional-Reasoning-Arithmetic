@@ -9,6 +9,11 @@ validation headline numbers were verified.
 
 READ-ONLY with respect to checkpoints and existing datasets; writes only
 results_v2/test_set_results.json.
+
+--run-dir <dir> evaluates the single checkpoint <dir>/best_model.pt instead (a
+positional-encoding sweep run; the scheme is read from the checkpoint's
+positional_encoding field) and writes <dir>/test_results.json beside
+train_v2.py's ood_results.json. Same decoder, same exact-match rule.
 """
 import argparse
 import json
@@ -32,6 +37,10 @@ _parser = argparse.ArgumentParser()
 _parser.add_argument("--device", default=None,
                      help="cpu/cuda/mps; default auto-detects. Pin to cpu for headless runs: "
                           "MPS init can stall in a detached background process.")
+_parser.add_argument("--run-dir", default=None,
+                     help="evaluate one checkpoint directory (sweep run) and write test_results.json there")
+_parser.add_argument("--study", default="study1", choices=["study1", "study2"],
+                     help="test split for --run-dir")
 _args, _ = _parser.parse_known_args()
 
 
@@ -71,13 +80,36 @@ def autoregressive_decode(model, src, max_len=MAX_OUTPUT_LEN):
     return dec_ids[1:]
 
 
-def build(model_type):
+def build(model_type, positional_encoding="sinusoidal"):
     if model_type == "lstm":
         return create_lstm_model(vocab_size=tokenizer.vocab_size, embedding_dim=128, hidden_size=256)
     return create_transformer_model(
         vocab_size=tokenizer.vocab_size, d_model=256, nhead=8,
         num_encoder_layers=3, num_decoder_layers=3, pad_idx=pad_idx,
+        positional_encoding=positional_encoding,
     )
+
+
+def evaluate_run_dir(run_dir, study):
+    """One sweep checkpoint on <study>/test.json -> <run_dir>/test_results.json."""
+    run_dir = Path(run_dir)
+    ckpt = torch.load(run_dir / "best_model.pt", map_location="cpu")
+    model_type = "transformer" if any(k.startswith("transformer.") for k in ckpt["model_state_dict"]) else "lstm"
+    pe = ckpt.get("positional_encoding", "sinusoidal")
+    model = build(model_type, pe)
+    model.load_state_dict(ckpt["model_state_dict"])
+    model = model.to(DEVICE)
+    items = json.loads((DATA_DIR / study / "test.json").read_text())["data"]
+    acc, n, per_example = evaluate(model, items)
+    result = {
+        "test_accuracy": acc, "n": n, "study": study, "decoding": "autoregressive greedy, exact match",
+        "model_type": model_type, "positional_encoding": pe,
+        "val_accuracy_fingerprint": ckpt["val_accuracy"], "epoch": ckpt["epoch"], "seed": ckpt.get("seed"),
+        "dataset_version": ckpt.get("dataset_version"), "per_example_correct": per_example,
+    }
+    (run_dir / "test_results.json").write_text(json.dumps(result, indent=2))
+    print(f"{run_dir}: test={acc:.2f}% (n={n}) | positional_encoding={pe} | val(fingerprint)={ckpt['val_accuracy']:.2f}%")
+    return result
 
 
 def evaluate(model, items):
@@ -95,7 +127,9 @@ def evaluate(model, items):
     return 100.0 * correct / len(items), len(items), per_example
 
 
-if __name__ == "__main__":
+if __name__ == "__main__" and _args.run_dir:
+    evaluate_run_dir(_args.run_dir, _args.study)
+elif __name__ == "__main__":
     print(f"Device: {DEVICE}\n")
     results = {}
     for study in ("study1", "study2"):

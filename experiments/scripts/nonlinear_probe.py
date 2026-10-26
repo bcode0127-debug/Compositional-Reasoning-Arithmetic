@@ -83,6 +83,14 @@ STATES = {"lstm": ("h", "c"), "transformer": ("pooled",)}
 TARGETS = ("value", "depth")
 
 MAX_INPUT_LEN = 64
+MAX_OUTPUT_LEN = 12
+
+# Transformer extraction. Default: forward hooks on the model's own modules, so every
+# positional-encoding arm is probed on exactly what it computes (hooks also keep
+# nn.TransformerEncoderLayer off its fused fast path, i.e. on the path training uses).
+# --legacy-extraction restores the hand-written layer loop of the committed results
+# (185b127 and earlier); it exists for reproduction tests only.
+LEGACY_EXTRACTION = False
 N_TRAIN, N_ID_TEST, N_OOD_TEST = 300, 150, 150
 N_CARVE = 240  # early-stopping carve-out: train val[:240], stop on val[240:300]
 
@@ -247,6 +255,7 @@ def load_model(model_name, study, seed):
         model = create_transformer_model(
             vocab_size=tokenizer.vocab_size, d_model=256, nhead=8,
             num_encoder_layers=3, num_decoder_layers=3, pad_idx=pad_idx,
+            positional_encoding=ckpt.get("positional_encoding", "sinusoidal"),
         )
     else:
         model = create_lstm_model(vocab_size=tokenizer.vocab_size, embedding_dim=128, hidden_size=256)
@@ -254,7 +263,8 @@ def load_model(model_name, study, seed):
     model = model.to(DEVICE)
     model.eval()
     CKPT_META[f"{model_name}/{study}/seed{seed}"] = {
-        k: ckpt.get(k) for k in ("epoch", "val_accuracy", "val_loss", "seed", "dataset_version", "generator_commit")}
+        k: ckpt.get(k) for k in ("epoch", "val_accuracy", "val_loss", "seed", "dataset_version", "generator_commit",
+                                 "positional_encoding")}
     return model
 
 
@@ -401,10 +411,61 @@ def lstm_cell_states(model, src):
     return c_concat[0].cpu().numpy()
 
 
+HOOKED_FEATURES = ("encoder_input", "layer1", "layer2", "layer3", "mean_pool", "memory")
+
+
+def transformer_states_hooked(model, src):
+    """Per-position encoder states read through forward hooks during model.forward.
+
+    encoder_input = model.pos_encoder output (embedding * sqrt(d) plus the arm's input
+    position signal; identity for rope / alibi / nope); layerN = output of
+    transformer.encoder.layers[N-1]; memory = transformer.encoder output (layer 3 plus the
+    final LayerNorm), the tensor cross-attention reads; mean_pool = mean of the three
+    layer outputs. The decoder input is [SOS] + pads; encoder states do not depend on it.
+    """
+    captured = {}
+
+    def keep(name):
+        def hook(module, inputs, output):
+            captured[name] = output.detach()
+        return hook
+
+    hooks = [model.pos_encoder.register_forward_hook(keep("encoder_input"))]
+    for n, layer in enumerate(model.transformer.encoder.layers, 1):
+        hooks.append(layer.register_forward_hook(keep(f"layer{n}")))
+    hooks.append(model.transformer.encoder.register_forward_hook(keep("memory")))
+    try:
+        with torch.no_grad():
+            src_in = src.unsqueeze(0).to(DEVICE)
+            tgt = torch.full((1, MAX_OUTPUT_LEN), pad_idx, dtype=torch.long, device=src_in.device)
+            tgt[0, 0] = tokenizer.sos_idx
+            model(src_in, tgt)
+    finally:
+        for h in hooks:
+            h.remove()
+    layers = [captured[f"layer{n}"] for n in range(1, len(model.transformer.encoder.layers) + 1)]
+    captured["mean_pool"] = torch.stack(layers, dim=0).mean(dim=0)
+    return {k: captured[k][0].cpu().numpy() for k in HOOKED_FEATURES}
+
+
+def transformer_pooled_states(model, src):
+    """The 'pooled' Transformer state: hooked mean pool (default) or the legacy hand-written one."""
+    if LEGACY_EXTRACTION:
+        return transformer_encoder_states_mean_pooled_masked(model, src)
+    return transformer_states_hooked(model, src)["mean_pool"]
+
+
+def state_cache_tag(model_name, state):
+    """Cache-file tag: hooked Transformer activations never share a file with legacy ones."""
+    if model_name == "transformer" and state == "pooled" and not LEGACY_EXTRACTION:
+        return "pooled-hooked"
+    return state
+
+
 STATE_FNS = {
     ("lstm", "h"): lstm_encoder_states,
     ("lstm", "c"): lstm_cell_states,
-    ("transformer", "pooled"): transformer_encoder_states_mean_pooled_masked,
+    ("transformer", "pooled"): transformer_pooled_states,
     ("transformer", "pooled_unmasked"): transformer_encoder_states_mean_pooled,
 }
 
@@ -432,7 +493,7 @@ def get_activations(model_name, study, seed, state, model, cache_dir):
     """{split: dict(X, depth, value, offsets)} for train + every eval split, cached as npz."""
     out = {}
     for split, items in load_split_items(study).items():
-        f = Path(cache_dir) / f"{model_name}_{study}_seed{seed}_{state}_{split}.npz"
+        f = Path(cache_dir) / f"{model_name}_{study}_seed{seed}_{state_cache_tag(model_name, state)}_{split}.npz"
         if f.exists():
             z = np.load(f)
             out[split] = {k: z[k] for k in ("X", "depth", "value", "offsets")}
@@ -1107,7 +1168,7 @@ def stratified_split_items(seed=STRAT_SEED):
 def strat_activations(model_name, seed, state, model, items, cache_dir):
     out = {}
     for split, its in items.items():
-        f = Path(cache_dir) / f"{model_name}_study1_seed{seed}_{state}_strat{STRAT_SEED}_{split}.npz"
+        f = Path(cache_dir) / f"{model_name}_study1_seed{seed}_{state_cache_tag(model_name, state)}_strat{STRAT_SEED}_{split}.npz"
         if f.exists():
             z = np.load(f)
             out[split] = {k: z[k] for k in ("X", "depth", "value", "offsets")}
@@ -1217,7 +1278,7 @@ def stage_addenda4c(out_dir, cache_dir):
         for seed in SEEDS:
             model = None
             for state in STATES[model_name]:
-                fs = [Path(cache_dir) / f"{model_name}_study1_seed{seed}_{state}_strat{STRAT_SEED}_{k}.npz"
+                fs = [Path(cache_dir) / f"{model_name}_study1_seed{seed}_{state_cache_tag(model_name, state)}_strat{STRAT_SEED}_{k}.npz"
                       for k in sitems]
                 if model is None and not all(f.exists() for f in fs):
                     model = load_model(model_name, "study1", seed)
@@ -1302,7 +1363,7 @@ def layerwise_acts(model, items, features=LAYERWISE_FEATURES, with_ids=False):
             expr = item["input"]
             d, v = compute_position_targets(expr)
             src = encode_input(expr)
-            st = transformer_layerwise_masked(model, src)
+            st = transformer_layerwise_masked(model, src) if LEGACY_EXTRACTION else transformer_states_hooked(model, src)
             for pos in range(len(expr)):
                 for k in features:
                     rows[k].append(st[k][pos])
@@ -1363,7 +1424,7 @@ def stage_addenda4d(out_dir, cache_dir):
     for model_name in MODELS:
         for seed in SEEDS:
             for state in STATES[model_name]:
-                fs = [Path(cache_dir) / f"{model_name}_study1_seed{seed}_{state}_strat{STRAT_SEED}_{k}.npz"
+                fs = [Path(cache_dir) / f"{model_name}_study1_seed{seed}_{state_cache_tag(model_name, state)}_strat{STRAT_SEED}_{k}.npz"
                       for k in sitems]
                 assert all(f.exists() for f in fs), f"missing strat cache for {model_name} seed{seed} {state}"
                 acts = strat_activations(model_name, seed, state, None, sitems, cache_dir)
@@ -1636,7 +1697,7 @@ def stage_addenda4f(out_dir, cache_dir):
     for tag, state in (("unmasked", "pooled_unmasked"), ("masked", "pooled")):
         fn = STATE_FNS[("transformer", state)]
         acts = final_answer_acts(lambda s_: fn(model, s_), items,
-                                 Path(cache_dir) / f"final_transformer_study1_seed0_{state}_matched.npz")
+                                 Path(cache_dir) / f"final_transformer_study1_seed0_{state_cache_tag('transformer', state)}_matched.npz")
         m[tag] = ridge_final(acts, splits)
     res["matched_transformer"] = {
         s: {"stored_unmasked": stored[s]["value_r2"], "rerun_unmasked": m["unmasked"][s], "masked": m["masked"][s],
@@ -1668,7 +1729,7 @@ def stage_addenda4f(out_dir, cache_dir):
         for seed in SEEDS:
             model = None
             for state in STATES[model_name]:
-                cf = Path(cache_dir) / f"final_{model_name}_study1_seed{seed}_{state}_strat{STRAT_SEED}.npz"
+                cf = Path(cache_dir) / f"final_{model_name}_study1_seed{seed}_{state_cache_tag(model_name, state)}_strat{STRAT_SEED}.npz"
                 if model is None and not cf.exists():
                     model = load_model(model_name, "study1", seed)
                 fn = STATE_FNS[(model_name, state)]
@@ -2376,6 +2437,9 @@ def main():
     ap.add_argument("--cache-dir", type=Path, default=Path("/tmp/nonlinear_probe_cache"))
     ap.add_argument("--only", nargs="*", help="checkpoint tags for --stage grid, e.g. lstm_study1_seed0")
     ap.add_argument("--force", action="store_true", help="recompute outputs that already exist")
+    ap.add_argument("--legacy-extraction", action="store_true",
+                    help="Transformer states via the hand-written layer loop of the committed results "
+                         "(reproduction tests only); default reads them through forward hooks")
     ap.add_argument("--no-env-record", action="store_true",
                     help="leave environment.json untouched (addenda4f records its environment in its own JSON)")
     ap.add_argument("--skip-figures", action="store_true", help="report stage: do not redraw the figures")
@@ -2384,6 +2448,8 @@ def main():
         args.no_env_record = True
 
     configure_device(args.device)
+    global LEGACY_EXTRACTION
+    LEGACY_EXTRACTION = args.legacy_extraction
     args.out_dir.mkdir(parents=True, exist_ok=True)
     print(f"device={DEVICE} torch={torch.__version__} out={args.out_dir}")
 

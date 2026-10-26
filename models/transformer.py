@@ -2,30 +2,23 @@ import torch
 import torch.nn as nn
 import math
 
-class PositionalEncoding(nn.Module):
-    def __init__(self, d_model, max_len=100):
-        super(PositionalEncoding, self).__init__()
-        
-        # Create positional encoding for batch_first=True
-        pe = torch.zeros(1, max_len, d_model)  # [1, max_len, d_model]
-        position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1)
-        div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-math.log(10000.0) / d_model))
-        
-        pe[0, :, 0::2] = torch.sin(position * div_term)
-        pe[0, :, 1::2] = torch.cos(position * div_term)
-        
-        self.register_buffer('pe', pe)
-
-    def forward(self, x):
-        # x shape: [batch, seq_len, d_model]
-        # Add positional encoding
-        return x + self.pe[:, :x.size(1), :]
+from models.positional import (
+    POSITIONAL_ENCODINGS,
+    LearnedPositionalEmbedding,
+    NoPositionalEncoding,
+    PositionalEncoding,  # noqa: F401 - re-exported; the paper's sinusoidal encoding lives in models/positional.py
+    PositionalMultiheadAttention,
+    StandardPathEncoderLayer,
+)
 
 
 class TransformerEncoderDecoder(nn.Module):
     def __init__(self, vocab_size, d_model=256, nhead=8, num_encoder_layers=3,
-                 num_decoder_layers=3, dim_feedforward=1024, dropout=0.1, pad_idx=None):
+                 num_decoder_layers=3, dim_feedforward=1024, dropout=0.1, pad_idx=None,
+                 positional_encoding="sinusoidal"):
         super(TransformerEncoderDecoder, self).__init__()
+        if positional_encoding not in POSITIONAL_ENCODINGS:
+            raise ValueError(f"positional_encoding must be one of {POSITIONAL_ENCODINGS}, got {positional_encoding!r}")
 
         self.d_model = d_model
         self.vocab_size = vocab_size
@@ -68,6 +61,37 @@ class TransformerEncoderDecoder(nn.Module):
         self.transformer.encoder.use_nested_tensor = False
 
         self.fc_out = nn.Linear(d_model, vocab_size)
+
+        # Positional-encoding sweep (docs/design/pos-encoding-sweep.md). "sinusoidal"
+        # leaves everything above untouched: same modules, state-dict keys and forward.
+        self.positional_encoding = positional_encoding
+        self.learned_pos_std = None
+        if positional_encoding != "sinusoidal":
+            self._configure_positional_encoding(positional_encoding)
+
+    def _configure_positional_encoding(self, scheme):
+        """Swap in the sweep arm's position scheme after the stock modules are built.
+
+        The swaps change module classes in place (attention and encoder layers) or draw
+        from a private generator (learned tables), so the stock parameters keep the
+        initialization the sinusoidal model gets from the same seed and the global RNG
+        stream is unchanged.
+        """
+        if scheme == "learned":
+            gen = torch.Generator().manual_seed(torch.initial_seed())
+            self.pos_encoder = LearnedPositionalEmbedding(self.d_model, generator=gen)
+            self.pos_decoder = LearnedPositionalEmbedding(self.d_model, generator=gen)
+            self.learned_pos_std = self.pos_encoder.std
+        elif scheme == "nope":
+            self.pos_encoder = NoPositionalEncoding()  # encoder only; the decoder keeps sinusoidal
+        else:  # rope, alibi: position re-injected in every self-attention layer
+            self.pos_encoder = NoPositionalEncoding()
+            self.pos_decoder = NoPositionalEncoding()
+            for layer in self.transformer.encoder.layers:
+                layer.__class__ = StandardPathEncoderLayer
+                _to_positional_attention(layer.self_attn, scheme, causal=False)
+            for layer in self.transformer.decoder.layers:
+                _to_positional_attention(layer.self_attn, scheme, causal=True)
 
     def generate_square_subsequent_mask(self, sz):
         # Generate causal mask for decoder
@@ -165,8 +189,18 @@ class TransformerEncoderDecoder(nn.Module):
         }
 
 
+def _to_positional_attention(mha, mode, causal):
+    """Turn a stock nn.MultiheadAttention into PositionalMultiheadAttention in place."""
+    if not (mha.batch_first and mha._qkv_same_embed_dim and mha.in_proj_bias is not None):
+        raise ValueError("unsupported attention configuration for RoPE/ALiBi")
+    mha.__class__ = PositionalMultiheadAttention
+    mha.mode = mode
+    mha.causal = causal
+
+
 def create_transformer_model(vocab_size, d_model=256, nhead=8,
-                             num_encoder_layers=3, num_decoder_layers=3, pad_idx=None):
+                             num_encoder_layers=3, num_decoder_layers=3, pad_idx=None,
+                             positional_encoding="sinusoidal"):
     model = TransformerEncoderDecoder(
         vocab_size=vocab_size,
         d_model=d_model,
@@ -176,5 +210,6 @@ def create_transformer_model(vocab_size, d_model=256, nhead=8,
         dim_feedforward=1024,
         dropout=0.1,
         pad_idx=pad_idx,
+        positional_encoding=positional_encoding,
     )
     return model
