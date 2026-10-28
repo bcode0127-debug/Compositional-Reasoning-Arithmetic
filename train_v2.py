@@ -17,9 +17,12 @@ results_v2/pos_sweep/<arm>/study<k>/seed<s>/. The default, sinusoidal, is the
 paper's model and keeps the paper's output path.
 """
 import argparse
+import datetime
 import json
+import os
 import platform
 import random
+import subprocess
 import time
 from pathlib import Path
 
@@ -88,6 +91,27 @@ def environment_block(device: str) -> dict:
         "device": device,
         "platform": platform.platform(),
     }
+
+
+def _command_output(cmd: list):
+    """Stripped stdout of a command, or None on any failure."""
+    try:
+        out = subprocess.run(cmd, capture_output=True, text=True, timeout=30, check=True).stdout.strip()
+    except Exception:
+        return None
+    return out or None
+
+
+def run_environment(device: str) -> dict:
+    """environment_block plus driver, container image, git commit and start time. Written to
+    <run_dir>/environment.json before training starts, and stored in history.json at the end."""
+    env = environment_block(device)
+    driver = _command_output(["nvidia-smi", "--query-gpu=driver_version", "--format=csv,noheader"])
+    env["driver_version"] = driver.splitlines()[0] if driver else None
+    env["pod_image"] = os.environ.get("POD_IMAGE")
+    env["git_commit"] = _command_output(["git", "rev-parse", "HEAD"])
+    env["started_at_utc"] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    return env
 
 
 def results_dir_for(model_type: str, study_key: str, seed: int, positional_encoding: str) -> Path:
@@ -178,6 +202,10 @@ def main():
     results_dir.mkdir(parents=True, exist_ok=True)
     save_path = results_dir / "best_model.pt"
 
+    environment = run_environment(device)
+    with open(results_dir / "environment.json", 'w') as f:
+        json.dump(environment, f, indent=2)
+
     def build_loaders(batch_size):
         pipeline = MathDataPipeline(
             data_dir=str(data_dir), batch_size=batch_size,
@@ -241,7 +269,7 @@ def main():
         model, history = train_with_batch_size(batch_size_used)
     elapsed = time.time() - t_start
     history['batch_size_used'] = batch_size_used
-    history['environment'] = environment_block(device)
+    history['environment'] = environment
     history['wall_time_seconds'] = round(elapsed, 1)
     if args.model == 'transformer':
         history['positional_encoding'] = args.positional_encoding
