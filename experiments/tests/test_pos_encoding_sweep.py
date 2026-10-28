@@ -226,16 +226,20 @@ def val_loaders():
     return {s: pipe.get_dataloaders_file(f"{s}/val.json", shuffle=False) for s in ("study1", "study2")}
 
 
+@pytest.mark.parametrize("device", ("cpu", "cuda"))
 @pytest.mark.parametrize("model_type,study,seed", PAPER_CKPTS)
-def test_paper_checkpoint_loads_and_reproduces_val_accuracy(model_type, study, seed, val_loaders):
+def test_paper_checkpoint_loads_and_reproduces_val_accuracy(model_type, study, seed, device, val_loaders):
     """All twelve paper checkpoints: identical state-dict keys under the default build, and the stored
     val_accuracy (teacher-forced, utils/trainer.calculate_accuracy) reproduced within 0.1 points."""
     path = npr.hf_file(npr.MODEL_REPO, f"{model_type}/{study}/seed{seed}/best_model.pt", "model")
+    if device == "cuda" and not torch.cuda.is_available():
+        pytest.skip("CUDA is not available")
     ckpt = torch.load(path, map_location="cpu", weights_only=False)
     model = train_v2.build_model(model_type, TOK.vocab_size, pad_idx=TOK.pad_idx)
     assert set(model.state_dict()) == set(ckpt["model_state_dict"])
     model.load_state_dict(ckpt["model_state_dict"], strict=True)
-    acc = calculate_accuracy(model, val_loaders[study], "cpu", pad_idx=TOK.pad_idx)
+    model = model.to(device)
+    acc = calculate_accuracy(model, val_loaders[study], device, pad_idx=TOK.pad_idx)
     print(f"\n{model_type}/{study}/seed{seed}: val_accuracy stored {ckpt['val_accuracy']:.2f} rerun {acc:.2f} "
           f"(delta {acc - ckpt['val_accuracy']:+.2f})")
     assert abs(acc - ckpt["val_accuracy"]) <= 0.1
@@ -442,6 +446,25 @@ def test_smoke_run(pe, smoke_root):
                  "test_accuracy": test["test_accuracy"], "params": None}
     print(f"\nsmoke {pe}: 1 epoch on 200 examples, {hist['wall_time_seconds']:.1f}s, train loss {loss:.4f}, "
           f"val loss {hist['val_losses'][0]:.4f}, test acc (autoregressive) {test['test_accuracy']:.2f}%")
+
+
+def test_environment_json_written_before_training(tmp_path, monkeypatch):
+    """environment.json is written at run start, so it exists even when training fails on its first call."""
+    def failing_train_model(*args, **kwargs):
+        raise RuntimeError("simulated training failure")
+
+    out = tmp_path / "run"
+    monkeypatch.chdir(REPO_ROOT)
+    monkeypatch.setattr(train_v2, "train_model", failing_train_model)
+    monkeypatch.setattr(sys, "argv", ["train_v2.py", "--model", "transformer", "--study", "1", "--seed", "0",
+                                      "--epochs", "1", "--max-train-examples", "8", "--device", "cpu",
+                                      "--output-dir", str(out)])
+    with pytest.raises(RuntimeError, match="simulated training failure"):
+        train_v2.main()
+    env = json.loads((out / "environment.json").read_text())
+    keys = set(train_v2.environment_block("cpu")) | {"driver_version", "pod_image", "git_commit", "started_at_utc"}
+    assert set(env) == keys
+    assert not (out / "history.json").exists()
 
 
 @pytest.mark.parametrize("pe", SWEEP_ARMS)

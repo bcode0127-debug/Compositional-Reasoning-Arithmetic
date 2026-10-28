@@ -12,6 +12,9 @@
 #   scripts/training/run_pos_sweep.sh                 # every run
 #   scripts/training/run_pos_sweep.sh rope:0          # one run (time the first run before the rest)
 #   PYTHON=/path/to/python scripts/training/run_pos_sweep.sh learned:1 alibi:2
+#
+# POD_IMAGE must be exported (e.g. export POD_IMAGE=<container image tag>): train_v2.py records it in
+# each run's environment.json. An empty POD_IMAGE logs one WARNING line to the sweep log.
 set -uo pipefail  # deliberately NOT -e: one run's failure must not abort the sweep
 
 REPO_DIR="${REPO_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
@@ -75,6 +78,9 @@ model=transformer
 study=1
 
 echo "=== POS SWEEP START $(date) runs=${RUNS[*]} ===" >> "$SWEEP_LOG"
+if [ -z "${POD_IMAGE:-}" ]; then
+  echo "WARNING: POD_IMAGE is empty; environment.json will record pod_image as null" >> "$SWEEP_LOG"
+fi
 
 for run in "${RUNS[@]}"; do
   arm="${run%%:*}"

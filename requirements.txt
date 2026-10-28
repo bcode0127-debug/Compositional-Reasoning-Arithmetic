@@ -1,4 +1,13 @@
+# torch is a floor on purpose: the training environment of the paper's checkpoints was not
+# recorded; test-set evaluation ran on torch 2.13.0 + numpy 2.4.6 (CPU).
 torch>=2.0
 numpy>=2.0
 matplotlib>=3.9
 seaborn>=0.13
+huggingface_hub
+pytest
+rapidfuzz
+# The two scikit-learn lines are the paper's two recorded probe environments: probe grid
+# (L4, torch 2.8.0+cu128, sklearn 1.9.1) and final-position addenda (CPU, torch 2.8.0, sklearn 1.6.1).
+scikit-learn==1.9.1; python_version >= "3.10"
+scikit-learn==1.6.1; python_version < "3.10"
