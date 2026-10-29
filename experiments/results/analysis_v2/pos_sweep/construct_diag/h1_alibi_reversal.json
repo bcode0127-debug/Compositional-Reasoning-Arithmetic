@@ -1,0 +1,80 @@
+{
+  "test": "reversal equivariance",
+  "arm": "alibi",
+  "n_expressions": 20,
+  "tolerance": 1e-05,
+  "checked_features": [
+    "layer1",
+    "layer2",
+    "layer3",
+    "memory"
+  ],
+  "expected": "pass",
+  "seeds": {
+    "0": {
+      "max_abs_diff": {
+        "encoder_input": 0.0,
+        "layer1": 9.5367431640625e-07,
+        "layer2": 1.430511474609375e-06,
+        "layer3": 2.0265579223632812e-06,
+        "memory": 1.817941665649414e-06
+      },
+      "max_over_checked": 2.0265579223632812e-06,
+      "pass": true,
+      "fails_by_orders_of_magnitude": false
+    },
+    "1": {
+      "max_abs_diff": {
+        "encoder_input": 0.0,
+        "layer1": 9.5367431640625e-07,
+        "layer2": 1.1920928955078125e-06,
+        "layer3": 1.9073486328125e-06,
+        "memory": 1.6689300537109375e-06
+      },
+      "max_over_checked": 1.9073486328125e-06,
+      "pass": true,
+      "fails_by_orders_of_magnitude": false
+    },
+    "2": {
+      "max_abs_diff": {
+        "encoder_input": 0.0,
+        "layer1": 1.1920928955078125e-06,
+        "layer2": 9.5367431640625e-07,
+        "layer3": 1.6689300537109375e-06,
+        "memory": 1.6093254089355469e-06
+      },
+      "max_over_checked": 1.6689300537109375e-06,
+      "pass": true,
+      "fails_by_orders_of_magnitude": false
+    }
+  },
+  "controls": {
+    "nope_seed0": {
+      "max_abs_diff": {
+        "encoder_input": 0.0,
+        "layer1": 3.5762786865234375e-07,
+        "layer2": 9.5367431640625e-07,
+        "layer3": 1.5050172805786133e-06,
+        "memory": 1.4603137969970703e-06
+      },
+      "max_over_checked": 1.5050172805786133e-06,
+      "pass": true,
+      "fails_by_orders_of_magnitude": false,
+      "expected": "pass"
+    },
+    "sinusoidal_seed0": {
+      "max_abs_diff": {
+        "encoder_input": 1.9999971389770508,
+        "layer1": 2.5475425720214844,
+        "layer2": 3.918234348297119,
+        "layer3": 3.616248607635498,
+        "memory": 3.5828025341033936
+      },
+      "max_over_checked": 3.918234348297119,
+      "pass": false,
+      "fails_by_orders_of_magnitude": true,
+      "expected": "fail"
+    }
+  },
+  "held": true
+}
