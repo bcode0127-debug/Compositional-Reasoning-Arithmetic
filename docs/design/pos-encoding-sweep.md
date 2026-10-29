@@ -140,6 +140,13 @@ Written after the NoPE floor run and before any learned, RoPE or ALiBi checkpoin
 5. **Scope and cost.** The LSTM's 34.57% also comes from the unrecorded environment, but no rule compares it with an arm, so it is out of scope. Three runs at about 35 minutes each, about $0.50.
 6. **Sequencing.** Sequenced after the H1–H3 bug hunt, per the 2026-10-19 entry item 4.
 
+### 2026-10-29: Correction to the 2026-10-19 "Probe extraction path" entry
+
+1. **Kernel.** The extraction that produced the committed probe grid (185b127) is a hand-written layer loop. It calls torch._native_multi_head_attention and never the layer-level fused op torch._transformer_encoder_layer_fwd; on CPU its layer-3 activations equal that fused op's exactly. The 2026-10-19 entry's "fused eval path" therefore describes the values this extraction produces; the kernel it calls is the native attention kernel.
+2. **Bound.** The 2026-10-19 figures (5.4e-4 in activations, 0.0007 in probe accuracy) record neither the machine they were measured on nor, for the activation figure, which layers it covers. Measured again on one machine (Apple M2 CPU; Python 3.12.13, torch 2.8.0, numpy 2.5.2, scikit-learn 1.9.1), the two paths differ by at most 7.1e-5 in layer-3 activations and by −0.0007, +0.0014 and −0.0004 in layer-3 linear position accuracy (seeds 0–2). The two activation figures cover different scopes and are not compared. The 0.0007 bound does not hold for layer-3 probe accuracy.
+3. **The two committed sources.** The probe grid (committed extraction, L4 GPU) and the battery (hooked path, pod x86 CPU) differ by 0.0000, −0.0004 and −0.0011. The hooked path with the same library versions on two CPU architectures differs by 0.0000, 0.0000 and +0.0018. Each difference changes one factor at one setting of the others; chained, they sum to the gap by construction, so none is reported as an independent effect size. Outputs: experiments/results/analysis_v2/pos_sweep/extraction_check/ (PR #20).
+4. **Consequence.** Layer-3 linear position accuracy reproduces to within about 0.002 across extraction path, device and CPU architecture. Where the two sources are compared it is quoted to two decimals, and they then agree on every seed (0.19, 0.18, 0.18). No pre-registered verdict changes: the nearest margin of any rule on this measure is P1's seed-1 lower bound, +0.005 against zero.
+
 ## References
 
 Chi, T.-C., et al. (2023). Latent positional information is in the self-attention variance of transformer language models without positional embeddings. arXiv:2305.13571.
