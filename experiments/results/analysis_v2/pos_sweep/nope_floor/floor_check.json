@@ -1,0 +1,10 @@
+{
+  "run_dir": "results_v2/pos_sweep/nope/study1/seed0",
+  "positional_encoding": "nope",
+  "layer3_position_accuracy": 0.14425770308123248,
+  "majority": 0.052521008403361345,
+  "expected_majority": 0.053,
+  "delta": 0.09173669467787113,
+  "tolerance": 0.02,
+  "pass": false
+}
