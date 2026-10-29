@@ -121,6 +121,25 @@ Written after the NoPE floor run and before any learned, RoPE or ALiBi checkpoin
 5. **Cost.** The reference rises by about 0.14 and the injection check uses it too: a re-injecting arm that would have cleared 0.053 + 0.10 may now read "not injected" and be excluded from P2 and the trigger. Every affected test becomes harder to pass, none easier.
 6. **Reporting.** Every affected rule is reported under both references, in the form "the design's 0.053, superseded before any arm was probed by order-blind baseline B2 at 0.1894, on the D1 and D2 evidence".
 
+### 2026-10-29: Bug hunt under the 2026-10-19 entry item 4, closed with no code defect
+
+1. **Trigger.** Under the primary reference (2026-10-28 entry), neither RoPE nor ALiBi passed the layer-1 injection check, so P2 and the fifth-arm trigger were not evaluated and the sweep stopped for a bug hunt before any further run (2026-10-19 entry, item 4).
+2. **What ran.** The construct diagnostic, experiments/scripts/pos_sweep_construct_diag.py, run on the sweep pod at bf65116 with readings amended at e131a20; outputs under experiments/results/analysis_v2/pos_sweep/construct_diag/, merged in PR #17. Its tests and readings were fixed in writing before the script was written. The amendments to the H2 reference and the H3 reading were written before the authors saw any H2 number; the run had already printed H2 point accuracies for four checkpoints, and construct_diag.md records which. The amended readings were recomputed mechanically from stored per-expression statistics (B2p reproduced exactly).
+3. **H1.** ALiBi seeds 0–2 are reversal-equivariant at layers 1–3 and memory: max abs diff at most 2.0e-6 against a tolerance of 1e-5. Controls: NoPE passes (1.5e-6), sinusoidal fails (3.9).
+4. **H3.** RoPE seeds 0–2 leave encoder_input unchanged under reversal and random permutation (diff exactly 0); layers 1–3 and memory change (0.58–6.4).
+5. **Closure.** Both encodings behave as their constructions require. The layer-1 injection failure is a property of the check, an absolute-index linear probe read at layer 1: H3 shows RoPE's layer 1 is order-sensitive, and the battery shows absolute position becoming linearly decodable for both arms from layer 2. The hunt closes with no code defect; further runs proceed from the main commit that carries this entry.
+6. **Verdicts unchanged.** P2 and the fifth-arm trigger remain "not evaluated"; no pre-registered verdict is recomputed.
+7. **H2, reported beside the closure.** The magnitude target |j − i| cannot be read by a linear probe on concat(h_i, h_j): its class scores are separable, f_c(h_i) + g_c(h_j), while each level set of |j − i| is the pair of lines j = i ± d, which an argmax over separable scores cannot carve out. The null was guaranteed by the probe's design, an error of the diagnostic; magnitude is reported as uninformative and is not re-run. A magnitude probe would need non-separable pair features, such as |h_j − h_i| or h_i ⊙ h_j. Sign was readable where the battery found absolute position (sinusoidal and learned at layer 1; RoPE and ALiBi at layers 2 and 3). Both pre-stated H2 predictions are reported as not held.
+
+### 2026-10-29: Supplementary sinusoidal retrain as a hardware control
+
+1. **What.** Sinusoidal seeds 0–2 retrained with the design's protocol (train_v2.py, --epochs 200 --patience 50, default schedule) on the sweep's RTX 4000 Ada pod, one run at a time, at the main commit that carries this entry (training and evaluation code identical to RUN_COMMIT 01b5bb7), output under results_v2/pos_sweep/sinusoidal_retrain/, test accuracy from scripts/eval/eval_test_splits.py --run-dir.
+2. **Why.** The paper's sinusoidal checkpoints were trained on an unrecorded GPU and environment; P1 compares the learned arm (RTX 4000 Ada) against them at a resolution where a hardware difference could decide it.
+3. **Use.** No rule is recomputed on the retrain; the pre-registered comparison against the paper's checkpoints stays primary. A separate hardware-control table, labelled "not used by any rule", shows the paper's and the retrain's sinusoidal values side by side, with each retrain's selected epoch beside its accuracy.
+4. **Loading.** Retrained checkpoints are read through load_model's run_dir path, which skips the fingerprint assert; the fingerprint check itself is unchanged.
+5. **Scope and cost.** The LSTM's 34.57% also comes from the unrecorded environment, but no rule compares it with an arm, so it is out of scope. Three runs at about 35 minutes each, about $0.50.
+6. **Sequencing.** Sequenced after the H1–H3 bug hunt, per the 2026-10-19 entry item 4.
+
 ## References
 
 Chi, T.-C., et al. (2023). Latent positional information is in the self-attention variance of transformer language models without positional embeddings. arXiv:2305.13571.
