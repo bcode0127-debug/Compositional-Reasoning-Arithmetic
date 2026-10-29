@@ -110,7 +110,8 @@ def run_h1(items, seeds, out_dir):
 def run_h3(items, seeds, out_dir):
     doc = {"arm": "rope", "n_expressions": len(items), "tolerance": EQUIV_TOL, "checked_features": list(CHECKED),
            "orders_of_magnitude_rule": f"max diff >= {ORDERS_OF_MAGNITUDE:g} x tolerance",
-           "expected": "reversal and random permutation both fail by orders of magnitude", "seeds": {}}
+           "expected": "encoder_input passes (no position at the input); layers 1-3 and memory fail, on both tests",
+           "seeds": {}}
     for seed in seeds:
         model = load_ckpt("rope", seed)
         rev = verdict_equiv(reversal_test(model, items))
@@ -120,8 +121,7 @@ def run_h3(items, seeds, out_dir):
         doc["seeds"][str(seed)] = {"reversal": rev, "permutation": perm}
         print(f"[H3 rope seed{seed}] reversal {rev['max_over_checked']:.2e} permutation "
               f"{perm['max_over_checked']:.2e}", flush=True)
-    doc["held"] = bool(all(s["reversal"]["fails_by_orders_of_magnitude"] and s["permutation"]["fails_by_orders_of_magnitude"]
-                           for s in doc["seeds"].values()))
+    doc["held"] = h3_held(doc)
     pb.write_json(out_dir / "h3_rope.json", doc)
     return doc
 
@@ -167,19 +167,27 @@ def pair_feature_rows(X, row_off, pairs):
     return np.concatenate([X[row_off[expr] + ii], X[row_off[expr] + jj]], axis=1)
 
 
-def baseline_pair_features(sitems, split, pairs):
+BASELINE_KINDS = ("B1p", "B2p", "B3p")
+
+
+def baseline_pair_features(sitems, split, pairs, kind="B2p"):
+    """Order-blind pair features: B1p one-hot(char_i) + one-hot(char_j); B2p B1p + one-hot(expression length);
+    B3p B2p + counts of each vocabulary character in the expression."""
     V, L = npr.tokenizer.vocab_size, npr.MAX_INPUT_LEN
     ii, jj, poff = pairs
+    dim = {"B1p": 2 * V, "B2p": 2 * V + L + 1, "B3p": 2 * V + L + 1 + V}[kind]
     rows = []
     for e, item in enumerate(sitems[split]):
         ids = npr.encode_checked(item["input"], L)
-        length = np.zeros(L + 1, dtype=np.float32)
-        length[len(item["input"])] = 1.0
+        counts = np.bincount(ids, minlength=V).astype(np.float32)
         for k in range(poff[e], poff[e + 1]):
-            v = np.zeros(2 * V + L + 1, dtype=np.float32)
+            v = np.zeros(dim, dtype=np.float32)
             v[ids[ii[k]]] = 1.0
             v[V + ids[jj[k]]] = 1.0
-            v[2 * V:] = length
+            if kind in ("B2p", "B3p"):
+                v[2 * V + len(item["input"])] = 1.0
+            if kind == "B3p":
+                v[2 * V + L + 1:] = counts
             rows.append(v)
     return np.array(rows)
 
@@ -212,30 +220,36 @@ def probe_checkpoint(model, sitems, pairs):
     return out
 
 
-def feature_baseline(sitems, pairs):
-    Xtr = baseline_pair_features(sitems, "train", pairs["train"])
-    Xte = baseline_pair_features(sitems, STRAT, pairs[STRAT])
+def feature_baselines(sitems, pairs):
     ytr, yte = pair_targets(*pairs["train"][:2]), pair_targets(*pairs[STRAT][:2])
-    out = {t: fit_probe(Xtr, ytr[t], Xte, yte[t], pairs[STRAT][2]) for t in TARGETS}
-    out["dim"] = int(Xtr.shape[1])
+    out = {}
+    for kind in BASELINE_KINDS:
+        Xtr = baseline_pair_features(sitems, "train", pairs["train"], kind)
+        Xte = baseline_pair_features(sitems, STRAT, pairs[STRAT], kind)
+        out[kind] = {t: fit_probe(Xtr, ytr[t], Xte, yte[t], pairs[STRAT][2]) for t in TARGETS}
+        out[kind]["dim"] = int(Xtr.shape[1])
     return out
 
 
-def reading(arm_stats_by_seed, nope_stats, base_stats):
-    """arm_stats_by_seed: {seed: stats}; "carries relative position" if the lower bound on
-    (arm - max(NoPE, baseline)), paired by expression with min/max inside each resample, exceeds +0.10 on all
-    seeds. Also reports the intervals against each reference alone."""
+REFERENCE_ORDER = ("NoPE",) + BASELINE_KINDS
+
+
+def reading(arm_stats_by_seed, refs):
+    """refs: {name: {"accuracy", "stats"}} for NoPE (same layer) and B1p-B3p. The reference is the one with the
+    highest point accuracy, chosen mechanically (first in REFERENCE_ORDER on a tie). "Carries relative position"
+    if the bootstrap lower bound on (arm - chosen reference), paired by expression, exceeds +0.10 on all seeds.
+    Intervals against every reference are reported beside it."""
+    chosen = max(REFERENCE_ORDER, key=lambda k: refs[k]["accuracy"])
     per = {}
     for seed, st in arm_stats_by_seed.items():
         st = pb.as_stats(st)
-        n_ex = len(st["n"])
-        sel = pb.boot_sel(npr.BOOT_SEED + int(seed), n_ex)
-        a, n, b = (pb.acc_boot(st, sel), pb.acc_boot(pb.as_stats(nope_stats), sel),
-                   pb.acc_boot(pb.as_stats(base_stats), sel))
-        per[str(seed)] = {"ci_vs_max_reference": pb.interval(a - np.maximum(n, b)),
-                          "ci_vs_nope": pb.interval(a - n), "ci_vs_feature_baseline": pb.interval(a - b)}
-    lbs = [v["ci_vs_max_reference"][0] for v in per.values()]
-    return {"per_seed": per, "carries_relative_position": bool(all(lb > CARRY_MARGIN for lb in lbs))}
+        sel = pb.boot_sel(npr.BOOT_SEED + int(seed), len(st["n"]))
+        a = pb.acc_boot(st, sel)
+        cis = {k: pb.interval(a - pb.acc_boot(pb.as_stats(refs[k]["stats"]), sel)) for k in REFERENCE_ORDER}
+        per[str(seed)] = {"ci_vs_chosen": cis[chosen], "ci_vs_each": cis}
+    lbs = [v["ci_vs_chosen"][0] for v in per.values()]
+    return {"chosen_reference": chosen, "reference_accuracies": {k: refs[k]["accuracy"] for k in REFERENCE_ORDER},
+            "per_seed": per, "carries_relative_position": bool(all(lb > CARRY_MARGIN for lb in lbs))}
 
 
 def run_h2(sitems, arms, seeds, out_dir):
@@ -245,10 +259,12 @@ def run_h2(sitems, arms, seeds, out_dir):
                           "n_pairs": {s: int(pairs[s][2][-1]) for s in ("train", STRAT)},
                           "targets": {"magnitude": "|j - i| (8 classes)", "sign": "sign of j - i (2 classes)"},
                           "probe": "LogisticRegression(max_iter=1000), unscaled",
-                          "carries_rule": f"lower bound of (arm - max(NoPE, feature baseline)) > +{CARRY_MARGIN} on all "
-                                          "three seeds; NoPE (one seed) is the reference for every arm seed"},
-           "feature_baseline": None, "checkpoints": {}, "readings": {}}
-    doc["feature_baseline"] = feature_baseline(sitems, pairs)
+                          "split": "pairs never cross expressions: training pairs come from the 300 training "
+                                   "expressions of the stratified split, test pairs from its 150 test expressions; "
+                                   "the bootstrap resamples test expressions",
+                          "carries_rule": CARRIES_RULE},
+           "feature_baselines": None, "checkpoints": {}, "readings": {}}
+    doc["feature_baselines"] = feature_baselines(sitems, pairs)
     todo = [(a, s) for a in arms for s in seeds] + [("nope", 0)]
     for arm, seed in todo:
         t0 = time.time()
@@ -263,6 +279,11 @@ def run_h2(sitems, arms, seeds, out_dir):
     return doc
 
 
+CARRIES_RULE = (f"reference = the highest point accuracy among NoPE (same layer; one seed, the reference for every "
+                f"arm seed), B1p, B2p and B3p, chosen mechanically; carries if the lower bound of (arm - reference), "
+                f"paired by expression, exceeds +{CARRY_MARGIN} on all three seeds")
+
+
 def compute_readings(doc, arms):
     for arm in arms:
         doc["readings"][arm] = {}
@@ -271,9 +292,45 @@ def compute_readings(doc, arms):
             for t in TARGETS:
                 seeds = {k.split("seed")[1]: v[layer][t]["stats"] for k, v in doc["checkpoints"].items()
                          if k.startswith(arm + "_seed")}
-                nope = doc["checkpoints"]["nope_seed0"][layer][t]["stats"]
-                base = doc["feature_baseline"][t]["stats"]
-                doc["readings"][arm][layer][t] = reading(seeds, nope, base)
+                refs = {"NoPE": doc["checkpoints"]["nope_seed0"][layer][t]}
+                refs.update({k: doc["feature_baselines"][k][t] for k in BASELINE_KINDS})
+                doc["readings"][arm][layer][t] = reading(seeds, refs)
+
+
+def amend_h2(doc, sitems, arms):
+    """Amended reference (all of NoPE, B1p, B2p, B3p) applied to an H2 run made with the original reference
+    (NoPE and B2p only). The checkpoint probes and their per-expression statistics are reused unchanged; the
+    order-blind baselines are recomputed on the same pairs and the readings recomputed."""
+    pairs = make_pairs(sitems)
+    assert int(pairs[STRAT][2][-1]) == doc["definition"]["n_pairs"][STRAT], "pairs differ from the probe run"
+    original = doc.pop("feature_baseline", None)
+    doc.pop("feature_baselines", None)
+    doc["feature_baselines"] = feature_baselines(sitems, pairs)
+    if original is not None:
+        same = all(original[t]["accuracy"] == doc["feature_baselines"]["B2p"][t]["accuracy"] for t in TARGETS)
+        assert same, "B2p recomputed differs from the probe run's feature baseline"
+    doc["definition"]["carries_rule"] = CARRIES_RULE
+    doc["definition"]["split"] = ("pairs never cross expressions: training pairs come from the 300 training "
+                                  "expressions of the stratified split, test pairs from its 150 test expressions; "
+                                  "the bootstrap resamples test expressions")
+    doc["readings"] = {}
+    compute_readings(doc, [a for a in arms if any(k.startswith(a + "_seed") for k in doc["checkpoints"])])
+    doc["amendment"] = {"applied_at_utc": pb.now_utc(), "probes_reused": original is not None,
+                        "text": "H2 order-blind reference = the highest of NoPE, B1p, B2p, B3p, chosen mechanically, all "
+                                "on the same pairs; received after the probe run started and before its readings "
+                                "were computed; readings recomputed from the run's per-expression statistics"}
+    return doc
+
+
+def h3_held(doc):
+    """Amended H3 reading: encoder_input passes (no position at the input); each of layers 1-3 and memory fails,
+    on both tests and every seed."""
+    ok = True
+    for s in doc["seeds"].values():
+        for name in ("reversal", "permutation"):
+            d = s[name]["max_abs_diff"]
+            ok &= d["encoder_input"] <= EQUIV_TOL and all(d[k] > EQUIV_TOL for k in CHECKED)
+    return bool(ok)
 
 
 # ---------------------------------------------------------------------------
@@ -289,17 +346,26 @@ def predictions(h1, h3, h2):
     only if it holds at every layer 1-3) is a choice made when this script was written, before the pod run."""
     p = {}
     p["H1: ALiBi is reversal-equivariant (pass on all seeds)"] = h1["held"]
-    p["H3: RoPE fails both reversal and permutation by orders of magnitude (all seeds)"] = h3["held"]
+    p["H3: RoPE encoder_input passes; layers 1-3 and memory fail, reversal and permutation (all seeds)"] = h3["held"]
     if "rope" in h2["readings"]:
         p["H2: RoPE carries magnitude and sign (every layer 1-3)"] = bool(all(
             carries(h2, "rope", l, t) for l in H2_LAYERS for t in TARGETS))
     if "alibi" in h2["readings"]:
         p["H2: ALiBi carries magnitude and its sign stays near the references (every layer 1-3)"] = bool(all(
             carries(h2, "alibi", l, "magnitude") and not carries(h2, "alibi", l, "sign") for l in H2_LAYERS))
-    if "rope" in h2["readings"] and "alibi" in h2["readings"]:
-        any_clear = any(carries(h2, a, l, t) for a in ("rope", "alibi") for l in H2_LAYERS for t in TARGETS)
-        p["Construct reading fails (RoPE and ALiBi clear no reference at any layer or target)"] = bool(not any_clear)
     return p
+
+
+def h2_finding(h2):
+    """Amendment 3: if neither RoPE nor ALiBi clears the reference at any layer or target, that is a finding (no
+    linearly decodable relative offset), not a failure of the construct reading."""
+    if not ("rope" in h2["readings"] and "alibi" in h2["readings"]):
+        return None
+    clears = [(a, l, t) for a in ("rope", "alibi") for l in H2_LAYERS for t in TARGETS if carries(h2, a, l, t)]
+    if not clears:
+        return ("Finding: neither RoPE nor ALiBi carries a linearly decodable relative offset at layers 1-3 "
+                "(no reading clears the reference).")
+    return "RoPE or ALiBi clears the reference at: " + ", ".join(f"{a} {l} {t}" for a, l, t in clears) + "."
 
 
 def md_report(h1, h3, h2, env):
@@ -327,36 +393,50 @@ def md_report(h1, h3, h2, env):
     for k, v in h1["controls"].items():
         L.append(row(f"control {k} (expected {v['expected']})", v))
     L += ["", "## H3: RoPE, reversal and random permutation", "",
-          "| Checkpoint | Test | Max (layers 1-3, memory) | layer1 | layer2 | layer3 | memory | Fails by orders of magnitude |",
+          "Expected (amended reading): encoder_input passes, since RoPE adds no position at the input; layers 1-3 and "
+          "memory fail. \"Fails by orders of magnitude\" means the largest of layers 1-3 and memory is at least "
+          f"{ORDERS_OF_MAGNITUDE:g} times the tolerance.", "",
+          "| Checkpoint | Test | encoder_input | layer1 | layer2 | layer3 | memory | Fails by orders of magnitude |",
           "|---|---|---|---|---|---|---|---|"]
     for k, s in h3["seeds"].items():
         for name in ("reversal", "permutation"):
             v = s[name]
             d = v["max_abs_diff"]
-            L.append(f"| rope seed{k} | {name} | {v['max_over_checked']:.2e} | {d['layer1']:.2e} | {d['layer2']:.2e} | "
+            L.append(f"| rope seed{k} | {name} | {d['encoder_input']:.2e} | {d['layer1']:.2e} | {d['layer2']:.2e} | "
                      f"{d['layer3']:.2e} | {d['memory']:.2e} | {v['fails_by_orders_of_magnitude']} |")
     L += ["", f"## H2: relative-offset probe (pairs: {h2['definition']['n_pairs']})", "",
-          "Accuracy per seed, the references (NoPE at the same layer; the order-blind feature baseline), the lower "
-          f"bound of (arm - max(NoPE, baseline)) per seed, and the reading (lower bound > +{CARRY_MARGIN} on all three "
-          "seeds). The majority rate is the share of the most frequent class in the test pairs.", "",
-          "| Arm | Layer | Target | Accuracy by seed | NoPE | Feature baseline | Lower bound by seed | Carries relative position |",
-          "|---|---|---|---|---|---|---|---|"]
+          "Split: " + h2["definition"]["split"] + ".", "",
+          "Reference (amended, applied before the readings were computed): the highest point accuracy among NoPE at "
+          "the same layer and the order-blind pair baselines B1p (one-hot char_i + one-hot char_j), B2p (B1p + one-hot "
+          "expression length) and B3p (B2p + character counts), chosen mechanically. The probe run itself used NoPE "
+          "and B2p only; its checkpoint statistics are reused unchanged and the readings were recomputed. Before the "
+          "amendment was received, H2 point accuracies for sinusoidal seeds 0-2 and learned seed 0 had been printed "
+          "in the pod run log, and a Mac test run (scikit-learn 1.6.1) had printed ALiBi seed 0's table.", "",
+          f"A reading is \"carries relative position\" if the lower bound of (arm - chosen reference), paired by "
+          f"expression, exceeds +{CARRY_MARGIN} on all three seeds.", "",
+          "| Arm | Layer | Target | Accuracy by seed | NoPE | B1p | B2p | B3p | Chosen | Lower bound by seed | Carries |",
+          "|---|---|---|---|---|---|---|---|---|---|---|"]
     for arm in h2["readings"]:
         for layer in H2_LAYERS:
             for t in TARGETS:
                 accs = [h2["checkpoints"][f"{arm}_seed{s}"][layer][t]["accuracy"] for s in (0, 1, 2)
                         if f"{arm}_seed{s}" in h2["checkpoints"]]
                 r = h2["readings"][arm][layer][t]
-                lbs = [v["ci_vs_max_reference"][0] for v in r["per_seed"].values()]
-                L.append(f"| {arm} | {layer} | {t} | {', '.join(f'{a:.3f}' for a in accs)} | "
-                         f"{h2['checkpoints']['nope_seed0'][layer][t]['accuracy']:.3f} | "
-                         f"{h2['feature_baseline'][t]['accuracy']:.3f} | {', '.join(f'{x:+.3f}' for x in lbs)} | "
+                ra = r["reference_accuracies"]
+                lbs = [v["ci_vs_chosen"][0] for v in r["per_seed"].values()]
+                L.append(f"| {arm} | {layer} | {t} | {', '.join(f'{a:.3f}' for a in accs)} | " +
+                         " | ".join(f"{ra[k]:.3f}" for k in REFERENCE_ORDER) +
+                         f" | {r['chosen_reference']} | {', '.join(f'{x:+.3f}' for x in lbs)} | "
                          f"{r['carries_relative_position']} |")
     maj = {t: h2['checkpoints']['nope_seed0']['layer1'][t]['majority'] for t in TARGETS}
-    L += ["", f"Majority rate in the test pairs: magnitude {maj['magnitude']:.3f}, sign {maj['sign']:.3f}.", "",
-          "## Pre-stated predictions", "",
+    L += ["", f"Majority rate in the test pairs: magnitude {maj['magnitude']:.3f}, sign {maj['sign']:.3f}.", ""]
+    finding = h2_finding(h2)
+    if finding:
+        L += [finding, ""]
+    L += ["## Pre-stated predictions", "",
           "A prediction holds only if it holds at every layer 1 to 3 (an aggregation fixed in the script before the "
-          "run); the per-layer readings are in the H2 table.", "",
+          "run); the per-layer readings are in the H2 table. If neither RoPE nor ALiBi clears the reference, that is "
+          "reported above as a finding (no linearly decodable relative offset), not as a failure.", "",
           "| Prediction | Held |", "|---|---|"]
     for k, v in predictions(h1, h3, h2).items():
         L.append(f"| {k} | {'held' if v else 'not held'} |")
@@ -383,11 +463,13 @@ def validate_h3(doc):
 
 
 def validate_h2(doc, n_expr=150):
-    pb._has(doc, ("definition", "feature_baseline", "checkpoints", "readings"), "h2")
-    assert "nope_seed0" in doc["checkpoints"]
-    for t in TARGETS:
-        pb._has(doc["feature_baseline"][t], ("accuracy", "majority", "stats"), f"h2 baseline {t}")
-        pb.validate_stats(doc["feature_baseline"][t]["stats"], f"h2 baseline {t}", n_expr)
+    pb._has(doc, ("definition", "feature_baselines", "checkpoints", "readings"), "h2")
+    pb._has(doc["definition"], ("pairs", "n_pairs", "split", "carries_rule"), "h2 definition")
+    assert "nope_seed0" in doc["checkpoints"] and "feature_baseline" not in doc
+    for kind in BASELINE_KINDS:
+        for t in TARGETS:
+            pb._has(doc["feature_baselines"][kind][t], ("accuracy", "majority", "stats"), f"h2 {kind} {t}")
+            pb.validate_stats(doc["feature_baselines"][kind][t]["stats"], f"h2 {kind} {t}", n_expr)
     for name, ck in doc["checkpoints"].items():
         for layer in H2_LAYERS:
             for t in TARGETS:
@@ -397,10 +479,13 @@ def validate_h2(doc, n_expr=150):
         for layer in H2_LAYERS:
             for t in TARGETS:
                 r = layers[layer][t]
-                pb._has(r, ("per_seed", "carries_relative_position"), f"h2 reading {arm} {layer} {t}")
+                pb._has(r, ("chosen_reference", "reference_accuracies", "per_seed", "carries_relative_position"),
+                        f"h2 reading {arm} {layer} {t}")
+                assert r["chosen_reference"] == max(REFERENCE_ORDER, key=lambda k: r["reference_accuracies"][k])
                 for v in r["per_seed"].values():
-                    pb._has(v, ("ci_vs_max_reference", "ci_vs_nope", "ci_vs_feature_baseline"), f"h2 reading {arm}")
-                    assert v["ci_vs_max_reference"][0] <= v["ci_vs_max_reference"][1]
+                    pb._has(v, ("ci_vs_chosen", "ci_vs_each"), f"h2 reading {arm}")
+                    assert set(v["ci_vs_each"]) == set(REFERENCE_ORDER)
+                    assert v["ci_vs_chosen"] == v["ci_vs_each"][r["chosen_reference"]]
 
 
 # ---------------------------------------------------------------------------
@@ -409,7 +494,8 @@ def validate_h2(doc, n_expr=150):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--parts", nargs="+", choices=("all", "h1", "h3", "h2", "report"), default=["all"])
+    ap.add_argument("--parts", nargs="+", choices=("all", "h1", "h3", "h2", "amend", "report"), default=["all"],
+                    help="amend: apply the amended H2 reference and H3 reading to existing outputs, without re-probing")
     ap.add_argument("--out-dir", type=Path, default=OUT)
     ap.add_argument("--arms", nargs="+", default=list(H2_ARMS), choices=H2_ARMS, help="arms for H2")
     ap.add_argument("--seeds", nargs="+", type=int, default=list(pb.SEEDS))
@@ -419,8 +505,12 @@ def main():
     out_dir.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
     env_file = out_dir / "environment.json"
-    if parts == {"report"} and env_file.exists():
-        env = json.loads(env_file.read_text())
+    if parts <= {"amend", "report"} and env_file.exists():
+        env = json.loads(env_file.read_text())  # the probe run's record
+        if "amend" in parts:
+            amend_env = pb.environment_doc("construct_diag amend", "none", sys.argv[1:])
+            env["amendment_run"] = {k: amend_env[k] for k in ("git_commit", "started_at_utc", "sklearn", "torch", "argv")}
+            pb.write_json(env_file, env)
     else:
         env = pb.environment_doc("construct_diag", "none", sys.argv[1:])
         pb.write_json(env_file, env)  # written at the start of the run
@@ -435,13 +525,22 @@ def main():
         run_h3(items, args.seeds, out_dir)
     if "h2" in parts:
         run_h2(sitems, args.arms, args.seeds, out_dir)
+    if "amend" in parts:
+        h2_file, h3_file = out_dir / "h2_relative_offset.json", out_dir / "h3_rope.json"
+        h2 = amend_h2(json.loads(h2_file.read_text()), sitems, list(H2_ARMS))
+        pb.write_json(h2_file, h2)
+        h3 = json.loads(h3_file.read_text())
+        h3["expected"] = "encoder_input passes (no position at the input); layers 1-3 and memory fail, on both tests"
+        h3["held"] = h3_held(h3)
+        pb.write_json(h3_file, h3)
+        print("amended: H2 readings recomputed with the NoPE/B1p/B2p/B3p reference; H3 reading updated", flush=True)
     if "report" in parts:
         h1, h3, h2 = (json.loads((out_dir / f).read_text())
                       for f in ("h1_alibi_reversal.json", "h3_rope.json", "h2_relative_offset.json"))
         (out_dir / "construct_diag.md").write_text(md_report(h1, h3, h2, env))
     env["finished_at_utc"] = pb.now_utc()
     env["wall_seconds"] = round(time.time() - t0, 1)
-    if parts != {"report"}:
+    if not parts <= {"amend", "report"}:
         pb.write_json(env_file, env)
     print(f"wall time {env['wall_seconds']}s", flush=True)
 

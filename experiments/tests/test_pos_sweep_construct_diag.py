@@ -69,14 +69,18 @@ def test_pair_feature_rows_alignment():
 
 def test_baseline_pair_features(sitems):
     pairs = cd.make_pairs(sitems)
-    F = cd.baseline_pair_features(sitems, npr.STRAT_SPLIT, pairs[npr.STRAT_SPLIT])
     V, L = npr.tokenizer.vocab_size, npr.MAX_INPUT_LEN
-    assert F.shape == (pairs[npr.STRAT_SPLIT][2][-1], 2 * V + L + 1)
-    assert (F[:, :V].sum(1) == 1).all() and (F[:, V:2 * V].sum(1) == 1).all() and (F[:, 2 * V:].sum(1) == 1).all()
     ii, jj, off = pairs[npr.STRAT_SPLIT]
     item = sitems[npr.STRAT_SPLIT][0]
     ids = npr.encode_checked(item["input"], L)
-    assert F[0, ids[ii[0]]] == 1 and F[0, V + ids[jj[0]]] == 1 and F[0, 2 * V + len(item["input"])] == 1
+    F = {k: cd.baseline_pair_features(sitems, npr.STRAT_SPLIT, pairs[npr.STRAT_SPLIT], k) for k in cd.BASELINE_KINDS}
+    assert F["B1p"].shape == (off[-1], 2 * V) and F["B2p"].shape == (off[-1], 2 * V + L + 1)
+    assert F["B3p"].shape == (off[-1], 2 * V + L + 1 + V)
+    assert np.array_equal(F["B2p"][:, :2 * V], F["B1p"]) and np.array_equal(F["B3p"][:, :2 * V + L + 1], F["B2p"])
+    assert (F["B1p"][:, :V].sum(1) == 1).all() and (F["B1p"][:, V:].sum(1) == 1).all()
+    assert (F["B2p"][:, 2 * V:].sum(1) == 1).all()
+    assert F["B2p"][0, ids[ii[0]]] == 1 and F["B2p"][0, V + ids[jj[0]]] == 1 and F["B2p"][0, 2 * V + len(item["input"])] == 1
+    assert F["B3p"][0, 2 * V + L + 1:].tolist() == np.bincount(ids, minlength=V).tolist()
 
 
 # ---------------------------------------------------------------------------
@@ -113,36 +117,59 @@ def synth_stats(acc, rng, n_expr=150, n_pairs=20):
     return {"n": [float(n_pairs)] * n_expr, "correct": rng.binomial(n_pairs, acc, size=n_expr).astype(float).tolist()}
 
 
-def test_reading_requires_margin_over_the_max_reference_on_all_seeds():
+def refs_with(rng, nope, b1, b2, b3):
+    out = {}
+    for name, acc in (("NoPE", nope), ("B1p", b1), ("B2p", b2), ("B3p", b3)):
+        st = synth_stats(acc, rng)
+        out[name] = {"accuracy": sum(st["correct"]) / sum(st["n"]), "stats": st}
+    return out
+
+
+def test_reading_uses_the_highest_reference_chosen_mechanically():
     rng = np.random.default_rng(0)
-    nope, base = synth_stats(0.30, rng), synth_stats(0.50, rng)  # the baseline is the higher reference
+    refs = refs_with(rng, 0.30, 0.40, 0.50, 0.45)  # B2p is the highest point accuracy
     high = {s: synth_stats(0.80, rng) for s in (0, 1, 2)}
-    assert cd.reading(high, nope, base)["carries_relative_position"] is True
-    # clears NoPE by a wide margin but not the (higher) baseline by +0.10
+    r = cd.reading(high, refs)
+    assert r["chosen_reference"] == "B2p" and r["carries_relative_position"] is True
+    assert r["per_seed"]["0"]["ci_vs_chosen"] == r["per_seed"]["0"]["ci_vs_each"]["B2p"]
+    # clears NoPE by a wide margin but not the chosen reference by +0.10
     mid = {s: synth_stats(0.58, rng) for s in (0, 1, 2)}
-    r = cd.reading(mid, nope, base)
+    r = cd.reading(mid, refs)
     assert r["carries_relative_position"] is False
-    assert r["per_seed"]["0"]["ci_vs_nope"][0] > 0.10 and r["per_seed"]["0"]["ci_vs_max_reference"][0] < 0.10
+    assert r["per_seed"]["0"]["ci_vs_each"]["NoPE"][0] > 0.10 and r["per_seed"]["0"]["ci_vs_chosen"][0] < 0.10
     # one seed below the margin is enough to fail
     mixed = {0: synth_stats(0.80, rng), 1: synth_stats(0.80, rng), 2: synth_stats(0.55, rng)}
-    assert cd.reading(mixed, nope, base)["carries_relative_position"] is False
+    assert cd.reading(mixed, refs)["carries_relative_position"] is False
+    # NoPE can be the chosen reference
+    assert cd.reading(high, refs_with(rng, 0.70, 0.40, 0.50, 0.45))["chosen_reference"] == "NoPE"
 
 
-def test_predictions_marks():
-    def readings(rope_mag, rope_sign, alibi_mag, alibi_sign):
-        vals = {"rope": {"magnitude": rope_mag, "sign": rope_sign}, "alibi": {"magnitude": alibi_mag, "sign": alibi_sign}}
-        return {"readings": {arm: {l: {t: {"carries_relative_position": vals[arm][t]} for t in cd.TARGETS}
-                                    for l in cd.H2_LAYERS} for arm in vals}}
+def fake_h2(rope_mag, rope_sign, alibi_mag, alibi_sign):
+    vals = {"rope": {"magnitude": rope_mag, "sign": rope_sign}, "alibi": {"magnitude": alibi_mag, "sign": alibi_sign}}
+    return {"readings": {arm: {l: {t: {"carries_relative_position": vals[arm][t]} for t in cd.TARGETS}
+                                for l in cd.H2_LAYERS} for arm in vals}}
+
+
+def test_predictions_and_finding():
     h1, h3 = {"held": True}, {"held": False}
-    p = cd.predictions(h1, h3, readings(True, True, True, False))
+    p = cd.predictions(h1, h3, fake_h2(True, True, True, False))
     assert p["H2: RoPE carries magnitude and sign (every layer 1-3)"] is True
     assert p["H2: ALiBi carries magnitude and its sign stays near the references (every layer 1-3)"] is True
-    assert p["Construct reading fails (RoPE and ALiBi clear no reference at any layer or target)"] is False
-    assert p["H3: RoPE fails both reversal and permutation by orders of magnitude (all seeds)"] is False
-    p = cd.predictions(h1, h3, readings(False, False, False, False))
-    assert p["Construct reading fails (RoPE and ALiBi clear no reference at any layer or target)"] is True
-    p = cd.predictions(h1, h3, readings(True, True, True, True))
+    assert not any("fail" in k.lower() and "construct" in k.lower() for k in p)
+    assert cd.h2_finding(fake_h2(True, True, True, False)).startswith("RoPE or ALiBi clears")
+    assert cd.h2_finding(fake_h2(False, False, False, False)).startswith("Finding: neither RoPE nor ALiBi")
+    p = cd.predictions(h1, h3, fake_h2(True, True, True, True))
     assert p["H2: ALiBi carries magnitude and its sign stays near the references (every layer 1-3)"] is False
+
+
+def test_h3_amended_reading():
+    def doc(enc, rest):
+        d = {k: rest for k in cd.CHECKED}
+        d["encoder_input"] = enc
+        return {"seeds": {"0": {"reversal": {"max_abs_diff": d}, "permutation": {"max_abs_diff": d}}}}
+    assert cd.h3_held(doc(0.0, 5.0)) is True
+    assert cd.h3_held(doc(1e-3, 5.0)) is False  # encoder_input must pass
+    assert cd.h3_held(doc(0.0, 1e-6)) is False  # layers must fail
 
 
 def test_verdict_equiv_thresholds():
@@ -190,4 +217,19 @@ def test_end_to_end_one_seed(tmp_path):
     assert set(h2["checkpoints"]) == {"alibi_seed0", "nope_seed0"} and set(h2["readings"]) == {"alibi"}
     pb.validate_environment(json.loads((out / "environment.json").read_text()))
     assert "Pre-stated predictions" in (out / "construct_diag.md").read_text()
-    print("\n", (out / "construct_diag.md").read_text()[-1500:])
+
+    # the amend path: an H2 file in the probe run's original form (NoPE + B2p only, as feature_baseline) is
+    # brought to the amended reference without re-probing, and B2p must reproduce exactly
+    old = dict(h2)
+    old["feature_baseline"] = old.pop("feature_baselines")["B2p"]
+    old["readings"] = {}
+    (out / "h2_relative_offset.json").write_text(json.dumps(old))
+    r = subprocess.run([sys.executable, "-u", str(REPO_ROOT / "experiments/scripts/pos_sweep_construct_diag.py"),
+                        "--parts", "amend", "report", "--out-dir", str(out)], cwd=REPO_ROOT, capture_output=True, text=True)
+    assert r.returncode == 0, r.stdout[-2000:] + r.stderr[-2000:]
+    amended = json.loads((out / "h2_relative_offset.json").read_text())
+    cd.validate_h2(amended)
+    assert amended["amendment"]["probes_reused"] is True
+    assert amended["readings"] == h2["readings"]
+    assert "amendment_run" in json.loads((out / "environment.json").read_text())
+    print("\n", (out / "construct_diag.md").read_text()[-1800:])
