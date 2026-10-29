@@ -1,0 +1,344 @@
+{
+  "anchor": {
+    "name": "B2",
+    "accuracy": 0.18942577030812324
+  },
+  "floor_a": {
+    "equivariance_max_abs_diff": {
+      "encoder_input": 0.0,
+      "layer1": 3.5762786865234375e-07,
+      "layer2": 1.1920928955078125e-06,
+      "layer3": 2.384185791015625e-06,
+      "memory": 1.6689300537109375e-06
+    },
+    "equivariance_pass": true,
+    "nope_layer3_accuracy": 0.14425770308123248,
+    "anchor_accuracy": 0.18942577030812324,
+    "bound": 0.20942577030812323,
+    "accuracy_pass": true,
+    "pass": true,
+    "as_pre_registered_0.053": {
+      "pass": false,
+      "delta": 0.09125770308123249
+    }
+  },
+  "injection_b": {
+    "anchor": {
+      "rope": {
+        "lower_bounds": {
+          "0": -0.0038842150913913145,
+          "1": 0.0007066021161710289,
+          "2": -0.010501077491615728
+        },
+        "injected": false
+      },
+      "alibi": {
+        "lower_bounds": {
+          "0": -0.039051620238352305,
+          "1": -0.04245065659110723,
+          "2": -0.04441854474322915
+        },
+        "injected": false
+      }
+    },
+    "prereg": {
+      "rope": {
+        "lower_bounds": {
+          "0": 0.1307866657017798,
+          "1": 0.13707866440294283,
+          "2": 0.12461758961938085
+        },
+        "injected": true
+      },
+      "alibi": {
+        "lower_bounds": {
+          "0": 0.09785286098346904,
+          "1": 0.09318001855313847,
+          "2": 0.09059111462958927
+        },
+        "injected": false
+      }
+    }
+  },
+  "survives_c": {
+    "anchor": {
+      "sinusoidal": {
+        "lower_bounds": {
+          "0": -0.010251459156152666,
+          "1": -0.025880290729390628,
+          "2": -0.019778963524982155
+        },
+        "survives": false
+      },
+      "learned": {
+        "lower_bounds": {
+          "0": 0.030827301237145003,
+          "1": -0.005904071593237447,
+          "2": -0.0007094115135873271
+        },
+        "survives": false
+      },
+      "rope": {
+        "lower_bounds": {
+          "0": 0.28999741465235285,
+          "1": 0.2802688631359204,
+          "2": 0.29451932745709636
+        },
+        "survives": true
+      },
+      "alibi": {
+        "lower_bounds": {
+          "0": 0.21295335953466737,
+          "1": 0.20257649272809694,
+          "2": 0.17632527701404938
+        },
+        "survives": true
+      }
+    },
+    "prereg": {
+      "sinusoidal": {
+        "lower_bounds": {
+          "0": 0.12454996116093496,
+          "1": 0.10903130664664684,
+          "2": 0.115628696956734
+        },
+        "survives": true
+      },
+      "learned": {
+        "lower_bounds": {
+          "0": 0.16570519467885017,
+          "1": 0.12773773178576558,
+          "2": 0.13402695174884074
+        },
+        "survives": true
+      },
+      "rope": {
+        "lower_bounds": {
+          "0": 0.4222521436529539,
+          "1": 0.4122646175813715,
+          "2": 0.4279024459983785
+        },
+        "survives": true
+      },
+      "alibi": {
+        "lower_bounds": {
+          "0": 0.34692152267006965,
+          "1": 0.33830359508611346,
+          "2": 0.30963216295390095
+        },
+        "survives": true
+      }
+    }
+  },
+  "p2_trigger_ef": {
+    "anchor": {
+      "evaluated": false,
+      "reason": "no re-injecting arm injected"
+    },
+    "prereg": {
+      "evaluated": true,
+      "reinjecting_arms_used": [
+        "rope"
+      ],
+      "per_seed_ci": {
+        "0": [
+          0.24605001593773287,
+          0.29229388646026244
+        ],
+        "1": [
+          0.27318618129660427,
+          0.32246947613261323
+        ],
+        "2": [
+          0.28246843567215685,
+          0.32910099502631945
+        ]
+      },
+      "p2_holds": true,
+      "trigger_fires": true
+    }
+  },
+  "p1_d": {
+    "per_seed": {
+      "0": {
+        "ci": [
+          0.024302108050475037,
+          0.05640491654544822
+        ],
+        "includes_zero": false
+      },
+      "1": {
+        "ci": [
+          0.004825219211356531,
+          0.03368029161040563
+        ],
+        "includes_zero": false
+      },
+      "2": {
+        "ci": [
+          0.006422579411964182,
+          0.0340067955349485
+        ],
+        "includes_zero": false
+      }
+    },
+    "holds": false
+  },
+  "id_gap_g": {
+    "learned": {
+      "per_seed": {
+        "0": {
+          "arm_acc": 7.000000000000001,
+          "sinusoidal_reeval_acc": 7.9,
+          "diff_points": -0.8999999999999995,
+          "ci": [
+            -0.023999999999999994,
+            0.006000000000000005
+          ]
+        },
+        "1": {
+          "arm_acc": 7.3999999999999995,
+          "sinusoidal_reeval_acc": 7.7,
+          "diff_points": -0.30000000000000027,
+          "ci": [
+            -0.018000000000000002,
+            0.010999999999999996
+          ]
+        },
+        "2": {
+          "arm_acc": 6.0,
+          "sinusoidal_reeval_acc": 7.9,
+          "diff_points": -1.9000000000000004,
+          "ci": [
+            -0.034,
+            -0.0040000000000000036
+          ]
+        }
+      },
+      "gap_moves": false,
+      "direction": null
+    },
+    "rope": {
+      "per_seed": {
+        "0": {
+          "arm_acc": 21.4,
+          "sinusoidal_reeval_acc": 7.9,
+          "diff_points": 13.5,
+          "ci": [
+            0.10700000000000001,
+            0.16502499999999998
+          ]
+        },
+        "1": {
+          "arm_acc": 18.0,
+          "sinusoidal_reeval_acc": 7.7,
+          "diff_points": 10.299999999999999,
+          "ci": [
+            0.07500000000000001,
+            0.13
+          ]
+        },
+        "2": {
+          "arm_acc": 21.5,
+          "sinusoidal_reeval_acc": 7.9,
+          "diff_points": 13.600000000000001,
+          "ci": [
+            0.10700000000000001,
+            0.165
+          ]
+        }
+      },
+      "gap_moves": true,
+      "direction": "up"
+    },
+    "alibi": {
+      "per_seed": {
+        "0": {
+          "arm_acc": 10.4,
+          "sinusoidal_reeval_acc": 7.9,
+          "diff_points": 2.4999999999999996,
+          "ci": [
+            0.0040000000000000036,
+            0.04502499999999999
+          ]
+        },
+        "1": {
+          "arm_acc": 12.6,
+          "sinusoidal_reeval_acc": 7.7,
+          "diff_points": 4.9,
+          "ci": [
+            0.02500000000000001,
+            0.072
+          ]
+        },
+        "2": {
+          "arm_acc": 13.100000000000001,
+          "sinusoidal_reeval_acc": 7.9,
+          "diff_points": 5.2,
+          "ci": [
+            0.029975,
+            0.07302499999999999
+          ]
+        }
+      },
+      "gap_moves": true,
+      "direction": "up"
+    }
+  },
+  "depth_h": {
+    "sinusoidal": {
+      "per_seed": {
+        "0": false,
+        "1": false,
+        "2": false
+      },
+      "depth_code_appears": false
+    },
+    "learned": {
+      "per_seed": {
+        "0": false,
+        "1": false,
+        "2": false
+      },
+      "depth_code_appears": false
+    },
+    "rope": {
+      "per_seed": {
+        "0": true,
+        "1": true,
+        "2": true
+      },
+      "depth_code_appears": true
+    },
+    "alibi": {
+      "per_seed": {
+        "0": false,
+        "1": false,
+        "2": false
+      },
+      "depth_code_appears": false
+    }
+  },
+  "kill_gate_i": {
+    "anchor": {
+      "verdict": "rope: position survives and the ID gap moves; alibi: position survives and the ID gap moves",
+      "survivors": [
+        "rope",
+        "alibi"
+      ]
+    },
+    "prereg": {
+      "verdict": "sinusoidal: position survives (the reference arm for the ID gap); learned: position survives but the ID gap does not move: the mechanism is encoding-specific and the behavioral gap is not; rope: position survives and the ID gap moves; alibi: position survives and the ID gap moves",
+      "survivors": [
+        "sinusoidal",
+        "learned",
+        "rope",
+        "alibi"
+      ]
+    }
+  },
+  "reference_text": {
+    "anchor": "ANCHOR (order-blind baseline, primary)",
+    "prereg": "the design's 0.053, superseded before any arm was probed by order-blind baseline B2 at 0.1894, on the D1 and D2 evidence"
+  }
+}
