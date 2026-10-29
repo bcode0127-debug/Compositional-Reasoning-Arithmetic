@@ -1,0 +1,49 @@
+{
+  "run_dir": "results_v2/pos_sweep/nope/study1/seed0",
+  "positional_encoding": "nope",
+  "D1": {
+    "n_expressions": 20,
+    "seed": 0,
+    "tolerance": 1e-05,
+    "n_identity_permutations": 0,
+    "max_abs_diff": {
+      "encoder_input": 0.0,
+      "layer1": 3.5762786865234375e-07,
+      "layer2": 1.1920928955078125e-06,
+      "layer3": 2.384185791015625e-06,
+      "memory": 1.6689300537109375e-06
+    },
+    "pass": true
+  },
+  "D2": {
+    "nope_layer3": {
+      "accuracy": 0.14425770308123248,
+      "majority": 0.052521008403361345,
+      "n_classes_train": 23,
+      "convergence_warning": false
+    },
+    "B1": {
+      "accuracy": 0.16211484593837536,
+      "majority": 0.052521008403361345,
+      "n_classes_train": 23,
+      "convergence_warning": false,
+      "dim": 20
+    },
+    "B2": {
+      "accuracy": 0.18942577030812324,
+      "majority": 0.052521008403361345,
+      "n_classes_train": 23,
+      "convergence_warning": false,
+      "dim": 85
+    },
+    "B3": {
+      "accuracy": 0.1880252100840336,
+      "majority": 0.052521008403361345,
+      "n_classes_train": 23,
+      "convergence_warning": false,
+      "dim": 105
+    }
+  },
+  "B3_minus_nope": 0.04376750700280113,
+  "case": "D1 passes, B3 above NoPE layer 3 by more than 0.02 (outside the packet's three cases)"
+}

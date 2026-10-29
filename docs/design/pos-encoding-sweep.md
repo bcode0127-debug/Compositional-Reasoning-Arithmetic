@@ -113,3 +113,22 @@ McLeish, S., et al. (2024). Transformers can do arithmetic with the right embedd
 Portes, J., et al. (2023). MosaicBERT: a bidirectional encoder optimized for fast pretraining. NeurIPS 2023. arXiv:2312.17482.
 Press, O., Smith, N. A., and Lewis, M. (2022). Train short, test long: attention with linear biases enables input length extrapolation. ICLR 2022.
 Su, J., et al. (2024). RoFormer: enhanced transformer with rotary position embedding. Neurocomputing.
+
+### 2026-10-28: NoPE floor failed; the position reference is replaced by an order-blind baseline
+
+Written after the NoPE floor run and before any learned, RoPE or ALiBi checkpoint was probed. Arm training had resumed when this was written; training does not depend on it.
+
+1. **Why the original rule could not work.** Character identity and expression length alone (B2 below) predict position at 0.1894 on the stratified split, +0.136 over the 0.053 majority. An encoder with no order information would clear the +0.10 margin of "position survives": the rule could not distinguish its own null.
+2. **What exposed it.** nope:0 (RUN_COMMIT 01b5bb7) read 0.1443 layer-3 linear position accuracy against the 0.0525 majority, outside the ±0.02 floor; the sweep stopped for a bug hunt as specified.
+3. **Bug hunt** (experiments/scripts/nope_floor_diag.py; pod, scikit-learn 1.9.1; outputs in experiments/results/analysis_v2/pos_sweep/nope_floor/).
+   a. Equivariance, the decisive test: the real tokens of 20 stratified test expressions were permuted and un-permuted; the maximum absolute difference is 0 (encoder input), 3.6e-7 (layer 1), 1.2e-6 (layer 2), 2.4e-6 (layer 3) and 1.7e-6 (memory), all at most 1e-5. The trained NoPE encoder carries no order information.
+   b. Order-blind feature baselines, same probe, split and positions: B1, one-hot character, 0.1621; B2, B1 plus one-hot expression length, 0.1894; B3, B2 plus character counts, 0.1880.
+   c. The pre-committed reading required B3 within ±0.02 of NoPE's 0.1443. The band failed on its lower side only: NoPE sits 0.0437 below B3. No leak mechanism can produce that direction, since a leak adds position information rather than removing it, and 3a rules a leak out.
+4. **Changes.** The text above is unchanged; its 0.053 position reference is replaced by ANCHOR.
+   a. ANCHOR is the highest-scoring order-blind baseline among B1, B2 and B3 on the stratified split and positions, recomputed in the probe run's environment; here B2, 0.1894. B1 and B3 are reported beside it, with per-expression correctness for all three.
+   b. Floor check: passes if the trained NoPE checkpoint is permutation-equivariant (maximum absolute difference at most 1e-5 at layers 1–3 and memory) and its layer-3 position accuracy is at most ANCHOR + 0.02. nope:0 passes.
+   c. "Position survives" and the layer-1 injection check take the bootstrap 95% lower bound on (arm accuracy − ANCHOR accuracy), paired by expression, instead of (accuracy − 0.053). The +0.10 margin is unchanged. The kill gate inherits this through "survives".
+   d. P1, P2 and the fifth-arm trigger compare arms with each other; the reference cancels; they are unchanged.
+   e. The depth endpoint keeps its references. Its decisive baseline, one-hot(character) + one-hot(position), already carries everything an order-blind encoder could and adds position, so the mis-specification does not reach it.
+5. **Cost.** The reference rises by about 0.14 and the injection check uses it too: a re-injecting arm that would have cleared 0.053 + 0.10 may now read "not injected" and be excluded from P2 and the trigger. Every affected test becomes harder to pass, none easier.
+6. **Reporting.** Every affected rule is reported under both references, in the form "the design's 0.053, superseded before any arm was probed by order-blind baseline B2 at 0.1894, on the D1 and D2 evidence".
