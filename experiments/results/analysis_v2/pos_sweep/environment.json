@@ -1,0 +1,28 @@
+{
+  "python": "3.12.3",
+  "torch": "2.8.0+cu128",
+  "numpy": "2.5.2",
+  "cuda": "12.8",
+  "cudnn": 91002,
+  "gpu": "NVIDIA RTX 4000 Ada Generation",
+  "device": "cpu",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+  "driver_version": "595.91.07",
+  "pod_image": "RunPod PyTorch template 1.5.0-2.8.0 (PyTorch 2.8.0, CUDA 12.8.1, Ubuntu 24.04)",
+  "git_commit": "89f713a9bde720dbe6568411eff8c784495a5865",
+  "started_at_utc": "2026-10-29T09:29:42.673407+00:00",
+  "sklearn": "1.9.1",
+  "probe_device": "cpu",
+  "eval_device": "cuda",
+  "stage": "all",
+  "argv": [
+    "--stage",
+    "all",
+    "--eval-device",
+    "cuda"
+  ],
+  "git_dirty_tracked": false,
+  "role": "positional-encoding sweep probe battery (one run, one environment, every checkpoint)",
+  "finished_at_utc": "2026-10-29T10:43:40.747725+00:00",
+  "wall_seconds": 4439.3
+}

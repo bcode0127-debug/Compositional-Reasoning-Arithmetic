@@ -238,15 +238,24 @@ def load_split_items(study):
 CKPT_META = {}
 
 
-def load_model(model_name, study, seed):
-    path = hf_file(MODEL_REPO, f"{model_name}/{study}/seed{seed}/best_model.pt", "model")
+def load_model(model_name, study, seed, run_dir=None):
+    """Default: the paper's checkpoint from the pinned Hub commit (FINGERPRINTS checked). With run_dir: the
+    checkpoint <run_dir>/best_model.pt (a positional-encoding sweep run), which must carry
+    dataset_version == "datasets_v2"; FINGERPRINTS describe the paper's checkpoints and are skipped."""
+    if run_dir is None:
+        path = hf_file(MODEL_REPO, f"{model_name}/{study}/seed{seed}/best_model.pt", "model")
+    else:
+        path = Path(run_dir) / "best_model.pt"
     # weights_only=False: the checkpoint dict carries plain metadata alongside
-    # tensors, and these are this project's own files at a pinned Hub commit.
+    # tensors, and these are this project's own files at a pinned Hub commit (or its own sweep runs).
     ckpt = torch.load(path, map_location="cpu", weights_only=False)
-    if "dataset_version" in ckpt:
+    if run_dir is not None:
+        assert ckpt.get("dataset_version") == "datasets_v2", (
+            f"{run_dir}: dataset_version={ckpt.get('dataset_version')!r}")
+    elif "dataset_version" in ckpt:
         assert ckpt["dataset_version"] == "datasets_v2", (
             f"{model_name}/{study}/seed{seed}: dataset_version={ckpt['dataset_version']!r}")
-    fp = FINGERPRINTS.get((model_name, study, seed))
+    fp = FINGERPRINTS.get((model_name, study, seed)) if run_dir is None else None
     if fp is not None:
         assert ckpt["val_accuracy"] == fp, (
             f"{model_name.upper()} FINGERPRINT MISMATCH: val_accuracy={ckpt['val_accuracy']} (expected {fp})")
@@ -262,7 +271,7 @@ def load_model(model_name, study, seed):
     model.load_state_dict(ckpt["model_state_dict"])
     model = model.to(DEVICE)
     model.eval()
-    CKPT_META[f"{model_name}/{study}/seed{seed}"] = {
+    CKPT_META[f"{model_name}/{study}/seed{seed}" if run_dir is None else str(run_dir)] = {
         k: ckpt.get(k) for k in ("epoch", "val_accuracy", "val_loss", "seed", "dataset_version", "generator_commit",
                                  "positional_encoding")}
     return model
@@ -1506,6 +1515,23 @@ def identity_probe(train, test, key):
     conv = any("converge" in str(x.message).lower() for x in w)
     return {"accuracy": acc, "majority": majority_baseline(test[key]), "n_classes_train": int(len(set(train[key]))),
             "convergence_warning": conv}
+
+
+def position_probe(train, test, key="position"):
+    """identity_probe (one fit, same fields) plus per-expression correctness from example_stats, as the depth
+    bootstraps use, for the positional-encoding sweep's paired bootstraps. Same LogisticRegression(max_iter=1000),
+    unscaled; identity_probe and its committed outputs are untouched. `test` needs "offsets" (layerwise_acts
+    provides it)."""
+    from sklearn.linear_model import LogisticRegression
+    probe = LogisticRegression(max_iter=1000)
+    with warnings.catch_warnings(record=True) as w:
+        warnings.simplefilter("always")
+        probe.fit(train["X"], train[key])
+    yhat = probe.predict(test["X"])
+    return {"accuracy": float(np.mean(yhat == test[key])), "majority": majority_baseline(test[key]),
+            "n_classes_train": int(len(set(train[key]))),
+            "convergence_warning": any("converge" in str(x.message).lower() for x in w),
+            "stats": example_stats("depth", test[key], yhat, test["offsets"])}
 
 
 def layerwise_depth_row(a, prot_cp):
