@@ -102,18 +102,6 @@ Added on branch `feat/pos-encoding-sweep`, before any training run. None of them
 
 Probe extraction runs on PyTorch's standard (hooked) path for every arm; the paper's committed numbers at 185b127 were produced on the fused eval path and differ by at most 5.4e-4 in activations and 0.0007 in probe accuracy; the sweep re-probes the paper's sinusoidal checkpoints through the hooks rather than reusing the committed numbers, so all five arms share one path.
 
-## References
-
-Chi, T.-C., et al. (2023). Latent positional information is in the self-attention variance of transformer language models without positional embeddings. arXiv:2305.13571.
-Delétang, G., et al. (2023). Neural networks and the Chomsky hierarchy. ICLR 2023. arXiv:2207.02098.
-Haviv, A., et al. (2022). Transformer language models without positional encodings still learn positional information. Findings of EMNLP 2022. arXiv:2203.16634.
-Kazemnejad, A., et al. (2023). The impact of positional encoding on length generalization in Transformers. NeurIPS 2023. arXiv:2305.19466.
-Lin, Y., Tan, Y. C., and Frank, R. (2019). Open Sesame: getting inside BERT's linguistic knowledge. BlackboxNLP 2019. arXiv:1906.01698.
-McLeish, S., et al. (2024). Transformers can do arithmetic with the right embeddings. NeurIPS 2024. arXiv:2405.17399.
-Portes, J., et al. (2023). MosaicBERT: a bidirectional encoder optimized for fast pretraining. NeurIPS 2023. arXiv:2312.17482.
-Press, O., Smith, N. A., and Lewis, M. (2022). Train short, test long: attention with linear biases enables input length extrapolation. ICLR 2022.
-Su, J., et al. (2024). RoFormer: enhanced transformer with rotary position embedding. Neurocomputing.
-
 ### 2026-10-28: NoPE floor failed; the position reference is replaced by an order-blind baseline
 
 Written after the NoPE floor run and before any learned, RoPE or ALiBi checkpoint was probed. Arm training had resumed when this was written; training does not depend on it.
@@ -132,3 +120,15 @@ Written after the NoPE floor run and before any learned, RoPE or ALiBi checkpoin
    e. The depth endpoint keeps its references. Its decisive baseline, one-hot(character) + one-hot(position), already carries everything an order-blind encoder could and adds position, so the mis-specification does not reach it.
 5. **Cost.** The reference rises by about 0.14 and the injection check uses it too: a re-injecting arm that would have cleared 0.053 + 0.10 may now read "not injected" and be excluded from P2 and the trigger. Every affected test becomes harder to pass, none easier.
 6. **Reporting.** Every affected rule is reported under both references, in the form "the design's 0.053, superseded before any arm was probed by order-blind baseline B2 at 0.1894, on the D1 and D2 evidence".
+
+## References
+
+Chi, T.-C., et al. (2023). Latent positional information is in the self-attention variance of transformer language models without positional embeddings. arXiv:2305.13571.
+Delétang, G., et al. (2023). Neural networks and the Chomsky hierarchy. ICLR 2023. arXiv:2207.02098.
+Haviv, A., et al. (2022). Transformer language models without positional encodings still learn positional information. Findings of EMNLP 2022. arXiv:2203.16634.
+Kazemnejad, A., et al. (2023). The impact of positional encoding on length generalization in Transformers. NeurIPS 2023. arXiv:2305.19466.
+Lin, Y., Tan, Y. C., and Frank, R. (2019). Open Sesame: getting inside BERT's linguistic knowledge. BlackboxNLP 2019. arXiv:1906.01698.
+McLeish, S., et al. (2024). Transformers can do arithmetic with the right embeddings. NeurIPS 2024. arXiv:2405.17399.
+Portes, J., et al. (2023). MosaicBERT: a bidirectional encoder optimized for fast pretraining. NeurIPS 2023. arXiv:2312.17482.
+Press, O., Smith, N. A., and Lewis, M. (2022). Train short, test long: attention with linear biases enables input length extrapolation. ICLR 2022.
+Su, J., et al. (2024). RoFormer: enhanced transformer with rotary position embedding. Neurocomputing.
