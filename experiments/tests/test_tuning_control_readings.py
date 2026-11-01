@@ -12,6 +12,18 @@ tcr = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(tcr)
 
 
+REAL = {n: getattr(tcr, n) for n in ("summary_sentence", "deviation_sentence", "mean_vs_reference_sentence", "tie_sentence",
+                                     "weight_decay_sentence", "report_text")}
+
+
+@pytest.fixture(autouse=True)
+def placeholder_sentences(monkeypatch):
+    """The synthetic runs do not satisfy the real data's conditions, so the sentence generators (which raise when their
+    condition is false) are replaced by placeholders except in the tests that call REAL[...] directly."""
+    monkeypatch.setattr(tcr, "weight_decay_sentence", lambda doc: "WD sentence")
+    monkeypatch.setattr(tcr, "report_text", lambda full: {"summary": "S", "deviation": "D", "mean_vs_reference": "M"})
+
+
 def write_run(d, enc, lr, wd, acc, train_acc, seed, n_epochs=60, sel=40):
     d.mkdir(parents=True, exist_ok=True)
     rng = np.random.default_rng(seed + int(acc * 1000))
@@ -231,3 +243,70 @@ def test_non_fit_kind(tmp_path):
         write_run(d, "sinusoidal", 3e-4, 0.0, 8, 30.0, 0, n_epochs=n_epochs)  # never fits
         r = tcr.under_rule({0: tcr.load_run(d, "x")}, "max_train")[0]
         assert tcr.non_fit_kind(r) == expected
+
+
+def _run(test, max_train, fits):
+    return {"test_accuracy": test, "max_train_accuracy": max_train, "fits_by_rule": {"max_train": fits}}
+
+
+def test_tie_sentence_names_every_run_at_the_maximum():
+    doc = {"cells": {c: {"runs": {str(k): _run(5.0, 70.0, False) for k in tcr.SEEDS}} for c in tcr.CELLS}}
+    doc["cells"]["R1"]["runs"]["0"] = _run(7.8, 91.6, True)
+    doc["cells"]["E1a"]["runs"]["2"] = _run(7.8, 78.89, False)
+    assert REAL["tie_sentence"](doc, "sinusoidal") == (
+        "Maximum test accuracy over its learning rates and seeds: 7.80%, reached by two runs: R1 seed 0, which fits "
+        "(maximum training accuracy 91.60%), and E1a seed 2, which does not (78.89%).")
+    doc["cells"]["E2a"]["runs"]["2"] = _run(21.5, 97.94, True)
+    assert REAL["tie_sentence"](doc, "rope") == ("Maximum test accuracy over its learning rates and seeds: 21.50%, reached by one run: "
+                                                 "E2a seed 2, which fits (maximum training accuracy 97.94%).")
+
+
+def _fake_full():
+    def cmp(verdict, n, up=0, down=0, holds=False):
+        return {"all_fitting_seeds": {"verdict": verdict, "n_eligible": n, "n_excluding_zero_up": up, "n_excluding_zero_down": down,
+                                      "holds": holds, "direction": None,
+                                      "per_seed": {str(k): {"diff_points": d} for k, d in zip(range(3), (1.0, -0.3, 2.0))}}}
+    status = {c: {"uninformative": c in ("E1a", "E1b", "E2b"), "n_fitting_seeds": 3, "non_fit_kind": {"0": None, "1": None, "2": None}}
+              for c in tcr.CELLS}
+    status["E1a"].update(n_fitting_seeds=1, non_fit_kind={"0": None, "1": "epoch cap", "2": "epoch cap"})
+    for c in ("E1b", "E2b"):
+        status[c].update(n_fitting_seeds=0, non_fit_kind={k: "stopped before cap" for k in "012"})
+    summ = {c: {"mean_test": 7.0} for c in tcr.CELLS}
+    summ.update(E1a={"mean_test": 7.57}, R1={"mean_test": 7.30}, E2a={"mean_test": 20.5}, R2={"mean_test": 19.6})
+    cells = {c: {"status": status[c], "summary": summ[c]} for c in tcr.CELLS}
+    unin = {"uninformative": True}
+    r1 = {c: (unin if c in ("E1a", "E1b", "E2b") else {"uninformative": False, "reference": "R", **cmp("no", 3)}) for c in tcr.LR_READING}
+    r5 = {c: {"uninformative": False, "reference": "R1", **cmp("no", 3)} for c in tcr.WD_READING}
+    prim = {"cells": cells, "reading1_tuning_effect": r1, "reading5_weight_decay": r5,
+            "reading3_architecture_gap": {"sinusoidal_cell": "R1", "lstm_minus_transformer": cmp("up", 3, up=3, holds=True)},
+            "reading4_rope_gain": {"rope_cell": "R2", "sinusoidal_cell": "R1", "rope_minus_sinusoidal": cmp("up", 3, up=3, holds=True)}}
+    sel_cells = {c: {"status": {**status[c], "n_fitting_seeds": 1 if c in ("R1", "R2") else 3}, "summary": summ[c]} for c in tcr.CELLS}
+    sel = {"cells": sel_cells, "reading3_architecture_gap": {"lstm_minus_transformer": cmp("not evaluable (fewer than 2 eligible seeds)", 1)},
+           "reading4_rope_gain": {"rope_minus_sinusoidal": cmp("not evaluable (fewer than 2 eligible seeds)", 0)}}
+    return {"max_train": prim, "selected_epoch": sel}
+
+
+def test_summary_sentence_generated_and_raises_when_reading1_cell_moves():
+    full = _fake_full()
+    text = REAL["summary_sentence"](full)
+    assert text.startswith("Under the primary rule, no informative cell moves test accuracy against its reference (E2a, E3a, E3b: 0 of 3")
+    assert "holds at R1 and the RoPE gain holds at R2 against R1, each on 3/3 seeds" in text
+    full["max_train"]["reading1_tuning_effect"]["E2a"]["all_fitting_seeds"]["verdict"] = "up"
+    with pytest.raises(AssertionError):
+        REAL["summary_sentence"](full)
+
+
+def test_deviation_sentence_raises_when_reading3_is_evaluable_under_selected_epoch():
+    full = _fake_full()
+    text = REAL["deviation_sentence"](full)
+    assert "(1 and 0 eligible seeds)" in text and "R1 fits on 1/3 seeds and R2 on 1/3" in text
+    full["selected_epoch"]["reading3_architecture_gap"]["lstm_minus_transformer"]["all_fitting_seeds"]["verdict"] = "up"
+    with pytest.raises(AssertionError):
+        REAL["deviation_sentence"](full)
+
+
+def test_mean_vs_reference_sentence():
+    full = _fake_full()
+    text = REAL["mean_vs_reference_sentence"](full)
+    assert "E1a (7.57% against R1's 7.30%) and E2a (20.50% against R2's 19.60%)" in text
+    assert "E1a because 1/3 of its seeds fit" in text and "+1.00, -0.30 and +2.00 points" in text

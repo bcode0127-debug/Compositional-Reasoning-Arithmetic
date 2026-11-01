@@ -2,7 +2,7 @@ Tuning control per docs/design/tuning-control.md (pre-registered at TUNE_COMMIT)
 
 ## Cells: fit count and classification under each rule
 
-| Cell | Encoding | LR | WD | Fitting seeds, max_train (primary) | Classification, max_train | Fitting seeds, selected_epoch (pre-registered) | Classification, selected_epoch | Non-fit kind, max_train | Non-fit kind, selected_epoch | Mean val % | Mean test % |
+| Cell | Encoding | LR | WD | Fitting seeds, max_train (primary: maximum training accuracy at least 80%) | Classification, max_train | Fitting seeds, selected_epoch (pre-registered: training accuracy at the selected epoch at least 80%) | Classification, selected_epoch | Non-fit kind, max_train | Non-fit kind, selected_epoch | Mean val % | Mean test % |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | R1 | sinusoidal | 0.0003 | 0 | 3/3 | informative | 1/3 | uninformative | none | seed0: stopped before cap; seed1: stopped before cap | 7.23 | 7.30 |
 | E1a | sinusoidal | 0.0001 | 0 | 1/3 | uninformative | 0/3 | uninformative | seed1: epoch cap; seed2: epoch cap | seed0: epoch cap; seed1: epoch cap; seed2: epoch cap | 7.07 | 7.57 |
@@ -20,6 +20,12 @@ Verdict differs between rules: reading 1 E2a (no under max_train, uninformative 
 
 
 Fit rule for this section: maximum training accuracy over the run at least 80% (primary, Deviation 2026-11-01).
+
+Under the primary rule, no informative cell moves test accuracy against its reference (E2a, E3a, E3b: 0 of 3 seeds exclude zero in each); the LSTM-minus-Transformer gap holds at R1 and the RoPE gain holds at R2 against R1, each on 3/3 seeds; and three rates are not covered: sinusoidal 1e-4, which does not fit within 200 epochs, and 1e-3 for both encodings, which stops before the cap under the 400-step warmup.
+
+Under the pre-registered fit rule, readings 3 and 4 cannot be computed (1 and 0 eligible seeds), because at the selected epoch R1 fits on 1/3 seeds and R2 on 1/3; the 2026-11-01 Deviations entry is what makes the two central comparisons evaluable.
+
+Descriptive: two cells have a higher mean test accuracy than their reference, E1a (7.57% against R1's 7.30%) and E2a (20.50% against R2's 19.60%); neither counts as movement, E1a because 1/3 of its seeds fit and E2a because no seed's interval excludes zero (per-seed differences +1.00, -0.30 and +2.00 points).
 
 Test accuracy is the endpoint; every test number is shown beside its validation number. Paired bootstraps resample the 1000 test expressions (N_BOOT 1000), seed-matched. Learning rates are selected on mean validation accuracy over seeds 0, 1 and 2, never on test.
 
@@ -93,7 +99,7 @@ Maxima and per-rate means over seeds 0, 1 and 2 are labelled as such.
 
 ### sinusoidal
 
-Maximum test accuracy over its learning rates and seeds: **7.80%** (cell R1, seed 0). Best configuration by mean validation accuracy over all of the encoding's cells (E1a, R1, E1b, E3a, E3b): **E3b**; best learning-rate-grid cell: **R1**.
+Maximum test accuracy over its learning rates and seeds: 7.80%, reached by two runs: R1 seed 0, which fits (maximum training accuracy 91.60%), and E1a seed 2, which does not (78.89%). Best configuration by mean validation accuracy over all of the encoding's cells (E1a, R1, E1b, E3a, E3b): **E3b**; best learning-rate-grid cell: **R1**.
 
 | Cell | LR | Mean val % (mean over seeds) | Mean test % (mean over seeds) |
 |---|---|---|---|
@@ -105,7 +111,7 @@ Expected maximum validation accuracy after n configurations (Dodge et al.), desc
 
 ### rope
 
-Maximum test accuracy over its learning rates and seeds: **21.50%** (cell E2a, seed 2). Best configuration by mean validation accuracy over all of the encoding's cells (E2a, R2, E2b): **R2**; best learning-rate-grid cell: **R2**.
+Maximum test accuracy over its learning rates and seeds: 21.50%, reached by one run: E2a seed 2, which fits (maximum training accuracy 97.94%). Best configuration by mean validation accuracy over all of the encoding's cells (E2a, R2, E2b): **R2**; best learning-rate-grid cell: **R2**.
 
 | Cell | LR | Mean val % (mean over seeds) | Mean test % (mean over seeds) |
 |---|---|---|---|
@@ -219,6 +225,8 @@ Selection pool, sinusoidal (mean validation accuracy over seeds 0, 1 and 2, what
 | 1 | 7.50 (7.30) | 7.10 (7.00) | +0.40 | [-0.90, +1.60] | yes |
 | 2 | 7.40 (8.10) | 7.00 (7.00) | +0.40 | [-1.00, +1.70] | yes |
 
+Descriptive: with weight decay, maximum training accuracy is higher than R1's on every seed (E3a 92.72–95.46, E3b 97.33–98.95, R1 90.44–91.89), and training accuracy at the selected epoch is higher on average (means E3a 86.52, E3b 93.04, R1 80.10), while test accuracy does not move (reading 5).
+
 
 ## Descriptive: RTX 4000 Ada runs beside the same-GPU references (never references)
 
@@ -325,7 +333,7 @@ Maxima and per-rate means over seeds 0, 1 and 2 are labelled as such.
 
 ### sinusoidal
 
-Maximum test accuracy over its learning rates and seeds: **7.80%** (cell R1, seed 0). Best configuration by mean validation accuracy over all of the encoding's cells (E1a, R1, E1b, E3a, E3b): **E3b**; best learning-rate-grid cell: **R1**.
+Maximum test accuracy over its learning rates and seeds: 7.80%, reached by two runs: R1 seed 0, which fits (maximum training accuracy 91.60%), and E1a seed 2, which does not (78.89%). Best configuration by mean validation accuracy over all of the encoding's cells (E1a, R1, E1b, E3a, E3b): **E3b**; best learning-rate-grid cell: **R1**.
 
 | Cell | LR | Mean val % (mean over seeds) | Mean test % (mean over seeds) |
 |---|---|---|---|
@@ -337,7 +345,7 @@ Expected maximum validation accuracy after n configurations (Dodge et al.), desc
 
 ### rope
 
-Maximum test accuracy over its learning rates and seeds: **21.50%** (cell E2a, seed 2). Best configuration by mean validation accuracy over all of the encoding's cells (E2a, R2, E2b): **R2**; best learning-rate-grid cell: **R2**.
+Maximum test accuracy over its learning rates and seeds: 21.50%, reached by one run: E2a seed 2, which fits (maximum training accuracy 97.94%). Best configuration by mean validation accuracy over all of the encoding's cells (E2a, R2, E2b): **R2**; best learning-rate-grid cell: **R2**.
 
 | Cell | LR | Mean val % (mean over seeds) | Mean test % (mean over seeds) |
 |---|---|---|---|
@@ -422,6 +430,8 @@ fewer than 2 of 3 seeds fit; reported as uninformative, not as a negative result
 ### E3b against R1
 
 fewer than 2 of 3 seeds fit; reported as uninformative, not as a negative result
+
+Descriptive: with weight decay, maximum training accuracy is higher than R1's on every seed (E3a 92.72–95.46, E3b 97.33–98.95, R1 90.44–91.89), and training accuracy at the selected epoch is higher on average (means E3a 86.52, E3b 93.04, R1 80.10), while test accuracy does not move (reading 5).
 
 
 ## Descriptive: RTX 4000 Ada runs beside the same-GPU references (never references)

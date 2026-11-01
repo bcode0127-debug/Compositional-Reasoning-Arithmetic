@@ -5002,5 +5002,15 @@
       ],
       "note": "sum of per-run training wall time; two runs shared the pod, so pod wall-clock is shorter"
     }
+  },
+  "report_text": {
+    "summary": "Under the primary rule, no informative cell moves test accuracy against its reference (E2a, E3a, E3b: 0 of 3 seeds exclude zero in each); the LSTM-minus-Transformer gap holds at R1 and the RoPE gain holds at R2 against R1, each on 3/3 seeds; and three rates are not covered: sinusoidal 1e-4, which does not fit within 200 epochs, and 1e-3 for both encodings, which stops before the cap under the 400-step warmup.",
+    "deviation": "Under the pre-registered fit rule, readings 3 and 4 cannot be computed (1 and 0 eligible seeds), because at the selected epoch R1 fits on 1/3 seeds and R2 on 1/3; the 2026-11-01 Deviations entry is what makes the two central comparisons evaluable.",
+    "mean_vs_reference": "Descriptive: two cells have a higher mean test accuracy than their reference, E1a (7.57% against R1's 7.30%) and E2a (20.50% against R2's 19.60%); neither counts as movement, E1a because 1/3 of its seeds fit and E2a because no seed's interval excludes zero (per-seed differences +1.00, -0.30 and +2.00 points).",
+    "reading2_maximum": {
+      "sinusoidal": "Maximum test accuracy over its learning rates and seeds: 7.80%, reached by two runs: R1 seed 0, which fits (maximum training accuracy 91.60%), and E1a seed 2, which does not (78.89%).",
+      "rope": "Maximum test accuracy over its learning rates and seeds: 21.50%, reached by one run: E2a seed 2, which fits (maximum training accuracy 97.94%)."
+    },
+    "weight_decay_descriptive": "Descriptive: with weight decay, maximum training accuracy is higher than R1's on every seed (E3a 92.72\u201395.46, E3b 97.33\u201398.95, R1 90.44\u201391.89), and training accuracy at the selected epoch is higher on average (means E3a 86.52, E3b 93.04, R1 80.10), while test accuracy does not move (reading 5)."
   }
 }
