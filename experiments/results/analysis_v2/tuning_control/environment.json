@@ -1,0 +1,32 @@
+{
+  "python": "3.12.13",
+  "torch": "2.8.0",
+  "numpy": "2.5.2",
+  "cuda": null,
+  "cudnn": null,
+  "gpu": null,
+  "device": "cpu",
+  "platform": "macOS-15.7.5-arm64-arm-64bit",
+  "driver_version": null,
+  "pod_image": null,
+  "git_commit": "a3ee1c68b85e9689de0aee6e5fce3f85a7593e92",
+  "started_at_utc": "2026-11-01T23:13:30.470366+00:00",
+  "sklearn": "1.9.1",
+  "probe_device": "cpu",
+  "eval_device": "cpu",
+  "stage": "tuning_control_readings",
+  "argv": [],
+  "git_dirty_tracked": true,
+  "role": "positional-encoding sweep probe battery (one run, one environment, every checkpoint)",
+  "pod_thread_setting": {
+    "nproc_shim": 6,
+    "omp_num_threads_per_run": 3,
+    "mkl_num_threads_per_run": 3,
+    "max_concurrent_runs": 2,
+    "pod_cpu_quota": "about 6.8 CPUs (cgroup cpu.max 680000 100000) while nproc reports 256",
+    "note": "a pod-side /root/shim/nproc printing 6 was put first on PATH so run_tuning_control.sh set max(1, 6/2) = 3 threads per run; no repository file changed. Recorded from the pod setup, not read from the runs."
+  },
+  "tune_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+  "design_sha256": "e06303ff5dedf5a0954e2c67bacc0193bc32a9db4559ab86fd10d4271149fcc7",
+  "wall_seconds": 432.2
+}

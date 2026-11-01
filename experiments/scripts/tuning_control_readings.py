@@ -434,7 +434,7 @@ def md_report(doc):
          "validation accuracy over seeds 0, 1 and 2, never on test.", "",
          "Interpretation notes: the learning-rate grid for readings 2 to 4 is the weight-decay-0 cells of each encoding (sinusoidal: "
          "E1a, R1, E1b; RoPE: E2a, R2, E2b); E3a and E3b enter reading 5 only. A seed is eligible for a comparison when both runs fit "
-         "(training accuracy at the selected epoch at least 80%); the LSTM paper checkpoints count as fitting.", "",
+         "under this section's fit rule (stated above); the LSTM paper checkpoints count as fitting.", "",
          "## Per-run table", "",
          "| Cell | Seed | Selected epoch | Train acc % at selected epoch | Max train acc % | Final train acc % | Max minus final | Spike flag | Val acc % | Test acc % | Fits | Diverged | Epoch cap | 70-90% band |",
          "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"]

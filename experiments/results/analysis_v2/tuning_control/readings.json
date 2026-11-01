@@ -1,0 +1,5006 @@
+{
+  "first_line": "Tuning control per docs/design/tuning-control.md (pre-registered at TUNE_COMMIT).",
+  "fit_rules": {
+    "max_train": "maximum training accuracy over the run at least 80% (primary, Deviation 2026-11-01)",
+    "selected_epoch": "training accuracy at the selected epoch at least 80% (as pre-registered)"
+  },
+  "primary_rule": "max_train",
+  "pre_registered_rule": "selected_epoch",
+  "max_train": {
+    "first_line": "Tuning control per docs/design/tuning-control.md (pre-registered at TUNE_COMMIT).",
+    "design": "docs/design/tuning-control.md",
+    "tune_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+    "fit_rule": "max_train",
+    "fit_rule_text": "maximum training accuracy over the run at least 80% (primary, Deviation 2026-11-01)",
+    "cells": {
+      "R1": {
+        "encoding": "sinusoidal",
+        "learning_rate": 0.0003,
+        "weight_decay": 0.0,
+        "status": {
+          "non_fit_kind": {
+            "0": null,
+            "1": null,
+            "2": null
+          },
+          "n_fitting_seeds": 3,
+          "uninformative": false,
+          "fits": {
+            "0": true,
+            "1": true,
+            "2": true
+          },
+          "diverged": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "epoch_cap": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "band_70_90": {
+            "0": false,
+            "1": false,
+            "2": false
+          }
+        },
+        "summary": {
+          "mean_test": 7.3,
+          "mean_val": 7.233333333333333,
+          "test_by_seed": {
+            "0": 7.8,
+            "1": 7.1,
+            "2": 7.0
+          },
+          "val_by_seed": {
+            "0": 7.7,
+            "1": 7.0,
+            "2": 7.0
+          }
+        },
+        "runs": {
+          "0": {
+            "label": "R1/seed0",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/R1/study1/seed0",
+            "selected_epoch": 102,
+            "epochs_run": 153,
+            "train_accuracy_at_selected": 77.825,
+            "max_train_accuracy": 91.6,
+            "final_train_accuracy": 91.5375,
+            "max_minus_final": 0.0625,
+            "spike_flag": false,
+            "val_accuracy": 7.7,
+            "test_accuracy": 7.8,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 1338.0,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0003,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 0.6,
+              "study1/ood_ops5.json": 0.5,
+              "study1/ood_ops6.json": 0.0,
+              "study1/ood_ops7.json": 0.0
+            },
+            "fits": true,
+            "band": false
+          },
+          "1": {
+            "label": "R1/seed1",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/R1/study1/seed1",
+            "selected_epoch": 114,
+            "epochs_run": 165,
+            "train_accuracy_at_selected": 76.5625,
+            "max_train_accuracy": 90.4375,
+            "final_train_accuracy": 90.275,
+            "max_minus_final": 0.16249999999999432,
+            "spike_flag": false,
+            "val_accuracy": 7.0,
+            "test_accuracy": 7.1,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 1451.3,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0003,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 0.3,
+              "study1/ood_ops5.json": 0.5,
+              "study1/ood_ops6.json": 0.6,
+              "study1/ood_ops7.json": 0.2
+            },
+            "fits": true,
+            "band": false
+          },
+          "2": {
+            "label": "R1/seed2",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/R1/study1/seed2",
+            "selected_epoch": 135,
+            "epochs_run": 186,
+            "train_accuracy_at_selected": 85.925,
+            "max_train_accuracy": 91.8875,
+            "final_train_accuracy": 91.7625,
+            "max_minus_final": 0.125,
+            "spike_flag": false,
+            "val_accuracy": 7.0,
+            "test_accuracy": 7.0,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 1588.3,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0003,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 0.7,
+              "study1/ood_ops5.json": 0.2,
+              "study1/ood_ops6.json": 0.2,
+              "study1/ood_ops7.json": 0.2
+            },
+            "fits": true,
+            "band": false
+          }
+        }
+      },
+      "E1a": {
+        "encoding": "sinusoidal",
+        "learning_rate": 0.0001,
+        "weight_decay": 0.0,
+        "status": {
+          "non_fit_kind": {
+            "0": null,
+            "1": "epoch cap",
+            "2": "epoch cap"
+          },
+          "n_fitting_seeds": 1,
+          "uninformative": true,
+          "fits": {
+            "0": true,
+            "1": false,
+            "2": false
+          },
+          "diverged": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "epoch_cap": {
+            "0": true,
+            "1": true,
+            "2": true
+          },
+          "band_70_90": {
+            "0": true,
+            "1": true,
+            "2": true
+          }
+        },
+        "summary": {
+          "mean_test": 7.566666666666666,
+          "mean_val": 7.066666666666666,
+          "test_by_seed": {
+            "0": 7.3,
+            "1": 7.6,
+            "2": 7.8
+          },
+          "val_by_seed": {
+            "0": 7.1,
+            "1": 7.1,
+            "2": 7.0
+          }
+        },
+        "runs": {
+          "0": {
+            "label": "E1a/seed0",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E1a/study1/seed0",
+            "selected_epoch": 157,
+            "epochs_run": 200,
+            "train_accuracy_at_selected": 75.375,
+            "max_train_accuracy": 80.9125,
+            "final_train_accuracy": 80.4375,
+            "max_minus_final": 0.4749999999999943,
+            "spike_flag": false,
+            "val_accuracy": 7.1,
+            "test_accuracy": 7.3,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": true,
+            "wall_time_seconds": 1704.7,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0001,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 0.2,
+              "study1/ood_ops5.json": 0.3,
+              "study1/ood_ops6.json": 0.1,
+              "study1/ood_ops7.json": 0.4
+            },
+            "fits": true,
+            "band": true
+          },
+          "1": {
+            "label": "E1a/seed1",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E1a/study1/seed1",
+            "selected_epoch": 193,
+            "epochs_run": 200,
+            "train_accuracy_at_selected": 75.25,
+            "max_train_accuracy": 76.0375,
+            "final_train_accuracy": 75.6875,
+            "max_minus_final": 0.3499999999999943,
+            "spike_flag": false,
+            "val_accuracy": 7.1,
+            "test_accuracy": 7.6,
+            "fits_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": true,
+            "wall_time_seconds": 1729.8,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0001,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 0.5,
+              "study1/ood_ops5.json": 0.1,
+              "study1/ood_ops6.json": 0.3,
+              "study1/ood_ops7.json": 0.2
+            },
+            "fits": false,
+            "band": true
+          },
+          "2": {
+            "label": "E1a/seed2",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E1a/study1/seed2",
+            "selected_epoch": 174,
+            "epochs_run": 200,
+            "train_accuracy_at_selected": 76.8625,
+            "max_train_accuracy": 78.8875,
+            "final_train_accuracy": 78.75,
+            "max_minus_final": 0.13750000000000284,
+            "spike_flag": false,
+            "val_accuracy": 7.0,
+            "test_accuracy": 7.8,
+            "fits_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": true,
+            "wall_time_seconds": 1711.4,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0001,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 1.1,
+              "study1/ood_ops5.json": 0.2,
+              "study1/ood_ops6.json": 0.3,
+              "study1/ood_ops7.json": 0.1
+            },
+            "fits": false,
+            "band": true
+          }
+        }
+      },
+      "E1b": {
+        "encoding": "sinusoidal",
+        "learning_rate": 0.001,
+        "weight_decay": 0.0,
+        "status": {
+          "non_fit_kind": {
+            "0": "stopped before cap",
+            "1": "stopped before cap",
+            "2": "stopped before cap"
+          },
+          "n_fitting_seeds": 0,
+          "uninformative": true,
+          "fits": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "diverged": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "epoch_cap": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "band_70_90": {
+            "0": false,
+            "1": false,
+            "2": false
+          }
+        },
+        "summary": {
+          "mean_test": 1.4666666666666668,
+          "mean_val": 1.8999999999999997,
+          "test_by_seed": {
+            "0": 1.6,
+            "1": 1.3,
+            "2": 1.5
+          },
+          "val_by_seed": {
+            "0": 1.9,
+            "1": 1.9,
+            "2": 1.9
+          }
+        },
+        "runs": {
+          "0": {
+            "label": "E1b/seed0",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E1b/study1/seed0",
+            "selected_epoch": 5,
+            "epochs_run": 56,
+            "train_accuracy_at_selected": 1.65,
+            "max_train_accuracy": 1.7125,
+            "final_train_accuracy": 1.05,
+            "max_minus_final": 0.6624999999999999,
+            "spike_flag": false,
+            "val_accuracy": 1.9,
+            "test_accuracy": 1.6,
+            "fits_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 475.4,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.001,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 0.6,
+              "study1/ood_ops5.json": 0.2,
+              "study1/ood_ops6.json": 0.4,
+              "study1/ood_ops7.json": 0.0
+            },
+            "fits": false,
+            "band": false
+          },
+          "1": {
+            "label": "E1b/seed1",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E1b/study1/seed1",
+            "selected_epoch": 7,
+            "epochs_run": 58,
+            "train_accuracy_at_selected": 1.4875,
+            "max_train_accuracy": 1.725,
+            "final_train_accuracy": 1.0875,
+            "max_minus_final": 0.6375000000000002,
+            "spike_flag": false,
+            "val_accuracy": 1.9,
+            "test_accuracy": 1.3,
+            "fits_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 489.6,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.001,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 0.3,
+              "study1/ood_ops5.json": 0.3,
+              "study1/ood_ops6.json": 0.3,
+              "study1/ood_ops7.json": 0.1
+            },
+            "fits": false,
+            "band": false
+          },
+          "2": {
+            "label": "E1b/seed2",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E1b/study1/seed2",
+            "selected_epoch": 3,
+            "epochs_run": 54,
+            "train_accuracy_at_selected": 1.375,
+            "max_train_accuracy": 1.525,
+            "final_train_accuracy": 1.075,
+            "max_minus_final": 0.44999999999999996,
+            "spike_flag": false,
+            "val_accuracy": 1.9,
+            "test_accuracy": 1.5,
+            "fits_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 458.8,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.001,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 0.6,
+              "study1/ood_ops5.json": 0.5,
+              "study1/ood_ops6.json": 0.4,
+              "study1/ood_ops7.json": 0.0
+            },
+            "fits": false,
+            "band": false
+          }
+        }
+      },
+      "E3a": {
+        "encoding": "sinusoidal",
+        "learning_rate": 0.0003,
+        "weight_decay": 0.01,
+        "status": {
+          "non_fit_kind": {
+            "0": null,
+            "1": null,
+            "2": null
+          },
+          "n_fitting_seeds": 3,
+          "uninformative": false,
+          "fits": {
+            "0": true,
+            "1": true,
+            "2": true
+          },
+          "diverged": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "epoch_cap": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "band_70_90": {
+            "0": false,
+            "1": false,
+            "2": false
+          }
+        },
+        "summary": {
+          "mean_test": 7.333333333333333,
+          "mean_val": 6.833333333333333,
+          "test_by_seed": {
+            "0": 7.6,
+            "1": 7.1,
+            "2": 7.3
+          },
+          "val_by_seed": {
+            "0": 6.7,
+            "1": 6.5,
+            "2": 7.3
+          }
+        },
+        "runs": {
+          "0": {
+            "label": "E3a/seed0",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E3a/study1/seed0",
+            "selected_epoch": 112,
+            "epochs_run": 163,
+            "train_accuracy_at_selected": 86.5125,
+            "max_train_accuracy": 95.4625,
+            "final_train_accuracy": 95.2,
+            "max_minus_final": 0.26250000000000284,
+            "spike_flag": false,
+            "val_accuracy": 6.7,
+            "test_accuracy": 7.6,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 1398.6,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0003,
+            "weight_decay": 0.01,
+            "optimizer": "AdamW",
+            "ood": {
+              "study1/ood_ops4.json": 0.4,
+              "study1/ood_ops5.json": 0.3,
+              "study1/ood_ops6.json": 0.1,
+              "study1/ood_ops7.json": 0.3
+            },
+            "fits": true,
+            "band": false
+          },
+          "1": {
+            "label": "E3a/seed1",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E3a/study1/seed1",
+            "selected_epoch": 121,
+            "epochs_run": 172,
+            "train_accuracy_at_selected": 82.95,
+            "max_train_accuracy": 92.725,
+            "final_train_accuracy": 92.725,
+            "max_minus_final": 0.0,
+            "spike_flag": false,
+            "val_accuracy": 6.5,
+            "test_accuracy": 7.1,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 1472.8,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0003,
+            "weight_decay": 0.01,
+            "optimizer": "AdamW",
+            "ood": {
+              "study1/ood_ops4.json": 0.5,
+              "study1/ood_ops5.json": 0.1,
+              "study1/ood_ops6.json": 0.1,
+              "study1/ood_ops7.json": 0.2
+            },
+            "fits": true,
+            "band": false
+          },
+          "2": {
+            "label": "E3a/seed2",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E3a/study1/seed2",
+            "selected_epoch": 147,
+            "epochs_run": 198,
+            "train_accuracy_at_selected": 90.0875,
+            "max_train_accuracy": 94.0875,
+            "final_train_accuracy": 93.85,
+            "max_minus_final": 0.23750000000001137,
+            "spike_flag": false,
+            "val_accuracy": 7.3,
+            "test_accuracy": 7.3,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 1716.8,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0003,
+            "weight_decay": 0.01,
+            "optimizer": "AdamW",
+            "ood": {
+              "study1/ood_ops4.json": 0.4,
+              "study1/ood_ops5.json": 0.4,
+              "study1/ood_ops6.json": 0.5,
+              "study1/ood_ops7.json": 0.3
+            },
+            "fits": true,
+            "band": false
+          }
+        }
+      },
+      "R2": {
+        "encoding": "rope",
+        "learning_rate": 0.0003,
+        "weight_decay": 0.0,
+        "status": {
+          "non_fit_kind": {
+            "0": null,
+            "1": null,
+            "2": null
+          },
+          "n_fitting_seeds": 3,
+          "uninformative": false,
+          "fits": {
+            "0": true,
+            "1": true,
+            "2": true
+          },
+          "diverged": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "epoch_cap": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "band_70_90": {
+            "0": false,
+            "1": false,
+            "2": false
+          }
+        },
+        "summary": {
+          "mean_test": 19.599999999999998,
+          "mean_val": 19.53333333333333,
+          "test_by_seed": {
+            "0": 19.6,
+            "1": 19.7,
+            "2": 19.5
+          },
+          "val_by_seed": {
+            "0": 20.2,
+            "1": 19.1,
+            "2": 19.3
+          }
+        },
+        "runs": {
+          "0": {
+            "label": "R2/seed0",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/R2/study1/seed0",
+            "selected_epoch": 52,
+            "epochs_run": 103,
+            "train_accuracy_at_selected": 67.4375,
+            "max_train_accuracy": 98.7,
+            "final_train_accuracy": 96.95,
+            "max_minus_final": 1.75,
+            "spike_flag": false,
+            "val_accuracy": 20.2,
+            "test_accuracy": 19.6,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 937.2,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0003,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 2.0,
+              "study1/ood_ops5.json": 0.7,
+              "study1/ood_ops6.json": 0.5,
+              "study1/ood_ops7.json": 0.4
+            },
+            "fits": true,
+            "band": false
+          },
+          "1": {
+            "label": "R2/seed1",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/R2/study1/seed1",
+            "selected_epoch": 63,
+            "epochs_run": 114,
+            "train_accuracy_at_selected": 85.3625,
+            "max_train_accuracy": 99.6875,
+            "final_train_accuracy": 99.1875,
+            "max_minus_final": 0.5,
+            "spike_flag": false,
+            "val_accuracy": 19.1,
+            "test_accuracy": 19.7,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 1038.4,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0003,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 1.8,
+              "study1/ood_ops5.json": 1.0,
+              "study1/ood_ops6.json": 0.5,
+              "study1/ood_ops7.json": 0.3
+            },
+            "fits": true,
+            "band": false
+          },
+          "2": {
+            "label": "R2/seed2",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/R2/study1/seed2",
+            "selected_epoch": 42,
+            "epochs_run": 93,
+            "train_accuracy_at_selected": 48.4875,
+            "max_train_accuracy": 96.975,
+            "final_train_accuracy": 96.975,
+            "max_minus_final": 0.0,
+            "spike_flag": false,
+            "val_accuracy": 19.3,
+            "test_accuracy": 19.5,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 862.6,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0003,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 1.1,
+              "study1/ood_ops5.json": 0.9,
+              "study1/ood_ops6.json": 0.2,
+              "study1/ood_ops7.json": 0.7
+            },
+            "fits": true,
+            "band": false
+          }
+        }
+      },
+      "E2a": {
+        "encoding": "rope",
+        "learning_rate": 0.0001,
+        "weight_decay": 0.0,
+        "status": {
+          "non_fit_kind": {
+            "0": null,
+            "1": null,
+            "2": null
+          },
+          "n_fitting_seeds": 3,
+          "uninformative": false,
+          "fits": {
+            "0": true,
+            "1": true,
+            "2": true
+          },
+          "diverged": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "epoch_cap": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "band_70_90": {
+            "0": false,
+            "1": false,
+            "2": false
+          }
+        },
+        "summary": {
+          "mean_test": 20.5,
+          "mean_val": 19.4,
+          "test_by_seed": {
+            "0": 20.6,
+            "1": 19.4,
+            "2": 21.5
+          },
+          "val_by_seed": {
+            "0": 18.8,
+            "1": 19.0,
+            "2": 20.4
+          }
+        },
+        "runs": {
+          "0": {
+            "label": "E2a/seed0",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E2a/study1/seed0",
+            "selected_epoch": 71,
+            "epochs_run": 122,
+            "train_accuracy_at_selected": 66.425,
+            "max_train_accuracy": 96.05,
+            "final_train_accuracy": 95.65,
+            "max_minus_final": 0.3999999999999915,
+            "spike_flag": false,
+            "val_accuracy": 18.8,
+            "test_accuracy": 20.6,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 1121.2,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0001,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 2.2,
+              "study1/ood_ops5.json": 0.4,
+              "study1/ood_ops6.json": 0.6,
+              "study1/ood_ops7.json": 0.3
+            },
+            "fits": true,
+            "band": false
+          },
+          "1": {
+            "label": "E2a/seed1",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E2a/study1/seed1",
+            "selected_epoch": 73,
+            "epochs_run": 124,
+            "train_accuracy_at_selected": 70.475,
+            "max_train_accuracy": 96.4,
+            "final_train_accuracy": 96.4,
+            "max_minus_final": 0.0,
+            "spike_flag": false,
+            "val_accuracy": 19.0,
+            "test_accuracy": 19.4,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 1142.6,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0001,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 2.0,
+              "study1/ood_ops5.json": 0.5,
+              "study1/ood_ops6.json": 0.3,
+              "study1/ood_ops7.json": 0.4
+            },
+            "fits": true,
+            "band": false
+          },
+          "2": {
+            "label": "E2a/seed2",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E2a/study1/seed2",
+            "selected_epoch": 81,
+            "epochs_run": 132,
+            "train_accuracy_at_selected": 78.3125,
+            "max_train_accuracy": 97.9375,
+            "final_train_accuracy": 97.2125,
+            "max_minus_final": 0.7249999999999943,
+            "spike_flag": false,
+            "val_accuracy": 20.4,
+            "test_accuracy": 21.5,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 1174.6,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0001,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 1.7,
+              "study1/ood_ops5.json": 0.5,
+              "study1/ood_ops6.json": 0.2,
+              "study1/ood_ops7.json": 0.3
+            },
+            "fits": true,
+            "band": false
+          }
+        }
+      },
+      "E2b": {
+        "encoding": "rope",
+        "learning_rate": 0.001,
+        "weight_decay": 0.0,
+        "status": {
+          "non_fit_kind": {
+            "0": "stopped before cap",
+            "1": "stopped before cap",
+            "2": "stopped before cap"
+          },
+          "n_fitting_seeds": 0,
+          "uninformative": true,
+          "fits": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "diverged": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "epoch_cap": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "band_70_90": {
+            "0": false,
+            "1": false,
+            "2": false
+          }
+        },
+        "summary": {
+          "mean_test": 2.1999999999999997,
+          "mean_val": 3.266666666666667,
+          "test_by_seed": {
+            "0": 2.6,
+            "1": 2.4,
+            "2": 1.6
+          },
+          "val_by_seed": {
+            "0": 3.3,
+            "1": 3.6,
+            "2": 2.9
+          }
+        },
+        "runs": {
+          "0": {
+            "label": "E2b/seed0",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E2b/study1/seed0",
+            "selected_epoch": 5,
+            "epochs_run": 56,
+            "train_accuracy_at_selected": 2.6,
+            "max_train_accuracy": 2.9125,
+            "final_train_accuracy": 1.45,
+            "max_minus_final": 1.4625000000000001,
+            "spike_flag": false,
+            "val_accuracy": 3.3,
+            "test_accuracy": 2.6,
+            "fits_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 508.3,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.001,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 0.5,
+              "study1/ood_ops5.json": 0.4,
+              "study1/ood_ops6.json": 0.5,
+              "study1/ood_ops7.json": 0.1
+            },
+            "fits": false,
+            "band": false
+          },
+          "1": {
+            "label": "E2b/seed1",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E2b/study1/seed1",
+            "selected_epoch": 7,
+            "epochs_run": 58,
+            "train_accuracy_at_selected": 2.5875,
+            "max_train_accuracy": 2.5875,
+            "final_train_accuracy": 1.425,
+            "max_minus_final": 1.1624999999999999,
+            "spike_flag": false,
+            "val_accuracy": 3.6,
+            "test_accuracy": 2.4,
+            "fits_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 515.6,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.001,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 0.7,
+              "study1/ood_ops5.json": 0.3,
+              "study1/ood_ops6.json": 0.2,
+              "study1/ood_ops7.json": 0.1
+            },
+            "fits": false,
+            "band": false
+          },
+          "2": {
+            "label": "E2b/seed2",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E2b/study1/seed2",
+            "selected_epoch": 3,
+            "epochs_run": 54,
+            "train_accuracy_at_selected": 1.8875,
+            "max_train_accuracy": 2.6375,
+            "final_train_accuracy": 1.425,
+            "max_minus_final": 1.2125000000000001,
+            "spike_flag": false,
+            "val_accuracy": 2.9,
+            "test_accuracy": 1.6,
+            "fits_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 470.6,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.001,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 0.6,
+              "study1/ood_ops5.json": 0.7,
+              "study1/ood_ops6.json": 0.3,
+              "study1/ood_ops7.json": 0.5
+            },
+            "fits": false,
+            "band": false
+          }
+        }
+      },
+      "E3b": {
+        "encoding": "sinusoidal",
+        "learning_rate": 0.0003,
+        "weight_decay": 0.1,
+        "status": {
+          "non_fit_kind": {
+            "0": null,
+            "1": null,
+            "2": null
+          },
+          "n_fitting_seeds": 3,
+          "uninformative": false,
+          "fits": {
+            "0": true,
+            "1": true,
+            "2": true
+          },
+          "diverged": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "epoch_cap": {
+            "0": true,
+            "1": false,
+            "2": false
+          },
+          "band_70_90": {
+            "0": false,
+            "1": false,
+            "2": false
+          }
+        },
+        "summary": {
+          "mean_test": 7.333333333333333,
+          "mean_val": 7.8,
+          "test_by_seed": {
+            "0": 7.1,
+            "1": 7.5,
+            "2": 7.4
+          },
+          "val_by_seed": {
+            "0": 8.0,
+            "1": 7.3,
+            "2": 8.1
+          }
+        },
+        "runs": {
+          "0": {
+            "label": "E3b/seed0",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E3b/study1/seed0",
+            "selected_epoch": 159,
+            "epochs_run": 200,
+            "train_accuracy_at_selected": 98.15,
+            "max_train_accuracy": 98.95,
+            "final_train_accuracy": 98.9,
+            "max_minus_final": 0.04999999999999716,
+            "spike_flag": false,
+            "val_accuracy": 8.0,
+            "test_accuracy": 7.1,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": true,
+            "wall_time_seconds": 1748.0,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0003,
+            "weight_decay": 0.1,
+            "optimizer": "AdamW",
+            "ood": {
+              "study1/ood_ops4.json": 0.4,
+              "study1/ood_ops5.json": 0.1,
+              "study1/ood_ops6.json": 0.2,
+              "study1/ood_ops7.json": 0.3
+            },
+            "fits": true,
+            "band": false
+          },
+          "1": {
+            "label": "E3b/seed1",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E3b/study1/seed1",
+            "selected_epoch": 108,
+            "epochs_run": 159,
+            "train_accuracy_at_selected": 84.4125,
+            "max_train_accuracy": 97.325,
+            "final_train_accuracy": 97.325,
+            "max_minus_final": 0.0,
+            "spike_flag": false,
+            "val_accuracy": 7.3,
+            "test_accuracy": 7.5,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 1414.1,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0003,
+            "weight_decay": 0.1,
+            "optimizer": "AdamW",
+            "ood": {
+              "study1/ood_ops4.json": 0.4,
+              "study1/ood_ops5.json": 0.1,
+              "study1/ood_ops6.json": 0.3,
+              "study1/ood_ops7.json": 0.3
+            },
+            "fits": true,
+            "band": false
+          },
+          "2": {
+            "label": "E3b/seed2",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E3b/study1/seed2",
+            "selected_epoch": 140,
+            "epochs_run": 191,
+            "train_accuracy_at_selected": 96.5625,
+            "max_train_accuracy": 98.8625,
+            "final_train_accuracy": 98.8625,
+            "max_minus_final": 0.0,
+            "spike_flag": false,
+            "val_accuracy": 8.1,
+            "test_accuracy": 7.4,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 743.1,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0003,
+            "weight_decay": 0.1,
+            "optimizer": "AdamW",
+            "ood": {
+              "study1/ood_ops4.json": 0.2,
+              "study1/ood_ops5.json": 0.5,
+              "study1/ood_ops6.json": 0.2,
+              "study1/ood_ops7.json": 0.4
+            },
+            "fits": true,
+            "band": false
+          }
+        }
+      }
+    },
+    "reading1_tuning_effect": {
+      "E1a": {
+        "reference": "R1",
+        "uninformative": true,
+        "note": "fewer than 2 of 3 seeds fit; reported as uninformative, not as a negative result"
+      },
+      "E1b": {
+        "reference": "R1",
+        "uninformative": true,
+        "note": "fewer than 2 of 3 seeds fit; reported as uninformative, not as a negative result"
+      },
+      "E2a": {
+        "reference": "R2",
+        "uninformative": false,
+        "all_fitting_seeds": {
+          "per_seed": {
+            "0": {
+              "a_test": 20.6,
+              "b_test": 19.6,
+              "a_val": 18.8,
+              "b_val": 20.2,
+              "diff_points": 1.0,
+              "ci_fraction": [
+                -0.016999999999999987,
+                0.04000000000000001
+              ],
+              "eligible": true
+            },
+            "1": {
+              "a_test": 19.4,
+              "b_test": 19.7,
+              "a_val": 19.0,
+              "b_val": 19.1,
+              "diff_points": -0.3000000000000007,
+              "ci_fraction": [
+                -0.032,
+                0.026024999999999972
+              ],
+              "eligible": true
+            },
+            "2": {
+              "a_test": 21.5,
+              "b_test": 19.5,
+              "a_val": 20.4,
+              "b_val": 19.3,
+              "diff_points": 2.0,
+              "ci_fraction": [
+                -0.008000000000000007,
+                0.04702499999999999
+              ],
+              "eligible": true
+            }
+          },
+          "n_eligible": 3,
+          "n_excluding_zero_up": 0,
+          "n_excluding_zero_down": 0,
+          "direction": null,
+          "holds": false,
+          "verdict": "no",
+          "count": "0/3 eligible seeds exclude 0 in one direction"
+        },
+        "excluding_band_70_90": {
+          "per_seed": {
+            "0": {
+              "a_test": 20.6,
+              "b_test": 19.6,
+              "a_val": 18.8,
+              "b_val": 20.2,
+              "diff_points": 1.0,
+              "ci_fraction": [
+                -0.016999999999999987,
+                0.04000000000000001
+              ],
+              "eligible": true
+            },
+            "1": {
+              "a_test": 19.4,
+              "b_test": 19.7,
+              "a_val": 19.0,
+              "b_val": 19.1,
+              "diff_points": -0.3000000000000007,
+              "ci_fraction": [
+                -0.032,
+                0.026024999999999972
+              ],
+              "eligible": true
+            },
+            "2": {
+              "a_test": 21.5,
+              "b_test": 19.5,
+              "a_val": 20.4,
+              "b_val": 19.3,
+              "diff_points": 2.0,
+              "ci_fraction": [
+                -0.008000000000000007,
+                0.04702499999999999
+              ],
+              "eligible": true
+            }
+          },
+          "n_eligible": 3,
+          "n_excluding_zero_up": 0,
+          "n_excluding_zero_down": 0,
+          "direction": null,
+          "holds": false,
+          "verdict": "no",
+          "count": "0/3 eligible seeds exclude 0 in one direction"
+        }
+      },
+      "E2b": {
+        "reference": "R2",
+        "uninformative": true,
+        "note": "fewer than 2 of 3 seeds fit; reported as uninformative, not as a negative result"
+      }
+    },
+    "reading2_best_over_grid": {
+      "sinusoidal": {
+        "per_rate_means_over_seeds_0_1_2": {
+          "E1a": {
+            "mean_test": 7.566666666666666,
+            "mean_val": 7.066666666666666,
+            "test_by_seed": {
+              "0": 7.3,
+              "1": 7.6,
+              "2": 7.8
+            },
+            "val_by_seed": {
+              "0": 7.1,
+              "1": 7.1,
+              "2": 7.0
+            }
+          },
+          "R1": {
+            "mean_test": 7.3,
+            "mean_val": 7.233333333333333,
+            "test_by_seed": {
+              "0": 7.8,
+              "1": 7.1,
+              "2": 7.0
+            },
+            "val_by_seed": {
+              "0": 7.7,
+              "1": 7.0,
+              "2": 7.0
+            }
+          },
+          "E1b": {
+            "mean_test": 1.4666666666666668,
+            "mean_val": 1.8999999999999997,
+            "test_by_seed": {
+              "0": 1.6,
+              "1": 1.3,
+              "2": 1.5
+            },
+            "val_by_seed": {
+              "0": 1.9,
+              "1": 1.9,
+              "2": 1.9
+            }
+          }
+        },
+        "best_over_grid_maximum": {
+          "test_accuracy": 7.8,
+          "cell": "R1",
+          "seed": 0
+        },
+        "best_learning_rate_cell_by_mean_validation": "R1",
+        "best_configuration_by_mean_validation": "E3b",
+        "configurations_covered": [
+          "E1a",
+          "R1",
+          "E1b",
+          "E3a",
+          "E3b"
+        ],
+        "expected_validation_performance": {
+          "1": 6.166666666666667,
+          "2": 7.182666666666667,
+          "3": 7.492474074074074,
+          "4": 7.631354074074074,
+          "5": 7.717790946502057,
+          "6": 7.781276102057614,
+          "7": 7.831093957238226,
+          "8": 7.871301595361682,
+          "9": 7.904244024602754,
+          "10": 7.93150840521049,
+          "11": 7.954252154675556,
+          "12": 7.973351277495313,
+          "13": 7.989483506818246,
+          "14": 8.00318124695615,
+          "15": 8.014867700184958
+        }
+      },
+      "rope": {
+        "per_rate_means_over_seeds_0_1_2": {
+          "E2a": {
+            "mean_test": 20.5,
+            "mean_val": 19.4,
+            "test_by_seed": {
+              "0": 20.6,
+              "1": 19.4,
+              "2": 21.5
+            },
+            "val_by_seed": {
+              "0": 18.8,
+              "1": 19.0,
+              "2": 20.4
+            }
+          },
+          "R2": {
+            "mean_test": 19.599999999999998,
+            "mean_val": 19.53333333333333,
+            "test_by_seed": {
+              "0": 19.6,
+              "1": 19.7,
+              "2": 19.5
+            },
+            "val_by_seed": {
+              "0": 20.2,
+              "1": 19.1,
+              "2": 19.3
+            }
+          },
+          "E2b": {
+            "mean_test": 2.1999999999999997,
+            "mean_val": 3.266666666666667,
+            "test_by_seed": {
+              "0": 2.6,
+              "1": 2.4,
+              "2": 1.6
+            },
+            "val_by_seed": {
+              "0": 3.3,
+              "1": 3.6,
+              "2": 2.9
+            }
+          }
+        },
+        "best_over_grid_maximum": {
+          "test_accuracy": 21.5,
+          "cell": "E2a",
+          "seed": 2
+        },
+        "best_learning_rate_cell_by_mean_validation": "R2",
+        "best_configuration_by_mean_validation": "R2",
+        "configurations_covered": [
+          "E2a",
+          "R2",
+          "E2b"
+        ],
+        "expected_validation_performance": {
+          "1": 14.066666666666668,
+          "2": 17.82962962962963,
+          "3": 19.175308641975306,
+          "4": 19.700502972107913,
+          "5": 19.935030229131737,
+          "6": 20.059179099843632,
+          "7": 20.136361076143288,
+          "8": 20.190189329403275,
+          "9": 20.230353814870128
+        }
+      }
+    },
+    "reading3_architecture_gap": {
+      "selection_pool": {
+        "sinusoidal": {
+          "cells_mean_validation_over_seeds_0_1_2": {
+            "E1a": 7.066666666666666,
+            "R1": 7.233333333333333,
+            "E1b": 1.8999999999999997
+          },
+          "selected_cell": "R1"
+        }
+      },
+      "sinusoidal_cell": "R1",
+      "lstm_minus_transformer": {
+        "all_fitting_seeds": {
+          "per_seed": {
+            "0": {
+              "a_test": 33.6,
+              "b_test": 7.8,
+              "a_val": 35.1,
+              "b_val": 7.7,
+              "diff_points": 25.8,
+              "ci_fraction": [
+                0.22897499999999998,
+                0.291
+              ],
+              "eligible": true
+            },
+            "1": {
+              "a_test": 35.5,
+              "b_test": 7.1,
+              "a_val": 35.9,
+              "b_val": 7.0,
+              "diff_points": 28.4,
+              "ci_fraction": [
+                0.253,
+                0.316
+              ],
+              "eligible": true
+            },
+            "2": {
+              "a_test": 34.6,
+              "b_test": 7.0,
+              "a_val": 36.1,
+              "b_val": 7.0,
+              "diff_points": 27.6,
+              "ci_fraction": [
+                0.248,
+                0.307
+              ],
+              "eligible": true
+            }
+          },
+          "n_eligible": 3,
+          "n_excluding_zero_up": 3,
+          "n_excluding_zero_down": 0,
+          "direction": "up",
+          "holds": true,
+          "verdict": "up",
+          "count": "3/3 eligible seeds exclude 0 in one direction"
+        },
+        "excluding_band_70_90": {
+          "per_seed": {
+            "0": {
+              "a_test": 33.6,
+              "b_test": 7.8,
+              "a_val": 35.1,
+              "b_val": 7.7,
+              "diff_points": 25.8,
+              "ci_fraction": [
+                0.22897499999999998,
+                0.291
+              ],
+              "eligible": true
+            },
+            "1": {
+              "a_test": 35.5,
+              "b_test": 7.1,
+              "a_val": 35.9,
+              "b_val": 7.0,
+              "diff_points": 28.4,
+              "ci_fraction": [
+                0.253,
+                0.316
+              ],
+              "eligible": true
+            },
+            "2": {
+              "a_test": 34.6,
+              "b_test": 7.0,
+              "a_val": 36.1,
+              "b_val": 7.0,
+              "diff_points": 27.6,
+              "ci_fraction": [
+                0.248,
+                0.307
+              ],
+              "eligible": true
+            }
+          },
+          "n_eligible": 3,
+          "n_excluding_zero_up": 3,
+          "n_excluding_zero_down": 0,
+          "direction": "up",
+          "holds": true,
+          "verdict": "up",
+          "count": "3/3 eligible seeds exclude 0 in one direction"
+        }
+      },
+      "descriptive_best_configuration_overall": {
+        "label": "descriptive",
+        "sinusoidal_cell": "E3b",
+        "lstm_minus_transformer": {
+          "all_fitting_seeds": {
+            "per_seed": {
+              "0": {
+                "a_test": 33.6,
+                "b_test": 7.1,
+                "a_val": 35.1,
+                "b_val": 8.0,
+                "diff_points": 26.5,
+                "ci_fraction": [
+                  0.235,
+                  0.296
+                ],
+                "eligible": true
+              },
+              "1": {
+                "a_test": 35.5,
+                "b_test": 7.5,
+                "a_val": 35.9,
+                "b_val": 7.3,
+                "diff_points": 28.0,
+                "ci_fraction": [
+                  0.248975,
+                  0.312
+                ],
+                "eligible": true
+              },
+              "2": {
+                "a_test": 34.6,
+                "b_test": 7.4,
+                "a_val": 36.1,
+                "b_val": 8.1,
+                "diff_points": 27.200000000000003,
+                "ci_fraction": [
+                  0.243,
+                  0.302
+                ],
+                "eligible": true
+              }
+            },
+            "n_eligible": 3,
+            "n_excluding_zero_up": 3,
+            "n_excluding_zero_down": 0,
+            "direction": "up",
+            "holds": true,
+            "verdict": "up",
+            "count": "3/3 eligible seeds exclude 0 in one direction"
+          },
+          "excluding_band_70_90": {
+            "per_seed": {
+              "0": {
+                "a_test": 33.6,
+                "b_test": 7.1,
+                "a_val": 35.1,
+                "b_val": 8.0,
+                "diff_points": 26.5,
+                "ci_fraction": [
+                  0.235,
+                  0.296
+                ],
+                "eligible": true
+              },
+              "1": {
+                "a_test": 35.5,
+                "b_test": 7.5,
+                "a_val": 35.9,
+                "b_val": 7.3,
+                "diff_points": 28.0,
+                "ci_fraction": [
+                  0.248975,
+                  0.312
+                ],
+                "eligible": true
+              },
+              "2": {
+                "a_test": 34.6,
+                "b_test": 7.4,
+                "a_val": 36.1,
+                "b_val": 8.1,
+                "diff_points": 27.200000000000003,
+                "ci_fraction": [
+                  0.243,
+                  0.302
+                ],
+                "eligible": true
+              }
+            },
+            "n_eligible": 3,
+            "n_excluding_zero_up": 3,
+            "n_excluding_zero_down": 0,
+            "direction": "up",
+            "holds": true,
+            "verdict": "up",
+            "count": "3/3 eligible seeds exclude 0 in one direction"
+          }
+        }
+      }
+    },
+    "reading4_rope_gain": {
+      "selection_pool": {
+        "rope": {
+          "cells_mean_validation_over_seeds_0_1_2": {
+            "E2a": 19.4,
+            "R2": 19.53333333333333,
+            "E2b": 3.266666666666667
+          },
+          "selected_cell": "R2"
+        },
+        "sinusoidal": {
+          "cells_mean_validation_over_seeds_0_1_2": {
+            "E1a": 7.066666666666666,
+            "R1": 7.233333333333333,
+            "E1b": 1.8999999999999997
+          },
+          "selected_cell": "R1"
+        }
+      },
+      "rope_cell": "R2",
+      "sinusoidal_cell": "R1",
+      "rope_minus_sinusoidal": {
+        "all_fitting_seeds": {
+          "per_seed": {
+            "0": {
+              "a_test": 19.6,
+              "b_test": 7.8,
+              "a_val": 20.2,
+              "b_val": 7.7,
+              "diff_points": 11.8,
+              "ci_fraction": [
+                0.093,
+                0.14500000000000002
+              ],
+              "eligible": true
+            },
+            "1": {
+              "a_test": 19.7,
+              "b_test": 7.1,
+              "a_val": 19.1,
+              "b_val": 7.0,
+              "diff_points": 12.6,
+              "ci_fraction": [
+                0.099,
+                0.15300000000000002
+              ],
+              "eligible": true
+            },
+            "2": {
+              "a_test": 19.5,
+              "b_test": 7.0,
+              "a_val": 19.3,
+              "b_val": 7.0,
+              "diff_points": 12.5,
+              "ci_fraction": [
+                0.098,
+                0.153
+              ],
+              "eligible": true
+            }
+          },
+          "n_eligible": 3,
+          "n_excluding_zero_up": 3,
+          "n_excluding_zero_down": 0,
+          "direction": "up",
+          "holds": true,
+          "verdict": "up",
+          "count": "3/3 eligible seeds exclude 0 in one direction"
+        },
+        "excluding_band_70_90": {
+          "per_seed": {
+            "0": {
+              "a_test": 19.6,
+              "b_test": 7.8,
+              "a_val": 20.2,
+              "b_val": 7.7,
+              "diff_points": 11.8,
+              "ci_fraction": [
+                0.093,
+                0.14500000000000002
+              ],
+              "eligible": true
+            },
+            "1": {
+              "a_test": 19.7,
+              "b_test": 7.1,
+              "a_val": 19.1,
+              "b_val": 7.0,
+              "diff_points": 12.6,
+              "ci_fraction": [
+                0.099,
+                0.15300000000000002
+              ],
+              "eligible": true
+            },
+            "2": {
+              "a_test": 19.5,
+              "b_test": 7.0,
+              "a_val": 19.3,
+              "b_val": 7.0,
+              "diff_points": 12.5,
+              "ci_fraction": [
+                0.098,
+                0.153
+              ],
+              "eligible": true
+            }
+          },
+          "n_eligible": 3,
+          "n_excluding_zero_up": 3,
+          "n_excluding_zero_down": 0,
+          "direction": "up",
+          "holds": true,
+          "verdict": "up",
+          "count": "3/3 eligible seeds exclude 0 in one direction"
+        }
+      }
+    },
+    "reading5_weight_decay": {
+      "E3a": {
+        "reference": "R1",
+        "uninformative": false,
+        "all_fitting_seeds": {
+          "per_seed": {
+            "0": {
+              "a_test": 7.6,
+              "b_test": 7.8,
+              "a_val": 6.7,
+              "b_val": 7.7,
+              "diff_points": -0.20000000000000018,
+              "ci_fraction": [
+                -0.013024999999999997,
+                0.010000000000000002
+              ],
+              "eligible": true
+            },
+            "1": {
+              "a_test": 7.1,
+              "b_test": 7.1,
+              "a_val": 6.5,
+              "b_val": 7.0,
+              "diff_points": 0.0,
+              "ci_fraction": [
+                -0.011999999999999997,
+                0.012999999999999998
+              ],
+              "eligible": true
+            },
+            "2": {
+              "a_test": 7.3,
+              "b_test": 7.0,
+              "a_val": 7.3,
+              "b_val": 7.0,
+              "diff_points": 0.2999999999999998,
+              "ci_fraction": [
+                -0.009999999999999995,
+                0.015
+              ],
+              "eligible": true
+            }
+          },
+          "n_eligible": 3,
+          "n_excluding_zero_up": 0,
+          "n_excluding_zero_down": 0,
+          "direction": null,
+          "holds": false,
+          "verdict": "no",
+          "count": "0/3 eligible seeds exclude 0 in one direction"
+        },
+        "excluding_band_70_90": {
+          "per_seed": {
+            "0": {
+              "a_test": 7.6,
+              "b_test": 7.8,
+              "a_val": 6.7,
+              "b_val": 7.7,
+              "diff_points": -0.20000000000000018,
+              "ci_fraction": [
+                -0.013024999999999997,
+                0.010000000000000002
+              ],
+              "eligible": true
+            },
+            "1": {
+              "a_test": 7.1,
+              "b_test": 7.1,
+              "a_val": 6.5,
+              "b_val": 7.0,
+              "diff_points": 0.0,
+              "ci_fraction": [
+                -0.011999999999999997,
+                0.012999999999999998
+              ],
+              "eligible": true
+            },
+            "2": {
+              "a_test": 7.3,
+              "b_test": 7.0,
+              "a_val": 7.3,
+              "b_val": 7.0,
+              "diff_points": 0.2999999999999998,
+              "ci_fraction": [
+                -0.009999999999999995,
+                0.015
+              ],
+              "eligible": true
+            }
+          },
+          "n_eligible": 3,
+          "n_excluding_zero_up": 0,
+          "n_excluding_zero_down": 0,
+          "direction": null,
+          "holds": false,
+          "verdict": "no",
+          "count": "0/3 eligible seeds exclude 0 in one direction"
+        }
+      },
+      "E3b": {
+        "reference": "R1",
+        "uninformative": false,
+        "all_fitting_seeds": {
+          "per_seed": {
+            "0": {
+              "a_test": 7.1,
+              "b_test": 7.8,
+              "a_val": 8.0,
+              "b_val": 7.7,
+              "diff_points": -0.7000000000000002,
+              "ci_fraction": [
+                -0.019999999999999997,
+                0.006000000000000005
+              ],
+              "eligible": true
+            },
+            "1": {
+              "a_test": 7.5,
+              "b_test": 7.1,
+              "a_val": 7.3,
+              "b_val": 7.0,
+              "diff_points": 0.40000000000000036,
+              "ci_fraction": [
+                -0.009000000000000008,
+                0.016
+              ],
+              "eligible": true
+            },
+            "2": {
+              "a_test": 7.4,
+              "b_test": 7.0,
+              "a_val": 8.1,
+              "b_val": 7.0,
+              "diff_points": 0.40000000000000036,
+              "ci_fraction": [
+                -0.009999999999999995,
+                0.017
+              ],
+              "eligible": true
+            }
+          },
+          "n_eligible": 3,
+          "n_excluding_zero_up": 0,
+          "n_excluding_zero_down": 0,
+          "direction": null,
+          "holds": false,
+          "verdict": "no",
+          "count": "0/3 eligible seeds exclude 0 in one direction"
+        },
+        "excluding_band_70_90": {
+          "per_seed": {
+            "0": {
+              "a_test": 7.1,
+              "b_test": 7.8,
+              "a_val": 8.0,
+              "b_val": 7.7,
+              "diff_points": -0.7000000000000002,
+              "ci_fraction": [
+                -0.019999999999999997,
+                0.006000000000000005
+              ],
+              "eligible": true
+            },
+            "1": {
+              "a_test": 7.5,
+              "b_test": 7.1,
+              "a_val": 7.3,
+              "b_val": 7.0,
+              "diff_points": 0.40000000000000036,
+              "ci_fraction": [
+                -0.009000000000000008,
+                0.016
+              ],
+              "eligible": true
+            },
+            "2": {
+              "a_test": 7.4,
+              "b_test": 7.0,
+              "a_val": 8.1,
+              "b_val": 7.0,
+              "diff_points": 0.40000000000000036,
+              "ci_fraction": [
+                -0.009999999999999995,
+                0.017
+              ],
+              "eligible": true
+            }
+          },
+          "n_eligible": 3,
+          "n_excluding_zero_up": 0,
+          "n_excluding_zero_down": 0,
+          "direction": null,
+          "holds": false,
+          "verdict": "no",
+          "count": "0/3 eligible seeds exclude 0 in one direction"
+        }
+      }
+    },
+    "lstm": {
+      "summary": {
+        "mean_test": 34.56666666666666,
+        "mean_val": 35.699999999999996,
+        "test_by_seed": {
+          "0": 33.6,
+          "1": 35.5,
+          "2": 34.6
+        },
+        "val_by_seed": {
+          "0": 35.1,
+          "1": 35.9,
+          "2": 36.1
+        }
+      },
+      "runs": {
+        "0": {
+          "label": "lstm/seed0",
+          "test_accuracy": 33.6,
+          "val_accuracy": 35.1,
+          "selected_epoch": 43,
+          "fits": true,
+          "band": false,
+          "diverged": false,
+          "epoch_cap": false,
+          "ood": {
+            "study1/ood_ops4.json": 14.4,
+            "study1/ood_ops5.json": 9.5,
+            "study1/ood_ops6.json": 2.8,
+            "study1/ood_ops7.json": 2.1
+          }
+        },
+        "1": {
+          "label": "lstm/seed1",
+          "test_accuracy": 35.5,
+          "val_accuracy": 35.9,
+          "selected_epoch": 46,
+          "fits": true,
+          "band": false,
+          "diverged": false,
+          "epoch_cap": false,
+          "ood": {
+            "study1/ood_ops4.json": 16.4,
+            "study1/ood_ops5.json": 7.7,
+            "study1/ood_ops6.json": 2.8,
+            "study1/ood_ops7.json": 2.5
+          }
+        },
+        "2": {
+          "label": "lstm/seed2",
+          "test_accuracy": 34.6,
+          "val_accuracy": 36.1,
+          "selected_epoch": 51,
+          "fits": true,
+          "band": false,
+          "diverged": false,
+          "epoch_cap": false,
+          "ood": {
+            "study1/ood_ops4.json": 13.7,
+            "study1/ood_ops5.json": 7.5,
+            "study1/ood_ops6.json": 2.5,
+            "study1/ood_ops7.json": 1.8
+          }
+        }
+      }
+    },
+    "descriptive_rtx4000ada": {
+      "sinusoidal_retrain": {
+        "beside": "R1",
+        "summary": {
+          "mean_test": 7.566666666666666,
+          "mean_val": 7.233333333333333,
+          "test_by_seed": {
+            "0": 7.6,
+            "1": 7.4,
+            "2": 7.7
+          },
+          "val_by_seed": {
+            "0": 7.3,
+            "1": 6.6,
+            "2": 7.8
+          }
+        },
+        "runs": {
+          "0": {
+            "label": "sinusoidal_retrain/seed0",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/pos_sweep/sinusoidal_retrain/study1/seed0",
+            "selected_epoch": 165,
+            "epochs_run": 200,
+            "train_accuracy_at_selected": 94.7875,
+            "max_train_accuracy": 96.425,
+            "final_train_accuracy": 96.275,
+            "max_minus_final": 0.14999999999999147,
+            "spike_flag": false,
+            "val_accuracy": 7.3,
+            "test_accuracy": 7.6,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": true,
+            "wall_time_seconds": 2440.8,
+            "gpu": "NVIDIA RTX 4000 Ada Generation",
+            "git_commit": "2030fd54419aa85dbdd86727b5829496d03c9ab2",
+            "learning_rate": null,
+            "weight_decay": null,
+            "optimizer": null,
+            "ood": {
+              "study1/ood_ops4.json": 0.4,
+              "study1/ood_ops5.json": 0.8,
+              "study1/ood_ops6.json": 0.1,
+              "study1/ood_ops7.json": 0.2
+            },
+            "fits": true,
+            "band": false
+          },
+          "1": {
+            "label": "sinusoidal_retrain/seed1",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/pos_sweep/sinusoidal_retrain/study1/seed1",
+            "selected_epoch": 110,
+            "epochs_run": 161,
+            "train_accuracy_at_selected": 80.775,
+            "max_train_accuracy": 92.9375,
+            "final_train_accuracy": 92.9375,
+            "max_minus_final": 0.0,
+            "spike_flag": false,
+            "val_accuracy": 6.6,
+            "test_accuracy": 7.4,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 1970.6,
+            "gpu": "NVIDIA RTX 4000 Ada Generation",
+            "git_commit": "2030fd54419aa85dbdd86727b5829496d03c9ab2",
+            "learning_rate": null,
+            "weight_decay": null,
+            "optimizer": null,
+            "ood": {
+              "study1/ood_ops4.json": 0.4,
+              "study1/ood_ops5.json": 0.3,
+              "study1/ood_ops6.json": 0.2,
+              "study1/ood_ops7.json": 0.4
+            },
+            "fits": true,
+            "band": false
+          },
+          "2": {
+            "label": "sinusoidal_retrain/seed2",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/pos_sweep/sinusoidal_retrain/study1/seed2",
+            "selected_epoch": 187,
+            "epochs_run": 200,
+            "train_accuracy_at_selected": 93.8375,
+            "max_train_accuracy": 94.4375,
+            "final_train_accuracy": 94.1375,
+            "max_minus_final": 0.29999999999999716,
+            "spike_flag": false,
+            "val_accuracy": 7.8,
+            "test_accuracy": 7.7,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": true,
+            "wall_time_seconds": 2455.6,
+            "gpu": "NVIDIA RTX 4000 Ada Generation",
+            "git_commit": "2030fd54419aa85dbdd86727b5829496d03c9ab2",
+            "learning_rate": null,
+            "weight_decay": null,
+            "optimizer": null,
+            "ood": {
+              "study1/ood_ops4.json": 0.4,
+              "study1/ood_ops5.json": 0.2,
+              "study1/ood_ops6.json": 0.5,
+              "study1/ood_ops7.json": 0.1
+            },
+            "fits": true,
+            "band": false
+          }
+        },
+        "diff_vs_pod_reference_not_a_reference": {
+          "per_seed": {
+            "0": {
+              "a_test": 7.6,
+              "b_test": 7.8,
+              "a_val": 7.3,
+              "b_val": 7.7,
+              "diff_points": -0.20000000000000018,
+              "ci_fraction": [
+                -0.015,
+                0.010999999999999996
+              ],
+              "eligible": true
+            },
+            "1": {
+              "a_test": 7.4,
+              "b_test": 7.1,
+              "a_val": 6.6,
+              "b_val": 7.0,
+              "diff_points": 0.3000000000000007,
+              "ci_fraction": [
+                -0.009999999999999995,
+                0.015024999999999983
+              ],
+              "eligible": true
+            },
+            "2": {
+              "a_test": 7.7,
+              "b_test": 7.0,
+              "a_val": 7.8,
+              "b_val": 7.0,
+              "diff_points": 0.7000000000000002,
+              "ci_fraction": [
+                -0.0050000000000000044,
+                0.02099999999999999
+              ],
+              "eligible": true
+            }
+          },
+          "n_eligible": 3,
+          "n_excluding_zero_up": 0,
+          "n_excluding_zero_down": 0,
+          "direction": null,
+          "holds": false,
+          "verdict": "no",
+          "count": "0/3 eligible seeds exclude 0 in one direction"
+        },
+        "note": "RTX 4000 Ada; reported beside the same-GPU reference, descriptively, never as a reference"
+      },
+      "rope": {
+        "beside": "R2",
+        "summary": {
+          "mean_test": 20.3,
+          "mean_val": 21.333333333333332,
+          "test_by_seed": {
+            "0": 21.4,
+            "1": 18.0,
+            "2": 21.5
+          },
+          "val_by_seed": {
+            "0": 22.7,
+            "1": 19.8,
+            "2": 21.5
+          }
+        },
+        "runs": {
+          "0": {
+            "label": "rope/seed0",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/pos_sweep/rope/study1/seed0",
+            "selected_epoch": 74,
+            "epochs_run": 125,
+            "train_accuracy_at_selected": 89.725,
+            "max_train_accuracy": 99.8,
+            "final_train_accuracy": 99.8,
+            "max_minus_final": 0.0,
+            "spike_flag": false,
+            "val_accuracy": 22.7,
+            "test_accuracy": 21.4,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 3112.0,
+            "gpu": "NVIDIA RTX 4000 Ada Generation",
+            "git_commit": "01b5bb76bd19f1f7739af1c80d2a4b6e27544d89",
+            "learning_rate": null,
+            "weight_decay": null,
+            "optimizer": null,
+            "ood": {
+              "study1/ood_ops4.json": 2.4,
+              "study1/ood_ops5.json": 1.6,
+              "study1/ood_ops6.json": 1.1,
+              "study1/ood_ops7.json": 0.4
+            },
+            "fits": true,
+            "band": false
+          },
+          "1": {
+            "label": "rope/seed1",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/pos_sweep/rope/study1/seed1",
+            "selected_epoch": 58,
+            "epochs_run": 109,
+            "train_accuracy_at_selected": 78.85,
+            "max_train_accuracy": 99.5625,
+            "final_train_accuracy": 99.0,
+            "max_minus_final": 0.5625,
+            "spike_flag": false,
+            "val_accuracy": 19.8,
+            "test_accuracy": 18.0,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 4828.3,
+            "gpu": "NVIDIA RTX 4000 Ada Generation",
+            "git_commit": "01b5bb76bd19f1f7739af1c80d2a4b6e27544d89",
+            "learning_rate": null,
+            "weight_decay": null,
+            "optimizer": null,
+            "ood": {
+              "study1/ood_ops4.json": 1.9,
+              "study1/ood_ops5.json": 1.0,
+              "study1/ood_ops6.json": 0.8,
+              "study1/ood_ops7.json": 0.6
+            },
+            "fits": true,
+            "band": false
+          },
+          "2": {
+            "label": "rope/seed2",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/pos_sweep/rope/study1/seed2",
+            "selected_epoch": 58,
+            "epochs_run": 109,
+            "train_accuracy_at_selected": 70.4375,
+            "max_train_accuracy": 98.9375,
+            "final_train_accuracy": 98.725,
+            "max_minus_final": 0.21250000000000568,
+            "spike_flag": false,
+            "val_accuracy": 21.5,
+            "test_accuracy": 21.5,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 4843.5,
+            "gpu": "NVIDIA RTX 4000 Ada Generation",
+            "git_commit": "01b5bb76bd19f1f7739af1c80d2a4b6e27544d89",
+            "learning_rate": null,
+            "weight_decay": null,
+            "optimizer": null,
+            "ood": {
+              "study1/ood_ops4.json": 1.9,
+              "study1/ood_ops5.json": 1.1,
+              "study1/ood_ops6.json": 0.3,
+              "study1/ood_ops7.json": 0.3
+            },
+            "fits": true,
+            "band": false
+          }
+        },
+        "diff_vs_pod_reference_not_a_reference": {
+          "per_seed": {
+            "0": {
+              "a_test": 21.4,
+              "b_test": 19.6,
+              "a_val": 22.7,
+              "b_val": 20.2,
+              "diff_points": 1.7999999999999972,
+              "ci_fraction": [
+                -0.010999999999999982,
+                0.04902499999999999
+              ],
+              "eligible": true
+            },
+            "1": {
+              "a_test": 18.0,
+              "b_test": 19.7,
+              "a_val": 19.8,
+              "b_val": 19.1,
+              "diff_points": -1.6999999999999993,
+              "ci_fraction": [
+                -0.046999999999999986,
+                0.015000000000000013
+              ],
+              "eligible": true
+            },
+            "2": {
+              "a_test": 21.5,
+              "b_test": 19.5,
+              "a_val": 21.5,
+              "b_val": 19.3,
+              "diff_points": 2.0,
+              "ci_fraction": [
+                -0.009000000000000008,
+                0.05299999999999999
+              ],
+              "eligible": true
+            }
+          },
+          "n_eligible": 3,
+          "n_excluding_zero_up": 0,
+          "n_excluding_zero_down": 0,
+          "direction": null,
+          "holds": false,
+          "verdict": "no",
+          "count": "0/3 eligible seeds exclude 0 in one direction"
+        },
+        "note": "RTX 4000 Ada; reported beside the same-GPU reference, descriptively, never as a reference"
+      }
+    },
+    "ood_ops4_7_descriptive": {
+      "R1": {
+        "study1/ood_ops4.json": 0.5333333333333333,
+        "study1/ood_ops5.json": 0.39999999999999997,
+        "study1/ood_ops6.json": 0.26666666666666666,
+        "study1/ood_ops7.json": 0.13333333333333333
+      },
+      "E1a": {
+        "study1/ood_ops4.json": 0.6,
+        "study1/ood_ops5.json": 0.20000000000000004,
+        "study1/ood_ops6.json": 0.2333333333333333,
+        "study1/ood_ops7.json": 0.23333333333333336
+      },
+      "E1b": {
+        "study1/ood_ops4.json": 0.5,
+        "study1/ood_ops5.json": 0.3333333333333333,
+        "study1/ood_ops6.json": 0.3666666666666667,
+        "study1/ood_ops7.json": 0.03333333333333333
+      },
+      "E3a": {
+        "study1/ood_ops4.json": 0.43333333333333335,
+        "study1/ood_ops5.json": 0.26666666666666666,
+        "study1/ood_ops6.json": 0.2333333333333333,
+        "study1/ood_ops7.json": 0.26666666666666666
+      },
+      "R2": {
+        "study1/ood_ops4.json": 1.6333333333333335,
+        "study1/ood_ops5.json": 0.8666666666666667,
+        "study1/ood_ops6.json": 0.39999999999999997,
+        "study1/ood_ops7.json": 0.4666666666666666
+      },
+      "E2a": {
+        "study1/ood_ops4.json": 1.9666666666666668,
+        "study1/ood_ops5.json": 0.4666666666666666,
+        "study1/ood_ops6.json": 0.36666666666666664,
+        "study1/ood_ops7.json": 0.3333333333333333
+      },
+      "E2b": {
+        "study1/ood_ops4.json": 0.6,
+        "study1/ood_ops5.json": 0.4666666666666666,
+        "study1/ood_ops6.json": 0.3333333333333333,
+        "study1/ood_ops7.json": 0.2333333333333333
+      },
+      "E3b": {
+        "study1/ood_ops4.json": 0.3333333333333333,
+        "study1/ood_ops5.json": 0.2333333333333333,
+        "study1/ood_ops6.json": 0.2333333333333333,
+        "study1/ood_ops7.json": 0.3333333333333333
+      },
+      "lstm": {
+        "study1/ood_ops4.json": 14.833333333333334,
+        "study1/ood_ops5.json": 8.233333333333333,
+        "study1/ood_ops6.json": 2.6999999999999997,
+        "study1/ood_ops7.json": 2.1333333333333333
+      }
+    },
+    "compute": {
+      "train_seconds_by_cell": {
+        "R1": [
+          1338.0,
+          1451.3,
+          1588.3
+        ],
+        "E1a": [
+          1704.7,
+          1729.8,
+          1711.4
+        ],
+        "E1b": [
+          475.4,
+          489.6,
+          458.8
+        ],
+        "E3a": [
+          1398.6,
+          1472.8,
+          1716.8
+        ],
+        "R2": [
+          937.2,
+          1038.4,
+          862.6
+        ],
+        "E2a": [
+          1121.2,
+          1142.6,
+          1174.6
+        ],
+        "E2b": [
+          508.3,
+          515.6,
+          470.6
+        ],
+        "E3b": [
+          1748.0,
+          1414.1,
+          743.1
+        ]
+      },
+      "total_train_hours": 7.558833333333333,
+      "reference_train_hours": 2.004388888888889,
+      "summary_txt_run_lines": [
+        "R1\tseed0\texit=0\twall_seconds=1359",
+        "R1\tseed1\texit=0\twall_seconds=1473",
+        "R1\tseed2\texit=0\twall_seconds=1609",
+        "E1a\tseed0\texit=0\twall_seconds=1725",
+        "E1a\tseed1\texit=0\twall_seconds=1750",
+        "E1a\tseed2\texit=0\twall_seconds=1731",
+        "E1b\tseed0\texit=0\twall_seconds=496",
+        "E1b\tseed1\texit=0\twall_seconds=510",
+        "E1b\tseed2\texit=0\twall_seconds=479",
+        "E3a\tseed0\texit=0\twall_seconds=1419",
+        "E3a\tseed1\texit=0\twall_seconds=1494",
+        "E3a\tseed2\texit=0\twall_seconds=1738",
+        "R2\tseed0\texit=0\twall_seconds=962",
+        "R2\tseed1\texit=0\twall_seconds=1066",
+        "R2\tseed2\texit=0\twall_seconds=889",
+        "E2a\tseed0\texit=0\twall_seconds=1147",
+        "E2a\tseed1\texit=0\twall_seconds=1168",
+        "E2a\tseed2\texit=0\twall_seconds=1202",
+        "E2b\tseed0\texit=0\twall_seconds=536",
+        "E2b\tseed1\texit=0\twall_seconds=544",
+        "E2b\tseed2\texit=0\twall_seconds=499",
+        "E3b\tseed0\texit=0\twall_seconds=1765",
+        "E3b\tseed1\texit=0\twall_seconds=1431",
+        "E3b\tseed2\texit=0\twall_seconds=757"
+      ],
+      "note": "sum of per-run training wall time; two runs shared the pod, so pod wall-clock is shorter"
+    }
+  },
+  "selected_epoch": {
+    "first_line": "Tuning control per docs/design/tuning-control.md (pre-registered at TUNE_COMMIT).",
+    "design": "docs/design/tuning-control.md",
+    "tune_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+    "fit_rule": "selected_epoch",
+    "fit_rule_text": "training accuracy at the selected epoch at least 80% (as pre-registered)",
+    "cells": {
+      "R1": {
+        "encoding": "sinusoidal",
+        "learning_rate": 0.0003,
+        "weight_decay": 0.0,
+        "status": {
+          "non_fit_kind": {
+            "0": "stopped before cap",
+            "1": "stopped before cap",
+            "2": null
+          },
+          "n_fitting_seeds": 1,
+          "uninformative": true,
+          "fits": {
+            "0": false,
+            "1": false,
+            "2": true
+          },
+          "diverged": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "epoch_cap": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "band_70_90": {
+            "0": true,
+            "1": true,
+            "2": true
+          }
+        },
+        "summary": {
+          "mean_test": 7.3,
+          "mean_val": 7.233333333333333,
+          "test_by_seed": {
+            "0": 7.8,
+            "1": 7.1,
+            "2": 7.0
+          },
+          "val_by_seed": {
+            "0": 7.7,
+            "1": 7.0,
+            "2": 7.0
+          }
+        },
+        "runs": {
+          "0": {
+            "label": "R1/seed0",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/R1/study1/seed0",
+            "selected_epoch": 102,
+            "epochs_run": 153,
+            "train_accuracy_at_selected": 77.825,
+            "max_train_accuracy": 91.6,
+            "final_train_accuracy": 91.5375,
+            "max_minus_final": 0.0625,
+            "spike_flag": false,
+            "val_accuracy": 7.7,
+            "test_accuracy": 7.8,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 1338.0,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0003,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 0.6,
+              "study1/ood_ops5.json": 0.5,
+              "study1/ood_ops6.json": 0.0,
+              "study1/ood_ops7.json": 0.0
+            },
+            "fits": false,
+            "band": true
+          },
+          "1": {
+            "label": "R1/seed1",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/R1/study1/seed1",
+            "selected_epoch": 114,
+            "epochs_run": 165,
+            "train_accuracy_at_selected": 76.5625,
+            "max_train_accuracy": 90.4375,
+            "final_train_accuracy": 90.275,
+            "max_minus_final": 0.16249999999999432,
+            "spike_flag": false,
+            "val_accuracy": 7.0,
+            "test_accuracy": 7.1,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 1451.3,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0003,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 0.3,
+              "study1/ood_ops5.json": 0.5,
+              "study1/ood_ops6.json": 0.6,
+              "study1/ood_ops7.json": 0.2
+            },
+            "fits": false,
+            "band": true
+          },
+          "2": {
+            "label": "R1/seed2",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/R1/study1/seed2",
+            "selected_epoch": 135,
+            "epochs_run": 186,
+            "train_accuracy_at_selected": 85.925,
+            "max_train_accuracy": 91.8875,
+            "final_train_accuracy": 91.7625,
+            "max_minus_final": 0.125,
+            "spike_flag": false,
+            "val_accuracy": 7.0,
+            "test_accuracy": 7.0,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 1588.3,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0003,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 0.7,
+              "study1/ood_ops5.json": 0.2,
+              "study1/ood_ops6.json": 0.2,
+              "study1/ood_ops7.json": 0.2
+            },
+            "fits": true,
+            "band": true
+          }
+        }
+      },
+      "E1a": {
+        "encoding": "sinusoidal",
+        "learning_rate": 0.0001,
+        "weight_decay": 0.0,
+        "status": {
+          "non_fit_kind": {
+            "0": "epoch cap",
+            "1": "epoch cap",
+            "2": "epoch cap"
+          },
+          "n_fitting_seeds": 0,
+          "uninformative": true,
+          "fits": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "diverged": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "epoch_cap": {
+            "0": true,
+            "1": true,
+            "2": true
+          },
+          "band_70_90": {
+            "0": true,
+            "1": true,
+            "2": true
+          }
+        },
+        "summary": {
+          "mean_test": 7.566666666666666,
+          "mean_val": 7.066666666666666,
+          "test_by_seed": {
+            "0": 7.3,
+            "1": 7.6,
+            "2": 7.8
+          },
+          "val_by_seed": {
+            "0": 7.1,
+            "1": 7.1,
+            "2": 7.0
+          }
+        },
+        "runs": {
+          "0": {
+            "label": "E1a/seed0",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E1a/study1/seed0",
+            "selected_epoch": 157,
+            "epochs_run": 200,
+            "train_accuracy_at_selected": 75.375,
+            "max_train_accuracy": 80.9125,
+            "final_train_accuracy": 80.4375,
+            "max_minus_final": 0.4749999999999943,
+            "spike_flag": false,
+            "val_accuracy": 7.1,
+            "test_accuracy": 7.3,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": true,
+            "wall_time_seconds": 1704.7,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0001,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 0.2,
+              "study1/ood_ops5.json": 0.3,
+              "study1/ood_ops6.json": 0.1,
+              "study1/ood_ops7.json": 0.4
+            },
+            "fits": false,
+            "band": true
+          },
+          "1": {
+            "label": "E1a/seed1",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E1a/study1/seed1",
+            "selected_epoch": 193,
+            "epochs_run": 200,
+            "train_accuracy_at_selected": 75.25,
+            "max_train_accuracy": 76.0375,
+            "final_train_accuracy": 75.6875,
+            "max_minus_final": 0.3499999999999943,
+            "spike_flag": false,
+            "val_accuracy": 7.1,
+            "test_accuracy": 7.6,
+            "fits_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": true,
+            "wall_time_seconds": 1729.8,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0001,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 0.5,
+              "study1/ood_ops5.json": 0.1,
+              "study1/ood_ops6.json": 0.3,
+              "study1/ood_ops7.json": 0.2
+            },
+            "fits": false,
+            "band": true
+          },
+          "2": {
+            "label": "E1a/seed2",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E1a/study1/seed2",
+            "selected_epoch": 174,
+            "epochs_run": 200,
+            "train_accuracy_at_selected": 76.8625,
+            "max_train_accuracy": 78.8875,
+            "final_train_accuracy": 78.75,
+            "max_minus_final": 0.13750000000000284,
+            "spike_flag": false,
+            "val_accuracy": 7.0,
+            "test_accuracy": 7.8,
+            "fits_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": true,
+            "wall_time_seconds": 1711.4,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0001,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 1.1,
+              "study1/ood_ops5.json": 0.2,
+              "study1/ood_ops6.json": 0.3,
+              "study1/ood_ops7.json": 0.1
+            },
+            "fits": false,
+            "band": true
+          }
+        }
+      },
+      "E1b": {
+        "encoding": "sinusoidal",
+        "learning_rate": 0.001,
+        "weight_decay": 0.0,
+        "status": {
+          "non_fit_kind": {
+            "0": "stopped before cap",
+            "1": "stopped before cap",
+            "2": "stopped before cap"
+          },
+          "n_fitting_seeds": 0,
+          "uninformative": true,
+          "fits": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "diverged": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "epoch_cap": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "band_70_90": {
+            "0": false,
+            "1": false,
+            "2": false
+          }
+        },
+        "summary": {
+          "mean_test": 1.4666666666666668,
+          "mean_val": 1.8999999999999997,
+          "test_by_seed": {
+            "0": 1.6,
+            "1": 1.3,
+            "2": 1.5
+          },
+          "val_by_seed": {
+            "0": 1.9,
+            "1": 1.9,
+            "2": 1.9
+          }
+        },
+        "runs": {
+          "0": {
+            "label": "E1b/seed0",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E1b/study1/seed0",
+            "selected_epoch": 5,
+            "epochs_run": 56,
+            "train_accuracy_at_selected": 1.65,
+            "max_train_accuracy": 1.7125,
+            "final_train_accuracy": 1.05,
+            "max_minus_final": 0.6624999999999999,
+            "spike_flag": false,
+            "val_accuracy": 1.9,
+            "test_accuracy": 1.6,
+            "fits_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 475.4,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.001,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 0.6,
+              "study1/ood_ops5.json": 0.2,
+              "study1/ood_ops6.json": 0.4,
+              "study1/ood_ops7.json": 0.0
+            },
+            "fits": false,
+            "band": false
+          },
+          "1": {
+            "label": "E1b/seed1",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E1b/study1/seed1",
+            "selected_epoch": 7,
+            "epochs_run": 58,
+            "train_accuracy_at_selected": 1.4875,
+            "max_train_accuracy": 1.725,
+            "final_train_accuracy": 1.0875,
+            "max_minus_final": 0.6375000000000002,
+            "spike_flag": false,
+            "val_accuracy": 1.9,
+            "test_accuracy": 1.3,
+            "fits_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 489.6,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.001,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 0.3,
+              "study1/ood_ops5.json": 0.3,
+              "study1/ood_ops6.json": 0.3,
+              "study1/ood_ops7.json": 0.1
+            },
+            "fits": false,
+            "band": false
+          },
+          "2": {
+            "label": "E1b/seed2",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E1b/study1/seed2",
+            "selected_epoch": 3,
+            "epochs_run": 54,
+            "train_accuracy_at_selected": 1.375,
+            "max_train_accuracy": 1.525,
+            "final_train_accuracy": 1.075,
+            "max_minus_final": 0.44999999999999996,
+            "spike_flag": false,
+            "val_accuracy": 1.9,
+            "test_accuracy": 1.5,
+            "fits_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 458.8,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.001,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 0.6,
+              "study1/ood_ops5.json": 0.5,
+              "study1/ood_ops6.json": 0.4,
+              "study1/ood_ops7.json": 0.0
+            },
+            "fits": false,
+            "band": false
+          }
+        }
+      },
+      "E3a": {
+        "encoding": "sinusoidal",
+        "learning_rate": 0.0003,
+        "weight_decay": 0.01,
+        "status": {
+          "non_fit_kind": {
+            "0": null,
+            "1": null,
+            "2": null
+          },
+          "n_fitting_seeds": 3,
+          "uninformative": false,
+          "fits": {
+            "0": true,
+            "1": true,
+            "2": true
+          },
+          "diverged": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "epoch_cap": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "band_70_90": {
+            "0": true,
+            "1": true,
+            "2": false
+          }
+        },
+        "summary": {
+          "mean_test": 7.333333333333333,
+          "mean_val": 6.833333333333333,
+          "test_by_seed": {
+            "0": 7.6,
+            "1": 7.1,
+            "2": 7.3
+          },
+          "val_by_seed": {
+            "0": 6.7,
+            "1": 6.5,
+            "2": 7.3
+          }
+        },
+        "runs": {
+          "0": {
+            "label": "E3a/seed0",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E3a/study1/seed0",
+            "selected_epoch": 112,
+            "epochs_run": 163,
+            "train_accuracy_at_selected": 86.5125,
+            "max_train_accuracy": 95.4625,
+            "final_train_accuracy": 95.2,
+            "max_minus_final": 0.26250000000000284,
+            "spike_flag": false,
+            "val_accuracy": 6.7,
+            "test_accuracy": 7.6,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 1398.6,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0003,
+            "weight_decay": 0.01,
+            "optimizer": "AdamW",
+            "ood": {
+              "study1/ood_ops4.json": 0.4,
+              "study1/ood_ops5.json": 0.3,
+              "study1/ood_ops6.json": 0.1,
+              "study1/ood_ops7.json": 0.3
+            },
+            "fits": true,
+            "band": true
+          },
+          "1": {
+            "label": "E3a/seed1",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E3a/study1/seed1",
+            "selected_epoch": 121,
+            "epochs_run": 172,
+            "train_accuracy_at_selected": 82.95,
+            "max_train_accuracy": 92.725,
+            "final_train_accuracy": 92.725,
+            "max_minus_final": 0.0,
+            "spike_flag": false,
+            "val_accuracy": 6.5,
+            "test_accuracy": 7.1,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 1472.8,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0003,
+            "weight_decay": 0.01,
+            "optimizer": "AdamW",
+            "ood": {
+              "study1/ood_ops4.json": 0.5,
+              "study1/ood_ops5.json": 0.1,
+              "study1/ood_ops6.json": 0.1,
+              "study1/ood_ops7.json": 0.2
+            },
+            "fits": true,
+            "band": true
+          },
+          "2": {
+            "label": "E3a/seed2",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E3a/study1/seed2",
+            "selected_epoch": 147,
+            "epochs_run": 198,
+            "train_accuracy_at_selected": 90.0875,
+            "max_train_accuracy": 94.0875,
+            "final_train_accuracy": 93.85,
+            "max_minus_final": 0.23750000000001137,
+            "spike_flag": false,
+            "val_accuracy": 7.3,
+            "test_accuracy": 7.3,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 1716.8,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0003,
+            "weight_decay": 0.01,
+            "optimizer": "AdamW",
+            "ood": {
+              "study1/ood_ops4.json": 0.4,
+              "study1/ood_ops5.json": 0.4,
+              "study1/ood_ops6.json": 0.5,
+              "study1/ood_ops7.json": 0.3
+            },
+            "fits": true,
+            "band": false
+          }
+        }
+      },
+      "R2": {
+        "encoding": "rope",
+        "learning_rate": 0.0003,
+        "weight_decay": 0.0,
+        "status": {
+          "non_fit_kind": {
+            "0": "stopped before cap",
+            "1": null,
+            "2": "stopped before cap"
+          },
+          "n_fitting_seeds": 1,
+          "uninformative": true,
+          "fits": {
+            "0": false,
+            "1": true,
+            "2": false
+          },
+          "diverged": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "epoch_cap": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "band_70_90": {
+            "0": false,
+            "1": true,
+            "2": false
+          }
+        },
+        "summary": {
+          "mean_test": 19.599999999999998,
+          "mean_val": 19.53333333333333,
+          "test_by_seed": {
+            "0": 19.6,
+            "1": 19.7,
+            "2": 19.5
+          },
+          "val_by_seed": {
+            "0": 20.2,
+            "1": 19.1,
+            "2": 19.3
+          }
+        },
+        "runs": {
+          "0": {
+            "label": "R2/seed0",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/R2/study1/seed0",
+            "selected_epoch": 52,
+            "epochs_run": 103,
+            "train_accuracy_at_selected": 67.4375,
+            "max_train_accuracy": 98.7,
+            "final_train_accuracy": 96.95,
+            "max_minus_final": 1.75,
+            "spike_flag": false,
+            "val_accuracy": 20.2,
+            "test_accuracy": 19.6,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 937.2,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0003,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 2.0,
+              "study1/ood_ops5.json": 0.7,
+              "study1/ood_ops6.json": 0.5,
+              "study1/ood_ops7.json": 0.4
+            },
+            "fits": false,
+            "band": false
+          },
+          "1": {
+            "label": "R2/seed1",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/R2/study1/seed1",
+            "selected_epoch": 63,
+            "epochs_run": 114,
+            "train_accuracy_at_selected": 85.3625,
+            "max_train_accuracy": 99.6875,
+            "final_train_accuracy": 99.1875,
+            "max_minus_final": 0.5,
+            "spike_flag": false,
+            "val_accuracy": 19.1,
+            "test_accuracy": 19.7,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 1038.4,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0003,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 1.8,
+              "study1/ood_ops5.json": 1.0,
+              "study1/ood_ops6.json": 0.5,
+              "study1/ood_ops7.json": 0.3
+            },
+            "fits": true,
+            "band": true
+          },
+          "2": {
+            "label": "R2/seed2",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/R2/study1/seed2",
+            "selected_epoch": 42,
+            "epochs_run": 93,
+            "train_accuracy_at_selected": 48.4875,
+            "max_train_accuracy": 96.975,
+            "final_train_accuracy": 96.975,
+            "max_minus_final": 0.0,
+            "spike_flag": false,
+            "val_accuracy": 19.3,
+            "test_accuracy": 19.5,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 862.6,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0003,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 1.1,
+              "study1/ood_ops5.json": 0.9,
+              "study1/ood_ops6.json": 0.2,
+              "study1/ood_ops7.json": 0.7
+            },
+            "fits": false,
+            "band": false
+          }
+        }
+      },
+      "E2a": {
+        "encoding": "rope",
+        "learning_rate": 0.0001,
+        "weight_decay": 0.0,
+        "status": {
+          "non_fit_kind": {
+            "0": "stopped before cap",
+            "1": "stopped before cap",
+            "2": "stopped before cap"
+          },
+          "n_fitting_seeds": 0,
+          "uninformative": true,
+          "fits": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "diverged": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "epoch_cap": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "band_70_90": {
+            "0": false,
+            "1": true,
+            "2": true
+          }
+        },
+        "summary": {
+          "mean_test": 20.5,
+          "mean_val": 19.4,
+          "test_by_seed": {
+            "0": 20.6,
+            "1": 19.4,
+            "2": 21.5
+          },
+          "val_by_seed": {
+            "0": 18.8,
+            "1": 19.0,
+            "2": 20.4
+          }
+        },
+        "runs": {
+          "0": {
+            "label": "E2a/seed0",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E2a/study1/seed0",
+            "selected_epoch": 71,
+            "epochs_run": 122,
+            "train_accuracy_at_selected": 66.425,
+            "max_train_accuracy": 96.05,
+            "final_train_accuracy": 95.65,
+            "max_minus_final": 0.3999999999999915,
+            "spike_flag": false,
+            "val_accuracy": 18.8,
+            "test_accuracy": 20.6,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 1121.2,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0001,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 2.2,
+              "study1/ood_ops5.json": 0.4,
+              "study1/ood_ops6.json": 0.6,
+              "study1/ood_ops7.json": 0.3
+            },
+            "fits": false,
+            "band": false
+          },
+          "1": {
+            "label": "E2a/seed1",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E2a/study1/seed1",
+            "selected_epoch": 73,
+            "epochs_run": 124,
+            "train_accuracy_at_selected": 70.475,
+            "max_train_accuracy": 96.4,
+            "final_train_accuracy": 96.4,
+            "max_minus_final": 0.0,
+            "spike_flag": false,
+            "val_accuracy": 19.0,
+            "test_accuracy": 19.4,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 1142.6,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0001,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 2.0,
+              "study1/ood_ops5.json": 0.5,
+              "study1/ood_ops6.json": 0.3,
+              "study1/ood_ops7.json": 0.4
+            },
+            "fits": false,
+            "band": true
+          },
+          "2": {
+            "label": "E2a/seed2",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E2a/study1/seed2",
+            "selected_epoch": 81,
+            "epochs_run": 132,
+            "train_accuracy_at_selected": 78.3125,
+            "max_train_accuracy": 97.9375,
+            "final_train_accuracy": 97.2125,
+            "max_minus_final": 0.7249999999999943,
+            "spike_flag": false,
+            "val_accuracy": 20.4,
+            "test_accuracy": 21.5,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 1174.6,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0001,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 1.7,
+              "study1/ood_ops5.json": 0.5,
+              "study1/ood_ops6.json": 0.2,
+              "study1/ood_ops7.json": 0.3
+            },
+            "fits": false,
+            "band": true
+          }
+        }
+      },
+      "E2b": {
+        "encoding": "rope",
+        "learning_rate": 0.001,
+        "weight_decay": 0.0,
+        "status": {
+          "non_fit_kind": {
+            "0": "stopped before cap",
+            "1": "stopped before cap",
+            "2": "stopped before cap"
+          },
+          "n_fitting_seeds": 0,
+          "uninformative": true,
+          "fits": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "diverged": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "epoch_cap": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "band_70_90": {
+            "0": false,
+            "1": false,
+            "2": false
+          }
+        },
+        "summary": {
+          "mean_test": 2.1999999999999997,
+          "mean_val": 3.266666666666667,
+          "test_by_seed": {
+            "0": 2.6,
+            "1": 2.4,
+            "2": 1.6
+          },
+          "val_by_seed": {
+            "0": 3.3,
+            "1": 3.6,
+            "2": 2.9
+          }
+        },
+        "runs": {
+          "0": {
+            "label": "E2b/seed0",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E2b/study1/seed0",
+            "selected_epoch": 5,
+            "epochs_run": 56,
+            "train_accuracy_at_selected": 2.6,
+            "max_train_accuracy": 2.9125,
+            "final_train_accuracy": 1.45,
+            "max_minus_final": 1.4625000000000001,
+            "spike_flag": false,
+            "val_accuracy": 3.3,
+            "test_accuracy": 2.6,
+            "fits_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 508.3,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.001,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 0.5,
+              "study1/ood_ops5.json": 0.4,
+              "study1/ood_ops6.json": 0.5,
+              "study1/ood_ops7.json": 0.1
+            },
+            "fits": false,
+            "band": false
+          },
+          "1": {
+            "label": "E2b/seed1",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E2b/study1/seed1",
+            "selected_epoch": 7,
+            "epochs_run": 58,
+            "train_accuracy_at_selected": 2.5875,
+            "max_train_accuracy": 2.5875,
+            "final_train_accuracy": 1.425,
+            "max_minus_final": 1.1624999999999999,
+            "spike_flag": false,
+            "val_accuracy": 3.6,
+            "test_accuracy": 2.4,
+            "fits_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 515.6,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.001,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 0.7,
+              "study1/ood_ops5.json": 0.3,
+              "study1/ood_ops6.json": 0.2,
+              "study1/ood_ops7.json": 0.1
+            },
+            "fits": false,
+            "band": false
+          },
+          "2": {
+            "label": "E2b/seed2",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E2b/study1/seed2",
+            "selected_epoch": 3,
+            "epochs_run": 54,
+            "train_accuracy_at_selected": 1.8875,
+            "max_train_accuracy": 2.6375,
+            "final_train_accuracy": 1.425,
+            "max_minus_final": 1.2125000000000001,
+            "spike_flag": false,
+            "val_accuracy": 2.9,
+            "test_accuracy": 1.6,
+            "fits_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 470.6,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.001,
+            "weight_decay": 0.0,
+            "optimizer": "Adam",
+            "ood": {
+              "study1/ood_ops4.json": 0.6,
+              "study1/ood_ops5.json": 0.7,
+              "study1/ood_ops6.json": 0.3,
+              "study1/ood_ops7.json": 0.5
+            },
+            "fits": false,
+            "band": false
+          }
+        }
+      },
+      "E3b": {
+        "encoding": "sinusoidal",
+        "learning_rate": 0.0003,
+        "weight_decay": 0.1,
+        "status": {
+          "non_fit_kind": {
+            "0": null,
+            "1": null,
+            "2": null
+          },
+          "n_fitting_seeds": 3,
+          "uninformative": false,
+          "fits": {
+            "0": true,
+            "1": true,
+            "2": true
+          },
+          "diverged": {
+            "0": false,
+            "1": false,
+            "2": false
+          },
+          "epoch_cap": {
+            "0": true,
+            "1": false,
+            "2": false
+          },
+          "band_70_90": {
+            "0": false,
+            "1": true,
+            "2": false
+          }
+        },
+        "summary": {
+          "mean_test": 7.333333333333333,
+          "mean_val": 7.8,
+          "test_by_seed": {
+            "0": 7.1,
+            "1": 7.5,
+            "2": 7.4
+          },
+          "val_by_seed": {
+            "0": 8.0,
+            "1": 7.3,
+            "2": 8.1
+          }
+        },
+        "runs": {
+          "0": {
+            "label": "E3b/seed0",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E3b/study1/seed0",
+            "selected_epoch": 159,
+            "epochs_run": 200,
+            "train_accuracy_at_selected": 98.15,
+            "max_train_accuracy": 98.95,
+            "final_train_accuracy": 98.9,
+            "max_minus_final": 0.04999999999999716,
+            "spike_flag": false,
+            "val_accuracy": 8.0,
+            "test_accuracy": 7.1,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": true,
+            "wall_time_seconds": 1748.0,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0003,
+            "weight_decay": 0.1,
+            "optimizer": "AdamW",
+            "ood": {
+              "study1/ood_ops4.json": 0.4,
+              "study1/ood_ops5.json": 0.1,
+              "study1/ood_ops6.json": 0.2,
+              "study1/ood_ops7.json": 0.3
+            },
+            "fits": true,
+            "band": false
+          },
+          "1": {
+            "label": "E3b/seed1",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E3b/study1/seed1",
+            "selected_epoch": 108,
+            "epochs_run": 159,
+            "train_accuracy_at_selected": 84.4125,
+            "max_train_accuracy": 97.325,
+            "final_train_accuracy": 97.325,
+            "max_minus_final": 0.0,
+            "spike_flag": false,
+            "val_accuracy": 7.3,
+            "test_accuracy": 7.5,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 1414.1,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0003,
+            "weight_decay": 0.1,
+            "optimizer": "AdamW",
+            "ood": {
+              "study1/ood_ops4.json": 0.4,
+              "study1/ood_ops5.json": 0.1,
+              "study1/ood_ops6.json": 0.3,
+              "study1/ood_ops7.json": 0.3
+            },
+            "fits": true,
+            "band": true
+          },
+          "2": {
+            "label": "E3b/seed2",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/tuning_control/E3b/study1/seed2",
+            "selected_epoch": 140,
+            "epochs_run": 191,
+            "train_accuracy_at_selected": 96.5625,
+            "max_train_accuracy": 98.8625,
+            "final_train_accuracy": 98.8625,
+            "max_minus_final": 0.0,
+            "spike_flag": false,
+            "val_accuracy": 8.1,
+            "test_accuracy": 7.4,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 743.1,
+            "gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 1g.24gb",
+            "git_commit": "a280bfc98b14b65c42a80025f14998095850d260",
+            "learning_rate": 0.0003,
+            "weight_decay": 0.1,
+            "optimizer": "AdamW",
+            "ood": {
+              "study1/ood_ops4.json": 0.2,
+              "study1/ood_ops5.json": 0.5,
+              "study1/ood_ops6.json": 0.2,
+              "study1/ood_ops7.json": 0.4
+            },
+            "fits": true,
+            "band": false
+          }
+        }
+      }
+    },
+    "reading1_tuning_effect": {
+      "E1a": {
+        "reference": "R1",
+        "uninformative": true,
+        "note": "fewer than 2 of 3 seeds fit; reported as uninformative, not as a negative result"
+      },
+      "E1b": {
+        "reference": "R1",
+        "uninformative": true,
+        "note": "fewer than 2 of 3 seeds fit; reported as uninformative, not as a negative result"
+      },
+      "E2a": {
+        "reference": "R2",
+        "uninformative": true,
+        "note": "fewer than 2 of 3 seeds fit; reported as uninformative, not as a negative result"
+      },
+      "E2b": {
+        "reference": "R2",
+        "uninformative": true,
+        "note": "fewer than 2 of 3 seeds fit; reported as uninformative, not as a negative result"
+      }
+    },
+    "reading2_best_over_grid": {
+      "sinusoidal": {
+        "per_rate_means_over_seeds_0_1_2": {
+          "E1a": {
+            "mean_test": 7.566666666666666,
+            "mean_val": 7.066666666666666,
+            "test_by_seed": {
+              "0": 7.3,
+              "1": 7.6,
+              "2": 7.8
+            },
+            "val_by_seed": {
+              "0": 7.1,
+              "1": 7.1,
+              "2": 7.0
+            }
+          },
+          "R1": {
+            "mean_test": 7.3,
+            "mean_val": 7.233333333333333,
+            "test_by_seed": {
+              "0": 7.8,
+              "1": 7.1,
+              "2": 7.0
+            },
+            "val_by_seed": {
+              "0": 7.7,
+              "1": 7.0,
+              "2": 7.0
+            }
+          },
+          "E1b": {
+            "mean_test": 1.4666666666666668,
+            "mean_val": 1.8999999999999997,
+            "test_by_seed": {
+              "0": 1.6,
+              "1": 1.3,
+              "2": 1.5
+            },
+            "val_by_seed": {
+              "0": 1.9,
+              "1": 1.9,
+              "2": 1.9
+            }
+          }
+        },
+        "best_over_grid_maximum": {
+          "test_accuracy": 7.8,
+          "cell": "R1",
+          "seed": 0
+        },
+        "best_learning_rate_cell_by_mean_validation": "R1",
+        "best_configuration_by_mean_validation": "E3b",
+        "configurations_covered": [
+          "E1a",
+          "R1",
+          "E1b",
+          "E3a",
+          "E3b"
+        ],
+        "expected_validation_performance": {
+          "1": 6.166666666666667,
+          "2": 7.182666666666667,
+          "3": 7.492474074074074,
+          "4": 7.631354074074074,
+          "5": 7.717790946502057,
+          "6": 7.781276102057614,
+          "7": 7.831093957238226,
+          "8": 7.871301595361682,
+          "9": 7.904244024602754,
+          "10": 7.93150840521049,
+          "11": 7.954252154675556,
+          "12": 7.973351277495313,
+          "13": 7.989483506818246,
+          "14": 8.00318124695615,
+          "15": 8.014867700184958
+        }
+      },
+      "rope": {
+        "per_rate_means_over_seeds_0_1_2": {
+          "E2a": {
+            "mean_test": 20.5,
+            "mean_val": 19.4,
+            "test_by_seed": {
+              "0": 20.6,
+              "1": 19.4,
+              "2": 21.5
+            },
+            "val_by_seed": {
+              "0": 18.8,
+              "1": 19.0,
+              "2": 20.4
+            }
+          },
+          "R2": {
+            "mean_test": 19.599999999999998,
+            "mean_val": 19.53333333333333,
+            "test_by_seed": {
+              "0": 19.6,
+              "1": 19.7,
+              "2": 19.5
+            },
+            "val_by_seed": {
+              "0": 20.2,
+              "1": 19.1,
+              "2": 19.3
+            }
+          },
+          "E2b": {
+            "mean_test": 2.1999999999999997,
+            "mean_val": 3.266666666666667,
+            "test_by_seed": {
+              "0": 2.6,
+              "1": 2.4,
+              "2": 1.6
+            },
+            "val_by_seed": {
+              "0": 3.3,
+              "1": 3.6,
+              "2": 2.9
+            }
+          }
+        },
+        "best_over_grid_maximum": {
+          "test_accuracy": 21.5,
+          "cell": "E2a",
+          "seed": 2
+        },
+        "best_learning_rate_cell_by_mean_validation": "R2",
+        "best_configuration_by_mean_validation": "R2",
+        "configurations_covered": [
+          "E2a",
+          "R2",
+          "E2b"
+        ],
+        "expected_validation_performance": {
+          "1": 14.066666666666668,
+          "2": 17.82962962962963,
+          "3": 19.175308641975306,
+          "4": 19.700502972107913,
+          "5": 19.935030229131737,
+          "6": 20.059179099843632,
+          "7": 20.136361076143288,
+          "8": 20.190189329403275,
+          "9": 20.230353814870128
+        }
+      }
+    },
+    "reading3_architecture_gap": {
+      "selection_pool": {
+        "sinusoidal": {
+          "cells_mean_validation_over_seeds_0_1_2": {
+            "E1a": 7.066666666666666,
+            "R1": 7.233333333333333,
+            "E1b": 1.8999999999999997
+          },
+          "selected_cell": "R1"
+        }
+      },
+      "sinusoidal_cell": "R1",
+      "lstm_minus_transformer": {
+        "all_fitting_seeds": {
+          "per_seed": {
+            "0": {
+              "a_test": 33.6,
+              "b_test": 7.8,
+              "a_val": 35.1,
+              "b_val": 7.7,
+              "diff_points": 25.8,
+              "ci_fraction": [
+                0.22897499999999998,
+                0.291
+              ],
+              "eligible": false
+            },
+            "1": {
+              "a_test": 35.5,
+              "b_test": 7.1,
+              "a_val": 35.9,
+              "b_val": 7.0,
+              "diff_points": 28.4,
+              "ci_fraction": [
+                0.253,
+                0.316
+              ],
+              "eligible": false
+            },
+            "2": {
+              "a_test": 34.6,
+              "b_test": 7.0,
+              "a_val": 36.1,
+              "b_val": 7.0,
+              "diff_points": 27.6,
+              "ci_fraction": [
+                0.248,
+                0.307
+              ],
+              "eligible": true
+            }
+          },
+          "n_eligible": 1,
+          "n_excluding_zero_up": 1,
+          "n_excluding_zero_down": 0,
+          "direction": null,
+          "holds": false,
+          "verdict": "not evaluable (fewer than 2 eligible seeds)",
+          "count": "1/1 eligible seeds exclude 0 in one direction"
+        },
+        "excluding_band_70_90": {
+          "per_seed": {
+            "0": {
+              "a_test": 33.6,
+              "b_test": 7.8,
+              "a_val": 35.1,
+              "b_val": 7.7,
+              "diff_points": 25.8,
+              "ci_fraction": [
+                0.22897499999999998,
+                0.291
+              ],
+              "eligible": false
+            },
+            "1": {
+              "a_test": 35.5,
+              "b_test": 7.1,
+              "a_val": 35.9,
+              "b_val": 7.0,
+              "diff_points": 28.4,
+              "ci_fraction": [
+                0.253,
+                0.316
+              ],
+              "eligible": false
+            },
+            "2": {
+              "a_test": 34.6,
+              "b_test": 7.0,
+              "a_val": 36.1,
+              "b_val": 7.0,
+              "diff_points": 27.6,
+              "ci_fraction": [
+                0.248,
+                0.307
+              ],
+              "eligible": false
+            }
+          },
+          "n_eligible": 0,
+          "n_excluding_zero_up": 0,
+          "n_excluding_zero_down": 0,
+          "direction": null,
+          "holds": false,
+          "verdict": "not evaluable (fewer than 2 eligible seeds)",
+          "count": "0/0 eligible seeds exclude 0 in one direction"
+        }
+      },
+      "descriptive_best_configuration_overall": {
+        "label": "descriptive",
+        "sinusoidal_cell": "E3b",
+        "lstm_minus_transformer": {
+          "all_fitting_seeds": {
+            "per_seed": {
+              "0": {
+                "a_test": 33.6,
+                "b_test": 7.1,
+                "a_val": 35.1,
+                "b_val": 8.0,
+                "diff_points": 26.5,
+                "ci_fraction": [
+                  0.235,
+                  0.296
+                ],
+                "eligible": true
+              },
+              "1": {
+                "a_test": 35.5,
+                "b_test": 7.5,
+                "a_val": 35.9,
+                "b_val": 7.3,
+                "diff_points": 28.0,
+                "ci_fraction": [
+                  0.248975,
+                  0.312
+                ],
+                "eligible": true
+              },
+              "2": {
+                "a_test": 34.6,
+                "b_test": 7.4,
+                "a_val": 36.1,
+                "b_val": 8.1,
+                "diff_points": 27.200000000000003,
+                "ci_fraction": [
+                  0.243,
+                  0.302
+                ],
+                "eligible": true
+              }
+            },
+            "n_eligible": 3,
+            "n_excluding_zero_up": 3,
+            "n_excluding_zero_down": 0,
+            "direction": "up",
+            "holds": true,
+            "verdict": "up",
+            "count": "3/3 eligible seeds exclude 0 in one direction"
+          },
+          "excluding_band_70_90": {
+            "per_seed": {
+              "0": {
+                "a_test": 33.6,
+                "b_test": 7.1,
+                "a_val": 35.1,
+                "b_val": 8.0,
+                "diff_points": 26.5,
+                "ci_fraction": [
+                  0.235,
+                  0.296
+                ],
+                "eligible": true
+              },
+              "1": {
+                "a_test": 35.5,
+                "b_test": 7.5,
+                "a_val": 35.9,
+                "b_val": 7.3,
+                "diff_points": 28.0,
+                "ci_fraction": [
+                  0.248975,
+                  0.312
+                ],
+                "eligible": false
+              },
+              "2": {
+                "a_test": 34.6,
+                "b_test": 7.4,
+                "a_val": 36.1,
+                "b_val": 8.1,
+                "diff_points": 27.200000000000003,
+                "ci_fraction": [
+                  0.243,
+                  0.302
+                ],
+                "eligible": true
+              }
+            },
+            "n_eligible": 2,
+            "n_excluding_zero_up": 2,
+            "n_excluding_zero_down": 0,
+            "direction": "up",
+            "holds": true,
+            "verdict": "up",
+            "count": "2/2 eligible seeds exclude 0 in one direction"
+          }
+        }
+      }
+    },
+    "reading4_rope_gain": {
+      "selection_pool": {
+        "rope": {
+          "cells_mean_validation_over_seeds_0_1_2": {
+            "E2a": 19.4,
+            "R2": 19.53333333333333,
+            "E2b": 3.266666666666667
+          },
+          "selected_cell": "R2"
+        },
+        "sinusoidal": {
+          "cells_mean_validation_over_seeds_0_1_2": {
+            "E1a": 7.066666666666666,
+            "R1": 7.233333333333333,
+            "E1b": 1.8999999999999997
+          },
+          "selected_cell": "R1"
+        }
+      },
+      "rope_cell": "R2",
+      "sinusoidal_cell": "R1",
+      "rope_minus_sinusoidal": {
+        "all_fitting_seeds": {
+          "per_seed": {
+            "0": {
+              "a_test": 19.6,
+              "b_test": 7.8,
+              "a_val": 20.2,
+              "b_val": 7.7,
+              "diff_points": 11.8,
+              "ci_fraction": [
+                0.093,
+                0.14500000000000002
+              ],
+              "eligible": false
+            },
+            "1": {
+              "a_test": 19.7,
+              "b_test": 7.1,
+              "a_val": 19.1,
+              "b_val": 7.0,
+              "diff_points": 12.6,
+              "ci_fraction": [
+                0.099,
+                0.15300000000000002
+              ],
+              "eligible": false
+            },
+            "2": {
+              "a_test": 19.5,
+              "b_test": 7.0,
+              "a_val": 19.3,
+              "b_val": 7.0,
+              "diff_points": 12.5,
+              "ci_fraction": [
+                0.098,
+                0.153
+              ],
+              "eligible": false
+            }
+          },
+          "n_eligible": 0,
+          "n_excluding_zero_up": 0,
+          "n_excluding_zero_down": 0,
+          "direction": null,
+          "holds": false,
+          "verdict": "not evaluable (fewer than 2 eligible seeds)",
+          "count": "0/0 eligible seeds exclude 0 in one direction"
+        },
+        "excluding_band_70_90": {
+          "per_seed": {
+            "0": {
+              "a_test": 19.6,
+              "b_test": 7.8,
+              "a_val": 20.2,
+              "b_val": 7.7,
+              "diff_points": 11.8,
+              "ci_fraction": [
+                0.093,
+                0.14500000000000002
+              ],
+              "eligible": false
+            },
+            "1": {
+              "a_test": 19.7,
+              "b_test": 7.1,
+              "a_val": 19.1,
+              "b_val": 7.0,
+              "diff_points": 12.6,
+              "ci_fraction": [
+                0.099,
+                0.15300000000000002
+              ],
+              "eligible": false
+            },
+            "2": {
+              "a_test": 19.5,
+              "b_test": 7.0,
+              "a_val": 19.3,
+              "b_val": 7.0,
+              "diff_points": 12.5,
+              "ci_fraction": [
+                0.098,
+                0.153
+              ],
+              "eligible": false
+            }
+          },
+          "n_eligible": 0,
+          "n_excluding_zero_up": 0,
+          "n_excluding_zero_down": 0,
+          "direction": null,
+          "holds": false,
+          "verdict": "not evaluable (fewer than 2 eligible seeds)",
+          "count": "0/0 eligible seeds exclude 0 in one direction"
+        }
+      }
+    },
+    "reading5_weight_decay": {
+      "E3a": {
+        "reference": "R1",
+        "uninformative": true,
+        "note": "fewer than 2 of 3 seeds fit; reported as uninformative, not as a negative result"
+      },
+      "E3b": {
+        "reference": "R1",
+        "uninformative": true,
+        "note": "fewer than 2 of 3 seeds fit; reported as uninformative, not as a negative result"
+      }
+    },
+    "lstm": {
+      "summary": {
+        "mean_test": 34.56666666666666,
+        "mean_val": 35.699999999999996,
+        "test_by_seed": {
+          "0": 33.6,
+          "1": 35.5,
+          "2": 34.6
+        },
+        "val_by_seed": {
+          "0": 35.1,
+          "1": 35.9,
+          "2": 36.1
+        }
+      },
+      "runs": {
+        "0": {
+          "label": "lstm/seed0",
+          "test_accuracy": 33.6,
+          "val_accuracy": 35.1,
+          "selected_epoch": 43,
+          "fits": true,
+          "band": false,
+          "diverged": false,
+          "epoch_cap": false,
+          "ood": {
+            "study1/ood_ops4.json": 14.4,
+            "study1/ood_ops5.json": 9.5,
+            "study1/ood_ops6.json": 2.8,
+            "study1/ood_ops7.json": 2.1
+          }
+        },
+        "1": {
+          "label": "lstm/seed1",
+          "test_accuracy": 35.5,
+          "val_accuracy": 35.9,
+          "selected_epoch": 46,
+          "fits": true,
+          "band": false,
+          "diverged": false,
+          "epoch_cap": false,
+          "ood": {
+            "study1/ood_ops4.json": 16.4,
+            "study1/ood_ops5.json": 7.7,
+            "study1/ood_ops6.json": 2.8,
+            "study1/ood_ops7.json": 2.5
+          }
+        },
+        "2": {
+          "label": "lstm/seed2",
+          "test_accuracy": 34.6,
+          "val_accuracy": 36.1,
+          "selected_epoch": 51,
+          "fits": true,
+          "band": false,
+          "diverged": false,
+          "epoch_cap": false,
+          "ood": {
+            "study1/ood_ops4.json": 13.7,
+            "study1/ood_ops5.json": 7.5,
+            "study1/ood_ops6.json": 2.5,
+            "study1/ood_ops7.json": 1.8
+          }
+        }
+      }
+    },
+    "descriptive_rtx4000ada": {
+      "sinusoidal_retrain": {
+        "beside": "R1",
+        "summary": {
+          "mean_test": 7.566666666666666,
+          "mean_val": 7.233333333333333,
+          "test_by_seed": {
+            "0": 7.6,
+            "1": 7.4,
+            "2": 7.7
+          },
+          "val_by_seed": {
+            "0": 7.3,
+            "1": 6.6,
+            "2": 7.8
+          }
+        },
+        "runs": {
+          "0": {
+            "label": "sinusoidal_retrain/seed0",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/pos_sweep/sinusoidal_retrain/study1/seed0",
+            "selected_epoch": 165,
+            "epochs_run": 200,
+            "train_accuracy_at_selected": 94.7875,
+            "max_train_accuracy": 96.425,
+            "final_train_accuracy": 96.275,
+            "max_minus_final": 0.14999999999999147,
+            "spike_flag": false,
+            "val_accuracy": 7.3,
+            "test_accuracy": 7.6,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": true,
+            "wall_time_seconds": 2440.8,
+            "gpu": "NVIDIA RTX 4000 Ada Generation",
+            "git_commit": "2030fd54419aa85dbdd86727b5829496d03c9ab2",
+            "learning_rate": null,
+            "weight_decay": null,
+            "optimizer": null,
+            "ood": {
+              "study1/ood_ops4.json": 0.4,
+              "study1/ood_ops5.json": 0.8,
+              "study1/ood_ops6.json": 0.1,
+              "study1/ood_ops7.json": 0.2
+            },
+            "fits": true,
+            "band": false
+          },
+          "1": {
+            "label": "sinusoidal_retrain/seed1",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/pos_sweep/sinusoidal_retrain/study1/seed1",
+            "selected_epoch": 110,
+            "epochs_run": 161,
+            "train_accuracy_at_selected": 80.775,
+            "max_train_accuracy": 92.9375,
+            "final_train_accuracy": 92.9375,
+            "max_minus_final": 0.0,
+            "spike_flag": false,
+            "val_accuracy": 6.6,
+            "test_accuracy": 7.4,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 1970.6,
+            "gpu": "NVIDIA RTX 4000 Ada Generation",
+            "git_commit": "2030fd54419aa85dbdd86727b5829496d03c9ab2",
+            "learning_rate": null,
+            "weight_decay": null,
+            "optimizer": null,
+            "ood": {
+              "study1/ood_ops4.json": 0.4,
+              "study1/ood_ops5.json": 0.3,
+              "study1/ood_ops6.json": 0.2,
+              "study1/ood_ops7.json": 0.4
+            },
+            "fits": true,
+            "band": true
+          },
+          "2": {
+            "label": "sinusoidal_retrain/seed2",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/pos_sweep/sinusoidal_retrain/study1/seed2",
+            "selected_epoch": 187,
+            "epochs_run": 200,
+            "train_accuracy_at_selected": 93.8375,
+            "max_train_accuracy": 94.4375,
+            "final_train_accuracy": 94.1375,
+            "max_minus_final": 0.29999999999999716,
+            "spike_flag": false,
+            "val_accuracy": 7.8,
+            "test_accuracy": 7.7,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": false
+            },
+            "diverged": false,
+            "epoch_cap": true,
+            "wall_time_seconds": 2455.6,
+            "gpu": "NVIDIA RTX 4000 Ada Generation",
+            "git_commit": "2030fd54419aa85dbdd86727b5829496d03c9ab2",
+            "learning_rate": null,
+            "weight_decay": null,
+            "optimizer": null,
+            "ood": {
+              "study1/ood_ops4.json": 0.4,
+              "study1/ood_ops5.json": 0.2,
+              "study1/ood_ops6.json": 0.5,
+              "study1/ood_ops7.json": 0.1
+            },
+            "fits": true,
+            "band": false
+          }
+        },
+        "diff_vs_pod_reference_not_a_reference": {
+          "per_seed": {
+            "0": {
+              "a_test": 7.6,
+              "b_test": 7.8,
+              "a_val": 7.3,
+              "b_val": 7.7,
+              "diff_points": -0.20000000000000018,
+              "ci_fraction": [
+                -0.015,
+                0.010999999999999996
+              ],
+              "eligible": false
+            },
+            "1": {
+              "a_test": 7.4,
+              "b_test": 7.1,
+              "a_val": 6.6,
+              "b_val": 7.0,
+              "diff_points": 0.3000000000000007,
+              "ci_fraction": [
+                -0.009999999999999995,
+                0.015024999999999983
+              ],
+              "eligible": false
+            },
+            "2": {
+              "a_test": 7.7,
+              "b_test": 7.0,
+              "a_val": 7.8,
+              "b_val": 7.0,
+              "diff_points": 0.7000000000000002,
+              "ci_fraction": [
+                -0.0050000000000000044,
+                0.02099999999999999
+              ],
+              "eligible": true
+            }
+          },
+          "n_eligible": 1,
+          "n_excluding_zero_up": 0,
+          "n_excluding_zero_down": 0,
+          "direction": null,
+          "holds": false,
+          "verdict": "not evaluable (fewer than 2 eligible seeds)",
+          "count": "0/1 eligible seeds exclude 0 in one direction"
+        },
+        "note": "RTX 4000 Ada; reported beside the same-GPU reference, descriptively, never as a reference"
+      },
+      "rope": {
+        "beside": "R2",
+        "summary": {
+          "mean_test": 20.3,
+          "mean_val": 21.333333333333332,
+          "test_by_seed": {
+            "0": 21.4,
+            "1": 18.0,
+            "2": 21.5
+          },
+          "val_by_seed": {
+            "0": 22.7,
+            "1": 19.8,
+            "2": 21.5
+          }
+        },
+        "runs": {
+          "0": {
+            "label": "rope/seed0",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/pos_sweep/rope/study1/seed0",
+            "selected_epoch": 74,
+            "epochs_run": 125,
+            "train_accuracy_at_selected": 89.725,
+            "max_train_accuracy": 99.8,
+            "final_train_accuracy": 99.8,
+            "max_minus_final": 0.0,
+            "spike_flag": false,
+            "val_accuracy": 22.7,
+            "test_accuracy": 21.4,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": true
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 3112.0,
+            "gpu": "NVIDIA RTX 4000 Ada Generation",
+            "git_commit": "01b5bb76bd19f1f7739af1c80d2a4b6e27544d89",
+            "learning_rate": null,
+            "weight_decay": null,
+            "optimizer": null,
+            "ood": {
+              "study1/ood_ops4.json": 2.4,
+              "study1/ood_ops5.json": 1.6,
+              "study1/ood_ops6.json": 1.1,
+              "study1/ood_ops7.json": 0.4
+            },
+            "fits": true,
+            "band": true
+          },
+          "1": {
+            "label": "rope/seed1",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/pos_sweep/rope/study1/seed1",
+            "selected_epoch": 58,
+            "epochs_run": 109,
+            "train_accuracy_at_selected": 78.85,
+            "max_train_accuracy": 99.5625,
+            "final_train_accuracy": 99.0,
+            "max_minus_final": 0.5625,
+            "spike_flag": false,
+            "val_accuracy": 19.8,
+            "test_accuracy": 18.0,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 4828.3,
+            "gpu": "NVIDIA RTX 4000 Ada Generation",
+            "git_commit": "01b5bb76bd19f1f7739af1c80d2a4b6e27544d89",
+            "learning_rate": null,
+            "weight_decay": null,
+            "optimizer": null,
+            "ood": {
+              "study1/ood_ops4.json": 1.9,
+              "study1/ood_ops5.json": 1.0,
+              "study1/ood_ops6.json": 0.8,
+              "study1/ood_ops7.json": 0.6
+            },
+            "fits": false,
+            "band": true
+          },
+          "2": {
+            "label": "rope/seed2",
+            "dir": "/Users/zsy/Desktop/Project's/Compositional-Reasoning-Arithmetic/results_v2/pos_sweep/rope/study1/seed2",
+            "selected_epoch": 58,
+            "epochs_run": 109,
+            "train_accuracy_at_selected": 70.4375,
+            "max_train_accuracy": 98.9375,
+            "final_train_accuracy": 98.725,
+            "max_minus_final": 0.21250000000000568,
+            "spike_flag": false,
+            "val_accuracy": 21.5,
+            "test_accuracy": 21.5,
+            "fits_by_rule": {
+              "max_train": true,
+              "selected_epoch": false
+            },
+            "band_by_rule": {
+              "max_train": false,
+              "selected_epoch": true
+            },
+            "diverged": false,
+            "epoch_cap": false,
+            "wall_time_seconds": 4843.5,
+            "gpu": "NVIDIA RTX 4000 Ada Generation",
+            "git_commit": "01b5bb76bd19f1f7739af1c80d2a4b6e27544d89",
+            "learning_rate": null,
+            "weight_decay": null,
+            "optimizer": null,
+            "ood": {
+              "study1/ood_ops4.json": 1.9,
+              "study1/ood_ops5.json": 1.1,
+              "study1/ood_ops6.json": 0.3,
+              "study1/ood_ops7.json": 0.3
+            },
+            "fits": false,
+            "band": true
+          }
+        },
+        "diff_vs_pod_reference_not_a_reference": {
+          "per_seed": {
+            "0": {
+              "a_test": 21.4,
+              "b_test": 19.6,
+              "a_val": 22.7,
+              "b_val": 20.2,
+              "diff_points": 1.7999999999999972,
+              "ci_fraction": [
+                -0.010999999999999982,
+                0.04902499999999999
+              ],
+              "eligible": false
+            },
+            "1": {
+              "a_test": 18.0,
+              "b_test": 19.7,
+              "a_val": 19.8,
+              "b_val": 19.1,
+              "diff_points": -1.6999999999999993,
+              "ci_fraction": [
+                -0.046999999999999986,
+                0.015000000000000013
+              ],
+              "eligible": false
+            },
+            "2": {
+              "a_test": 21.5,
+              "b_test": 19.5,
+              "a_val": 21.5,
+              "b_val": 19.3,
+              "diff_points": 2.0,
+              "ci_fraction": [
+                -0.009000000000000008,
+                0.05299999999999999
+              ],
+              "eligible": false
+            }
+          },
+          "n_eligible": 0,
+          "n_excluding_zero_up": 0,
+          "n_excluding_zero_down": 0,
+          "direction": null,
+          "holds": false,
+          "verdict": "not evaluable (fewer than 2 eligible seeds)",
+          "count": "0/0 eligible seeds exclude 0 in one direction"
+        },
+        "note": "RTX 4000 Ada; reported beside the same-GPU reference, descriptively, never as a reference"
+      }
+    },
+    "ood_ops4_7_descriptive": {
+      "R1": {
+        "study1/ood_ops4.json": 0.5333333333333333,
+        "study1/ood_ops5.json": 0.39999999999999997,
+        "study1/ood_ops6.json": 0.26666666666666666,
+        "study1/ood_ops7.json": 0.13333333333333333
+      },
+      "E1a": {
+        "study1/ood_ops4.json": 0.6,
+        "study1/ood_ops5.json": 0.20000000000000004,
+        "study1/ood_ops6.json": 0.2333333333333333,
+        "study1/ood_ops7.json": 0.23333333333333336
+      },
+      "E1b": {
+        "study1/ood_ops4.json": 0.5,
+        "study1/ood_ops5.json": 0.3333333333333333,
+        "study1/ood_ops6.json": 0.3666666666666667,
+        "study1/ood_ops7.json": 0.03333333333333333
+      },
+      "E3a": {
+        "study1/ood_ops4.json": 0.43333333333333335,
+        "study1/ood_ops5.json": 0.26666666666666666,
+        "study1/ood_ops6.json": 0.2333333333333333,
+        "study1/ood_ops7.json": 0.26666666666666666
+      },
+      "R2": {
+        "study1/ood_ops4.json": 1.6333333333333335,
+        "study1/ood_ops5.json": 0.8666666666666667,
+        "study1/ood_ops6.json": 0.39999999999999997,
+        "study1/ood_ops7.json": 0.4666666666666666
+      },
+      "E2a": {
+        "study1/ood_ops4.json": 1.9666666666666668,
+        "study1/ood_ops5.json": 0.4666666666666666,
+        "study1/ood_ops6.json": 0.36666666666666664,
+        "study1/ood_ops7.json": 0.3333333333333333
+      },
+      "E2b": {
+        "study1/ood_ops4.json": 0.6,
+        "study1/ood_ops5.json": 0.4666666666666666,
+        "study1/ood_ops6.json": 0.3333333333333333,
+        "study1/ood_ops7.json": 0.2333333333333333
+      },
+      "E3b": {
+        "study1/ood_ops4.json": 0.3333333333333333,
+        "study1/ood_ops5.json": 0.2333333333333333,
+        "study1/ood_ops6.json": 0.2333333333333333,
+        "study1/ood_ops7.json": 0.3333333333333333
+      },
+      "lstm": {
+        "study1/ood_ops4.json": 14.833333333333334,
+        "study1/ood_ops5.json": 8.233333333333333,
+        "study1/ood_ops6.json": 2.6999999999999997,
+        "study1/ood_ops7.json": 2.1333333333333333
+      }
+    },
+    "compute": {
+      "train_seconds_by_cell": {
+        "R1": [
+          1338.0,
+          1451.3,
+          1588.3
+        ],
+        "E1a": [
+          1704.7,
+          1729.8,
+          1711.4
+        ],
+        "E1b": [
+          475.4,
+          489.6,
+          458.8
+        ],
+        "E3a": [
+          1398.6,
+          1472.8,
+          1716.8
+        ],
+        "R2": [
+          937.2,
+          1038.4,
+          862.6
+        ],
+        "E2a": [
+          1121.2,
+          1142.6,
+          1174.6
+        ],
+        "E2b": [
+          508.3,
+          515.6,
+          470.6
+        ],
+        "E3b": [
+          1748.0,
+          1414.1,
+          743.1
+        ]
+      },
+      "total_train_hours": 7.558833333333333,
+      "reference_train_hours": 2.004388888888889,
+      "summary_txt_run_lines": [
+        "R1\tseed0\texit=0\twall_seconds=1359",
+        "R1\tseed1\texit=0\twall_seconds=1473",
+        "R1\tseed2\texit=0\twall_seconds=1609",
+        "E1a\tseed0\texit=0\twall_seconds=1725",
+        "E1a\tseed1\texit=0\twall_seconds=1750",
+        "E1a\tseed2\texit=0\twall_seconds=1731",
+        "E1b\tseed0\texit=0\twall_seconds=496",
+        "E1b\tseed1\texit=0\twall_seconds=510",
+        "E1b\tseed2\texit=0\twall_seconds=479",
+        "E3a\tseed0\texit=0\twall_seconds=1419",
+        "E3a\tseed1\texit=0\twall_seconds=1494",
+        "E3a\tseed2\texit=0\twall_seconds=1738",
+        "R2\tseed0\texit=0\twall_seconds=962",
+        "R2\tseed1\texit=0\twall_seconds=1066",
+        "R2\tseed2\texit=0\twall_seconds=889",
+        "E2a\tseed0\texit=0\twall_seconds=1147",
+        "E2a\tseed1\texit=0\twall_seconds=1168",
+        "E2a\tseed2\texit=0\twall_seconds=1202",
+        "E2b\tseed0\texit=0\twall_seconds=536",
+        "E2b\tseed1\texit=0\twall_seconds=544",
+        "E2b\tseed2\texit=0\twall_seconds=499",
+        "E3b\tseed0\texit=0\twall_seconds=1765",
+        "E3b\tseed1\texit=0\twall_seconds=1431",
+        "E3b\tseed2\texit=0\twall_seconds=757"
+      ],
+      "note": "sum of per-run training wall time; two runs shared the pod, so pod wall-clock is shorter"
+    }
+  }
+}
