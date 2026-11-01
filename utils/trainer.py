@@ -74,6 +74,13 @@ def _make_scheduler_lambda(warmup_steps: int, total_steps: int, schedule: str, m
     return lr_lambda
 
 
+def build_optimizer(model, learning_rate, weight_decay=0.0):
+    # weight_decay == 0 keeps the original plain Adam; > 0 switches to decoupled-decay AdamW.
+    if weight_decay == 0:
+        return torch.optim.Adam(model.parameters(), lr=learning_rate)
+    return torch.optim.AdamW(model.parameters(), lr=learning_rate, weight_decay=weight_decay)
+
+
 def train_epoch(model, dataloader, optimizer, criterion, device, pad_idx=0, scheduler=None):
     # Train for one epoch - return loss only
     model.train()
@@ -116,6 +123,7 @@ def train_model(
     dataset_version: Optional[str] = None,
     generator_commit: Optional[str] = None,
     extra_checkpoint_metadata: Optional[dict] = None,
+    weight_decay: float = 0.0,
 ) -> Dict[str, list]:
     """
     Checkpoint selection AND early stopping both now watch VAL_ACCURACY
@@ -135,7 +143,7 @@ def train_model(
 
     model = model.to(device)
     criterion = nn.CrossEntropyLoss(ignore_index=pad_idx)
-    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+    optimizer = build_optimizer(model, learning_rate, weight_decay)
 
     steps_per_epoch = len(train_loader)
     total_steps = num_epochs * steps_per_epoch
