@@ -157,7 +157,7 @@ def evaluate_ood(model, tokenizer, data_dir: Path, study: str, batch_size: int, 
     return results
 
 
-def main():
+def build_parser():
     parser = argparse.ArgumentParser(description="Retrain on datasets_v2 with the fixed pipeline")
     parser.add_argument('--model', choices=['lstm', 'transformer'], required=True)
     parser.add_argument('--study', choices=['1', '2'], required=True)
@@ -175,7 +175,24 @@ def main():
                         help="train on the first N training examples only (smoke tests)")
     parser.add_argument('--output-dir', type=str, default=None,
                         help="override the results directory (smoke tests)")
+    parser.add_argument('--learning-rate', type=float, default=None,
+                        help="peak learning rate; default is TRAINING_CONFIG_V2['learning_rate'][model]")
+    parser.add_argument('--weight-decay', type=float, default=0.0,
+                        help="0 (default) trains with plain Adam; > 0 switches to AdamW with this decay")
+    return parser
+
+
+def optimizer_settings(args):
+    lr = args.learning_rate if args.learning_rate is not None else TRAINING_CONFIG_V2['learning_rate'][args.model]
+    return {"learning_rate": lr, "weight_decay": args.weight_decay,
+            "optimizer": "AdamW" if args.weight_decay > 0 else "Adam"}
+
+
+def main():
+    parser = build_parser()
     args = parser.parse_args()
+    if args.weight_decay < 0:
+        parser.error("--weight-decay must be >= 0")
     if args.model == 'lstm' and args.positional_encoding != 'sinusoidal':
         parser.error("--positional_encoding applies to the transformer only")
 
@@ -203,6 +220,8 @@ def main():
     save_path = results_dir / "best_model.pt"
 
     environment = run_environment(device)
+    optim = optimizer_settings(args)
+    environment.update(optim)
     with open(results_dir / "environment.json", 'w') as f:
         json.dump(environment, f, indent=2)
 
@@ -237,7 +256,8 @@ def main():
             train_loader=train_loader,
             val_loader=val_loader,
             num_epochs=args.epochs,
-            learning_rate=TRAINING_CONFIG_V2['learning_rate'][args.model],
+            learning_rate=optim['learning_rate'],
+            weight_decay=optim['weight_decay'],
             device=device,
             save_path=str(save_path),
             pad_idx=tokenizer.pad_idx,
@@ -270,6 +290,7 @@ def main():
     elapsed = time.time() - t_start
     history['batch_size_used'] = batch_size_used
     history['environment'] = environment
+    history.update(optim)
     history['wall_time_seconds'] = round(elapsed, 1)
     if args.model == 'transformer':
         history['positional_encoding'] = args.positional_encoding

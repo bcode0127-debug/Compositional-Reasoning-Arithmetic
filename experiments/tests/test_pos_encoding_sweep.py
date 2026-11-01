@@ -462,7 +462,8 @@ def test_environment_json_written_before_training(tmp_path, monkeypatch):
     with pytest.raises(RuntimeError, match="simulated training failure"):
         train_v2.main()
     env = json.loads((out / "environment.json").read_text())
-    keys = set(train_v2.environment_block("cpu")) | {"driver_version", "pod_image", "git_commit", "started_at_utc"}
+    keys = set(train_v2.environment_block("cpu")) | {"driver_version", "pod_image", "git_commit", "started_at_utc",
+                                                          "learning_rate", "weight_decay", "optimizer"}
     assert set(env) == keys
     assert not (out / "history.json").exists()
 
