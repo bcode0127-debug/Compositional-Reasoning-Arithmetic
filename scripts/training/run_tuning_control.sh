@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Tuning-control runner (design: docs/design/tuning-control.md). Six cells x seeds 0,1,2 on Study 1, transformer.
+# Tuning-control runner (design: docs/design/tuning-control.md). Eight cells (R1, R2 are the same-GPU reference cells) x seeds 0,1,2 on Study 1, transformer.
 # Training flags are run_pos_sweep.sh's (--epochs 200 --patience 50, schedule and batch size from
 # TRAINING_CONFIG_V2) plus --learning-rate and --weight-decay per cell. At most 2 runs at once, each with
 # OMP_NUM_THREADS and MKL_NUM_THREADS = max(1, nproc/2).
 #
-#   scripts/training/run_tuning_control.sh --dry-run     # print the 18 train commands and exit
+#   scripts/training/run_tuning_control.sh --dry-run     # print the 24 train commands and exit
 #   PYTHON=/path/to/python scripts/training/run_tuning_control.sh
 #
 # POD_IMAGE must be exported: train_v2.py records it in each run's environment.json.
@@ -17,7 +17,7 @@ LOG_DIR="$REPO_DIR/logs/tuning_control"
 SUMMARY="$REPO_DIR/$OUT_ROOT/summary.txt"
 
 # cell:encoding:learning_rate:weight_decay, in run order
-CELLS=(E1a:sinusoidal:1e-4:0 E1b:sinusoidal:1e-3:0 E3a:sinusoidal:3e-4:0.01 E2a:rope:1e-4:0 E2b:rope:1e-3:0 E3b:sinusoidal:3e-4:0.1)
+CELLS=(R1:sinusoidal:3e-4:0 E1a:sinusoidal:1e-4:0 E1b:sinusoidal:1e-3:0 E3a:sinusoidal:3e-4:0.01 R2:rope:3e-4:0 E2a:rope:1e-4:0 E2b:rope:1e-3:0 E3b:sinusoidal:3e-4:0.1)
 SEEDS=(0 1 2)
 
 train_cmd() {

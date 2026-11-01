@@ -96,9 +96,10 @@ def test_run_tuning_control_dry_run():
                        capture_output=True, text=True, env={**os.environ, "PYTHON": "python3"})
     assert r.returncode == 0
     lines = r.stdout.splitlines()
-    assert len(lines) == 18
-    cells = [("E1a", "sinusoidal", "1e-4", "0"), ("E1b", "sinusoidal", "1e-3", "0"),
-             ("E3a", "sinusoidal", "3e-4", "0.01"), ("E2a", "rope", "1e-4", "0"), ("E2b", "rope", "1e-3", "0"),
+    assert len(lines) == 24
+    cells = [("R1", "sinusoidal", "3e-4", "0"), ("E1a", "sinusoidal", "1e-4", "0"), ("E1b", "sinusoidal", "1e-3", "0"),
+             ("E3a", "sinusoidal", "3e-4", "0.01"),
+             ("R2", "rope", "3e-4", "0"), ("E2a", "rope", "1e-4", "0"), ("E2b", "rope", "1e-3", "0"),
              ("E3b", "sinusoidal", "3e-4", "0.1")]
     expected = [f"python3 -u train_v2.py --model transformer --study 1 --seed {s} --epochs 200 --patience 50 "
                 f"--positional_encoding {enc} --learning-rate {lr} --weight-decay {wd} "
