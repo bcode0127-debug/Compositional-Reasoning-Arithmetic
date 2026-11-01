@@ -1,0 +1,14 @@
+{
+  "python": "3.12.3",
+  "torch": "2.8.0+cu128",
+  "numpy": "2.5.2",
+  "cuda": "12.8",
+  "cudnn": 91002,
+  "gpu": "NVIDIA RTX 4000 Ada Generation",
+  "device": "cuda",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.39",
+  "driver_version": "595.91.07",
+  "pod_image": "RunPod PyTorch template 1.5.0-2.8.0 (PyTorch 2.8.0, CUDA 12.8.1, Ubuntu 24.04)",
+  "git_commit": "01b5bb76bd19f1f7739af1c80d2a4b6e27544d89",
+  "started_at_utc": "2026-10-29T00:43:15.419350+00:00"
+}

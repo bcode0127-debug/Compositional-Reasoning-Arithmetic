@@ -1,0 +1,10 @@
+nope_study1_seed0	best_val_accuracy=6.40%	best_epoch=142	epochs_run=193	test_accuracy=6.70%	train_seconds=2369.4	wall_seconds=2424
+learned_study1_seed0	best_val_accuracy=7.50%	best_epoch=115	epochs_run=166	test_accuracy=7.00%	train_seconds=2037.7	wall_seconds=2093
+rope_study1_seed1	best_val_accuracy=19.80%	best_epoch=58	epochs_run=109	test_accuracy=18.00%	train_seconds=4828.3	wall_seconds=5015
+learned_study1_seed1	best_val_accuracy=7.20%	best_epoch=101	epochs_run=152	test_accuracy=7.40%	train_seconds=5950.5	wall_seconds=6111
+alibi_study1_seed1	best_val_accuracy=12.00%	best_epoch=94	epochs_run=145	test_accuracy=12.60%	train_seconds=5954.2	wall_seconds=6179
+rope_study1_seed2	best_val_accuracy=21.50%	best_epoch=58	epochs_run=109	test_accuracy=21.50%	train_seconds=4843.5	wall_seconds=5039
+learned_study1_seed2	best_val_accuracy=6.60%	best_epoch=82	epochs_run=133	test_accuracy=6.00%	train_seconds=5329.0	wall_seconds=5463
+alibi_study1_seed2	best_val_accuracy=12.10%	best_epoch=106	epochs_run=157	test_accuracy=13.10%	train_seconds=6508.6	wall_seconds=6686
+alibi_study1_seed0	best_val_accuracy=12.50%	best_epoch=54	epochs_run=105	test_accuracy=10.40%	train_seconds=3756.6	wall_seconds=3883
+rope_study1_seed0	best_val_accuracy=22.70%	best_epoch=74	epochs_run=125	test_accuracy=21.40%	train_seconds=3112.0	wall_seconds=3201
