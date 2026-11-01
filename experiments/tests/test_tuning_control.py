@@ -105,3 +105,17 @@ def test_run_tuning_control_dry_run():
                 f"--output-dir results_v2/tuning_control/{cell}/study1/seed{s}"
                 for cell, enc, lr, wd in cells for s in range(3)]
     assert lines == expected
+
+
+def test_adamw_zero_weight_decay_step_identical_to_adam():
+    x = torch.randn(16, 4, generator=torch.Generator().manual_seed(1))
+    y = torch.randn(16, 2, generator=torch.Generator().manual_seed(2))
+    a, b = small_model(), small_model()
+    oa = torch.optim.AdamW(a.parameters(), lr=3e-4, betas=(0.9, 0.999), eps=1e-8, weight_decay=0.0)
+    ob = torch.optim.Adam(b.parameters(), lr=3e-4, betas=(0.9, 0.999), eps=1e-8)
+    for m, o in ((a, oa), (b, ob)):
+        o.zero_grad()
+        nn.functional.mse_loss(m(x), y).backward()
+        o.step()
+    for pa, pb in zip(a.parameters(), b.parameters()):
+        assert torch.equal(pa, pb)
