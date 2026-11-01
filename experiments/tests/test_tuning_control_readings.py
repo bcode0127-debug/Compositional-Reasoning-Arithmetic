@@ -187,3 +187,47 @@ def test_classification_differs_line(tmp_path):
     assert ver.startswith("Verdict differs between rules:")
     md = tcr.md_full(full)
     assert cls in md and ver in md and md.count("## Cells: fit count and classification under each rule") == 1
+
+
+def _synthetic_full_inputs(tmp_path, tweak=None):
+    root = tmp_path / "r"
+    for c, (enc, lr, wd) in tcr.CELLS.items():
+        for k in tcr.SEEDS:
+            write_run(tcr.run_dir(root, c, k), enc, lr, wd, 8 + (4 if c == "E1b" else 0), 85.0, k)
+    if tweak:
+        tweak(root)
+    sweep = tmp_path / "s"
+    for a, (enc, _) in tcr.DESC_RUNS.items():
+        for k in tcr.SEEDS:
+            write_run(tcr.run_dir(sweep, a, k), enc, 3e-4, 0.0, 8, 85.0, k)
+    lstm = {k: {"label": "l", "test_accuracy": 35.0, "val_accuracy": 35.0, "selected_epoch": 1, "fits": True, "band": False,
+                "diverged": False, "epoch_cap": False, "ood": {f: 5.0 for f in tcr.OOD_FILES},
+                "flags": (np.random.default_rng(k).random(1000) < 0.35).astype(float)} for k in tcr.SEEDS}
+    return tcr.load_cells(root), tcr.load_descriptive(sweep), lstm
+
+
+def test_selection_pool_same_under_both_rules_when_a_grid_cell_is_uninformative_under_one(tmp_path):
+    def tweak(root):  # E1b: a low value at the selected epoch for two seeds, a later peak above 80
+        for k in (0, 1):
+            d = tcr.run_dir(root, "E1b", k)
+            h = json.loads((d / "history.json").read_text())
+            h["train_accuracies"][40], h["train_accuracies"][55] = 40.0, 90.0
+            (d / "history.json").write_text(json.dumps(h))
+    cells, desc, lstm = _synthetic_full_inputs(tmp_path, tweak)
+    a, b = tcr.under_rule(cells, "max_train"), tcr.under_rule(cells, "selected_epoch")
+    assert tcr.cell_status(a["E1b"])["uninformative"] is False and tcr.cell_status(b["E1b"])["uninformative"] is True
+    assert tcr.best_by_val(a, "sinusoidal") == tcr.best_by_val(b, "sinusoidal") == "E1b"
+    full = {"first_line": tcr.FIRST_LINE, "fit_rules": tcr.RULE_TEXT, "primary_rule": "max_train", "pre_registered_rule": "selected_epoch",
+            **{r: tcr.build(cells, desc, lstm, None, r) for r in tcr.RULES}}
+    tcr.validate(full)
+    assert full["max_train"]["reading3_architecture_gap"]["selection_pool"] == full["selected_epoch"]["reading3_architecture_gap"]["selection_pool"]
+    md = tcr.md_full(full)
+    assert tcr.SAME_LINE in md and "Selection pool, sinusoidal" in md and "Selection pool, rope" in md
+
+
+def test_non_fit_kind(tmp_path):
+    for n_epochs, expected in ((200, "epoch cap"), (60, "stopped before cap")):
+        d = tmp_path / f"run{n_epochs}"
+        write_run(d, "sinusoidal", 3e-4, 0.0, 8, 30.0, 0, n_epochs=n_epochs)  # never fits
+        r = tcr.under_rule({0: tcr.load_run(d, "x")}, "max_train")[0]
+        assert tcr.non_fit_kind(r) == expected

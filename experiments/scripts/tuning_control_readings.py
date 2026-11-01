@@ -137,9 +137,19 @@ def load_descriptive(sweep_root=SWEEP_ROOT):
     return {a: {k: load_run(run_dir(sweep_root, a, k), f"{a}/seed{k}") for k in SEEDS} for a in DESC_RUNS}
 
 
+def non_fit_kind(r):
+    """Why a non-fitting seed did not fit: it reached the epoch cap (a budget result), or it stopped before the cap
+    (a rate result), with 'diverged' added when that flag is set. None for a fitting seed."""
+    if r["fits"]:
+        return None
+    if r["epoch_cap"]:
+        return "epoch cap"
+    return "stopped before cap" + (", diverged" if r["diverged"] else "")
+
+
 def cell_status(runs):
     n_fit = sum(r["fits"] for r in runs.values())
-    return {"n_fitting_seeds": n_fit, "uninformative": bool(n_fit < 2),
+    return {"non_fit_kind": {str(k): non_fit_kind(r) for k, r in runs.items()}, "n_fitting_seeds": n_fit, "uninformative": bool(n_fit < 2),
             "fits": {str(k): r["fits"] for k, r in runs.items()},
             "diverged": {str(k): r["diverged"] for k, r in runs.items()},
             "epoch_cap": {str(k): r["epoch_cap"] for k, r in runs.items()},
@@ -342,12 +352,17 @@ def build(cells, desc, lstm, summary_lines=None, rule="max_train"):
                    "expected_validation_performance": evp([cells[c][k]["val_accuracy"] for c in ALL_CELLS[enc] for k in SEEDS])}
     doc["reading2_best_over_grid"] = r2
     sin_best, rope_best = best["sinusoidal"], best["rope"]
+    def pool(enc):
+        return {"cells_mean_validation_over_seeds_0_1_2": {c: mean([r["val_accuracy"] for r in cells[c].values()]) for c in GRID[enc]},
+                "selected_cell": best[enc]}
+
     doc["reading3_architecture_gap"] = {
+        "selection_pool": {"sinusoidal": pool("sinusoidal")},
         "sinusoidal_cell": sin_best, "lstm_minus_transformer": both_variants(lstm, cells[sin_best]),
         "descriptive_best_configuration_overall": {
             "label": "descriptive", "sinusoidal_cell": best_all["sinusoidal"],
             "lstm_minus_transformer": both_variants(lstm, cells[best_all["sinusoidal"]])}}
-    doc["reading4_rope_gain"] = {"rope_cell": rope_best, "sinusoidal_cell": sin_best,
+    doc["reading4_rope_gain"] = {"selection_pool": {"rope": pool("rope"), "sinusoidal": pool("sinusoidal")}, "rope_cell": rope_best, "sinusoidal_cell": sin_best,
                                  "rope_minus_sinusoidal": both_variants(cells[rope_best], cells[sin_best])}
     doc["reading5_weight_decay"] = reading1(WD_READING)
     doc["lstm"] = {"summary": cell_summary(lstm), "runs": {str(k): public(r) for k, r in lstm.items()}}
@@ -404,6 +419,15 @@ def variant_block(label_a, label_b, v, word):
     return L
 
 
+def pool_lines(pools):
+    L = []
+    for enc, p in pools.items():
+        L.append(f"Selection pool, {enc} (mean validation accuracy over seeds 0, 1 and 2, whatever their fit): " +
+                 ", ".join(f"{c} {f2(v)}%" for c, v in p["cells_mean_validation_over_seeds_0_1_2"].items()) +
+                 f". Selected: {p['selected_cell']}.")
+    return L + [""]
+
+
 def md_report(doc):
     L = [doc["first_line"], "", f"Fit rule for this section: {doc['fit_rule_text']}.", "", "Test accuracy is the endpoint; every test number is shown beside its validation number. "
          "Paired bootstraps resample the 1000 test expressions (N_BOOT 1000), seed-matched. Learning rates are selected on mean "
@@ -446,6 +470,7 @@ def md_report(doc):
     r3 = doc["reading3_architecture_gap"]
     L += ["## Reading 3: the architecture gap under tuning", "",
           f"Sinusoidal learning rate with the highest mean validation accuracy: cell {r3['sinusoidal_cell']}. LSTM minus Transformer.", ""]
+    L += pool_lines(r3["selection_pool"])
     L += variant_block("LSTM", r3["sinusoidal_cell"], r3["lstm_minus_transformer"], "gap holds")
     dsc = r3["descriptive_best_configuration_overall"]
     L += [f"### Descriptive: the gap at the best configuration overall (cell {dsc['sinusoidal_cell']}, all sinusoidal cells including weight decay)", "",
@@ -454,6 +479,7 @@ def md_report(doc):
     r4 = doc["reading4_rope_gain"]
     L += ["## Reading 4: RoPE's gain under tuning", "",
           f"Best-validation cells: RoPE {r4['rope_cell']}, sinusoidal {r4['sinusoidal_cell']}. RoPE minus sinusoidal.", ""]
+    L += pool_lines(r4["selection_pool"])
     L += variant_block("RoPE", "sinusoidal", r4["rope_minus_sinusoidal"], "gain holds")
     L += r1("## Reading 5: weight decay (reading 1 applied to E3a and E3b)", doc["reading5_weight_decay"])
     L += ["", "## Descriptive: RTX 4000 Ada runs beside the same-GPU references (never references)", ""]
@@ -469,6 +495,9 @@ def md_report(doc):
     L += ["", "## Compute", "", f"Total training time over all 24 runs: {cp['total_train_hours']:.2f} run-hours; reference runs (R1, R2): "
           f"{cp['reference_train_hours']:.2f} run-hours. {cp['note']}.", ""]
     return "\n".join(L)
+
+
+SAME_LINE = "All other cells: same classification under both rules."
 
 
 def verdict_of(entry):
@@ -505,19 +534,21 @@ def cells_table(full):
     a, b = full[RULES[0]], full[RULES[1]]
     L = ["## Cells: fit count and classification under each rule", "",
          "| Cell | Encoding | LR | WD | Fitting seeds, max_train (primary) | Classification, max_train | Fitting seeds, selected_epoch (pre-registered) | "
-         "Classification, selected_epoch | Mean val % | Mean test % |", "|---|---|---|---|---|---|---|---|---|---|"]
+         "Classification, selected_epoch | Non-fit kind, max_train | Non-fit kind, selected_epoch | Mean val % | Mean test % |",
+         "|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for c, cd in a["cells"].items():
         sa, sb = cd["status"], b["cells"][c]["status"]
         cl = lambda st: "uninformative" if st["uninformative"] else "informative"
+        kinds = lambda st: "; ".join(f"seed{k}: {v}" for k, v in st["non_fit_kind"].items() if v) or "none"
         L.append(f"| {c} | {cd['encoding']} | {cd['learning_rate']:g} | {cd['weight_decay']:g} | {sa['n_fitting_seeds']}/3 | {cl(sa)} | "
-                 f"{sb['n_fitting_seeds']}/3 | {cl(sb)} | {f2(cd['summary']['mean_val'])} | {f2(cd['summary']['mean_test'])} |")
+                 f"{sb['n_fitting_seeds']}/3 | {cl(sb)} | {kinds(sa)} | {kinds(sb)} | {f2(cd['summary']['mean_val'])} | {f2(cd['summary']['mean_test'])} |")
     return L
 
 
 def md_full(full):
     first, second = md_report(full[RULES[0]]).splitlines(), md_report(full[RULES[1]]).splitlines()
     cls, ver = differences(full)
-    return "\n".join([first[0], ""] + cells_table(full) + ["", cls, "", ver, ""] + first[1:] +
+    return "\n".join([first[0], ""] + cells_table(full) + ["", cls, SAME_LINE, "", ver, ""] + first[1:] +
                       ["", "---", "", "## Under the pre-registered fit rule (selected-epoch training accuracy)", ""] + second[1:]) + "\n"
 
 
@@ -557,6 +588,10 @@ def validate_rule(doc):
         for n in ("all_fitting_seeds", "excluding_band_70_90"):
             check_cmp(v[n], f"{where} {n}")
 
+    for rd in ("reading3_architecture_gap", "reading4_rope_gain"):
+        assert all(p["selected_cell"] in p["cells_mean_validation_over_seeds_0_1_2"] for p in doc[rd]["selection_pool"].values())
+    for c in CELLS:
+        assert set(doc["cells"][c]["status"]["non_fit_kind"]) == {"0", "1", "2"}
     for key, cs in (("reading1_tuning_effect", LR_READING), ("reading5_weight_decay", WD_READING)):
         assert set(doc[key]) == set(cs)
         for c, d in doc[key].items():
