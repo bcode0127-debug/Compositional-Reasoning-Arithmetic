@@ -23,7 +23,7 @@ def test_committed_section_ends_with_the_four_notes():
     lines = committed_section().rstrip("\n").splitlines()
     assert lines[-len(reg.NOTES) - 2:-len(reg.NOTES)] == ["Notes:", ""]
     assert lines[-len(reg.NOTES):] == reg.NOTES and len(reg.NOTES) == 4
-    assert all("—" not in n for n in reg.NOTES)
+    assert all("\u2014" not in n for n in reg.NOTES)
 
 
 def test_table_rows_unchanged_from_main():
@@ -37,3 +37,9 @@ def test_generator_output_matches_committed_section_and_ends_with_notes():
     sec = reg.section()
     assert sec == committed_section()
     assert sec.rstrip("\n").splitlines()[-4:] == reg.NOTES
+
+
+def test_committed_checkpoints_file_has_no_em_dash():
+    """The whole committed file, read as text: header, table, notes and the lines outside the generated section.
+    Read, not regenerated: section() hashes the gitignored .pt files."""
+    assert "\u2014" not in (REPO_ROOT / "CHECKPOINTS.md").read_text()

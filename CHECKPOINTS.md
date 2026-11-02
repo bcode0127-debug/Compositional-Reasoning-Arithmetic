@@ -1,6 +1,6 @@
 # Checkpoint Registry
 
-One row per trained checkpoint saved in this repo's history. `.pt` files themselves are gitignored (`*.pt`) and not committed — this table is the durable record of what each one is, alongside the Hugging Face Hub copy ([huggingface.co/Ajay0728/Compositional-reasoning-arithmetic](https://huggingface.co/Ajay0728/Compositional-reasoning-arithmetic)) as the actual binary backup.
+One row per trained checkpoint saved in this repo's history. `.pt` files themselves are gitignored (`*.pt`) and not committed; this table is the durable record of what each one is, alongside the Hugging Face Hub copy ([huggingface.co/Ajay0728/Compositional-reasoning-arithmetic](https://huggingface.co/Ajay0728/Compositional-reasoning-arithmetic)) as the actual binary backup.
 
 The twelve `results_v2/` checkpoints are published on the Hugging Face Hub; the last column links each one. The legacy row was not published.
 
