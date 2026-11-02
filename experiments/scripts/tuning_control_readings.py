@@ -419,6 +419,127 @@ def variant_block(label_a, label_b, v, word):
     return L
 
 
+# ---------------------------------------------------------------------------
+# Generated sentences: every number comes from the computed values, and each generator raises if the
+# condition its sentence states is false
+# ---------------------------------------------------------------------------
+
+def need(cond, msg):
+    if not cond:
+        raise AssertionError(msg)
+
+
+def _all_fit(entry):
+    return entry["all_fitting_seeds"]
+
+
+def _n_excluding_zero(entry):
+    return max(_all_fit(entry)["n_excluding_zero_up"], _all_fit(entry)["n_excluding_zero_down"])
+
+
+def summary_sentence(full):
+    a = full[RULES[0]]
+    informative = [c for c in LR_READING + WD_READING
+                   if not (a["reading1_tuning_effect"] if c in LR_READING else a["reading5_weight_decay"])[c]["uninformative"]]
+    for c in informative:
+        e = (a["reading1_tuning_effect"] if c in LR_READING else a["reading5_weight_decay"])[c]
+        need(_all_fit(e)["verdict"] == "no" and _all_fit(e)["n_eligible"] == 3 and _n_excluding_zero(e) == 0,
+             f"informative cell {c} does not have verdict 'no' with 0 of 3 seeds excluding zero")
+    r3, r4 = a["reading3_architecture_gap"], a["reading4_rope_gain"]
+    c3, c4 = _all_fit(r3["lstm_minus_transformer"]), _all_fit(r4["rope_minus_sinusoidal"])
+    need(c3["holds"] and c4["holds"] and c3["n_eligible"] == c4["n_eligible"] == 3
+         and max(c3["n_excluding_zero_up"], c3["n_excluding_zero_down"]) == 3
+         and max(c4["n_excluding_zero_up"], c4["n_excluding_zero_down"]) == 3, "readings 3 and 4 do not hold on 3 of 3 seeds")
+    for c in ("E1a", "E1b", "E2b"):
+        need(a["cells"][c]["status"]["uninformative"], f"{c} is not uninformative under max_train")
+    kinds = lambda c: [v for v in a["cells"][c]["status"]["non_fit_kind"].values() if v is not None]
+    need(kinds("E1a") and all(v == "epoch cap" for v in kinds("E1a")), "a non-fitting E1a seed is not 'epoch cap'")
+    for c in ("E1b", "E2b"):
+        need(len(kinds(c)) == 3 and all(v == "stopped before cap" for v in kinds(c)), f"a {c} seed is not 'stopped before cap'")
+    return (f"Under the primary rule, no informative cell moves test accuracy against its reference ({', '.join(informative)}: 0 of 3 seeds "
+            f"exclude zero in each); the LSTM-minus-Transformer gap holds at {r3['sinusoidal_cell']} and the RoPE gain holds at "
+            f"{r4['rope_cell']} against {r4['sinusoidal_cell']}, each on {c3['n_eligible']}/3 seeds; and three rates are not covered: "
+            "sinusoidal 1e-4, which does not fit within 200 epochs, and 1e-3 for both encodings, which stops before the cap under the "
+            "400-step warmup.")
+
+
+def deviation_sentence(full):
+    b = full[RULES[1]]
+    c3, c4 = _all_fit(b["reading3_architecture_gap"]["lstm_minus_transformer"]), _all_fit(b["reading4_rope_gain"]["rope_minus_sinusoidal"])
+    need(c3["verdict"].startswith("not evaluable") and c4["verdict"].startswith("not evaluable"),
+         "reading 3 or 4 is evaluable under selected_epoch")
+    return (f"Under the pre-registered fit rule, readings 3 and 4 cannot be computed ({c3['n_eligible']} and {c4['n_eligible']} eligible "
+            f"seeds), because at the selected epoch R1 fits on {b['cells']['R1']['status']['n_fitting_seeds']}/3 seeds and R2 on "
+            f"{b['cells']['R2']['status']['n_fitting_seeds']}/3; the 2026-11-01 Deviations entry is what makes the two central "
+            "comparisons evaluable.")
+
+
+def mean_vs_reference_sentence(full):
+    a = full[RULES[0]]
+    mt = lambda c: a["cells"][c]["summary"]["mean_test"]
+    need(mt("E1a") > mt("R1") and mt("E2a") > mt("R2"), "E1a or E2a does not exceed its reference's mean test accuracy")
+    need(a["cells"]["E1a"]["status"]["uninformative"], "E1a is not uninformative under max_train")
+    e2a = a["reading1_tuning_effect"]["E2a"]
+    need(not e2a["uninformative"] and _all_fit(e2a)["n_excluding_zero_up"] + _all_fit(e2a)["n_excluding_zero_down"] == 0,
+         "E2a has a seed whose interval excludes zero")
+    d = [_all_fit(e2a)["per_seed"][str(k)]["diff_points"] for k in SEEDS]
+    return (f"Descriptive: two cells have a higher mean test accuracy than their reference, E1a ({f2(mt('E1a'))}% against R1's "
+            f"{f2(mt('R1'))}%) and E2a ({f2(mt('E2a'))}% against R2's {f2(mt('R2'))}%); neither counts as movement, E1a because "
+            f"{a['cells']['E1a']['status']['n_fitting_seeds']}/3 of its seeds fit and E2a because no seed's interval excludes zero "
+            f"(per-seed differences {d[0]:+.2f}, {d[1]:+.2f} and {d[2]:+.2f} points).")
+
+
+def tie_sentence(doc, enc):
+    """Every (cell, seed) of the encoding's learning-rate grid that reaches the maximum test accuracy, with its fit status and
+    its training-accuracy measure under the fit rule of the section it is printed in (doc["fit_rule"])."""
+    rule = doc["fit_rule"]
+    key, measure = {"max_train": ("max_train_accuracy", "maximum training accuracy"),
+                    "selected_epoch": ("train_accuracy_at_selected", "training accuracy at the selected epoch")}[rule]
+    runs = [(c, k, doc["cells"][c]["runs"][str(k)]) for c in CELLS if c in GRID[enc] for k in SEEDS]
+    top = max(r["test_accuracy"] for _, _, r in runs)
+    hit = [(c, k, r) for c, k, r in runs if r["test_accuracy"] == top]
+    need(hit, "no run reaches the maximum")
+    for c, k, r in hit:
+        need(r["fits"] == r["fits_by_rule"][rule] and r["fits"] == (r[key] >= FIT_MIN),
+             f"{c} seed {k}: fit status does not match the {rule} rule")
+    first_fits = hit[0][2]["fits"]
+    items = []
+    for i, (c, k, r) in enumerate(hit):
+        if i == 0:
+            verb = "fits" if r["fits"] else "does not fit"
+            tail = f"({measure} {f2(r[key])}%)"
+        else:
+            same = r["fits"] == first_fits
+            verb = ("does too" if same else "does") if r["fits"] else ("does not either" if same else "does not")
+            tail = f"({f2(r[key])}%)"
+        items.append(f"{c} seed {k}, which {verb} {tail}")
+    words = {1: "one", 2: "two", 3: "three"}
+    body = items[0] if len(items) == 1 else (", and ".join(items) if len(items) == 2 else ", ".join(items[:-1]) + ", and " + items[-1])
+    return (f"Maximum test accuracy over its learning rates and seeds: {f2(top)}%, reached by {words.get(len(hit), str(len(hit)))} "
+            f"run{'s' if len(hit) > 1 else ''}: {body}.")
+
+
+def weight_decay_sentence(doc):
+    def stats(c):
+        runs = [doc["cells"][c]["runs"][str(k)] for k in SEEDS]
+        mx = [r["max_train_accuracy"] for r in runs]
+        return min(mx), max(mx), mean([r["train_accuracy_at_selected"] for r in runs])
+    r1, e3a, e3b = stats("R1"), stats("E3a"), stats("E3b")
+    need(e3a[0] > r1[1] and e3b[0] > r1[1], "a weight-decay cell's maximum training accuracy is not above R1's on every seed")
+    need(e3a[2] > r1[2] and e3b[2] > r1[2], "a weight-decay cell's mean selected-epoch training accuracy does not exceed R1's")
+    rng = lambda t: f"{f2(t[0])}\u2013{f2(t[1])}"
+    return (f"Descriptive: with weight decay, maximum training accuracy is higher than R1's on every seed (E3a {rng(e3a)}, E3b {rng(e3b)}, "
+            f"R1 {rng(r1)}), and training accuracy at the selected epoch is higher on average (means E3a {f2(e3a[2])}, E3b {f2(e3b[2])}, "
+            f"R1 {f2(r1[2])}), while test accuracy does not move (reading 5).")
+
+
+def report_text(full):
+    a = full[RULES[0]]
+    return {"summary": summary_sentence(full), "deviation": deviation_sentence(full),
+            "mean_vs_reference": mean_vs_reference_sentence(full),
+            "reading2_maximum": {enc: tie_sentence(a, enc) for enc in GRID}, "weight_decay_descriptive": weight_decay_sentence(a)}
+
+
 def pool_lines(pools):
     L = []
     for enc, p in pools.items():
@@ -434,7 +555,7 @@ def md_report(doc):
          "validation accuracy over seeds 0, 1 and 2, never on test.", "",
          "Interpretation notes: the learning-rate grid for readings 2 to 4 is the weight-decay-0 cells of each encoding (sinusoidal: "
          "E1a, R1, E1b; RoPE: E2a, R2, E2b); E3a and E3b enter reading 5 only. A seed is eligible for a comparison when both runs fit "
-         "(training accuracy at the selected epoch at least 80%); the LSTM paper checkpoints count as fitting.", "",
+         "under this section's fit rule (stated above); the LSTM paper checkpoints count as fitting.", "",
          "## Per-run table", "",
          "| Cell | Seed | Selected epoch | Train acc % at selected epoch | Max train acc % | Final train acc % | Max minus final | Spike flag | Val acc % | Test acc % | Fits | Diverged | Epoch cap | 70-90% band |",
          "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
@@ -457,8 +578,7 @@ def md_report(doc):
     L += r1("## Reading 1: tuning effect per cell (cell minus its reference)", doc["reading1_tuning_effect"])
     L += ["", "## Reading 2: best over the grid", "", "Maxima and per-rate means over seeds 0, 1 and 2 are labelled as such.", ""]
     for enc, d in doc["reading2_best_over_grid"].items():
-        m = d["best_over_grid_maximum"]
-        L += [f"### {enc}", "", f"Maximum test accuracy over its learning rates and seeds: **{f2(m['test_accuracy'])}%** (cell {m['cell']}, seed {m['seed']}). "
+        L += [f"### {enc}", "", f"{tie_sentence(doc, enc)} "
               f"Best configuration by mean validation accuracy over all of the encoding's cells ({', '.join(d['configurations_covered'])}): "
               f"**{d['best_configuration_by_mean_validation']}**; best learning-rate-grid cell: **{d['best_learning_rate_cell_by_mean_validation']}**.", "",
               "| Cell | LR | Mean val % (mean over seeds) | Mean test % (mean over seeds) |", "|---|---|---|---|"]
@@ -482,6 +602,7 @@ def md_report(doc):
     L += pool_lines(r4["selection_pool"])
     L += variant_block("RoPE", "sinusoidal", r4["rope_minus_sinusoidal"], "gain holds")
     L += r1("## Reading 5: weight decay (reading 1 applied to E3a and E3b)", doc["reading5_weight_decay"])
+    L += [weight_decay_sentence(doc), ""]
     L += ["", "## Descriptive: RTX 4000 Ada runs beside the same-GPU references (never references)", ""]
     for a, d in doc["descriptive_rtx4000ada"].items():
         L += [f"### {a} beside {d['beside']}", "", f"Mean val {f2(d['summary']['mean_val'])}%, mean test {f2(d['summary']['mean_test'])}% "
@@ -533,7 +654,7 @@ def differences(full):
 def cells_table(full):
     a, b = full[RULES[0]], full[RULES[1]]
     L = ["## Cells: fit count and classification under each rule", "",
-         "| Cell | Encoding | LR | WD | Fitting seeds, max_train (primary) | Classification, max_train | Fitting seeds, selected_epoch (pre-registered) | "
+         "| Cell | Encoding | LR | WD | Fitting seeds, max_train (primary: maximum training accuracy at least 80%) | Classification, max_train | Fitting seeds, selected_epoch (pre-registered: training accuracy at the selected epoch at least 80%) | "
          "Classification, selected_epoch | Non-fit kind, max_train | Non-fit kind, selected_epoch | Mean val % | Mean test % |",
          "|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for c, cd in a["cells"].items():
@@ -548,7 +669,9 @@ def cells_table(full):
 def md_full(full):
     first, second = md_report(full[RULES[0]]).splitlines(), md_report(full[RULES[1]]).splitlines()
     cls, ver = differences(full)
-    return "\n".join([first[0], ""] + cells_table(full) + ["", cls, SAME_LINE, "", ver, ""] + first[1:] +
+    t = report_text(full)
+    return "\n".join([first[0], ""] + cells_table(full) + ["", cls, SAME_LINE, "", ver, ""] + first[1:4] +
+                      [t["summary"], "", t["deviation"], "", t["mean_vs_reference"], ""] + first[4:] +
                       ["", "---", "", "## Under the pre-registered fit rule (selected-epoch training accuracy)", ""] + second[1:]) + "\n"
 
 
@@ -641,6 +764,7 @@ def main():
     doc = {"first_line": FIRST_LINE, "fit_rules": RULE_TEXT, "primary_rule": RULES[0], "pre_registered_rule": RULES[1],
            **{r: build(cells, desc, lstm, summary, r) for r in RULES}}
     validate(doc)
+    doc["report_text"] = report_text(doc)
     pb.write_json(args.out_dir / "readings.json", doc)
     (args.out_dir / "readings.md").write_text(md_full(doc))
     env = pb.environment_doc("tuning_control_readings", "cpu", sys.argv[1:])
