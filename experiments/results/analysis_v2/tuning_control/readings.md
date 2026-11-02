@@ -333,7 +333,7 @@ Maxima and per-rate means over seeds 0, 1 and 2 are labelled as such.
 
 ### sinusoidal
 
-Maximum test accuracy over its learning rates and seeds: 7.80%, reached by two runs: R1 seed 0, which fits (maximum training accuracy 91.60%), and E1a seed 2, which does not (78.89%). Best configuration by mean validation accuracy over all of the encoding's cells (E1a, R1, E1b, E3a, E3b): **E3b**; best learning-rate-grid cell: **R1**.
+Maximum test accuracy over its learning rates and seeds: 7.80%, reached by two runs: R1 seed 0, which does not fit (training accuracy at the selected epoch 77.83%), and E1a seed 2, which does not either (76.86%). Best configuration by mean validation accuracy over all of the encoding's cells (E1a, R1, E1b, E3a, E3b): **E3b**; best learning-rate-grid cell: **R1**.
 
 | Cell | LR | Mean val % (mean over seeds) | Mean test % (mean over seeds) |
 |---|---|---|---|
@@ -345,7 +345,7 @@ Expected maximum validation accuracy after n configurations (Dodge et al.), desc
 
 ### rope
 
-Maximum test accuracy over its learning rates and seeds: 21.50%, reached by one run: E2a seed 2, which fits (maximum training accuracy 97.94%). Best configuration by mean validation accuracy over all of the encoding's cells (E2a, R2, E2b): **R2**; best learning-rate-grid cell: **R2**.
+Maximum test accuracy over its learning rates and seeds: 21.50%, reached by one run: E2a seed 2, which does not fit (training accuracy at the selected epoch 78.31%). Best configuration by mean validation accuracy over all of the encoding's cells (E2a, R2, E2b): **R2**; best learning-rate-grid cell: **R2**.
 
 | Cell | LR | Mean val % (mean over seeds) | Mean test % (mean over seeds) |
 |---|---|---|---|

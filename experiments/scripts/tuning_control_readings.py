@@ -490,14 +490,29 @@ def mean_vs_reference_sentence(full):
 
 
 def tie_sentence(doc, enc):
-    """Every (cell, seed) of the encoding's learning-rate grid that reaches the maximum test accuracy, each with its fit status
-    under max_train and its maximum training accuracy."""
+    """Every (cell, seed) of the encoding's learning-rate grid that reaches the maximum test accuracy, with its fit status and
+    its training-accuracy measure under the fit rule of the section it is printed in (doc["fit_rule"])."""
+    rule = doc["fit_rule"]
+    key, measure = {"max_train": ("max_train_accuracy", "maximum training accuracy"),
+                    "selected_epoch": ("train_accuracy_at_selected", "training accuracy at the selected epoch")}[rule]
     runs = [(c, k, doc["cells"][c]["runs"][str(k)]) for c in CELLS if c in GRID[enc] for k in SEEDS]
     top = max(r["test_accuracy"] for _, _, r in runs)
     hit = [(c, k, r) for c, k, r in runs if r["test_accuracy"] == top]
     need(hit, "no run reaches the maximum")
-    items = [f"{c} seed {k}, which {'fits' if r['fits_by_rule']['max_train'] else 'does not'} "
-             f"({'maximum training accuracy ' if i == 0 else ''}{f2(r['max_train_accuracy'])}%)" for i, (c, k, r) in enumerate(hit)]
+    for c, k, r in hit:
+        need(r["fits"] == r["fits_by_rule"][rule] and r["fits"] == (r[key] >= FIT_MIN),
+             f"{c} seed {k}: fit status does not match the {rule} rule")
+    first_fits = hit[0][2]["fits"]
+    items = []
+    for i, (c, k, r) in enumerate(hit):
+        if i == 0:
+            verb = "fits" if r["fits"] else "does not fit"
+            tail = f"({measure} {f2(r[key])}%)"
+        else:
+            same = r["fits"] == first_fits
+            verb = ("does too" if same else "does") if r["fits"] else ("does not either" if same else "does not")
+            tail = f"({f2(r[key])}%)"
+        items.append(f"{c} seed {k}, which {verb} {tail}")
     words = {1: "one", 2: "two", 3: "three"}
     body = items[0] if len(items) == 1 else (", and ".join(items) if len(items) == 2 else ", ".join(items[:-1]) + ", and " + items[-1])
     return (f"Maximum test accuracy over its learning rates and seeds: {f2(top)}%, reached by {words.get(len(hit), str(len(hit)))} "

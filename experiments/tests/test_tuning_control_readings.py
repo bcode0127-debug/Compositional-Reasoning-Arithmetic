@@ -245,20 +245,42 @@ def test_non_fit_kind(tmp_path):
         assert tcr.non_fit_kind(r) == expected
 
 
-def _run(test, max_train, fits):
-    return {"test_accuracy": test, "max_train_accuracy": max_train, "fits_by_rule": {"max_train": fits}}
+def _run(test, max_train, fits, sel=None, fits_sel=None):
+    sel = max_train if sel is None else sel
+    fits_sel = fits if fits_sel is None else fits_sel
+    return {"test_accuracy": test, "max_train_accuracy": max_train, "train_accuracy_at_selected": sel,
+            "fits_by_rule": {"max_train": fits, "selected_epoch": fits_sel}}
 
 
-def test_tie_sentence_names_every_run_at_the_maximum():
-    doc = {"cells": {c: {"runs": {str(k): _run(5.0, 70.0, False) for k in tcr.SEEDS}} for c in tcr.CELLS}}
-    doc["cells"]["R1"]["runs"]["0"] = _run(7.8, 91.6, True)
-    doc["cells"]["E1a"]["runs"]["2"] = _run(7.8, 78.89, False)
-    assert REAL["tie_sentence"](doc, "sinusoidal") == (
-        "Maximum test accuracy over its learning rates and seeds: 7.80%, reached by two runs: R1 seed 0, which fits "
-        "(maximum training accuracy 91.60%), and E1a seed 2, which does not (78.89%).")
-    doc["cells"]["E2a"]["runs"]["2"] = _run(21.5, 97.94, True)
-    assert REAL["tie_sentence"](doc, "rope") == ("Maximum test accuracy over its learning rates and seeds: 21.50%, reached by one run: "
-                                                 "E2a seed 2, which fits (maximum training accuracy 97.94%).")
+def _tie_doc(rule):
+    runs = {c: {str(k): _run(5.0, 70.0, False) for k in tcr.SEEDS} for c in tcr.CELLS}
+    runs["R1"]["0"] = _run(7.8, 91.6, True, sel=77.83, fits_sel=False)
+    runs["E1a"]["2"] = _run(7.8, 78.89, False, sel=76.86, fits_sel=False)
+    runs["E2a"]["2"] = _run(21.5, 97.94, True, sel=78.31, fits_sel=False)
+    cells = {c: {"runs": {k: {**r, "fits": r["fits_by_rule"][rule]} for k, r in rs.items()}} for c, rs in runs.items()}
+    return {"fit_rule": rule, "cells": cells}
+
+
+def test_tie_sentence_follows_its_sections_fit_rule():
+    """R1 seed 0 fits under max_train but not under selected_epoch: 'fits' with its maximum in one section, 'does not fit'
+    with its selected-epoch value in the other."""
+    pre = "Maximum test accuracy over its learning rates and seeds: "
+    assert REAL["tie_sentence"](_tie_doc("max_train"), "sinusoidal") == (
+        pre + "7.80%, reached by two runs: R1 seed 0, which fits (maximum training accuracy 91.60%), and E1a seed 2, which does not (78.89%).")
+    assert REAL["tie_sentence"](_tie_doc("max_train"), "rope") == (
+        pre + "21.50%, reached by one run: E2a seed 2, which fits (maximum training accuracy 97.94%).")
+    assert REAL["tie_sentence"](_tie_doc("selected_epoch"), "sinusoidal") == (
+        pre + "7.80%, reached by two runs: R1 seed 0, which does not fit (training accuracy at the selected epoch 77.83%), "
+        "and E1a seed 2, which does not either (76.86%).")
+    assert REAL["tie_sentence"](_tie_doc("selected_epoch"), "rope") == (
+        pre + "21.50%, reached by one run: E2a seed 2, which does not fit (training accuracy at the selected epoch 78.31%).")
+
+
+def test_tie_sentence_raises_when_fit_flag_disagrees_with_the_rule():
+    doc = _tie_doc("max_train")
+    doc["cells"]["R1"]["runs"]["0"]["fits"] = False
+    with pytest.raises(AssertionError):
+        REAL["tie_sentence"](doc, "sinusoidal")
 
 
 def _fake_full():
