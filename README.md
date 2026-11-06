@@ -5,54 +5,7 @@
 
 ## Abstract
 
-We train character-level LSTM and Transformer encoder-decoders, three seeds
-each, to evaluate fully parenthesized integer arithmetic expressions. Two
-controlled studies test generalization to longer expressions (2-3 → 4-7
-operations) and to deeper nesting (depth 2 → 3). Under greedy autoregressive
-decoding, the LSTM shows partial competence: it reaches 34.6% exact match on
-an independently generated in-distribution test set (Study 1) and 30.5%
-(Study 2). Its accuracy falls steadily as expressions grow, from 14.8% at 4
-operations to 2.1% at 7, and reaches 7.0% on deeper expressions. The
-Transformer stays near the floor throughout: 7.8% and 2.3% on the test sets,
-and at most 2.7% on any out-of-distribution split. Neither architecture
-transfers what it learns to substantially longer or deeper expressions at
-this data scale. All checkpoints and datasets are released on the Hugging
-Face Hub.
-
----
-
-## ⚠️ Pre-v2 Results Invalidated (Input-Truncation Bug)
-
-Every number below through the "Attention Analysis" table — the 1.6%/0.3%
-OOD headline and CP1–CP5 — was produced by `main.py`'s legacy eval path
-(`main.py::evaluate_model()`), which silently truncates encoder input to
-`max_input_len=20` characters (`src_ids[:max_input_len]`, no error, no
-warning). Measured directly against the datasets these numbers were
-computed on: 99.0% of `datasets/study1/ood.json` (max length 50) and 70.0%
-of `datasets/study2/ood.json` exceed 20 characters. That means the model
-was evaluated on a chopped prefix of nearly every OOD example - in most
-cases missing the operators and operands that determine the correct
-answer. The "catastrophic OOD collapse" these numbers report is
-substantially confounded by this truncation artifact, not a clean
-measurement of compositional failure. CP1–CP5's attention maps,
-cross-attention, head ablation, and failure traces all inherit the same
-truncated inputs, so their interpretation is compromised the same way.
-
-**These results are retired, not corrected.** They are left in place below
-as a historical record of what this repo previously reported, not as
-findings to cite. The legacy code path (`main.py`, `experiments/analysis.py`,
-`experiments/notebooks/analysis_plots.ipynb`) and the legacy `datasets/`
-directory are unchanged and still runnable, but no valid claim about
-compositional reasoning should be drawn from their output.
-
-The corrected, superseding results are the v2 pipeline (`train_v2.py` +
-`datasets_v2/`, `max_input_len=64` with hard-fail encode_checked instead of
-silent truncation) and mechanistic analysis v2:
-- Seed-matrix training results: [`matrix_summary.txt`](matrix_summary.txt),
-  [`CHECKPOINTS.md`](CHECKPOINTS.md)
-- Mechanistic v2 (behavioral + attention + probing, on verified checkpoints,
-  truncation-safe throughout): [`experiments/notebooks/analysis_v2.ipynb`](experiments/notebooks/analysis_v2.ipynb),
-  [`experiments/results/analysis_v2/`](experiments/results/analysis_v2/)
+We train character-level LSTM and Transformer encoder-decoders, three seeds each, to evaluate fully parenthesized integer arithmetic expressions. Study 1 tests generalization to longer expressions (2–3 → 4–7 operations). Study 2, reported as exploratory, shifts depth and tree shape together (balanced depth-2 → chain-shaped depth-3 trees at three operations). Under greedy autoregressive decoding, the LSTM shows partial competence: it reaches 34.6% exact match on an independently generated in-distribution test set (Study 1) and 30.5% (Study 2). Its accuracy falls steadily as expressions grow, from 14.8% at 4 operations to 2.1% at 7, and reaches 7.0% on the Study 2 shift. The Transformer stays near the floor throughout: 7.8% and 2.3% on the test sets, and a mean of at most 2.7% on any out-of-distribution split. Neither architecture transfers what it learns to substantially longer expressions at this data scale. The gap survives a positional-encoding sweep and a learning-rate and weight-decay control (see Further results). All checkpoints and datasets are released on the Hugging Face Hub.
 
 ---
 
@@ -66,75 +19,36 @@ exact-match (verified teacher-forced-equivalent under greedy decoding by `script
 **Validation selected the checkpoints; the test split is independently held out and was
 generated after training, so the Test column is the primary in-distribution result.**
 
-**Study 1 (Length Generalization)**
+**Study 1 (Operation-Count Generalization)**
 
 | Model | Val | Test | OOD ops4 | OOD ops5 | OOD ops6 | OOD ops7 |
 |---|---|---|---|---|---|---|
 | LSTM | 35.7% [35.1-36.1] | 34.57% ± 0.95 | 14.8% [13.7-16.4] | 8.2% [7.5-9.5] | 2.7% [2.5-2.8] | 2.1% [1.8-2.5] |
 | Transformer | 7.3% [6.8-7.5] | 7.83% ± 0.12 | 0.7% [0.4-1.2] | 0.6% [0.5-0.7] | 0.3% [0.1-0.5] | 0.4% [0.2-0.6] |
 
-**Study 2 (Depth Generalization)**
+**Study 2 (Structural Generalization, exploratory)**
 
 | Model | Val | Test | OOD |
 |---|---|---|---|
 | LSTM | 31.5% [30.1-32.5] | 30.47% ± 2.14 | 7.0% [6.3-7.8] |
 | Transformer | 3.9% [3.7-4.2] | 2.27% ± 0.47 | 2.7% [2.0-3.1] |
 
+Two of three Transformer runs did not fit the training data (maximum training accuracy over the run 61.39% and 72.79%, final epoch 61.39% and 67.40%, against the 80% fit threshold), so Study 2 does not support an architecture comparison.
+
 Paper: *Partial Competence and Limited Transfer: Comparing LSTM and Transformer
 Generalization on Arithmetic Expressions* (arXiv ID pending).
----
 
-## Key Findings
+## Further results
 
-*The findings below predate the v2 pipeline and are affected by the
-input-truncation bug described above. Retained as historical record only -
-see the notice above before citing any number in this section or the two
-tables that follow.*
+The sweep and the tuning control below are committed in this repository with their design docs; the manuscript draft predates them.
 
-- Under autoregressive decoding, OOD accuracy collapses to 1.6% (LSTM) and
-  0.3% (Transformer) on length generalization; multiplication and division
-  reach 0.0% OOD
-- Length generalization shows a sharp in-distribution → OOD drop (LSTM
-  32.6% → 1.6%); depth accuracy is low both in- and out-of-distribution,
-  indicating the models never learned depth composition in the first place
-- Transformer Layer 3 encoder attention collapses to near-uniform
-  distributions on OOD inputs while Layer 1 retains structure
-- No attention head shows meaningful OOD-specific sensitivity when ablated (top head's OOD-accuracy drop ≈ 0.000); ablation deltas are driven by in-distribution drops, not OOD-specific compositional work - failure is architecturally distributed, not localized in a single circuit
-- All four operations collapse to near-total OOD failure (0.00%-0.58%), with no meaningful ranking between them
-- 4 of 5 traced OOD failures occur at decoding Step 0, ruling out 
-  error accumulation as the cause
+- **Probes** ([summary](experiments/results/analysis_v2/nonlinear_probe/summary.md)). On a stratified in-distribution split, a linear probe decodes running depth from the LSTM's cell state at 0.896–0.911 against a 0.527 majority. No probe decodes a running value in either model (R² 0.02 to 0.11, below the pre-set threshold). The Transformer's encoder loses linearly decodable position, from 0.995 at the input to 0.18 at layer 3. These results are correlational.
+- **Positional-encoding sweep** ([design](docs/design/pos-encoding-sweep.md), [summary](experiments/results/analysis_v2/pos_sweep/summary.md)). RoPE raises the Transformer's in-distribution test accuracy over sinusoidal by 13.5, 10.3 and 13.6 points across seeds, and ALiBi by 2.5 to 5.2; learned absolute encoding does not move it. The LSTM still leads every arm.
+- **Tuning control** ([design](docs/design/tuning-control.md), [readings](experiments/results/analysis_v2/tuning_control/readings.md)). At the validation-selected learning rate, the LSTM-minus-Transformer test gap is 25.8, 28.4 and 27.6 points, with 95% intervals above zero on all three seeds; RoPE's gain over sinusoidal holds at 11.8 to 12.6 points; weight decay 0.01 and 0.1 move nothing. Sinusoidal at 1e-4 does not fit within 200 epochs, and 1e-3 stops near the floor for both encodings, so those rates are not covered. Under the pre-registered selected-epoch fit rule these two comparisons are not evaluable; the design doc's 2026-11-01 Deviations entry explains the change.
 
----
+## Retired results
 
-## Results
-
-*Historical / retired - see the input-truncation notice above.*
-
-### Baseline Accuracy
-
-*Val and OOD accuracies are reported under autoregressive decoding at inference
-time. Train accuracy is teacher-forced (training-time) and is shown only for
-reference; the Gap column is computed as Val − OOD so all compared numbers use
-the same decoding mode.*
-
-| Model | Study | Train (TF) | Val | OOD | Gap (Val−OOD) |
-|---|---|---|---|---|---|
-| LSTM | Study 1 - Length (2-3 → 4-7 ops) | 95.1% | 32.6% | **1.6%** | 31.0 pp |
-| LSTM | Study 2 - Depth (d=2 → d=3) | 89.2% | 11.5% | **11.9%** | −0.4 pp |
-| Transformer | Study 1 - Length | 56.7% | 7.0% | **0.3%** | 6.7 pp |
-| Transformer | Study 2 - Depth | 51.3% | 3.9% | **4.0%** | −0.1 pp |
-
-### Attention Analysis - Transformer (Study 1)
-
-| Checkpoint | What was measured | Finding |
-|---|---|---|
-| CP1 | Encoder self-attention heatmaps (ID vs OOD) | Layer 1 heads structured on ID; Layer 3 collapses to uniform on OOD |
-| CP2 | Cross-attention per decoding step (ID vs OOD) | ID attention shifts selectively per step; OOD spreads flat across all tokens |
-| CP3 | Head ablation - ID drop vs OOD drop delta (48 heads) | Top head (`EL3H2`) OOD drop ≈ 0.000; ablation deltas are driven by ID drops, not OOD-specific effects - no head performs OOD-specific compositional work, failure is distributed across the architecture |
-| CP4 | OOD accuracy by dominant operation type | `+`: 1/441 = 0.23%, `-`: 2/347 = 0.58%, `*`: 1/201 = 0.50%, `/`: 0/11 = 0.00%* |
-| CP5 | Failure onset traces - first wrong decoding step | 4/5 failures at Step 0; immediate breakdown, not error accumulation |
-
-*CP4's `/` bucket has only 11 OOD examples; its exact 0.00% is not statistically reliable in isolation. CP5 traces 5 failures for illustration, not to establish a population failure rate.*
+Results produced before the v2 pipeline were affected by an input-truncation bug and are retired, not corrected. They are kept, with the bug description, in [docs/LEGACY_RESULTS.md](docs/LEGACY_RESULTS.md); do not cite them.
 
 ---
 
@@ -152,16 +66,15 @@ Output: 6
 ```
 ### Controlled Studies
 
-Two generalization axes are tested independently:
+Study 1 varies operation count; Study 2 shifts depth and tree shape together:
 
-**Study 1 - Length Generalization**
+**Study 1 - Operation-Count Generalization**
 Train on expressions with 2–3 operations. Test on expressions with 4–7
 operations. Tests whether learned computation rules extend to longer
 expression chains.
 
-**Study 2 - Depth Generalization**
-Train on expression trees of depth 2. Test on depth 3. Tests whether
-learned subexpression evaluation extends to deeper nesting.
+**Study 2 - Structural Generalization (exploratory)**
+Train on balanced depth-2 trees with three operations. Test on chain-shaped depth-3 trees with three operations. Depth and shape change together, so this study cannot isolate depth.
 
 ### Dataset Specification
 
@@ -320,7 +233,7 @@ reproduce the historical (truncation-affected) CP1–CP5 results, saved to
 @misc{jamanjyothi2026partial,
   title   = {Partial Competence and Limited Transfer: Comparing LSTM and
              Transformer Generalization on Arithmetic Expressions},
-  author  = {Jamanjyothi, Ajay},
+  author  = {Jamanjyothi, Ajay and Kasztelnik, Karina},
   year    = {2026},
   note    = {arXiv preprint (cs.LG)}
 }
