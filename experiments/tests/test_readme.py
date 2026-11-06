@@ -11,7 +11,7 @@ LINK = re.compile(r"\]\(([^)\s]+)\)")
 
 @pytest.mark.parametrize("path", FILES, ids=lambda p: p.name)
 def test_no_em_dash(path):
-    assert "—" not in path.read_text()
+    assert "\u2014" not in path.read_text()
 
 
 @pytest.mark.parametrize("path", FILES, ids=lambda p: p.name)
