@@ -107,7 +107,7 @@ Compositional-Reasoning-Arithmetic/
 ├── train_v2.py                  # v2 training entry point (one model/study/seed per run)
 ├── matrix_summary.txt           # v2 seed-matrix summary (selected epoch, val accuracy)
 ├── CHECKPOINTS.md               # Registry of all trained checkpoints
-├── main.py                      # Legacy entry point (eval path retired, see notice above)
+├── main.py                      # Legacy entry point (eval path retired, see docs/LEGACY_RESULTS.md)
 ├── scripts/                     # Run from repo root: python -m scripts.<folder>.<name>
 │   ├── eval/                    # cold_verify, eval_test_splits, eval_all_per_example
 │   ├── analysis/                # Reviewer stats: baselines, paired tests, divisor check, items 8-10
@@ -187,7 +187,7 @@ python main.py --mode train --model transformer --num-epochs 100
 
 ### Evaluate
 
-*Retired - see the input-truncation notice above. `main.py --mode eval`
+*Retired; see the input-truncation notice in [docs/LEGACY_RESULTS.md](docs/LEGACY_RESULTS.md). `main.py --mode eval`
 silently truncates input to 20 characters and its output should not be
 treated as a valid measurement. Kept runnable as historical record only.*
 ```bash
@@ -205,7 +205,7 @@ python -m scripts.analysis.per_seed_and_paired_stats
 
 ### Attention analysis
 
-*Retired - see the input-truncation notice above.* Open
+*Retired; see the input-truncation notice in [docs/LEGACY_RESULTS.md](docs/LEGACY_RESULTS.md).* Open
 `experiments/notebooks/analysis_plots.ipynb` and run all cells to
 reproduce the historical (truncation-affected) CP1–CP5 results, saved to
 `experiments/results/`. For the corrected analysis, use
