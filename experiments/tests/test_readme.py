@@ -55,3 +55,13 @@ def test_notice_above_only_below_the_notice():
             assert all(h > notice for h in hits), rel
         else:
             assert not hits, rel
+
+
+def test_citation_does_not_claim_an_unposted_preprint():
+    """The BibTeX may call the paper an arXiv preprint only once the README stops saying the arXiv ID is pending."""
+    text = (REPO_ROOT / "README.md").read_text()
+    start = text.index("@misc{jamanjyothi2026partial")
+    bib = text[start:]
+    bib = bib[: bib.index("\n}") + 2]
+    if "arXiv ID pending" in text:
+        assert "arXiv preprint" not in bib, bib

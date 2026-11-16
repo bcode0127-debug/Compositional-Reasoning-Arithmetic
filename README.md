@@ -235,6 +235,6 @@ reproduce the historical (truncation-affected) CP1–CP5 results, saved to
              Transformer Generalization on Arithmetic Expressions},
   author  = {Jamanjyothi, Ajay and Kasztelnik, Karina},
   year    = {2026},
-  note    = {arXiv preprint (cs.LG)}
+  note    = {Manuscript, arXiv ID pending}
 }
 ```
