@@ -44,13 +44,28 @@ def row(d):
             f"[`pos_sweep/{hub}/best_model.pt`]({HUB}/pos_sweep/{hub}/best_model.pt) |")
 
 
+NOTES = [
+    "- The three `sinusoidal_retrain` rows are the hardware-control retrain of the paper's sinusoidal configuration on the RTX 4000 Ada. "
+    "They are not used by any rule of the sweep, and the tuning control reports them only descriptively beside its reference R1 "
+    "(`docs/design/tuning-control.md`). The paper's sinusoidal checkpoints are the `results_v2/transformer/study1/` rows in the table above.",
+    "- Val accuracy is teacher-forced exact match (`utils/trainer.calculate_accuracy`) and is the measure checkpoints were selected on; "
+    "test accuracy is free-running greedy decoding with exact match (`scripts/eval/eval_test_splits.py`). They are different measures and "
+    "are never interchanged (`docs/design/pos-encoding-sweep.md`, Deviations, 2026-10-19, item 3).",
+    "- The `nope` row is the floor check, not an arm: NoPE in the encoder only, one seed (`docs/design/pos-encoding-sweep.md`).",
+    "- All thirteen runs train on the same `datasets_v2` Study 1 files as the rows above (generator commit "
+    "`f5044574212d2a41e5091456096e0841cf5ae6f8`, the repository commit the generator ran at, recorded in each data file's "
+    "`generator_commit` header field; the files themselves were committed later, in `402e0dd`, so they are not in the tree at `f5044574`); "
+    "the train and validation files are byte-identical at both training commits and match `datasets_v2/CHECKSUMS.txt`.",
+]
+
+
 def section():
     dirs = run_dirs()
     assert len(dirs) == 13, len(dirs)
     return "\n".join([TITLE, "",
                       "Thirteen Study 1 Transformer checkpoints from the positional-encoding sweep, published on the "
                       "Hub under `pos_sweep/` with their run records and logs. The `.pt` files are not in git.", "",
-                      HEADER, "|" + "---|" * 11] + [row(d) for d in dirs]) + "\n"
+                      HEADER, "|" + "---|" * 11] + [row(d) for d in dirs] + ["", "Notes:", ""] + NOTES) + "\n"
 
 
 def main():
