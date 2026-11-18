@@ -344,7 +344,7 @@ def generate_study_datasets_v2(output_root: str = "datasets_v2") -> Dict[str, An
 
     This is a NEW function alongside the original generate_study_datasets()
     (in main.py) rather than a replacement - it writes to `output_root`
-    (default datasets_v2/), leaving datasets/ and the original generator
+    (default datasets_v2/), leaving legacy/datasets/ and the original generator
     untouched, and it performs cross-split deduplication (a single
     seen_expressions set shared across every bucket in every split generated
     by this call, the strictest reading of "no string appears in two

@@ -2,7 +2,7 @@
 """Item 10: per-seed results and uncertainty.
 
 Every figure is read from a committed artifact, none typed:
-  matrix_summary.txt                      selected epoch, val accuracy
+  results_v2/matrix_summary.txt           selected epoch, val accuracy
   results_v2/*/*/seed*/history.json       final epoch, train acc at selected epoch
   results_v2/*/*/seed*/ood_results.json   per-bucket OOD accuracy
   results_v2/test_set_results.json        test accuracy + per-example correctness
@@ -35,7 +35,7 @@ def load(p):
 
 def matrix_summary():
     out = {}
-    for line in Path("matrix_summary.txt").read_text().splitlines():
+    for line in Path("results_v2/matrix_summary.txt").read_text().splitlines():
         parts = line.split("\t")
         if len(parts) < 4:
             continue

@@ -1,6 +1,6 @@
 """Retraining entry point for the fixed pipeline (datasets_v2 + trainer fixes).
 
-Does NOT touch the original main.py / datasets/ / results/ pipeline - this is
+Does NOT touch the legacy pipeline (legacy/main.py, legacy/datasets/, legacy/results/) - this is
 an additive parallel path, same philosophy as data/generate_controlled.py's
 generate_study_datasets_v2(). Run one (model, study, seed) combination per
 invocation; loop externally over the combinations you want (e.g. 2 models x

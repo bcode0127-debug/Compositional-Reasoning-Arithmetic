@@ -7,8 +7,8 @@ OOD headline and CP1–CP5, was produced by `main.py`'s legacy eval path
 (`main.py::evaluate_model()`), which silently truncates encoder input to
 `max_input_len=20` characters (`src_ids[:max_input_len]`, no error, no
 warning). Measured directly against the datasets these numbers were
-computed on: 99.0% of `datasets/study1/ood.json` (max length 50) and 70.0%
-of `datasets/study2/ood.json` exceed 20 characters. That means the model
+computed on: 99.0% of `legacy/datasets/study1/ood.json` (max length 50) and 70.0%
+of `legacy/datasets/study2/ood.json` exceed 20 characters. That means the model
 was evaluated on a chopped prefix of nearly every OOD example - in most
 cases missing the operators and operands that determine the correct
 answer. The "catastrophic OOD collapse" these numbers report is
@@ -19,15 +19,16 @@ truncated inputs, so their interpretation is compromised the same way.
 
 **These results are retired, not corrected.** They are left in place below
 as a historical record of what this repo previously reported, not as
-findings to cite. The legacy code path (`main.py`, `experiments/analysis.py`,
-`experiments/notebooks/analysis_plots.ipynb`) and the legacy `datasets/`
-directory are unchanged and still runnable, but no valid claim about
+findings to cite. The legacy entry point, data and outputs (`main.py`, `datasets/`,
+`results/`, `figures/` and five folders of `experiments/results/`) are
+archived unchanged under [`legacy/`](../legacy/README.md), which lists
+what moved. They are not runnable from there, and no valid claim about
 compositional reasoning should be drawn from their output.
 
 The corrected, superseding results are the v2 pipeline (`train_v2.py` +
 `datasets_v2/`, `max_input_len=64` with hard-fail encode_checked instead of
 silent truncation) and mechanistic analysis v2:
-- Seed-matrix training results: [`matrix_summary.txt`](../matrix_summary.txt),
+- Seed-matrix training results: [`results_v2/matrix_summary.txt`](../results_v2/matrix_summary.txt),
   [`CHECKPOINTS.md`](../CHECKPOINTS.md)
 - Mechanistic v2 (behavioral + attention + probing, on verified checkpoints,
   truncation-safe throughout): [`experiments/notebooks/analysis_v2.ipynb`](../experiments/notebooks/analysis_v2.ipynb),

@@ -30,11 +30,11 @@ proejct_document.md
 
 # Archive folders
 data/archive/
-datasets/archive/
-results/archive/
+legacy/datasets/archive/
+legacy/results/archive/
 
 
 # Verification samples
-datasets/verification/
+legacy/datasets/verification/
 # Private developer docs / learning notes
 developer_docs/
