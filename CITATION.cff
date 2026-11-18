@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this code or data, please cite the paper below."
+title: "Compositional-Reasoning-Arithmetic"
+type: software
+authors:
+  - family-names: Jamanjyothi
+    given-names: Ajay
+license: Apache-2.0
+repository-code: "https://github.com/bcode0127-debug/Compositional-Reasoning-Arithmetic"
+preferred-citation:
+  type: unpublished
+  title: "Partial Competence and Limited Transfer: Comparing LSTM and Transformer Generalization on Arithmetic Expressions"
+  authors:
+    - family-names: Jamanjyothi
+      given-names: Ajay
+    - family-names: Kasztelnik
+      given-names: Karina
+  year: 2026
+  notes: "Manuscript, arXiv ID pending"

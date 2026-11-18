@@ -1,6 +1,8 @@
 # Partial Competence and Limited Transfer
 ### Comparing LSTM and Transformer Generalization on Arithmetic Expressions
 
+Code, data and results for the paper *Partial Competence and Limited Transfer: Comparing LSTM and Transformer Generalization on Arithmetic Expressions* (Jamanjyothi and Kasztelnik; manuscript, arXiv ID pending). The [Quickstart](#quickstart) checks the headline test-set numbers on a CPU without training, and [Where each number comes from](#where-each-number-comes-from) traces every reported figure to its file and the script that produces it.
+
 ---
 
 ## Abstract
@@ -9,9 +11,9 @@ We train character-level LSTM and Transformer encoder-decoders, three seeds each
 
 ---
 
-## Results (v2 pipeline, current)
+## Results
 
-*Values below are the canonical v2 numbers, read directly from `matrix_summary.txt`,
+*Values below are the canonical v2 numbers, read directly from `results_v2/matrix_summary.txt`,
 each run's `ood_results.json`, and `results_v2/test_set_results.json`. Val and OOD are
 mean [min-max] across seeds 0/1/2; Test is mean ± SD. All figures are autoregressive
 exact-match (verified teacher-forced-equivalent under greedy decoding by `scripts/eval/cold_verify.py`).*
@@ -35,9 +37,6 @@ generated after training, so the Test column is the primary in-distribution resu
 
 Two of three Transformer runs did not fit the training data (maximum training accuracy over the run 61.39% and 72.79%, final epoch 61.39% and 67.40%, against the 80% fit threshold), so Study 2 does not support an architecture comparison.
 
-Paper: *Partial Competence and Limited Transfer: Comparing LSTM and Transformer
-Generalization on Arithmetic Expressions* (arXiv ID pending).
-
 ## Further results
 
 The sweep and the tuning control below are committed in this repository with their design docs; the manuscript draft predates them.
@@ -46,13 +45,94 @@ The sweep and the tuning control below are committed in this repository with the
 - **Positional-encoding sweep** ([design](docs/design/pos-encoding-sweep.md), [summary](experiments/results/analysis_v2/pos_sweep/summary.md)). RoPE raises the Transformer's in-distribution test accuracy over sinusoidal by 13.5, 10.3 and 13.6 points across seeds, and ALiBi by 2.5 to 5.2; learned absolute encoding does not move it. The LSTM still leads every arm.
 - **Tuning control** ([design](docs/design/tuning-control.md), [readings](experiments/results/analysis_v2/tuning_control/readings.md)). At the validation-selected learning rate, the LSTM-minus-Transformer test gap is 25.8, 28.4 and 27.6 points, with 95% intervals above zero on all three seeds; RoPE's gain over sinusoidal holds at 11.8 to 12.6 points; weight decay 0.01 and 0.1 move nothing. Sinusoidal at 1e-4 does not fit within 200 epochs, and 1e-3 stops near the floor for both encodings, so those rates are not covered. Under the pre-registered selected-epoch fit rule these two comparisons are not evaluable; the design doc's 2026-11-01 Deviations entry explains the change.
 
-## Retired results
+---
 
-Results produced before the v2 pipeline were affected by an input-truncation bug and are retired, not corrected. They are kept, with the bug description, in [docs/LEGACY_RESULTS.md](docs/LEGACY_RESULTS.md); do not cite them.
+## Quickstart
+
+Checks the in-distribution test-set numbers from the released checkpoints, without training. On a CPU the whole sequence takes about 5 minutes (measured on a Mac mini).
+
+```bash
+git clone https://github.com/bcode0127-debug/Compositional-Reasoning-Arithmetic.git
+cd Compositional-Reasoning-Arithmetic
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+hf download Ajay0728/Compositional-reasoning-arithmetic --include "*/best_model.pt" --local-dir results_v2
+python -m scripts.eval.eval_test_splits --device cpu
+git diff --stat results_v2/test_set_results.json
+```
+
+The evaluation prints each run's test accuracy and rewrites `results_v2/test_set_results.json`. An empty `git diff` means every per-example result matched the committed file.
+
+To also reproduce the per-example results on the validation and out-of-distribution splits, run `python -m scripts.eval.eval_all_per_example`, then `git diff --stat results_v2/all_splits_per_example.json`. It decodes every split for all twelve checkpoints, about 15 more minutes on the same machine, and an empty diff again means every result matched.
+
+Requirements: Python 3.9 or later. On Python 3.10 and later, `requirements.txt` installs scikit-learn 1.9.1, the version the probe grid ran on; on Python 3.9 it installs 1.6.1, the version the final-position addenda ran on.
+
+## Where each number comes from
+
+Run every command from the repository root. Each training run's directory is `results_v2/<model>/study<n>/seed<s>/`.
+
+| Result | File | Produced by |
+|---|---|---|
+| Validation accuracy (Results tables) | `results_v2/matrix_summary.txt` and each run's `history.json` | `python train_v2.py --model lstm --study 1 --seed 0`, one run per model, study and seed |
+| Out-of-distribution accuracy (Results tables) | each run's `ood_results.json` | `train_v2.py`, at the end of each run |
+| Test accuracy (Results tables) | `results_v2/test_set_results.json` | `python -m scripts.eval.eval_test_splits --device cpu` |
+| Per-example results on every split | `results_v2/all_splits_per_example.json` | `python -m scripts.eval.eval_all_per_example` |
+| Per-seed results and paired tests | `results_v2/per_seed_and_paired_stats.json` | `python -m scripts.analysis.per_seed_and_paired_stats` |
+| Comparison with the constant-output baseline | `results_v2/baseline_paired_stats.json` | `python -m scripts.analysis.baseline_paired_stats` |
+| Chance baselines | `results_v2/chance_baselines.json` | `python -m scripts.analysis.chance_baselines` |
+| Per-operation accuracy | `results_v2/item_8_9_10_stats.json` | `python -m scripts.analysis.item_8_9_10_stats` |
+| Divisor distribution | `results_v2/divisor_distribution.json` | `python -m scripts.analysis.divisor_check` |
+| Probes (Further results) | `experiments/results/analysis_v2/nonlinear_probe/summary.md` | `python experiments/scripts/nonlinear_probe.py --stage all` |
+| Positional-encoding sweep (Further results) | `experiments/results/analysis_v2/pos_sweep/summary.md` | runs from `scripts/training/run_pos_sweep.sh` (GPU), then `python experiments/scripts/pos_sweep_battery.py --stage all` |
+| Tuning control (Further results) | `experiments/results/analysis_v2/tuning_control/readings.md` | runs from `scripts/training/run_tuning_control.sh` (GPU), then `python experiments/scripts/tuning_control_readings.py` |
+
+The scripts rewrite their own output files in place, so `git diff` shows whether a rerun matched the committed result.
+
+## Full reproduction
+
+### Data
+
+The splits used in the paper are committed in `datasets_v2/`, pinned by SHA-256 in `datasets_v2/CHECKSUMS.txt` and mirrored on the [Hugging Face Hub](https://huggingface.co/datasets/Ajay0728/Compositional-reasoning-arithmetic-datasets). Verify them from the repository root with `shasum -a 256 -c datasets_v2/CHECKSUMS.txt` (macOS) or `sha256sum -c datasets_v2/CHECKSUMS.txt` (Linux). The train, validation and out-of-distribution splits come from `generate_study_datasets_v2()` in `data/generate_controlled.py`, and the test splits from `scripts/datagen/make_test_splits.py`.
+
+### Training
+
+Each of the twelve checkpoints is one run of `train_v2.py`, for each model (`lstm`, `transformer`), study (`1`, `2`) and seed (`0`, `1`, `2`). A run writes `best_model.pt`, `history.json` and `ood_results.json` into its directory under `results_v2/`, replacing the committed files there; pass `--output-dir` to write somewhere else. The released checkpoints are on the [Hugging Face Hub](https://huggingface.co/Ajay0728/Compositional-reasoning-arithmetic) and listed with their fingerprints in [CHECKPOINTS.md](CHECKPOINTS.md). `scripts/training/run_matrix.sh` is the record of how the original twelve runs were launched; it is kept unchanged, so the paths inside it point at the machine they ran on. The library versions of that training environment were not recorded, as the paper's Reproducibility paragraph states.
+
+## Repository map
+
+```
+Compositional-Reasoning-Arithmetic/
+├── train_v2.py          # Training entry point: one model, study and seed per run
+├── data/                # Code: dataset generator, tokenizer, data loader, expression trees
+├── datasets_v2/         # The splits used in the paper, with CHECKSUMS.txt
+├── models/              # LSTM and Transformer encoder-decoders, positional encodings
+├── utils/               # Training loop and early stopping
+├── scripts/             # Pipeline scripts: evaluation, statistics, test-split generation, training runners
+├── experiments/
+│   ├── scripts/         # Probes, the positional-encoding sweep and the tuning control
+│   ├── results/         # Their outputs, under analysis_v2/
+│   ├── notebooks/       # analysis_v2.ipynb (current); analysis_plots.ipynb (pre-v2 record)
+│   └── tests/           # Test suite (pytest)
+├── results_v2/          # Per-run histories and out-of-distribution results, test results, statistics
+├── docs/                # Design docs, decision log, retired results
+├── legacy/              # Pre-v2 files kept as a record (see legacy/README.md)
+├── CHECKPOINTS.md       # Registry of every trained checkpoint
+├── CITATION.cff
+├── LICENSE
+└── requirements.txt
+```
+
+Both script folders are current. `scripts/` runs the v2 pipeline, and `experiments/scripts/` holds the analyses built on it.
+
+## Design docs and decisions
+
+- [docs/design/pos-encoding-sweep.md](docs/design/pos-encoding-sweep.md) and [docs/design/tuning-control.md](docs/design/tuning-control.md): pre-registered designs, each with a dated Deviations section recording every change made after registration.
+- [docs/DECISIONS.md](docs/DECISIONS.md): repository-level decisions.
+- [CHECKPOINTS.md](CHECKPOINTS.md): one row per trained checkpoint, with its fingerprint.
 
 ---
 
-## Experimental Design
+## Experimental design
 
 ### Task
 
@@ -64,7 +144,7 @@ as a sequence-to-sequence problem with character-level tokenization.
 Input:  ( ( 1 3 - 7 ) + ( 8 - 8 ) )
 Output: 6
 ```
-### Controlled Studies
+### Controlled studies
 
 Study 1 varies operation count; Study 2 shifts depth and tree shape together:
 
@@ -75,145 +155,27 @@ expression chains.
 
 **Study 2 - Structural Generalization (exploratory)**
 Train on balanced depth-2 trees with three operations. Test on chain-shaped depth-3 trees with three operations. Depth and shape change together, so this study cannot isolate depth.
-
-### Dataset Specification
+### Dataset specification
 
 - Operand range: 1-20
-- Division: D1 integer-only (no remainder, no division by zero)
+- Division: D1 integer-only (no remainder, no division by zero). In `datasets_v2` every division divides by +1 or -1 ([divisor check](results_v2/divisor_distribution.json)), so division acts as identity or negation; the paper discloses this.
 - Magnitude cap: |result| ≤ 10,000
 - Format: Fully parenthesized infix notation
 - Operator distribution: equal 25% per operator type
 - Vocabulary: 20 character-level tokens
-- Split: 8,000 train / 1,000 val / 1,000 OOD per study
+- Splits per study: 8,000 train, 1,000 validation and 1,000 test. Out-of-distribution: 1,000 per bucket, four buckets in Study 1 (4, 5, 6 and 7 operations) and one in Study 2.
 
-### Model Architectures
+### Model architectures
 
-**LSTM Encoder-Decoder**
-Bidirectional encoder, unidirectional decoder. Hidden dim 256, embedding
-dim 128, ~2.1M parameters. Trained with teacher forcing, Adam (lr=0.001),
-early stopping (patience=25).
+**LSTM encoder-decoder.** Bidirectional encoder, unidirectional decoder. Hidden dim 256, embedding dim 128, about 2.1M parameters.
 
-**Transformer Encoder-Decoder**
-3 encoder + 3 decoder layers, 8 attention heads, model dim 256, sinusoidal
-positional encoding, ~5.5M parameters. Trained with teacher forcing, Adam
-(lr=0.0001), early stopping (patience=25).
+**Transformer encoder-decoder.** 3 encoder and 3 decoder layers, 8 attention heads, model dim 256, sinusoidal positional encoding, about 5.5M parameters.
+
+**Training, both models.** Adam with a peak learning rate of 0.001 (LSTM) or 3e-4 (Transformer), a 400-step linear warmup and cosine decay to 1e-5; teacher forcing; batch size 64; at most 200 epochs, with early stopping at a patience of 50 epochs on validation accuracy, keeping the checkpoint with the best validation accuracy. Three seeds per model and study. Input and output budgets are 64 and 12 tokens, above the longest sequence in the data; an over-length example raises an error instead of being truncated.
 
 ---
 
-## Repository Structure
-
-```
-Compositional-Reasoning-Arithmetic/
-├── train_v2.py                  # v2 training entry point (one model/study/seed per run)
-├── matrix_summary.txt           # v2 seed-matrix summary (selected epoch, val accuracy)
-├── CHECKPOINTS.md               # Registry of all trained checkpoints
-├── main.py                      # Legacy entry point (eval path retired, see docs/LEGACY_RESULTS.md)
-├── scripts/                     # Run from repo root: python -m scripts.<folder>.<name>
-│   ├── eval/                    # cold_verify, eval_test_splits, eval_all_per_example
-│   ├── analysis/                # Reviewer stats: baselines, paired tests, divisor check, items 8-10
-│   ├── datagen/                 # make_test_splits (independent test splits)
-│   └── training/                # run_matrix.sh (12-run seed matrix), overfit_test
-├── data/
-│   ├── generate_controlled.py   # Controlled dataset generation
-│   ├── tokenizer.py             # Character-level math tokenizer
-│   ├── dataloader.py            # PyTorch DataLoader pipeline
-│   └── tree.py                  # Binary expression tree data structure
-├── models/
-│   ├── lstm.py                  # LSTM encoder-decoder
-│   └── transformer.py           # Transformer encoder-decoder
-├── utils/
-│   └── trainer.py               # Training loop + early stopping
-├── experiments/
-│   ├── config.py                # Checkpoint and path configuration
-│   ├── analysis.py              # CP4/CP5 programmatic analysis
-│   └── notebooks/
-│       ├── analysis_plots.ipynb # CP1–CP5 attention visualizations (legacy)
-│       └── analysis_v2.ipynb    # Mechanistic analysis v2
-├── datasets/                    # Legacy splits (pre-v2)
-├── datasets_v2/                 # Current splits: study1 (train/val/test/ood_ops4-7), study2 (train/val/test/ood)
-├── results/                     # Legacy results (pre-v2)
-├── results_v2/                  # Per-run history/OOD results + analysis outputs (*.json)
-│   └── {lstm,transformer}/study{1,2}/seed{0,1,2}/
-├── figures/
-├── requirements.txt
-└── README.md
-```
-
----
-
-## Reproducing Results
-
-### Pretrained checkpoints and datasets (Hugging Face Hub)
-
-The twelve v2 checkpoints and the `datasets_v2` splits are published on the
-Hugging Face Hub, so results can be checked without retraining:
-
-- **Models:** [Ajay0728/Compositional-reasoning-arithmetic](https://huggingface.co/Ajay0728/Compositional-reasoning-arithmetic)
-  - `{lstm,transformer}/study{1,2}/seed{0,1,2}/best_model.pt`, the same files listed in [`CHECKPOINTS.md`](CHECKPOINTS.md)
-- **Datasets:** [Ajay0728/Compositional-reasoning-arithmetic-datasets](https://huggingface.co/datasets/Ajay0728/Compositional-reasoning-arithmetic-datasets)
-  - the same files as `datasets_v2/`, including `CHECKSUMS.txt`
-
-To place the checkpoints where the evaluation scripts expect them
-(`results_v2/...`):
-```bash
-pip install huggingface_hub
-hf download Ajay0728/Compositional-reasoning-arithmetic --include "*/best_model.pt" --local-dir results_v2
-```
-
-### Setup
-```bash
-git clone https://github.com/bcode0127-debug/Compositional-Reasoning-Arithmetic.git
-cd Compositional-Reasoning-Arithmetic
-pip install -r requirements.txt
-```
-
-Requirements: Python 3.8+, PyTorch 2.0+
-
-### Generate datasets
-```bash
-python main.py --mode generate
-```
-
-Generates 20,000 controlled samples across both studies.
-
-### Train
-```bash
-# LSTM
-python main.py --mode train --model lstm --num-epochs 100
-
-# Transformer
-python main.py --mode train --model transformer --num-epochs 100
-```
-
-### Evaluate
-
-*Retired; see the input-truncation notice in [docs/LEGACY_RESULTS.md](docs/LEGACY_RESULTS.md). `main.py --mode eval`
-silently truncates input to 20 characters and its output should not be
-treated as a valid measurement. Kept runnable as historical record only.*
-```bash
-python main.py --mode eval --model lstm
-python main.py --mode eval --model transformer
-```
-
-For a valid evaluation, use `train_v2.py` / `scripts/eval/cold_verify.py`
-against `datasets_v2/` instead. Run scripts from the repo root as modules so
-their root-relative paths resolve:
-```bash
-python -m scripts.eval.eval_test_splits --device cpu
-python -m scripts.analysis.per_seed_and_paired_stats
-```
-
-### Attention analysis
-
-*Retired; see the input-truncation notice in [docs/LEGACY_RESULTS.md](docs/LEGACY_RESULTS.md).* Open
-`experiments/notebooks/analysis_plots.ipynb` and run all cells to
-reproduce the historical (truncation-affected) CP1–CP5 results, saved to
-`experiments/results/`. For the corrected analysis, use
-`experiments/notebooks/analysis_v2.ipynb`.
-
----
-
-## Related Work
+## Related work
 
 - Lake and Baroni (2018). Generalization without systematicity: On the compositional skills of sequence-to-sequence recurrent networks. Proceedings of the 35th International Conference on Machine Learning
 - Stolfo et al. (2023). A Mechanistic Interpretation of Arithmetic Reasoning in Language Models using Causal Mediation Analysis. Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing
@@ -228,6 +190,10 @@ reproduce the historical (truncation-affected) CP1–CP5 results, saved to
 
 ---
 
+## License
+
+Code: Apache-2.0 ([LICENSE](LICENSE)). The checkpoints and datasets on the Hugging Face Hub carry the same license.
+
 ## Citation
 ```bibtex
 @misc{jamanjyothi2026partial,
@@ -238,3 +204,9 @@ reproduce the historical (truncation-affected) CP1–CP5 results, saved to
   note    = {Manuscript, arXiv ID pending}
 }
 ```
+
+Machine-readable citation: [CITATION.cff](CITATION.cff).
+
+## Retired results
+
+Results produced before the v2 pipeline were affected by an input-truncation bug and are retired, not corrected. They are kept, with the bug description, in [docs/LEGACY_RESULTS.md](docs/LEGACY_RESULTS.md); do not cite them. The pre-v2 files themselves are in [legacy/](legacy/README.md).
