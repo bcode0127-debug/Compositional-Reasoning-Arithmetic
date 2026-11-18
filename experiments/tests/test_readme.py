@@ -127,7 +127,11 @@ def test_readme_results_match_the_result_files():
     rv = REPO_ROOT / "results_v2"
     val = {}
     for line in (rv / "matrix_summary.txt").read_text().splitlines():
-        run, acc = line.split()[:2]
+        if not line.strip():
+            continue
+        fields = line.split()
+        assert len(fields) >= 2 and "=" in fields[1], f"matrix_summary.txt: malformed line {line!r}"
+        run, acc = fields[:2]
         val[run] = float(acc.split("=")[1].rstrip("%"))
     test = json.loads((rv / "test_set_results.json").read_text())
 
